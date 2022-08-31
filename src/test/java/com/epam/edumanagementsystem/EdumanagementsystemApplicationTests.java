@@ -1,10 +1,10 @@
-package com.epam.edumanagemnentsystem;
+package com.epam.edumanagementsystem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EdumanagemnentsystemApplicationTests {
+class EdumanagementsystemApplicationTests {
 
 	@Test
 	void contextLoads() {

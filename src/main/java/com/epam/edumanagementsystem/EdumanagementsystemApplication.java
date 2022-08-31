@@ -1,13 +1,13 @@
-package com.epam.edumanagemnentsystem;
+package com.epam.edumanagementsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EdumanagemnentsystemApplication {
+public class EdumanagementsystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EdumanagemnentsystemApplication.class, args);
+		SpringApplication.run(EdumanagementsystemApplication.class, args);
 	}
 
 }
