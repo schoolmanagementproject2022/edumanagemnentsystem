@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script>
+        function validateForm() {
+            var x = document.forms["myForm"]["email"].value;
+            var y = document.forms["myForm"]["password"].value;
+            var emptyEmail = document.getElementById("emptyEmail");
+            var emptyPassword = document.getElementById("emptyPassword");
+            emptyEmail.type = "hidden";
+            emptyPassword.type = "hidden";
+            if (x.replace(/\s/g, '') == "" && y.replace(/\s/g, '') == ""){
+                emptyEmail.type = "text";
+                emptyPassword.type = "text";
+            }
+            if (x.replace(/\s/g, '') == "") {
+                emptyEmail.type = "text";
+                return false;
+            }
+            if (y.replace(/\s/g, '') == "") {
+                emptyPassword.type = "text";
+                return false;
+            }
+
+        }
+    </script>
+</head>
+<body>
+<div class="main">
+    <div class="header">
+        <h1>Schooling App</h1>
+    </div>
+
+    <div class="formLogin">
+        <p class="errorMsg" th:text="${msg}"></p>
+        <form action="/login" method="post" id="login" name="myForm" onsubmit="return validateForm()" required>
+            <div>
+                <input class="emailInput" type="text" id="email" name="email" placeholder="email"><br>
+                <input class="emptyEmail" id="emptyEmail" type="hidden" value="Please, fill the email field"
+                       name="emptyEmail">
+
+            </div>
+            <div>
+                <input class="passInput" type="password" id="password" name="password" placeholder="password"><br>
+                <input class="emptyPassword" id="emptyPassword" type="hidden" value="Please, fill the password field"
+                       name="emptyPassword">
+            </div>
+            <input onsubmit="required()" class="loginInput" type="submit" value="Login">
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

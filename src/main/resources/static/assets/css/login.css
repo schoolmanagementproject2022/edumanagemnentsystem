@@ -1,0 +1,88 @@
+.main{
+    width: 1800px;
+    height: 1400px;
+    background-color: #333333;
+}
+
+.header{
+    position: absolute;
+    width: 406px;
+    height: 104px;
+    margin-left: 40px;
+}
+
+h1{
+    color: rgb(0,126,180);
+}
+
+.formLogin{
+    background-color: rgb(85,85,85);
+    position: absolute;
+    width: 650px;
+    height: 545px;
+    margin-top: 426px;
+    margin-left: 634px;
+    align-items: normal;
+}
+.emailInput{
+    position: absolute;
+    width: 319px;
+    height: 60px;
+    margin-top: 130px;
+    margin-left: 163px;
+    font-size: 18px;
+    padding: 0 15px;
+}
+::placeholder{
+    font-size: 18px;
+}
+.passInput{
+    position: absolute;
+    padding: 0 15px;
+    width: 319px;
+    height: 60px;
+    margin-top: 240px;
+    margin-left: 163px;
+    font-size: 18px;
+}
+
+.loginInput{
+    position: absolute;
+    background-color: rgb(0,126,180);
+    width: 219px;
+    height: 60px;
+    margin-top: 357px;
+    margin-left: 209px;
+    color: white;
+    font-size: 36px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+}
+
+.errorMsg{
+    position: absolute;
+    color: red;
+    margin-top: 100px;
+    margin-left: 163px;
+
+}
+.emptyEmail{
+    background-color: transparent; !important;
+    border: none;
+    outline: none;
+    color: red;
+    position: absolute;
+    margin-top:180px;
+    margin-left:163px;
+
+}.emptyPassword{
+    width: 100%;
+     background-color: transparent; !important;
+     border: none;
+     outline: none;
+     color: red;
+     position: absolute;
+    margin-top:290px;
+    margin-left:163px;
+}
