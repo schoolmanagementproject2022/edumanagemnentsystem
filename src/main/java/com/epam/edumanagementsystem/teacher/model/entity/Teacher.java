@@ -1,12 +1,10 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "teacher", schema = "public")
 public class Teacher {
 
     @Id
