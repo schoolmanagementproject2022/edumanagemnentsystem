@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherMapper {
-    public static Teacher ToTeacher(TeacherDto teacherDto) {
+    public static Teacher toTeacher(TeacherDto teacherDto) {
         Teacher teacher = new Teacher();
         teacher.setId(teacherDto.getId());
         teacher.setName(teacherDto.getName());
@@ -27,11 +27,19 @@ public class TeacherMapper {
         return teacherDto;
     }
 
-    public static List<TeacherDto> listOfTeachers(List<Teacher> teachers) {
+    public static List<TeacherDto> toListOfTeachersDto(List<Teacher> teachers) {
         List<TeacherDto> teacherDto = new ArrayList<>();
         for (Teacher teacher : teachers) {
             teacherDto.add(toDto(teacher));
         }
         return teacherDto;
+    }
+
+    public static List<Teacher> toListOfTeachers(List<TeacherDto> teachersDto) {
+        List<Teacher> teachers = new ArrayList<>();
+        for (TeacherDto teacherDto : teachersDto) {
+            teachers.add(toTeacher(teacherDto));
+        }
+        return teachers;
     }
 }

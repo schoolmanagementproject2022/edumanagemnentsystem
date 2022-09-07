@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Admin Page</title>
+    <title>Teacher Page</title>
 </head>
 
 <body>
@@ -17,54 +17,53 @@
 <div class="create">
     <button class="show-btn" onclick="PopUpShow()">Create</button>
 
-        <div class="popup-container" id="popup-container">
-            <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-            <h1>New Teacher</h1>
+    <div class="popup-container" id="popup-container">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>New Teacher</h1>
 
-            <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
 
-                <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
-                    $("#popup-container").show();
-                </script>
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null">
+                $("#popup-container").show();
+            </script>
 
-                <div class="popup-wrapper">
-                    <div class="half">
-                        <div id="error"></div>
-                        <label class="popup-label-title" for="name">Name</label>
-                        <input class="form_input" type="text" th:maxlength="50" th:name="name" id="name">
-                        <div class="error" th:if="${#fields.hasErrors('name')}"
-                             th:errors="*{name}"></div>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <div id="error"></div>
+                    <label class="popup-label-title" for="name">Name</label>
+                    <input class="form_input" type="text" th:maxlength="50" th:name="name" id="name">
+                    <div class="error" th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}"></div>
 
-                        <label class="popup-label-title" for="surname">Surname</label>
-                        <input class="form_input" type="text" th:maxlength="50" th:name="surname" id="surname" >
-                        <div class="error" th:if="${#fields.hasErrors('surname')}"
-                             th:errors="*{surname}"></div>
+                    <label class="popup-label-title" for="surname">Surname</label>
+                    <input class="form_input" type="text" th:maxlength="50" th:name="surname" id="surname">
+                    <div class="error" th:if="${#fields.hasErrors('surname')}"
+                         th:errors="*{surname}"></div>
 
-                        <label class="popup-label-title" for="email">Email</label>
-                        <input class="form_input" type="email" th:maxlength="50" th:name="email" id="email" >
-                        <div class="error" th:if="${#fields.hasErrors('email')}"
-                             th:errors="*{email}"></div>
-                        <div th:if="${duplicated}!= null" class="error">
-                            <p th:text="${duplicated}"></p>
-                        </div>
-                    </div>
-
-                    <div class="half">
-                        <label class="popup-label-title">Password</label>
-                        <input type="text" class="form_input" placeholder="Create Password" id="password"
-                               th:name="password">
-                        <div class="error" th:if="${#fields.hasErrors('password')}"
-                             th:errors="*{password}"></div>
-                        <button class="button-generate" id="btn" type="button" onclick="getPassword()">
-                            Generator Password
-                        </button>
-                        <button type="submit" class="button-save" id="submit">Save</button>
+                    <label class="popup-label-title" for="email">Email</label>
+                    <input class="form_input" type="email" th:maxlength="50" th:name="email" id="email">
+                    <div class="error" th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}"></div>
+                    <div th:if="${duplicated}!= null" class="error">
+                        <p th:text="${duplicated}"></p>
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
 
+                <div class="half">
+                    <label class="popup-label-title">Password</label>
+                    <input type="text" class="form_input" placeholder="Create Password" id="password"
+                           th:name="password">
+                    <div class="error" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}"></div>
+                    <button class="button-generate" id="btn" type="button" onclick="getPassword()">
+                        Generator Password
+                    </button>
+                    <button type="submit" class="button-save" id="submit">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <div class="container" style="pointer-events: none">
     <div class="topnav-wrapper">
@@ -99,9 +98,6 @@
         </div>
     </div>
 </div>
-<script>
 
-
-</script>
 </body>
 </html>

@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
-
     private final TeacherRepository teacherRepository;
 
     @Autowired
@@ -20,18 +19,20 @@ public class TeacherServiceImpl implements TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-
     @Override
-    public void create(TeacherDto teacherDto) {
-        teacherRepository.save(TeacherMapper.ToTeacher(teacherDto));
+    public void create(Teacher teacher) {
+        teacherRepository.save(teacher);
     }
 
     @Override
     public List<TeacherDto> findAll() {
-        List<Teacher> all = teacherRepository.findAll();
-        List<TeacherDto> listOfTeachers = TeacherMapper.listOfTeachers(all);
-        return listOfTeachers;
+        List<Teacher> allTeachers = teacherRepository.findAll();
+        return TeacherMapper.toListOfTeachersDto(allTeachers);
     }
 
-
+    @Override
+    public TeacherDto getTeacherById(Long id) {
+        Teacher teacherById = teacherRepository.getTeacherById(id);
+        return TeacherMapper.toDto(teacherById);
+    }
 }

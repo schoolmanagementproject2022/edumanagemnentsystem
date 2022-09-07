@@ -1,21 +1,12 @@
 package com.epam.edumanagementsystem.teacher.model.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class TeacherDto {
     private Long id;
-    @NotBlank(message = "Please, fill the required fields")
     private String name;
-    @NotBlank(message = "Please, fill the required fields")
     private String surname;
-    @Email(message = "You entered invalid email")
-    @NotBlank(message = "Please, fill the required fields")
     private String email;
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(min = 9, max = 50, message = "The password size is not valid")
     private String password;
 
     public TeacherDto() {

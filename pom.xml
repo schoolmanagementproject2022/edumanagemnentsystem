@@ -73,15 +73,12 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.6.Final</version>
         </dependency>
-        <!--		thymeleaf-->
+        <!--thymeleaf-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
-
     </dependencies>
-
 
     <build>
         <plugins>

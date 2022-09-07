@@ -1,18 +1,29 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
 @Table(name = "teacher", schema = "public")
 public class Teacher {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Please, fill the required fields")
+    @Size( max = 50, message = "The fields size is not valid")
     private String name;
+    @NotBlank(message = "Please, fill the required fields")
+    @Size( max = 50, message = "The fields size is not valid")
     private String surname;
+    @Email(message = "You entered invalid email")
+    @NotBlank(message = "Please, fill the required fields")
+    @Size( max = 50, message = "The fields size is not valid")
     private String email;
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(min = 9, max = 50, message = "The fields size is not valid")
     private String password;
 
     public Teacher() {
