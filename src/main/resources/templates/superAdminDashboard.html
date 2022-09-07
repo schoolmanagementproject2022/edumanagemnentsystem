@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" >
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/styleSuperAdminDashboard.css" rel="stylesheet">
+    <title>Super Admin Page</title>
+</head>
+
+
+<body>
+<div class="container">
+    <div class="topnav-wrapper">
+        <div class="topnav-left-side">
+            <div class="nav-link-wrapper">
+                <a href="#superAdminDashboard">Admin</a>
+            </div>
+        </div>
+        <div class="topnav-right-side">
+            <div class="nav-link-wrapper">
+                <a>Name Surname</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="sidebar">
+        <a href="#admins">Admins</a>
+        <a href="#settings">Settings</a>
+    </div>
+
+    <div class="main">
+        <div class="create">
+            <input type="checkbox" id="show">
+            <label for="show" class="show-btn">Create</label>
+
+            <div class="popup-container">
+                <label for="show" class="close-btn" title="close">×</label>
+                <h1>New Admin</h1>
+                <form action="#">
+                    <div class="popup-wrapper">
+                        <div class="half">
+                            <label class="popup-label-title">Admin name*</label>
+                            <input type="text">
+                            <label class="popup-label-title">Admin surname*</label>
+                            <input type="text">
+                            <label class="popup-label-title">Admin email*</label>
+                            <input type="text">
+                        </div>
+
+                        <div class="half">
+                            <label class="popup-label-title">Admin password*</label>
+                            <input type="password">
+                            <button class="button-generate" type="submit">Generate password</button>
+                            <button class="button-save" type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="list-items" th:each="users : ${user}">
+                <p class="item" th:text="Admin">Admin 1</p>
+                <p class="item" th:text="Admin">Admin 2</p>
+                <p class="item" th:text="Admin">Admin 3</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
