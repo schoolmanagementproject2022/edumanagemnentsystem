@@ -18,7 +18,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Admin</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{/admin}" th:object="${admin}">
+        <form id="form" class="form" th:method="POST" th:action="@{/admin/add}" th:object="${admin}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
                 $("#popup-container").show();

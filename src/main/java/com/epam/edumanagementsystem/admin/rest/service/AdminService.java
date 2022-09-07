@@ -10,5 +10,4 @@ public interface AdminService {
     void addAdmin(Admin admin);
 
     List<AdminDTO> findAllAdmins();
-
 }
