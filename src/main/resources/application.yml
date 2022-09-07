@@ -1,9 +1,11 @@
 spring:
+  mvc:
+    static-path-pattern: /static/**
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5477/edumanagement
-    username: root
+    url: jdbc:postgresql://localhost:5432/admin
+    username: postgres
     password: root
 
   jpa:
