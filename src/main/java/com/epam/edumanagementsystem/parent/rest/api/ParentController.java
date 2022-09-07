@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.parent.rest.api;
 
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/parents")
 public class ParentController {
 
     private final ParentService parentService;
@@ -20,25 +19,25 @@ public class ParentController {
         this.parentService = parentService;
     }
 
-    @GetMapping("parents")
+    @GetMapping()
     public String toParents(ModelMap modelMap) {
         modelMap.addAttribute("parents", parentService.parents());
         modelMap.addAttribute("parent", new Parent());
         return "parents";
     }
 
-    @PostMapping("parent/save")
-    public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
+    @PostMapping("/save")
+    public String saveParent(@Valid @ModelAttribute(value = "parent") Parent parent, BindingResult bindingResult,
                              ModelMap modelMap) {
         modelMap.addAttribute("parents", parentService.parents());
-        if (parentService.findByEmail(parentDto.getEmail()).isPresent()) {
+        if (parentService.findByEmail(parent.getEmail()).isPresent()) {
             modelMap.addAttribute("duplicated", "A user with the specified email already exists");
             return "parents";
         }
         if (bindingResult.hasErrors()) {
             return "parents";
         }
-        parentService.save(parentDto);
+        parentService.save(parent);
         return "redirect:/parents";
     }
 

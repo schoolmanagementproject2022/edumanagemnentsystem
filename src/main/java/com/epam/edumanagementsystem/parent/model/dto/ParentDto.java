@@ -1,23 +1,13 @@
 package com.epam.edumanagementsystem.parent.model.dto;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ParentDto {
 
     private Long id;
-    @NotBlank(message = "Please, fill the required fields")
     private String name;
-    @NotBlank(message = "Please, fill the required fields")
     private String surname;
-    @NotBlank(message = "Please, fill the required fields")
-    @Email
     private String email;
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(min = 9, max = 50)
     private String password;
 
     public Long getId() {

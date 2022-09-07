@@ -1,8 +1,6 @@
 package com.epam.edumanagementsystem.parent.impl;
 
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import org.springframework.stereotype.Service;
@@ -29,9 +27,8 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public void save(ParentDto parent) {
-        Parent savedParent = ParentMapper.toParent(parent);
-        parentRepository.save(savedParent);
+    public void save(Parent parent) {
+        parentRepository.save(parent);
     }
 
     @Override
