@@ -1,0 +1,18 @@
+version: "3"
+services:
+  edu-db:
+    image: postgres
+    container_name: "edu-db"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=edumanagement
+    ports:
+      - "5477:5432"
+  edu-backend:
+    image: edumanagement2022/edu-backend
+    container_name: "edu-backend"
+    ports:
+      - "8082:8082"
+    links:
+      - edu-db
