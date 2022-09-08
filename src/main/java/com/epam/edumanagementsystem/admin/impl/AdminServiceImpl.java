@@ -1,8 +1,9 @@
-package com.epam.edumanagementsystem.admin.rest.service;
+package com.epam.edumanagementsystem.admin.impl;
 
 import com.epam.edumanagementsystem.admin.model.dto.AdminDTO;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
+import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
