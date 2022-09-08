@@ -51,7 +51,6 @@ public class Student {
     @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
 
-
     public Student(Long id,
                    String name,
                    String surname,

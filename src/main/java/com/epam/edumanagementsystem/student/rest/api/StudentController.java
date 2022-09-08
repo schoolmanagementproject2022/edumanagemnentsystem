@@ -31,7 +31,6 @@ public class StudentController {
     private final ParentService parentService;
     private final AcademicClassService academicClassService;
 
-
     @Autowired
     public StudentController(StudentService studentService,
                              ParentService parentService,

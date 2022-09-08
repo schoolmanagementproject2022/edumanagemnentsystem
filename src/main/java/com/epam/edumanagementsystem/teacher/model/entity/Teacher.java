@@ -10,6 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "teacher", schema = "public")
 public class Teacher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

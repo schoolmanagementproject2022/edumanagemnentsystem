@@ -92,5 +92,4 @@ public class StudentServiceImpl implements StudentService {
         student.setAcademicClass(studentDto.getAcademicClass());
         return StudentMapper.toStudentDto(studentRepository.save(student));
     }
-
 }
