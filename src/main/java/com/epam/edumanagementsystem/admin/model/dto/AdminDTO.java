@@ -1,15 +1,27 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
+import java.util.Objects;
+
 public class AdminDTO {
     private String username;
     private String surname;
+    private String email;
 
     public AdminDTO() {
     }
 
-    public AdminDTO(String username, String surname) {
+    public AdminDTO(String username, String surname,String email) {
         this.username = username;
         this.surname = surname;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -26,5 +38,18 @@ public class AdminDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AdminDTO adminDTO = (AdminDTO) o;
+        return Objects.equals(username, adminDTO.username) && Objects.equals(surname, adminDTO.surname) && Objects.equals(email, adminDTO.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, surname, email);
     }
 }

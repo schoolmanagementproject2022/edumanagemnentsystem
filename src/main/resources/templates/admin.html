@@ -7,7 +7,6 @@
     <link href="../static/css/styles.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
-    <script src="/static/js/popupControl.js"></script>
     <title>Admin Page</title>
 </head>
 <body>
@@ -18,7 +17,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Admin</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{/admin/add}" th:object="${admin}">
+        <form id="form" class="form" th:method="POST" th:action="@{/admin}" th:object="${admin}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
                 $("#popup-container").show();
@@ -88,7 +87,16 @@
         </div>
     </div>
 </div>
+<script>
+    function PopUpShow(){
+        $("#popup-container").show();
+    }
 
+    function PopUpHide(){
+        $("#popup-container").hide();
+
+    }
+</script>
 </body>
 
 </html>
