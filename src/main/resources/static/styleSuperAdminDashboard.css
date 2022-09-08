@@ -12,8 +12,7 @@ body {
 }
 
 
-/*Top part styles*/
-
+/*Top part style*/
 .container {
     width: 100%;
     margin: 0 auto;
@@ -43,25 +42,24 @@ body {
     color: #01A7F0;
 }
 
-/*Main part styles*/
 
+/*Main part style*/
 .main-wrapper {
     width: 100%;
     display: flex;
     padding: 0px;
     background-color: #AAAAAA;
-    height:96vh;
+    height: 96vh;
 }
 
-
-/*Sidebar styles*/
-
+/*Sidebar style*/
 .sidebar {
     width: 16%;
     padding: 0px;
     background-color: #555555;
     margin-left: 0px;
-    height:96vh
+    height: 96vh
+
 }
 
 .sidebar a {
@@ -79,27 +77,24 @@ body {
     color: #01A7F0;
 }
 
-
 /*Main bar style*/
-
 .main {
     width: 88%;
     padding: 0px;
     margin-right: 0px;
     background-color: #AAAAAA;
-    height:96vh;
+    height: 96vh;
     font-size: 1.3em;
 }
 
-
-/*Button part styles*/
-
+/*Button part style*/
 .create {
     display: block;
     padding: 5px;
     transition: all 0.5s ease;
     height: 7%;
 }
+
 
 .button {
     background-color: #555555;
@@ -137,10 +132,10 @@ body {
     width: 91%;
     padding: 0px;
     background-color: #555555;
-    margin: 50px;
+    margin: 20px;
     height: 65vh;
-    margin-top: 60px;
-    margin-left: 35px;
+    margin-top: 43px;
+    margin-left: 36px;
     overflow: scroll;
 }
 
@@ -150,7 +145,6 @@ body {
     padding: 10px;
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
 }
 
 .list-items p:hover {
@@ -168,9 +162,7 @@ body {
     font-size: 1.3em;
 }
 
-
 /*Pop up part style*/
-
 .show-btn {
     font-size: 20px;
     font-weight: 500;
@@ -186,7 +178,7 @@ body {
 .show-btn {
     position: absolute;
     top: 10%;
-    left: 46%;
+    left: 50%;
     transform: translate(-50%, -50%)
 }
 
@@ -207,7 +199,7 @@ input[type="checkbox"] {
 
 .popup-container {
     display: none;
-    width: 480px;
+    width: 350px;
     padding: 20px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.25);
@@ -220,7 +212,8 @@ input[type="checkbox"] {
     top: 60%;
     left: 50%;
     background-color: #F2F2F2;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+
 }
 
 .popup-container .close-btn {
@@ -242,10 +235,12 @@ h1 {
 
 }
 
+
 form {
     margin: 0px;
     margin-left: 0px;
     margin-right: 4px;
+
 }
 
 .popup-wrapper {
@@ -254,7 +249,6 @@ form {
     padding: 10px;
     margin-top: 30px;
 }
-
 
 .half {
     width: 50%;
@@ -266,32 +260,17 @@ form {
 .button-save {
     color: red;
     float: right;
-    margin-top: 150px;
-    width: 64px;
-    height: 24px;
+    margin-top: 184px;
 }
 
 .button-generate {
     color: green;
-    margin-top: 8px;
+    margin-top: 18px;
     text-align: center;
-    width: 172px;
-    height: 24px;
+    width: 165px;
 }
 
 .popup-label-title {
     font-size: 0.8em;
     height: 1.2em;
-}
-
-
-.error{
-    font-size: 0.7em;
-    color: red;
-}
-
-
-.form_input{
-    margin-top: 4px;
-    margin-bottom: 4px;
 }

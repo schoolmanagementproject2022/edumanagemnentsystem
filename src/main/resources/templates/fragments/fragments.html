@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="container">
+    <div class="container">
+        <div class="topnav-wrapper">
+            <div class="topnav-left-side">
+                <div class="nav-link-wrapper">
+                    <a href="#homePageSuperAdmin.html">Admin</a>
+                </div>
+            </div>
+            <div class="topnav-right-side">
+                <div class="nav-link-wrapper">
+                    <a>Name Surname</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="menu">
+
+    <div>
+        <a href="#admins">Admins</a>
+        <a href="/teachers">Teachers</a>
+        <a href="/students">Students</a>
+        <a href="/parents">Parents</a>
+        <a href="/academicClasses">Academic classes</a>
+        <a href="#academicYears">Academic years</a>
+        <a href="#subjects">Subjects</a>
+        <a href="#vacations">Vacations</a>
+        <a href="#settings">Settings</a>
+    </div>
+
+</th:block>
+
+<th:block th:fragment="header">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <script src="/static/js/passwordGenerator.js"></script>
+    <script src="/static/js/popupControl.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+</th:block>
+
+
+</html>

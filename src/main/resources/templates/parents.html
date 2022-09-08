@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="fragments/fragments :: header"></div>
+    <title>Parent page</title>
+</head>
+
+<body>
+
+<div th:insert="fragments/fragments :: container"></div>
+
+<div class="main-wrapper">
+
+    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="main">
+        <div class="create">
+            <input type="checkbox" id="show">
+
+            <button class="show-btn" style="top: 7%" onclick="PopUpShow()">Create</button>
+
+            <div id="popup-container" class="popup-container">
+                <label for="show" class="close-btn" onclick="PopUpHide()" title="close">×</label>
+                <h1>New Parent</h1>
+                <form id="form" th:action="@{/parents/save}" method="POST" th:object="${parent}">
+
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null">
+                        $("#popup-container").show();
+                    </script>
+
+                    <div class="popup-wrapper">
+                        <div class="half">
+
+                            <div id="error"></div>
+                            <label class="popup-label-title" for="name">Parent Name*</label>
+                            <input class="form_input" type="text" th:maxlength="50" th:name="name" id="name" >
+                            <div class="error" th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}"></div>
+
+                            <label class="popup-label-title" for="surname">Parent Surname*</label>
+                            <input class="form_input" type="text" th:maxlength="50" th:name="surname" id="surname">
+                            <div class="error" th:if="${#fields.hasErrors('surname')}"
+                                 th:errors="*{surname}"></div>
+
+                            <label class="popup-label-title" for="email">Parent Email*</label>
+                            <input class="form_input" type="email" th:maxlength="50" th:name="email" id="email">
+                            <div class="error" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}"></div>
+                            <div th:if="${duplicated} != null" class="error">
+                                <p class="error" th:text="${duplicated}"> </p>
+                            </div>
+
+                        </div>
+
+                        <div class="half">
+                            <label class="popup-label-title">Parent password*</label>
+                            <input class="form_input" type="password" placeholder="Create Password" id="password" th:name="password">
+                            <div class="error" th:if="${#fields.hasErrors('password')}"
+                                 th:errors="*{password}"></div>
+                            <button class="button-generate" id="btn" type="button" onclick="getPassword()">Generate password</button>
+                            <button class="button-save" id="submit" type="submit">Save</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="list">
+                <div class="list-items" th:each="item: ${parents}">
+                    <p class="item" th:text="${item.name}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
