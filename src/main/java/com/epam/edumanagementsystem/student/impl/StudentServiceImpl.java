@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
         if (studentDto.getSurname() != null) {
             student.setSurname(studentDto.getSurname());
         }
-        if (studentDto.getName() != null) {
+        if (studentDto.getEmail() != null) {
             student.setEmail(studentDto.getEmail());
         }
         if (studentDto.getGeneratePassword() != null) {
