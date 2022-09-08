@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/academicClass")
+@RequestMapping("/classes")
 public class AcademicClassController {
 
     private final AcademicClassService academicClassService;

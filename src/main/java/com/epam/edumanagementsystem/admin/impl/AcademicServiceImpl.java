@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AcademicServiceImpl implements AcademicClassService {
@@ -27,8 +28,11 @@ public class AcademicServiceImpl implements AcademicClassService {
 
     @Override
     public AcademicClassDto getById(Long id) {
-        AcademicClass classById = academicClassRepository.getById(id);
-        return AcademicClassMapper.toDto(classById);
+        Optional<AcademicClass> classById = academicClassRepository.findById(id);
+        if (classById.isPresent()) {
+            return AcademicClassMapper.toDto(classById.get());
+        }
+        return new AcademicClassDto();
     }
 
     @Override
