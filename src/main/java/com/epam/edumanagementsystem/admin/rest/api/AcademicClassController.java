@@ -49,7 +49,7 @@ public class AcademicClassController {
             return "academicClassSection";
         } else {
             academicClassService.create(academicClass);
-            return "redirect:/academicClass";
+            return "redirect:/classes";
         }
     }
 }

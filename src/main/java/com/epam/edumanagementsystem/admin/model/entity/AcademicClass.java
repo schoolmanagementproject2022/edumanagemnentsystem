@@ -11,7 +11,7 @@ public class AcademicClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 2, max = 2, message = "Size is not valid!")
+    @Size(min = 2, max = 3, message = "Size is not valid!")
     private String classNumber;
 
     public AcademicClass(Long id, String classNumber) {

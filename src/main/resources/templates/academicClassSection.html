@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/academicClassStyle.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/static/js/popup.js"></script>
+    <script src="/static/js/popupControl.js"></script>
     <title>Admin Page</title>
 </head>
 
@@ -20,7 +20,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Academic Class</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{/academicClass}" th:object="${academicClass}">
+        <form id="form" class="form" th:method="POST" th:action="@{/classes}" th:object="${academicClass}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
                 $("#popup-container").show();
@@ -29,8 +29,8 @@
             <div class="half">
                 <div id="error"></div>
                 <label class="popup-label-title" for="classNumber">Class Number</label>
-                <input class="form_input" pattern="^[0-12]{1,2}[A-J]{1,2}$" oninvalid="this.setCustomValidity('Please Enter Your Class Name Correctly')"
-                       oninput="this.setCustomValidity('')" type="text" th:maxlength="2" th:name="classNumber" id="classNumber">
+                <input class="form_input" pattern="^[0-9]{1,2}[A-D]{1}$" oninvalid="this.setCustomValidity('Please Enter Your Class Name Correctly')"
+                       oninput="this.setCustomValidity('')" type="text" th:maxlength="3" th:name="classNumber" id="classNumber">
                 <div class="error" th:if="${#fields.hasErrors('classNumber')}"
                      th:errors="*{classNumber}"></div>
                 <div th:if="${duplicated}!= null" class="error">
