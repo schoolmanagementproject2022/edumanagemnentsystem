@@ -35,6 +35,7 @@ public class AdminServiceImpl implements AdminService {
         AdminDTO adminDTO = new AdminDTO();
         adminDTO.setUsername(admin.getUsername());
         adminDTO.setSurname(admin.getSurname());
+        adminDTO.setEmail(admin.getEmail());
         return adminDTO;
     }
 

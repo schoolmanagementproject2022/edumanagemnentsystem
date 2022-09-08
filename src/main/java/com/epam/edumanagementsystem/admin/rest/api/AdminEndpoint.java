@@ -23,20 +23,23 @@ public class AdminEndpoint {
     public AdminEndpoint(AdminService adminService) {
         this.adminService = adminService;
     }
-    @GetMapping("/add")
-    public String addAdmin(ModelMap modelMap) {
-        return "admin";
-    }
-    @PostMapping("/add")
+
+    @PostMapping()
     public String addAdmin(@ModelAttribute("admin") @Valid Admin admin, BindingResult result, ModelMap modelMap) {
         List<AdminDTO> all = adminService.findAllAdmins();
         modelMap.addAttribute("admins", all);
         if (result.hasErrors()) {
-            return "redirect:/admin/add";
+            for (AdminDTO admins : all) {
+                if (admin.getEmail().equals(admins.getEmail()))
+                    modelMap.addAttribute("duplicated", "A user with the specified email already exists");
+            }
+            return "admin";
+        } else {
+            adminService.addAdmin(admin);
+            return "redirect:/admin";
         }
-        adminService.addAdmin(admin);
-        return "redirect:/admin";
     }
+
     @GetMapping()
     public String getAll(ModelMap modelMap) {
         modelMap.addAttribute("admin", new Admin());

@@ -1,10 +1,11 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name="admin")
@@ -19,7 +20,8 @@ public class Admin {
     private String surname;
     @Size(max = 12,min = 6)
     private String password;
-    @Email
+    @Email(message = "You entered invalid email")
+    @NotEmpty(message = "email is required")
     private String email;
 
     public Admin() {
@@ -71,5 +73,18 @@ public class Admin {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Admin admin = (Admin) o;
+        return Objects.equals(id, admin.id) && Objects.equals(username, admin.username) && Objects.equals(surname, admin.surname) && Objects.equals(password, admin.password) && Objects.equals(email, admin.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, surname, password, email);
     }
 }
