@@ -17,10 +17,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminEndpoint {
+public class AdminController {
     private final AdminService adminService;
 
-    public AdminEndpoint(AdminService adminService) {
+    public AdminController(AdminService adminService) {
         this.adminService = adminService;
     }
 

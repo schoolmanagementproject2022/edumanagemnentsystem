@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.parent.rest.api;
 
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ public class ParentController {
 
     private final ParentService parentService;
 
+    @Autowired
     public ParentController(ParentService parentService) {
         this.parentService = parentService;
     }
@@ -26,7 +28,7 @@ public class ParentController {
         return "parents";
     }
 
-    @PostMapping("/save")
+    @PostMapping()
     public String saveParent(@Valid @ModelAttribute(value = "parent") Parent parent, BindingResult bindingResult,
                              ModelMap modelMap) {
         modelMap.addAttribute("parents", parentService.parents());

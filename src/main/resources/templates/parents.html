@@ -23,7 +23,7 @@
             <div id="popup-container" class="popup-container">
                 <label for="show" class="close-btn" onclick="PopUpHide()" title="close">×</label>
                 <h1>New Parent</h1>
-                <form id="form" th:action="@{/parents/save}" method="POST" th:object="${parent}">
+                <form id="form" th:action="@{/parents}" method="POST" th:object="${parent}">
 
                     <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null">
                         $("#popup-container").show();
