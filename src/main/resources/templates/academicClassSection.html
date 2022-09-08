@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="/static/js/popup.js"></script>
+    <title>Admin Page</title>
+</head>
+
+<body>
+
+<div class="create">
+    <button class="show-btn" onclick="PopUpShow()">Create</button>
+
+    <div class="popup-container" id="popup-container">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>New Academic Class</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{/academicClass}" th:object="${academicClass}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                $("#popup-container").show();
+            </script>
+
+            <div class="half">
+                <div id="error"></div>
+                <label class="popup-label-title" for="classNumber">Class Number</label>
+                <input class="form_input" pattern="^[0-12]{1,2}[A-J]{1,2}$" oninvalid="this.setCustomValidity('Please Enter Your Class Name Correctly')"
+                       oninput="this.setCustomValidity('')" type="text" th:maxlength="2" th:name="classNumber" id="classNumber">
+                <div class="error" th:if="${#fields.hasErrors('classNumber')}"
+                     th:errors="*{classNumber}"></div>
+                <div th:if="${duplicated}!= null" class="error">
+                    <p th:text="${duplicated}"></p>
+                </div>
+                <button type="submit" class="button-save" id="submit">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="container" style="pointer-events: none">
+    <div class="topnav-wrapper">
+        <div class="topnav-left-side">
+            <div class="nav-link-wrapper">
+                <a href="#homePageSuperAdmin.html">Admin</a>
+            </div>
+        </div>
+        <div class="topnav-right-side">
+            <div class="nav-link-wrapper">
+                <a>Name Surname</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="sidebar">
+        <a th:href="@{/teacher}">Teachers</a>
+        <a href="#students">Students</a>
+        <a href="#parents">Parents</a>
+        <a th:href="@{/academicClasses}">Academic classes</a>
+        <a href="#academicYears">Academic years</a>
+        <a href="#subjects">Subjects</a>
+        <a href="#vacations">Vacations</a>
+        <a href="#settings">Settings</a>
+    </div>
+
+    <div class="list">
+        <div class="list-items" th:each="academicClass : ${academicClasses}">
+            <p class="item" th:text="${academicClass.getClassNumber()}"> Academic Classes </p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

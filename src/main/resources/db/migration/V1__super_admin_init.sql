@@ -1,4 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS edu_management;
 CREATE TABLE super_admin (
        id       SERIAL PRIMARY KEY,
        email    VARCHAR ( 50 ) UNIQUE NOT NULL,

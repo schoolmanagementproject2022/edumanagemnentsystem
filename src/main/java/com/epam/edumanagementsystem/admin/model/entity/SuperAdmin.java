@@ -3,7 +3,7 @@ package com.epam.edumanagementsystem.admin.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "super_admin")
+@Table(name = "super_admin", schema = "public")
 public class SuperAdmin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
