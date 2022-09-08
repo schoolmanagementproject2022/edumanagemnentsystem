@@ -18,11 +18,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/teachers")
-public class TeacherSectionController {
+public class TeacherController {
     private final TeacherService teacherService;
 
     @Autowired
-    public TeacherSectionController(TeacherService teacherService) {
+    public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 
