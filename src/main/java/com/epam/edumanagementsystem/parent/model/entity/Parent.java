@@ -76,6 +76,10 @@ public class Parent {
         this.password = password;
     }
 
+    public String getNameAndSurname(){
+        return this.name + " " + this.surname;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
