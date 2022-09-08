@@ -50,7 +50,7 @@ body {
     display: flex;
     padding: 0px;
     background-color: #AAAAAA;
-    height: 96vh;
+    height:96vh;
 }
 
 
@@ -61,7 +61,7 @@ body {
     padding: 0px;
     background-color: #555555;
     margin-left: 0px;
-    height: 96vh
+    height:96vh
 }
 
 .sidebar a {
@@ -87,7 +87,7 @@ body {
     padding: 0px;
     margin-right: 0px;
     background-color: #AAAAAA;
-    height: 96vh;
+    height:96vh;
     font-size: 1.3em;
 }
 
@@ -220,8 +220,7 @@ input[type="checkbox"] {
     top: 60%;
     left: 50%;
     background-color: #F2F2F2;
-    transform: translate(-50%, -50%)
-
+    transform: translate(-50%, -50%);
 }
 
 .popup-container .close-btn {
@@ -255,6 +254,7 @@ form {
     padding: 10px;
     margin-top: 30px;
 }
+
 
 .half {
     width: 50%;
