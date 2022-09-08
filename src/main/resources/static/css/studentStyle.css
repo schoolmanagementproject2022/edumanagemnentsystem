@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -9,10 +10,9 @@ body {
     color: #000000;
     background: #ffffff;
     font-family: "Montserrat", sans-serif;
+
 }
 
-
-/*Top part styles*/
 
 .container {
     width: 100%;
@@ -43,8 +43,8 @@ body {
     color: #01A7F0;
 }
 
-/*Main part styles*/
 
+/*Main part styles*/
 .main-wrapper {
     width: 100%;
     display: flex;
@@ -53,15 +53,14 @@ body {
     height: 96vh;
 }
 
-
 /*Sidebar styles*/
-
 .sidebar {
     width: 16%;
     padding: 0px;
     background-color: #555555;
     margin-left: 0px;
     height: 96vh
+
 }
 
 .sidebar a {
@@ -79,9 +78,7 @@ body {
     color: #01A7F0;
 }
 
-
 /*Main bar style*/
-
 .main {
     width: 88%;
     padding: 0px;
@@ -91,15 +88,13 @@ body {
     font-size: 1.3em;
 }
 
-
 /*Button part styles*/
-
 .create {
     display: block;
-    padding: 5px;
     transition: all 0.5s ease;
     height: 7%;
 }
+
 
 .button {
     background-color: #555555;
@@ -150,7 +145,6 @@ body {
     padding: 10px;
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
 }
 
 .list-items p:hover {
@@ -168,9 +162,7 @@ body {
     font-size: 1.3em;
 }
 
-
 /*Pop up part style*/
-
 .show-btn {
     font-size: 20px;
     font-weight: 500;
@@ -185,14 +177,17 @@ body {
 
 .show-btn {
     position: absolute;
-    top: 10%;
-    left: 46%;
+    top: 6%;
+    left: 60%;
+    border-radius: 6px;
+    border-color: #555555;
     transform: translate(-50%, -50%)
 }
 
 .show-btn:hover {
     background-color: #333333;
     color: #01A7F0;
+
 }
 
 input[type="checkbox"] {
@@ -208,6 +203,7 @@ input[type="checkbox"] {
 .popup-container {
     display: none;
     width: 480px;
+    height: 480px;
     padding: 20px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.25);
@@ -221,7 +217,6 @@ input[type="checkbox"] {
     left: 50%;
     background-color: #F2F2F2;
     transform: translate(-50%, -50%)
-
 }
 
 .popup-container .close-btn {
@@ -231,6 +226,7 @@ input[type="checkbox"] {
     font-size: 25px;
     cursor: pointer;
 }
+
 
 .close-btn:hover {
     color: red;
@@ -243,10 +239,12 @@ h1 {
 
 }
 
+
 form {
     margin: 0px;
     margin-left: 0px;
     margin-right: 4px;
+
 }
 
 .popup-wrapper {
@@ -264,34 +262,59 @@ form {
 }
 
 .button-save {
+    position: absolute;
     color: red;
     float: right;
-    margin-top: 150px;
+    margin-top: 70%;
+    margin-left: -14%;
     width: 64px;
+    display: block;
     height: 24px;
+    border-radius: 6px;
+    border-color: red;
+    cursor: pointer;
 }
 
 .button-generate {
     color: green;
     margin-top: 8px;
+    margin-bottom: 8px;
     text-align: center;
     width: 172px;
     height: 24px;
+    border-radius: 6px;
+    border-color: green;
+    cursor: pointer;
 }
+
+
+
 
 .popup-label-title {
     font-size: 0.8em;
     height: 1.2em;
+    margin-top: 20px;
 }
 
-
-.error{
+.error {
     font-size: 0.7em;
     color: red;
 }
 
-
-.form_input{
+.form_input {
     margin-top: 4px;
     margin-bottom: 4px;
+    display: block;
+}
+
+#date:invalid + .check-validation-date::after {
+    content: '✖';
+    color: red;
+    display: block;
+}
+
+#date:valid + .check-validation-date::after {
+    content: '✓';
+    color: green;
+    display: block;
 }
