@@ -1,6 +1,6 @@
-package com.epam.edumanagementsystem.config;
+package com.epam.edumanagementsystem.security.config;
 
-import com.epam.edumanagementsystem.security.SecurityService;
+import com.epam.edumanagementsystem.security.currentUser.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

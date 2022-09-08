@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.entity;
+package com.epam.edumanagementsystem.security.entity;
 
 import javax.persistence.*;
 import java.util.Objects;

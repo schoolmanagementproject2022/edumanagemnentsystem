@@ -1,7 +1,7 @@
-package com.epam.edumanagementsystem.controller;
+package com.epam.edumanagementsystem.security.controller;
 
-import com.epam.edumanagementsystem.entity.User;
-import com.epam.edumanagementsystem.service.UserService;
+import com.epam.edumanagementsystem.security.entity.User;
+import com.epam.edumanagementsystem.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String userLogin(@ModelAttribute User user, Model model) {
-      return userService.login(user,model);
+        return userService.login(user, model);
 
     }
 }

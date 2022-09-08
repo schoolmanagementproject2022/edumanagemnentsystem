@@ -1,6 +1,6 @@
-package com.epam.edumanagementsystem.repository;
+package com.epam.edumanagementsystem.security.repository;
 
-import com.epam.edumanagementsystem.entity.User;
+import com.epam.edumanagementsystem.security.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {

@@ -1,6 +1,6 @@
-package com.epam.edumanagementsystem.service;
+package com.epam.edumanagementsystem.security.service;
 
-import com.epam.edumanagementsystem.entity.User;
+import com.epam.edumanagementsystem.security.entity.User;
 import org.springframework.ui.Model;
 
 public interface UserService {

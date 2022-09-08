@@ -1,7 +1,7 @@
-package com.epam.edumanagementsystem.security;
+package com.epam.edumanagementsystem.security.currentUser;
 
-import com.epam.edumanagementsystem.entity.User;
-import com.epam.edumanagementsystem.repository.UserRepository;
+import com.epam.edumanagementsystem.security.entity.User;
+import com.epam.edumanagementsystem.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
