@@ -1,8 +1,9 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -13,14 +14,14 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Please, fill the required fields")
-    @Size( max = 50, message = "The fields size is not valid")
+    @Size(max = 50, message = "The fields size is not valid")
     private String name;
     @NotBlank(message = "Please, fill the required fields")
-    @Size( max = 50, message = "The fields size is not valid")
+    @Size(max = 50, message = "The fields size is not valid")
     private String surname;
     @Email(message = "You entered invalid email")
     @NotBlank(message = "Please, fill the required fields")
-    @Size( max = 50, message = "The fields size is not valid")
+    @Size(max = 50, message = "The fields size is not valid")
     private String email;
     @NotBlank(message = "Please, fill the required fields")
     @Size(min = 9, max = 50, message = "The fields size is not valid")

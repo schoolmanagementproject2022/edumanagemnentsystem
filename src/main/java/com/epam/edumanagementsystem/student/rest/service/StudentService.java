@@ -5,7 +5,7 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 
 import java.util.List;
 
-public interface StudentServices {
+public interface StudentService {
     Student create(Student student);
 
     String delete(StudentDto studentDto);

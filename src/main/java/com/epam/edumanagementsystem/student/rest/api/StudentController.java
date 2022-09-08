@@ -10,7 +10,7 @@ import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
-import com.epam.edumanagementsystem.student.rest.service.StudentServices;
+import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,30 +27,18 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-    private final StudentServices studentService;
+    private final StudentService studentService;
     private final ParentService parentService;
     private final AcademicClassService academicClassService;
 
 
     @Autowired
-    public StudentController(StudentServices studentService,
+    public StudentController(StudentService studentService,
                              ParentService parentService,
                              AcademicClassService academicClassService) {
         this.studentService = studentService;
         this.parentService = parentService;
         this.academicClassService = academicClassService;
-    }
-
-    public List<StudentDto> findAllStudents() {
-        return studentService.findAll();
-    }
-
-    public List<ParentDto> findAllParents() {
-        return ParentMapper.toParentDtoList(parentService.parents());
-    }
-
-    public List<AcademicClassDto> findAllClasses(){
-        return academicClassService.findAll();
     }
 
 
@@ -87,4 +75,17 @@ public class StudentController {
             return "redirect:/students";
         }
     }
+
+    public List<StudentDto> findAllStudents() {
+        return studentService.findAll();
+    }
+
+    public List<ParentDto> findAllParents() {
+        return ParentMapper.toParentDtoList(parentService.parents());
+    }
+
+    public List<AcademicClassDto> findAllClasses(){
+        return academicClassService.findAll();
+    }
+
 }

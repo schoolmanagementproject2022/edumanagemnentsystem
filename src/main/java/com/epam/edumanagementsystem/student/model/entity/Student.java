@@ -2,10 +2,10 @@ package com.epam.edumanagementsystem.student.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;

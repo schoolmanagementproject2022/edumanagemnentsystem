@@ -4,15 +4,14 @@ import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
-import com.epam.edumanagementsystem.student.rest.service.StudentServices;
+import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class StudentServiceImpl implements StudentServices {
+public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
@@ -32,20 +31,17 @@ public class StudentServiceImpl implements StudentServices {
     }
 
     @Override
-    @Transactional
     public Student create(Student student) {
         return studentRepository.save(student);
     }
 
     @Override
-    @Transactional
     public String delete(StudentDto studentDto) {
         studentRepository.deleteById(studentDto.getId());
         return studentDto.getNameAndSurname() + " is Deleted";
     }
 
     @Override
-    @Transactional
     public StudentDto updateField(StudentDto studentDto) {
         Student student = studentRepository.findById(studentDto.getId()).orElseThrow(RuntimeException::new);
         if (studentDto.getName() != null) {
@@ -75,11 +71,13 @@ public class StudentServiceImpl implements StudentServices {
         if (studentDto.getGender() != null) {
             student.setGender(studentDto.getGender());
         }
+        if (studentDto.getAcademicClass() != null) {
+            student.setAcademicClass(studentDto.getAcademicClass());
+        }
         return StudentMapper.toStudentDto(studentRepository.save(student));
     }
 
     @Override
-    @Transactional
     public StudentDto update(StudentDto studentDto) {
         Student student = studentRepository.findById(studentDto.getId()).orElseThrow(RuntimeException::new);
         student.setName(studentDto.getName());
@@ -91,6 +89,7 @@ public class StudentServiceImpl implements StudentServices {
         student.setBloodGroup(studentDto.getBloodGroup());
         student.setParent(studentDto.getParent());
         student.setGender(studentDto.getGender());
+        student.setAcademicClass(studentDto.getAcademicClass());
         return StudentMapper.toStudentDto(studentRepository.save(student));
     }
 
