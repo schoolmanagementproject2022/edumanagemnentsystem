@@ -1,6 +1,6 @@
 package com.epam.edumanagementsystem.admin.impl;
 
-import com.epam.edumanagementsystem.admin.model.dto.AdminDTO;
+import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -24,19 +23,18 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminDTO> findAllAdmins() {
+    public List<AdminDto> findAllAdmins() {
         return adminRepository.findAll()
                 .stream()
                 .map(this::adminDTOConvert)
                 .collect(Collectors.toList());
     }
 
-    public AdminDTO adminDTOConvert(Admin admin) {
-        AdminDTO adminDTO = new AdminDTO();
+    public AdminDto adminDTOConvert(Admin admin) {
+        AdminDto adminDTO = new AdminDto();
         adminDTO.setUsername(admin.getUsername());
         adminDTO.setSurname(admin.getSurname());
         adminDTO.setEmail(admin.getEmail());
         return adminDTO;
     }
-
 }

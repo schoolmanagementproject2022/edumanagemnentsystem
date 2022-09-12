@@ -1,27 +1,29 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name="admin")
+@Table(name = "admin")
 
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "name is required")
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String username;
-    @NotEmpty(message = "name is required")
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
-    @Size(max = 12,min = 6)
+    @NotBlank(message = "Please, fill the required fields")
     private String password;
-    @Email(message = "You entered invalid email")
-    @NotEmpty(message = "email is required")
+    @Column(unique = true)
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
 
     public Admin() {
@@ -33,6 +35,10 @@ public class Admin {
         this.surname = surname;
         this.password = password;
         this.email = email;
+    }
+
+    public String getNameSurname() {
+        return username + " " + surname;
     }
 
     public Long getId() {

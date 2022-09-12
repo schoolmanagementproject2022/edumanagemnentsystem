@@ -20,15 +20,19 @@ public class Student {
     private Long id;
     @Column(name = "name")
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
     @Column(name = "surname")
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
     @Column(name = "email", unique = true)
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
     @Column(name = "address")
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String address;
     @Column(name = "date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -39,7 +43,7 @@ public class Student {
     @NotNull(message = "Please, fill the required fields")
     private Gender gender;
     @Column(name = "generate_password")
-    @Size(min = 9, max = 50, message = "Please, fill the required fields")
+    @NotBlank(message = "Please, fill the required fields")
     private String generatePassword;
     @Column(name = "blood_group")
     @Enumerated(EnumType.STRING)
@@ -178,5 +182,22 @@ public class Student {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, email, address, date, gender, generatePassword, bloodGroup, parent, academicClass);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", date=" + date +
+                ", gender=" + gender +
+                ", generatePassword='" + generatePassword + '\'' +
+                ", bloodGroup=" + bloodGroup +
+                ", parent=" + parent +
+                ", academicClass=" + academicClass +
+                '}';
     }
 }

@@ -140,6 +140,7 @@ public class StudentDto {
         this.academicClass = academicClass;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -151,5 +152,22 @@ public class StudentDto {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, email, address, date, bloodGroup, gender, generatePassword, parent, academicClass);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", date=" + date +
+                ", bloodGroup=" + bloodGroup +
+                ", gender=" + gender +
+                ", generatePassword='" + generatePassword + '\'' +
+                ", parent=" + parent +
+                ", academicClass=" + academicClass +
+                '}';
     }
 }

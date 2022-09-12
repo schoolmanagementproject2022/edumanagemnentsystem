@@ -32,7 +32,7 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public List<Parent> parents() {
+    public List<Parent> findAll() {
         return parentRepository.findAll();
     }
 

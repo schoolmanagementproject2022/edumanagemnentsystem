@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/studentStyle.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
-    <script src="/static/js/popupControlStudent.js"></script>
-    <title>Admin Page</title>
+    <script src="/static/js/popupControl.js"></script>
+    <title>Student Page</title>
 </head>
 
 <body>
@@ -27,83 +29,79 @@
 </div>
 
 <div class="create">
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()">Create</button>
+    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
         <form id="form" class="form" th:method="POST" th:action="@{/students}" th:object="${student}">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
-                $("#popup-container").show();
+                PopUpShow();
             </script>
+
             <div class="popup-wrapper">
                 <div class="half">
                     <div id="error"></div>
-                    <label class="popup-label-title">Name: <span style="color:red">*</span></label>
+                    <label class="popup-label-title">Student name<span style="color:#A30014">*</span></label>
                     <input class="form_input"
                            th:type="text"
-                           th:maxlength="50"
                            th:name="name"
                            th:id="name"
-                           pattern="^[A-Z][a-z]{1,49}$"
-                           oninvalid="this.setCustomValidity('Please Enter Your Name Correctly')"
-                           oninput="this.setCustomValidity('')"/>
+                           th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
 
-                    <label class="popup-label-title">Surname <span style="color:red">*</span></label>
+                    <label class="popup-label-title">Student surname <span style="color:#A30014">*</span></label>
                     <input class="form_input"
                            th:type="text"
-                           th:maxlength="50"
                            th:name="surname"
                            th:id="surname"
-                           pattern="^[A-Z][a-z]{1,49}$"
-                           oninvalid="this.setCustomValidity('Please Enter Your Surname Correctly')"
-                           oninput="this.setCustomValidity('')"/>
+                           th:value="${#object.surname}"/>
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title">Email <span style="color:red">*</span></label>
+                    <label class="popup-label-title">Student email <span style="color:#A30014">*</span></label>
                     <input class="form_input"
-                           th:type="email"
-                           th:maxlength="50"
+                           th:type="text"
                            th:name="email"
                            th:id="email"
-                           pattern="^[A-Za-z_-]{3,20}(@)[a-z]{2,10}(.)[a-z]{1,5}$"
-                           oninvalid="this.setCustomValidity('Please Enter Your Email Correctly')"
-                           oninput="this.setCustomValidity('')"/>
+                           th:value="${#object.email}"/>
                     <div class="error" th:if="${#fields.hasErrors('email')}"
                          th:errors="*{email}"></div>
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
+                    <div th:if="${invalid}!= null" class="error">
+                        <p th:text="${invalid}"></p>
+                    </div>
 
-                    <label class="popup-label-title">Address <span style="color:red">*</span></label>
+                    <label class="popup-label-title">Student address <span style="color:#A30014">*</span></label>
                     <input class="form_input"
                            th:type="text"
                            th:name="address"
                            th:id="address"
-                           th:maxlength="50"
-                           placeholder="Country/Region/City/Etc"/>
+                           placeholder="Country/Region/City/Etc"
+                           th:value="${#object.address}"/>
                     <div class="error" th:if="${#fields.hasErrors('address')}"
                          th:errors="*{address}"></div>
 
-                    <label class="popup-label-title">Birth Date <span style="color:red">*</span></label>
+                    <label class="popup-label-title">Birth Date <span style="color:#A30014">* </span>
+                        <span class="check-validation-date"></span>
+                    </label>
                     <input class="form_input"
                            th:type="date"
                            th:name="date"
+                           th:value="*{date}"
+                           th:field="*{date}"
                            th:id="date"
                            th:min="1900-01-01"
-                           th:max="2019-01-01"
-                           oninvalid="this.setCustomValidity('Please Enter Your Date Correctly')"
-                           oninput="this.setCustomValidity('')"
-                           required/>
-                    <span class="check-validation-date"></span>
+                           th:max="2019-01-01"/>
                     <div class="error" th:if="${#fields.hasErrors('date')}"
                          th:errors="*{date}"></div>
 
-                    <label class="popup-label-title">Linked Class <span style="color:red">*</span></label>
-                    <select class="form_input" th:name="academicClass" th:id="academicClass">
-                        <option value="">Class</option>
+                    <label class="popup-label-title">Linked Class <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicClass" th:id="academicClass"
+                            th:field="*{academicClass}">
+                        <option th:value="*{academicClass}">Class</option>
                         <option th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
@@ -112,45 +110,48 @@
 
                 </div>
 
-                <div class="half">
-                    <label class="popup-label-title">Password <span style="color:red">*</span></label>
+                <div class="half2">
+                    <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
                     <input type="text" class="form_input" placeholder="Create Password" id="password"
-                           th:name="generatePassword" required readonly>
+                           th:name="generatePassword" readonly
+                           th:value="${#object.generatePassword}">
                     <div class="error" th:if="${#fields.hasErrors('generatePassword')}"
                          th:errors="*{generatePassword}"></div>
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
-                        Generator Password
+                        <b>Generate password</b>
                     </button>
+                    <div class="halfSection">
+                        <label class="popup-label-title">Student blood group <span
+                                style="color:#A30014">*</span></label>
+                        <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
+                            <option th:value="*{bloodGroup}">Blood Group</option>
+                            <option th:each="bloodGroup : ${bloodGroups}" th:value="${bloodGroup}"
+                                    th:text="${bloodGroup.bloodGroup}"></option>
+                        </select>
+                        <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
+                             th:errors="*{bloodGroup}"></div>
 
-                    <label class="popup-label-title">Student blood group <span style="color:red">*</span></label>
-                    <select class="form_input" th:name="bloodGroup" th:id="bloodGroup">
-                        <option value="">Blood Group</option>
-                        <option th:each="bloodGroup : ${bloodGroups}" th:value="${bloodGroup}"
-                                th:text="${bloodGroup.bloodGroup}"></option>
-                    </select>
-                    <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
-                         th:errors="*{bloodGroup}"></div>
+                        <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
+                        <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
+                            <option th:value="*{gender}">Gender</option>
+                            <option th:each="gender : ${genders}" th:value="${gender}"
+                                    th:text="${gender.gender}"></option>
+                        </select>
+                        <div class="error" th:if="${#fields.hasErrors('gender')}"
+                             th:errors="*{gender}"></div>
 
-                    <label class="popup-label-title">Gender <span style="color:red">*</span></label>
-                    <select class="form_input" th:name="gender" th:id="gender">
-                        <option value="">Gender</option>
-                        <option th:each="gender : ${genders}" th:value="${gender}"
-                                th:text="${gender.gender}"></option>
-                    </select>
-                    <div class="error" th:if="${#fields.hasErrors('gender')}"
-                         th:errors="*{gender}"></div>
-
-                    <label class="popup-label-title">Linked Parent</label>
-                    <select class="form_input" th:name="parent" th:id="parent">
-                        <option value="">Parent</option>
-                        <option th:each="parent : ${parents}" th:value="${parent.id}"
-                                th:text="${parent.getNameAndSurname}"></option>
-                    </select>
-                    <div class="error" th:if="${#fields.hasErrors('parent')}"
-                         th:errors="*{parent}"></div>
+                        <label class="popup-label-title">Linked Parent</label>
+                        <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
+                            <option th:value="*{parent}">Parent</option>
+                            <option th:each="parent : ${parents}" th:value="${parent.id}"
+                                    th:text="${parent.getNameAndSurname}"></option>
+                        </select>
+                        <div class="error" th:if="${#fields.hasErrors('parent')}"
+                             th:errors="*{parent}"></div>
+                    </div>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit">Save</button>
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
         </form>

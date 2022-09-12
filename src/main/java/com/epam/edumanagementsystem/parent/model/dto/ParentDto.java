@@ -50,7 +50,11 @@ public class ParentDto {
         this.password = password;
     }
 
-    public String getNameAndSurname(){
+    public String getNameSurname() {
+        return name + " " + surname;
+    }
+
+    public String getNameAndSurname() {
         return this.name + " " + this.surname;
     }
 
@@ -65,5 +69,16 @@ public class ParentDto {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, email, password);
+    }
+
+    @Override
+    public String toString() {
+        return "ParentDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

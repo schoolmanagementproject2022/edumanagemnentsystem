@@ -11,7 +11,7 @@ public interface ParentService {
 
     void save(Parent parent);
 
-    List<Parent> parents();
+    List<Parent> findAll();
 
     Optional<Parent> findByEmail(String email);
 

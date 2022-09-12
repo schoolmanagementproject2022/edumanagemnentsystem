@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
+import com.epam.edumanagementsystem.util.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +50,12 @@ public class TeacherController {
         }
 
         if (result.hasErrors()) {
+            if (!result.hasFieldErrors("email")) {
+                if (!EmailValidation.validate(teacher.getEmail())) {
+                    model.addAttribute("invalid", "Email is invalid");
+                    return "teacherSection";
+                }
+            }
             return "teacherSection";
         } else {
             teacherService.create(teacher);

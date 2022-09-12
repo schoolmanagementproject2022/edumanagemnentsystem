@@ -11,6 +11,7 @@ import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.util.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,6 @@ public class StudentController {
         this.academicClassService = academicClassService;
     }
 
-
     @GetMapping
     public String openStudentSection(Model model) {
         model.addAttribute("student", new StudentDto());
@@ -54,7 +54,7 @@ public class StudentController {
 
     @PostMapping
     public String createStudentSection(@ModelAttribute("student") @Valid Student student,
-                                BindingResult result,
+                                       BindingResult result,
                                        Model model) {
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
@@ -68,6 +68,12 @@ public class StudentController {
             }
         }
         if (result.hasErrors()) {
+            if (!result.hasFieldErrors("email")) {
+                if (!EmailValidation.validate(student.getEmail())) {
+                    model.addAttribute("invalid", "Email is invalid");
+                    return "studentSection";
+                }
+            }
             return "studentSection";
         } else {
             studentService.create(student);
@@ -80,10 +86,10 @@ public class StudentController {
     }
 
     public List<ParentDto> findAllParents() {
-        return ParentMapper.toParentDtoList(parentService.parents());
+        return ParentMapper.toParentDtoList(parentService.findAll());
     }
 
-    public List<AcademicClassDto> findAllClasses(){
+    public List<AcademicClassDto> findAllClasses() {
         return academicClassService.findAll();
     }
 
