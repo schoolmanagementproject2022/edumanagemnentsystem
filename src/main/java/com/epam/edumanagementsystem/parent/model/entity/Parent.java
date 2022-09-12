@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.parent.model.entity;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -8,21 +7,23 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "parent", schema = "public")
+@Table(name = "parent")
 public class Parent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+    @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
-    @Email
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
     @NotBlank(message = "Please, fill the required fields")
-    @Size(min = 9, max = 50)
     private String password;
 
     public Parent(Long id, String name, String surname, String email, String password) {
@@ -76,7 +77,7 @@ public class Parent {
         this.password = password;
     }
 
-    public String getNameAndSurname(){
+    public String getNameAndSurname() {
         return this.name + " " + this.surname;
     }
 
@@ -91,5 +92,16 @@ public class Parent {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, email, password);
+    }
+
+    @Override
+    public String toString() {
+        return "Parent{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

@@ -30,6 +30,7 @@ public class AcademicClassMapper {
         }
         return academicClassDtos;
     }
+
     public static List<AcademicClass> academicClassessList(List<AcademicClassDto> academicClassDtos) {
         List<AcademicClass> academicClasses = new ArrayList<>();
         for (AcademicClassDto academicClassDto : academicClassDtos) {

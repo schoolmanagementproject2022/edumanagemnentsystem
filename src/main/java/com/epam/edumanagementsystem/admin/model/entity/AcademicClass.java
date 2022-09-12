@@ -5,13 +5,15 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name ="academicClass", schema = "public")
+@Table(name = "academicClass")
 public class AcademicClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 2, max = 3, message = "Size is not valid!")
+
+    @Size(max = 50, message = "Symbols can't be more than 50")
+    @Column(unique = true)
     private String classNumber;
 
     public AcademicClass(Long id, String classNumber) {
@@ -20,7 +22,6 @@ public class AcademicClass {
     }
 
     public AcademicClass() {
-
     }
 
     public void setId(Long id) {

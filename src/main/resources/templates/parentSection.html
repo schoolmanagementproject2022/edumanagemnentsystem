@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Teacher Page</title>
+    <title>Parent Page</title>
 </head>
 
 <body>
@@ -19,8 +19,8 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
         <div class="list">
-            <div class="list-items" th:each="teacher : ${teachers}">
-                <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+            <div class="list-items" th:each="item: ${parents}">
+                <p class="item" th:text="${item.getNameAndSurname()}"></p>
             </div>
         </div>
     </div>
@@ -30,10 +30,9 @@
     <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
 
     <div class="popup-container" id="popup-container">
-        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1>New Teacher</h1>
-
-        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+        <label class="close-btn" onclick="PopUpHide()" title="close">×</label>
+        <h1>New Parent</h1>
+        <form id="form" th:action="@{/parents}" method="POST" th:object="${parent}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null">
                 PopUpShow();
@@ -42,21 +41,20 @@
             <div class="popup-wrapper">
                 <div class="half">
                     <div id="error"></div>
-                    <label class="popup-label-title" for="name">Teacher name <span
-                            style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}"/>
+                    <label class="popup-label-title" for="name">Parent name<span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
 
-                    <label class="popup-label-title" for="surname">Teacher surname <span style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}"/>
+                    <label class="popup-label-title" for="surname">Parent surname<span
+                            style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title" for="email">Teacher email <span
+                    <label class="popup-label-title" for="email">Parent email<span
                             style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="email" id="email"
-                           th:value="${#object.email}"/>
+                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
                     <div class="error" th:if="${#fields.hasErrors('email')}"
                          th:errors="*{email}"></div>
                     <div th:if="${duplicated}!= null" class="error">
@@ -65,13 +63,13 @@
                     <div th:if="${invalid}!= null" class="error">
                         <p th:text="${invalid}"></p>
                     </div>
+
                 </div>
 
                 <div class="half2">
-                    <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
-                    <input type="text" class="form_input" placeholder="Create Password" id="password"
-                           th:name="password"
-                           readonly
+                    <label class="popup-label-title">Password<span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" placeholder="Create Password" id="password"
+                           th:name="password" readonly
                            th:value="${#object.password}"/>
                     <div class="error" th:if="${#fields.hasErrors('password')}"
                          th:errors="*{password}"></div>
@@ -83,10 +81,10 @@
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
-
-
         </form>
     </div>
 </div>
+
 </body>
+
 </html>
