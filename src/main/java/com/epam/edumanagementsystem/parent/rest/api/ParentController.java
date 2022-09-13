@@ -48,6 +48,9 @@ public class ParentController {
                 }
             }
             return "parentSection";
+        } else if (!EmailValidation.validate(parent.getEmail())) {
+            modelMap.addAttribute("invalid", "Email is invalid");
+            return "parentSection";
         }
         parentService.save(parent);
         return "redirect:/parents";

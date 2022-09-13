@@ -54,9 +54,11 @@ public class AdminController {
                 }
             }
             return "adminSection";
-        } else {
-            adminService.addAdmin(admin);
-            return "redirect:/admins";
+        } else if (!EmailValidation.validate(admin.getEmail())) {
+            modelMap.addAttribute("invalid", "Email is invalid");
+            return "adminSection";
         }
+        adminService.addAdmin(admin);
+        return "redirect:/admins";
     }
 }

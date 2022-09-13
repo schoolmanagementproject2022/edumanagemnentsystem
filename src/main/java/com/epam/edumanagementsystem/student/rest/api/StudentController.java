@@ -75,10 +75,12 @@ public class StudentController {
                 }
             }
             return "studentSection";
-        } else {
-            studentService.create(student);
-            return "redirect:/students";
+        } else if (!EmailValidation.validate(student.getEmail())) {
+            model.addAttribute("invalid", "Email is invalid");
+            return "studentSection";
         }
+        studentService.create(student);
+        return "redirect:/students";
     }
 
     public List<StudentDto> findAllStudents() {
