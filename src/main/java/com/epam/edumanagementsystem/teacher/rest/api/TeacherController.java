@@ -57,9 +57,11 @@ public class TeacherController {
                 }
             }
             return "teacherSection";
-        } else {
-            teacherService.create(teacher);
-            return "redirect:/teachers";
+        } else if (!EmailValidation.validate(teacher.getEmail())) {
+            model.addAttribute("invalid", "Email is invalid");
+            return "teacherSection";
         }
+        teacherService.create(teacher);
+        return "redirect:/teachers";
     }
 }

@@ -34,7 +34,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
         <form id="form" class="form" th:method="POST" th:action="@{/students}" th:object="${student}">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
                 PopUpShow();
             </script>
 

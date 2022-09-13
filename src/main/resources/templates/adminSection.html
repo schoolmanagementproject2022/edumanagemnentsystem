@@ -48,7 +48,7 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{/admins}" th:object="${admin}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
                 PopUpShow();
             </script>
 

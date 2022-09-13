@@ -35,7 +35,7 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
                 PopUpShow();
             </script>
 
