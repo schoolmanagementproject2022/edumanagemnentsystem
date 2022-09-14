@@ -36,9 +36,12 @@ public class ParentController {
     public String saveParent(@Valid @ModelAttribute(value = "parent") Parent parent, BindingResult bindingResult,
                              ModelMap modelMap) {
         modelMap.addAttribute("parents", parentService.findAll());
-        if (parentService.findByEmail(parent.getEmail()).isPresent()) {
-            modelMap.addAttribute("duplicated", "A user with the specified email already exists");
-            return "parentSection";
+
+        for (Parent parentLoop : parentService.findAll()) {
+            if (parent.getEmail().equalsIgnoreCase(parentLoop.getEmail())) {
+                modelMap.addAttribute("duplicated", "A user with the specified email already exists");
+                return "parentSection";
+            }
         }
         if (bindingResult.hasErrors()) {
             if (!bindingResult.hasFieldErrors("email")) {
