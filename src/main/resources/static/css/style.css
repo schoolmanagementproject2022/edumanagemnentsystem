@@ -341,3 +341,9 @@ form {
     outline: none !important;
     border: 1px solid #01A7F0;
 }
+.startAcademicYear{
+    margin-right: 0;
+}
+.endAcademicYear{
+    margin-left: 0;
+}
