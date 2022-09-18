@@ -7,10 +7,12 @@ import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+
     private final AdminRepository adminRepository;
 
     public AdminServiceImpl(AdminRepository adminRepository) {
@@ -29,6 +31,12 @@ public class AdminServiceImpl implements AdminService {
                 .map(this::adminDTOConvert)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Optional<Admin> findByEmail(String email) {
+        return adminRepository.findByEmail(email);
+    }
+
 
     public AdminDto adminDTOConvert(Admin admin) {
         AdminDto adminDTO = new AdminDto();

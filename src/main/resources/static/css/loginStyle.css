@@ -97,3 +97,9 @@ body {
     outline: none !important;
     border: 1.5px solid #01A7F0;
 }
+.errorMsg{
+    color: red;
+    font-size: 0.8em;
+    text-align: center;
+    margin-right: 15px;
+}

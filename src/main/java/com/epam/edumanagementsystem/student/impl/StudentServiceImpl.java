@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.student.impl;
 
+import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -91,5 +93,9 @@ public class StudentServiceImpl implements StudentService {
         student.setGender(studentDto.getGender());
         student.setAcademicClass(studentDto.getAcademicClass());
         return StudentMapper.toStudentDto(studentRepository.save(student));
+    }
+    @Override
+    public Optional<Student> findByEmail(String email) {
+        return studentRepository.findByEmail(email);
     }
 }
