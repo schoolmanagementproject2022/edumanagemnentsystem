@@ -1,5 +1,10 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
+import com.epam.edumanagementsystem.admin.rest.service.AdminService;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -22,9 +27,12 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService teacherService;
 
+
+
     @Autowired
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
+
     }
 
     @GetMapping
@@ -40,7 +48,6 @@ public class TeacherController {
                                 BindingResult result, Model model) {
         List<TeacherDto> allTeachersDto = teacherService.findAll();
         model.addAttribute("teachers", allTeachersDto);
-
         List<Teacher> teachers = TeacherMapper.toListOfTeachers(allTeachersDto);
         for (Teacher teach : teachers) {
             if (teach.getEmail().equals(teacher.getEmail())) {
@@ -48,7 +55,6 @@ public class TeacherController {
                 return "teacherSection";
             }
         }
-
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
                 if (!EmailValidation.validate(teacher.getEmail())) {

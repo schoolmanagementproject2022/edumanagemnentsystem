@@ -3,6 +3,12 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,15 +43,16 @@ public class AdminController {
 
     @PostMapping
     public String addAdmin(@ModelAttribute("admin") @Valid Admin admin, BindingResult result, ModelMap modelMap) {
+
         List<AdminDto> allAdmins = adminService.findAllAdmins();
         modelMap.addAttribute("admins", allAdmins);
+
         for (AdminDto admins : allAdmins) {
-            if (admin.getEmail().equals(admins.getEmail())) {
+            if (admin.getEmail().equalsIgnoreCase(admins.getEmail())) {
                 modelMap.addAttribute("duplicated", "A user with the specified email already exists");
                 return "adminSection";
             }
         }
-
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
                 if (!EmailValidation.validate(admin.getEmail())) {

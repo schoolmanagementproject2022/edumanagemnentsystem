@@ -1,10 +1,13 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -25,17 +28,29 @@ public class Teacher {
     private String email;
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+    @ManyToMany(mappedBy = "teacherSet",fetch = FetchType.EAGER)
+    private Set<Subject> subjectSet=new HashSet<>();
 
-    public Teacher() {
-    }
-
-    public Teacher(Long id, String name, String surname, String email, String password) {
+    public Teacher(Long id, @Size(max = 50, message = "Symbols can't be more than 50") String name, @Size(max = 50, message = "Symbols can't be more than 50") String surname, @Size(max = 50, message = "Symbols can't be more than 50") String email, String password, Set<Subject> subjectSet) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.subjectSet = subjectSet;
     }
+
+    public Teacher() {
+    }
+
+    public Set<Subject> getSubjectSet() {
+        return new HashSet<Subject>();
+    }
+
+    public void setSubjectSet(Set<Subject> subjectSet) {
+        this.subjectSet = subjectSet;
+    }
+
 
     public Long getId() {
         return id;
