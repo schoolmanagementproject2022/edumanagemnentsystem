@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -55,16 +54,16 @@ public class SecurityConfig {
         return http
 
                 .authorizeRequests()
-                    .antMatchers("/static/css/**", "/static/js/**").permitAll()
-                    .mvcMatchers("/teachers", "/parents", "/students", "/classes").hasAuthority("ADMIN")
-                    .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
+                .antMatchers("/static/css/**", "/static/js/**").permitAll()
+                .mvcMatchers("/teachers", "/parents", "/students", "/classes").hasAuthority("ADMIN")
+                .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .permitAll()
-                    .successHandler(loginSuccessHandler).and().csrf().disable()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll()
+                .successHandler(loginSuccessHandler).and().csrf().disable()
                 .build();
     }
 }

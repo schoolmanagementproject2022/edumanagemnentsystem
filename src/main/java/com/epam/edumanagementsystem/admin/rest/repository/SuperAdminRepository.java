@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface SuperAdminRepository extends JpaRepository<SuperAdmin, Integer> {
 
+    @Query(value = "SELECT * FROM super_admin WHERE LOWER(email) = LOWER(?1)",nativeQuery = true)
     Optional<SuperAdmin> findByEmail(String email);
 }
