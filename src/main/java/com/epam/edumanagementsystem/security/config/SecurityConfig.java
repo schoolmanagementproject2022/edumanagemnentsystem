@@ -64,6 +64,7 @@ public class SecurityConfig {
                 .passwordParameter("password")
                 .permitAll()
                 .successHandler(loginSuccessHandler).and().csrf().disable()
-                .build();
+                .exceptionHandling().accessDeniedPage("/accessDenied")
+                .and().build();
     }
 }
