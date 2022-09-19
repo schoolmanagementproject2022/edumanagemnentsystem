@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,12 @@ import java.util.List;
 @RequestMapping("/admins")
 public class AdminController {
 
+    private final PasswordEncoder bcryptPasswordEncoder;
     private final AdminService adminService;
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(PasswordEncoder bcryptPasswordEncoder, AdminService adminService) {
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.adminService = adminService;
     }
 
@@ -58,6 +61,8 @@ public class AdminController {
             modelMap.addAttribute("invalid", "Email is invalid");
             return "adminSection";
         }
+
+        admin.setPassword(bcryptPasswordEncoder.encode(admin.getPassword()));
         adminService.addAdmin(admin);
         return "redirect:/admins";
     }

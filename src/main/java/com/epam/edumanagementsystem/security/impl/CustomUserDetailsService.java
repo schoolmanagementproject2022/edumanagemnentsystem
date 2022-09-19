@@ -32,7 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private StudentRepository studentRepository;
 
-
     @Override
     public SecurityUser loadUserByUsername(String username) {
 
@@ -80,7 +79,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             user.setName(student.getName());
             user.setSurname(student.getSurname());
             user.setEmail(student.getEmail());
-            user.setPassword(student.getGeneratePassword());
+            user.setPassword(student.getPassword());
             user.setRole("STUDENT");
             return new SecurityUser(user);
         }

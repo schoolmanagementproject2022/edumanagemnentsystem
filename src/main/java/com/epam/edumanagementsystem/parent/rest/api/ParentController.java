@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -18,10 +19,12 @@ import javax.validation.Valid;
 @RequestMapping("/parents")
 public class ParentController {
 
+    private final PasswordEncoder bcryptPasswordEncoder;
     private final ParentService parentService;
 
     @Autowired
-    public ParentController(ParentService parentService) {
+    public ParentController(PasswordEncoder bcryptPasswordEncoder, ParentService parentService) {
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.parentService = parentService;
     }
 
@@ -52,8 +55,8 @@ public class ParentController {
             modelMap.addAttribute("invalid", "Email is invalid");
             return "parentSection";
         }
+        parent.setPassword(bcryptPasswordEncoder.encode(parent.getPassword()));
         parentService.save(parent);
         return "redirect:/parents";
     }
-
 }

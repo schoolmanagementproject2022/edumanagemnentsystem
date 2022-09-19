@@ -4,6 +4,8 @@ import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    private PasswordEncoder passwordEncoder;
+
     private final AdminRepository adminRepository;
 
     public AdminServiceImpl(AdminRepository adminRepository) {
@@ -20,7 +24,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addAdmin(Admin admin) {
+    public void addAdmin(Admin admin) { ;
         adminRepository.save(admin);
     }
 

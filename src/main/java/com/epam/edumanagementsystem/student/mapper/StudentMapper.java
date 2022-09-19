@@ -17,7 +17,7 @@ public class StudentMapper {
         student.setAddress(studentDto.getAddress());
         student.setBloodGroup(studentDto.getBloodGroup());
         student.setGender(studentDto.getGender());
-        student.setGeneratePassword(studentDto.getGeneratePassword());
+        student.setPassword(studentDto.getPassword());
         student.setParent(studentDto.getParent());
         student.setAcademicClass(studentDto.getAcademicClass());
         return student;
@@ -33,7 +33,7 @@ public class StudentMapper {
         studentDto.setAddress(student.getAddress());
         studentDto.setBloodGroup(student.getBloodGroup());
         studentDto.setGender(student.getGender());
-        studentDto.setGeneratePassword(student.getGeneratePassword());
+        studentDto.setPassword(student.getPassword());
         studentDto.setParent(student.getParent());
         studentDto.setAcademicClass(student.getAcademicClass());
         return studentDto;

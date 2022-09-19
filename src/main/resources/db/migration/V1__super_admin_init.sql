@@ -5,4 +5,4 @@ CREATE TABLE super_admin (
 );
 
 INSERT INTO super_admin (email, password)
-VALUES('super@gmail.com','Sa123567+');
+VALUES('super@gmail.com','$2a$12$afCkykYWEECra01rkCoNfeOBnKKgN/cG1sCoHB3Cfa37M99mXlJ.q');

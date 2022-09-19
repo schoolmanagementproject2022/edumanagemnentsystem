@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.student.impl;
 
-import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -55,8 +54,8 @@ public class StudentServiceImpl implements StudentService {
         if (studentDto.getEmail() != null) {
             student.setEmail(studentDto.getEmail());
         }
-        if (studentDto.getGeneratePassword() != null) {
-            student.setGeneratePassword(studentDto.getGeneratePassword());
+        if (studentDto.getPassword() != null) {
+            student.setPassword(studentDto.getPassword());
         }
         if (studentDto.getAddress() != null) {
             student.setAddress(studentDto.getAddress());
@@ -85,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
         student.setName(studentDto.getName());
         student.setSurname(studentDto.getSurname());
         student.setEmail(studentDto.getEmail());
-        student.setGeneratePassword(studentDto.getGeneratePassword());
+        student.setPassword(studentDto.getPassword());
         student.setAddress(studentDto.getAddress());
         student.setDate(studentDto.getDate());
         student.setBloodGroup(studentDto.getBloodGroup());

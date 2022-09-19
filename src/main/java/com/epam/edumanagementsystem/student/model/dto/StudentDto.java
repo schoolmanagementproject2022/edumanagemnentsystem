@@ -17,7 +17,7 @@ public class StudentDto {
     private LocalDate date;
     private BloodGroup bloodGroup;
     private Gender gender;
-    private String generatePassword;
+    private String password;
     private Parent parent;
     private AcademicClass academicClass;
 
@@ -29,7 +29,7 @@ public class StudentDto {
                       LocalDate date,
                       BloodGroup bloodGroup,
                       Gender gender,
-                      String generatePassword,
+                      String password,
                       Parent parent,
                       AcademicClass academicClass) {
         this.id = id;
@@ -40,7 +40,7 @@ public class StudentDto {
         this.date = date;
         this.bloodGroup = bloodGroup;
         this.gender = gender;
-        this.generatePassword = generatePassword;
+        this.password = password;
         this.parent = parent;
         this.academicClass = academicClass;
     }
@@ -112,12 +112,12 @@ public class StudentDto {
         this.gender = gender;
     }
 
-    public String getGeneratePassword() {
-        return generatePassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setGeneratePassword(String generatePassword) {
-        this.generatePassword = generatePassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNameAndSurname() {
@@ -146,12 +146,17 @@ public class StudentDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentDto that = (StudentDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(address, that.address) && Objects.equals(date, that.date) && bloodGroup == that.bloodGroup && gender == that.gender && Objects.equals(generatePassword, that.generatePassword) && Objects.equals(parent, that.parent) && Objects.equals(academicClass, that.academicClass);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(surname, that.surname) && Objects.equals(email, that.email) &&
+                Objects.equals(address, that.address) && Objects.equals(date, that.date) &&
+                bloodGroup == that.bloodGroup && gender == that.gender && Objects.equals(password, that.password)
+                && Objects.equals(parent, that.parent) && Objects.equals(academicClass, that.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, address, date, bloodGroup, gender, generatePassword, parent, academicClass);
+        return Objects.hash(id, name, surname, email, address, date,
+                bloodGroup, gender, password, parent, academicClass);
     }
 
     @Override
@@ -165,7 +170,7 @@ public class StudentDto {
                 ", date=" + date +
                 ", bloodGroup=" + bloodGroup +
                 ", gender=" + gender +
-                ", generatePassword='" + generatePassword + '\'' +
+                ", generatePassword='" + password + '\'' +
                 ", parent=" + parent +
                 ", academicClass=" + academicClass +
                 '}';
