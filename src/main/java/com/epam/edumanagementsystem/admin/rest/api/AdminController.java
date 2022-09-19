@@ -40,7 +40,7 @@ public class AdminController {
         List<AdminDto> allAdmins = adminService.findAllAdmins();
         modelMap.addAttribute("admins", allAdmins);
         for (AdminDto admins : allAdmins) {
-            if (admin.getEmail().equals(admins.getEmail())) {
+            if (admin.getEmail().equalsIgnoreCase(admins.getEmail())) {
                 modelMap.addAttribute("duplicated", "A user with the specified email already exists");
                 return "adminSection";
             }
