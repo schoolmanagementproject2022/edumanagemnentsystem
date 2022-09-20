@@ -53,17 +53,16 @@ public class VacationController {
         }
 
         if (vacation.getStartDate().isBefore(LocalDate.now())) {
-            model.addAttribute("invalid", "Start date must be current date");
+            model.addAttribute("invalid", "Wrong selected dates");
             return "vacationSection";
         } else if (vacation.getStartDate().isAfter(vacation.getEndDate())) {
-            model.addAttribute("invalid", "End date must after start date");
+            model.addAttribute("invalid", "Wrong selected dates");
             return "vacationSection";
         } else {
             vacationService.create(vacation);
             return "redirect:/vacations";
         }
     }
-
 
 }
 
