@@ -21,7 +21,6 @@ import java.util.List;
 public class SubjectController {
     private final SubjectService subjectService;
     private final TeacherService teacherService;
-
     public SubjectController(SubjectService subjectService, TeacherService teacherService) {
         this.subjectService = subjectService;
         this.teacherService = teacherService;

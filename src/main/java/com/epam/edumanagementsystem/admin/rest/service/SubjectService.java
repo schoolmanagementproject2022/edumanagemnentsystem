@@ -7,5 +7,4 @@ import java.util.List;
 public interface SubjectService {
     void create(Subject admin);
     List<Subject> findAll();
-
 }

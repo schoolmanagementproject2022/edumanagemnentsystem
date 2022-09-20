@@ -43,7 +43,6 @@ public class Subject {
 
     public Subject() {
     }
-
     public Long getId() {
         return id;
     }

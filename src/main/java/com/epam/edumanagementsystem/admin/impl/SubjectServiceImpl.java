@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
-
     public SubjectServiceImpl(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }
@@ -21,11 +20,9 @@ public class SubjectServiceImpl implements SubjectService {
             subjectRepository.save(subject);
         }
     }
-
     @Override
     public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
-
 
 }
