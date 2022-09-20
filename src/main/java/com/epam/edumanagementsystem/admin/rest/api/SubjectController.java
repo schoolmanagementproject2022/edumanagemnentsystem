@@ -25,7 +25,6 @@ public class SubjectController {
         this.subjectService = subjectService;
         this.teacherService = teacherService;
     }
-
     @GetMapping()
     public String getAll(ModelMap modelMap) {
         List<TeacherDto> teachers = teacherService.findAll();
@@ -35,7 +34,6 @@ public class SubjectController {
         modelMap.addAttribute("subject", new Subject());
         return "subjectSection";
     }
-
     @PostMapping
     public String createSubject(@ModelAttribute("subject") @Valid Subject subject, BindingResult bindingResult, Model model) {
         List<Subject> all = subjectService.findAll();

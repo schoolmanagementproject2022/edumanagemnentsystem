@@ -7,9 +7,7 @@ import java.util.List;
 public interface AcademicClassService {
 
     void create(AcademicClass academicClass);
-
     List<AcademicClassDto> findAll();
-
     AcademicClassDto getById(Long id);
 
 }

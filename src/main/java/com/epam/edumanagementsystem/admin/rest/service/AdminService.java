@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface AdminService {
     void addAdmin(Admin admin);
-
     List<AdminDto> findAllAdmins();
 
 }

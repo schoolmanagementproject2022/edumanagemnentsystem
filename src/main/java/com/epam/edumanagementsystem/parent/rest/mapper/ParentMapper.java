@@ -17,7 +17,6 @@ public class ParentMapper {
         parent.setPassword(parentDto.getPassword());
         return parent;
     }
-
     public static ParentDto toParentDto(Parent parent) {
         ParentDto parentDto = new ParentDto();
         parentDto.setId(parent.getId());

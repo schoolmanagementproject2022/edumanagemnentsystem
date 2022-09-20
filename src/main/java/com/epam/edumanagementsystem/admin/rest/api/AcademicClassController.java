@@ -26,7 +26,6 @@ public class AcademicClassController {
     public AcademicClassController(AcademicClassService academicClassService) {
         this.academicClassService = academicClassService;
     }
-
     @GetMapping
     public String openStudentSection(Model model) {
         List<AcademicClassDto> academicClassDtoList = academicClassService.findAll();

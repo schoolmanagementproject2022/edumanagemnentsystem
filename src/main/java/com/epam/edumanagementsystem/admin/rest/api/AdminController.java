@@ -32,7 +32,6 @@ public class AdminController {
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
     }
-
     @GetMapping()
     public String getAll(ModelMap modelMap) {
         List<AdminDto> allAdmins = adminService.findAllAdmins();

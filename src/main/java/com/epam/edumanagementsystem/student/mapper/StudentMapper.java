@@ -22,7 +22,6 @@ public class StudentMapper {
         student.setAcademicClass(studentDto.getAcademicClass());
         return student;
     }
-
     public static StudentDto toStudentDto(Student student) {
         StudentDto studentDto = new StudentDto();
         studentDto.setId(student.getId());

@@ -22,7 +22,6 @@ public class SuperAdmin {
 
     public SuperAdmin() {
     }
-
     public SuperAdmin(int id, String email, String password) {
         this.id = id;
         this.email = email;

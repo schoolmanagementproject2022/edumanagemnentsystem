@@ -13,7 +13,6 @@ public class SubjectServiceImpl implements SubjectService {
     public SubjectServiceImpl(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }
-
     @Override
     public void create(Subject subject) {
         if(subject!=null){
@@ -24,5 +23,4 @@ public class SubjectServiceImpl implements SubjectService {
     public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
-
 }

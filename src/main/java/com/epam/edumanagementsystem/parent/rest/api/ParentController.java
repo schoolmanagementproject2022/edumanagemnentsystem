@@ -27,7 +27,6 @@ import java.util.List;
 public class ParentController {
 
     private final ParentService parentService;
-
     @Autowired
     public ParentController( ParentService parentService) {
 

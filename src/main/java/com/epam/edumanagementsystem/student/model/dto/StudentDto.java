@@ -7,7 +7,6 @@ import com.epam.edumanagementsystem.student.model.entity.Gender;
 
 import java.time.LocalDate;
 import java.util.Objects;
-
 public class StudentDto {
     private Long id;
     private String name;

@@ -7,13 +7,11 @@ public class AcademicClassDto {
     private String classNumber;
 
     public AcademicClassDto(){
-
     }
     public AcademicClassDto(Long id, String classNumber) {
         this.id = id;
         this.classNumber = classNumber;
     }
-
     public Long getId() {
         return id;
     }

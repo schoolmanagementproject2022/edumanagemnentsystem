@@ -9,6 +9,5 @@ public interface TeacherService {
     void create(Teacher teacher);
 
     List<TeacherDto> findAll();
-
     TeacherDto getTeacherById(Long id);
 }

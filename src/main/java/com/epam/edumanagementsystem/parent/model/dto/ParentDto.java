@@ -3,7 +3,6 @@ package com.epam.edumanagementsystem.parent.model.dto;
 import java.util.Objects;
 
 public class ParentDto {
-
     private Long id;
     private String name;
     private String surname;

@@ -9,7 +9,6 @@ public class AdminDto {
 
     public AdminDto() {
     }
-
     public AdminDto(String username, String surname, String email) {
         this.username = username;
         this.surname = surname;

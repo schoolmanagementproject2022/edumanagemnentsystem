@@ -26,7 +26,6 @@ public class Subject {
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teacherSet = new HashSet<>();
 
-
     public Subject(Long id, String username, Set<Teacher> teacherSet) {
         this.id = id;
         this.name = username;
@@ -40,6 +39,7 @@ public class Subject {
     public void setTeacherSet(Set<Teacher> teacherSet) {
         this.teacherSet = teacherSet;
     }
+
 
     public Subject() {
     }

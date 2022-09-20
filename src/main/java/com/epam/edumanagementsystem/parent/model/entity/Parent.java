@@ -9,7 +9,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "parent")
 public class Parent {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

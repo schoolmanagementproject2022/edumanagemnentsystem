@@ -13,7 +13,6 @@ import java.util.Optional;
 public class ParentServiceImpl implements ParentService {
 
     private final ParentRepository parentRepository;
-
     public ParentServiceImpl(ParentRepository parentRepository) {
         this.parentRepository = parentRepository;
     }

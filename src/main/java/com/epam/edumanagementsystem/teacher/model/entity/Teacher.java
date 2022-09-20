@@ -38,10 +38,8 @@ public class Teacher {
         this.password = password;
         this.subjectSet = subjectSet;
     }
-
     public Teacher() {
     }
-
     public Set<Subject> getSubjectSet() {
         return new HashSet<Subject>();
     }
