@@ -25,7 +25,6 @@ public class SubjectController {
         this.subjectService = subjectService;
         this.teacherService = teacherService;
     }
-
     @GetMapping()
     public String getAll(ModelMap modelMap) {
         List<TeacherDto> teachers = teacherService.findAll();

@@ -24,5 +24,4 @@ public class SubjectServiceImpl implements SubjectService {
     public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
-
 }

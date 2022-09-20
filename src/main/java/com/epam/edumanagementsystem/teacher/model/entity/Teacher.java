@@ -41,7 +41,6 @@ public class Teacher {
 
     public Teacher() {
     }
-
     public Set<Subject> getSubjectSet() {
         return new HashSet<Subject>();
     }
