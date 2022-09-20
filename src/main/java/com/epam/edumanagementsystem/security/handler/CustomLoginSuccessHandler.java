@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.security.impl;
+package com.epam.edumanagementsystem.security.handler;
 
 import com.epam.edumanagementsystem.security.model.SecurityUser;
 import org.springframework.security.core.Authentication;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
