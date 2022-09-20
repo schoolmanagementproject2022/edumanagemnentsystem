@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,6 +17,7 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
@@ -57,8 +59,9 @@ public class Subject {
     public void setName(String username) {
         this.name = username;
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, teacherSet);
     }
 }

@@ -28,8 +28,8 @@ public class Teacher {
     private String email;
     @NotBlank(message = "Please, fill the required fields")
     private String password;
-    @ManyToMany(mappedBy = "teacherSet",fetch = FetchType.EAGER)
-    private Set<Subject> subjectSet=new HashSet<>();
+    @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
+    private Set<Subject> subjectSet = new HashSet<>();
 
     public Teacher(Long id, @Size(max = 50, message = "Symbols can't be more than 50") String name, @Size(max = 50, message = "Symbols can't be more than 50") String surname, @Size(max = 50, message = "Symbols can't be more than 50") String email, String password, Set<Subject> subjectSet) {
         this.id = id;

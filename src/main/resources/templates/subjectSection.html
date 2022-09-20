@@ -36,12 +36,8 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title" style="color:black;">Subject name <span style="color:#A30014">*</span></label>
-                    <input class="form_input"
-                           th:type="text"
-                           th:name="name"
-                           th:id="email"
-                           th:value="${#object.name}"/>
+                    <label class="popup-label-title" for="email">Sbject name<span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="name" id="email" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
                     <div th:if="${duplicated}!= null" class="error">

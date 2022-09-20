@@ -16,8 +16,10 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void create(Subject admin) {
-        subjectRepository.save(admin);
+    public void create(Subject subject) {
+        if(subject!=null){
+            subjectRepository.save(subject);
+        }
     }
 
     @Override
