@@ -27,7 +27,8 @@
         <a th:classappend="${activeTab eq 'parents' ? 'activeTab' : 'notActiveTab'}" href="/parents">Parents</a>
         <a th:classappend="${activeTab eq 'classes' ? 'activeTab' : 'notActiveTab'}" href="/classes">Academic
             classes</a>
-        <a href="#academicYears">Academic years</a>
+        <a th:classappend="${activeTab eq 'years' ? 'activeTab' : 'notActiveTab'}" href="/years">Academic
+            years</a>
         <a href="#subjects">Subjects</a>
         <a href="#vacations">Vacations</a>
         <a href="#settings">Settings</a>

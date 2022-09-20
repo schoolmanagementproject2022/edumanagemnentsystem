@@ -62,7 +62,7 @@ public class StudentController {
         model.addAttribute("parents", ParentMapper.toParentList(findAllParents()));
         model.addAttribute("classes", findAllClasses());
         for (Student students : StudentMapper.toStudentList(findAllStudents())) {
-            if (student.getEmail().equals(students.getEmail())) {
+            if (student.getEmail().equalsIgnoreCase(students.getEmail())) {
                 model.addAttribute("duplicated", "A user with the specified email already exists");
                 return "studentSection";
             }

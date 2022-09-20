@@ -43,7 +43,7 @@ public class TeacherController {
 
         List<Teacher> teachers = TeacherMapper.toListOfTeachers(allTeachersDto);
         for (Teacher teach : teachers) {
-            if (teach.getEmail().equals(teacher.getEmail())) {
+            if (teacher.getEmail().equalsIgnoreCase(teach.getEmail())) {
                 model.addAttribute("duplicated", "A user with the specified email already exists");
                 return "teacherSection";
             }
