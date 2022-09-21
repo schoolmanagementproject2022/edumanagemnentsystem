@@ -38,27 +38,30 @@ public class AcademicYearController {
     @PostMapping
     public String create(@ModelAttribute("academicYear") @Valid AcademicYear academicYear,
                          BindingResult result, Model model) {
-
         LocalDate endDate = academicYear.getEndDate();
         LocalDate startDate = academicYear.getStartDate();
         List<AcademicYearDto> academicYears = academicYearService.findAll();
         model.addAttribute("academicYears", academicYears);
 
-        if (result.hasErrors()) {
-            if (result.hasFieldErrors("startDate") || result.hasFieldErrors("endDate")) {
+        if (result.hasFieldErrors()) {
+            if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
+                if (startDate.isBefore(now)) {
+                    model.addAttribute("invalid", invalidMsg);
+                }
+                return "academicYearSection";
+            } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
+                if (endDate.isBefore(now)) {
+                    model.addAttribute("invalid", invalidMsg);
+                }
+                return "academicYearSection";
+            } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 return "academicYearSection";
             }
         }
-
-        if (startDate.isBefore(now) || endDate.isBefore(now)) {
+        if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
             model.addAttribute("invalid", invalidMsg);
             return "academicYearSection";
-        } else if (startDate.isAfter(endDate)) {
-            model.addAttribute("invalid", invalidMsg);
-            return "academicYearSection";
-        }
-
-        if (endDate.getYear() == startDate.getYear()) {
+        } else if (endDate.getYear() == startDate.getYear()) {
             if (endDate.getMonth().getValue() == startDate.getMonth().getValue()) {
                 model.addAttribute("min", minRangeMsg);
                 return "academicYearSection";
