@@ -1,9 +1,10 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
-import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import com.epam.edumanagementsystem.util.EmailValidation;
+import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,26 +22,28 @@ import java.util.List;
 public class AdminController {
 
     private final AdminService adminService;
+    private final UserService userService;
 
     @Autowired
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, UserService userService) {
         this.adminService = adminService;
+        this.userService = userService;
     }
 
     @GetMapping()
     public String getAll(ModelMap modelMap) {
         List<AdminDto> allAdmins = adminService.findAllAdmins();
-        modelMap.addAttribute("admin", new Admin());
+        modelMap.addAttribute("admin", new AdminDto());
         modelMap.addAttribute("admins", allAdmins);
         return "adminSection";
     }
 
     @PostMapping
-    public String addAdmin(@ModelAttribute("admin") @Valid Admin admin, BindingResult result, ModelMap modelMap) {
+    public String addAdmin(@ModelAttribute("admin") @Valid AdminDto adminDto, BindingResult result, ModelMap modelMap) {
         List<AdminDto> allAdmins = adminService.findAllAdmins();
         modelMap.addAttribute("admins", allAdmins);
-        for (AdminDto admins : allAdmins) {
-            if (admin.getEmail().equalsIgnoreCase(admins.getEmail())) {
+        for (User user : userService.findAll()) {
+            if (adminDto.getEmail().equalsIgnoreCase(user.getEmail())) {
                 modelMap.addAttribute("duplicated", "A user with the specified email already exists");
                 return "adminSection";
             }
@@ -48,17 +51,17 @@ public class AdminController {
 
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(admin.getEmail())) {
+                if (!EmailValidation.validate(adminDto.getEmail())) {
                     modelMap.addAttribute("invalid", "Email is invalid");
                     return "adminSection";
                 }
             }
             return "adminSection";
-        } else if (!EmailValidation.validate(admin.getEmail())) {
+        } else if (!EmailValidation.validate(adminDto.getEmail())) {
             modelMap.addAttribute("invalid", "Email is invalid");
             return "adminSection";
         }
-        adminService.addAdmin(admin);
+        adminService.addAdmin(adminDto, userService);
         return "redirect:/admins";
     }
 }

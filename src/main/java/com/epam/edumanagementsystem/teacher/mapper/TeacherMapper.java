@@ -2,17 +2,42 @@ package com.epam.edumanagementsystem.teacher.mapper;
 
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.service.UserService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TeacherMapper {
+
+    @Lazy
+    private static UserService userService;
+
+    public TeacherMapper(UserService userService) {
+        this.userService = userService;
+    }
+
     public static Teacher toTeacher(TeacherDto teacherDto) {
+        Teacher teacher = new Teacher();
+        User user = new User();
+        teacher.setId(teacherDto.getId());
+        teacher.setName(teacherDto.getName());
+        teacher.setSurname(teacherDto.getSurname());
+        teacher.setPassword(teacherDto.getPassword());
+        user.setEmail(teacherDto.getEmail());
+        teacher.setUser(userService.save(user));
+        return teacher;
+    }
+
+    public static Teacher toTeacherWithoutSavingUser(TeacherDto teacherDto) {
         Teacher teacher = new Teacher();
         teacher.setId(teacherDto.getId());
         teacher.setName(teacherDto.getName());
         teacher.setSurname(teacherDto.getSurname());
-        teacher.setEmail(teacherDto.getEmail());
+        teacher.setUser(userService.findByEmail(teacherDto.getEmail()));
         teacher.setPassword(teacherDto.getPassword());
         return teacher;
     }
@@ -22,7 +47,7 @@ public class TeacherMapper {
         teacherDto.setId(teacher.getId());
         teacherDto.setName(teacher.getName());
         teacherDto.setSurname(teacher.getSurname());
-        teacherDto.setEmail(teacher.getEmail());
+        teacherDto.setEmail(teacher.getUser().getEmail());
         teacherDto.setPassword(teacher.getPassword());
         return teacherDto;
     }
