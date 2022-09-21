@@ -11,7 +11,7 @@
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Student Page</title>
+    <title>Academic Years Page</title>
 </head>
 
 <body>
@@ -22,8 +22,8 @@
 
         <div class="list">
             <div class="list-items" th:each="academicYear : ${academicYears}">
-                <p class="startAcademicYear" th:text="${academicYear.getStartDate() + '-'
-                 + academicYear.getEndDate()}">Academic Year</p>
+                <p class="startAcademicYear" th:text="${academicYear.getStartDate().getYear() + '-'
+                 + academicYear.getEndDate().getYear()}">Academic Year</p>
             </div>
         </div>
     </div>
@@ -33,54 +33,56 @@
     <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+
         <h1>New Academic Year</h1>
         <form id="form" class="form" th:method="POST" th:action="@{/years}" th:object="${academicYear}">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${min} !=null
+                                                      or ${invalid}!=null or ${max}!=null">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
-                    <div id="error"></div>
-                    <div style="margin-bottom: 15px">
-                        <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                             th:errors="*{StartDateBiggerEndDate}"></div>
-                        <div th:if="${DateValidError}!= null" class="error">
-                            <p th:text="${DateValidError}"></p>
-                        </div>
-                        <label style="display: block" class="popup-label-title">Start Date <span
-                                style="color:#A30014">* </span>
-                            <span class="check-validation-date"></span>
-                        </label>
-                        <input th:type="number"
-                               th:min="2022"
-                               th:max="2099"
-                               th:name="startDate"
-                               th:value="startDate"
-                               th:field="*{startDate}"
-                               th:id="startDate">
+                    <label class="popup-label-title">Start Date <span style="color:#A30014">* </span>
+                        <span class="check-validation-date"></span>
+                    </label>
+                    <input class="form_input"
+                           th:type="date"
+                           th:name="startDate"
+                           th:value="*{startDate}"
+                           th:field="*{startDate}"
+                           th:id="startDate"
+                    />
+                    <div class="error" th:if="${#fields.hasErrors('startDate')}"
+                         th:errors="*{startDate}">
                     </div>
 
-                    <div>
-                        <label style="display: block" class="popup-label-title">End Date <span
-                                style="color:#A30014">* </span>
-                            <span class="check-validation-date"></span>
-                        </label>
-                        <input th:type="number"
-                               th:min="2022"
-                               th:max="2099"
-                               th:name="endDate"
-                               th:value="*{endDate}"
-                               th:field="*{endDate}"
-                               th:id="endDate">
+                    <label class="popup-label-title">End Date <span style="color:#A30014">* </span>
+                        <span class="check-validation-date"></span>
+                    </label>
+                    <input class="form_input" placeholder="Date pick"
+                           th:type="date"
+                           th:name="endDate"
+                           th:value="*{endDate}"
+                           th:field="*{endDate}"
+                           th:id="endDate"
+                    />
+                    <div class="error" th:if="${#fields.hasErrors('endDate')}"
+                         th:errors="*{endDate}">
                     </div>
-
-
+                    <div th:if="${invalid}!= null" class="error">
+                        <p th:text="${invalid}"></p>
+                    </div>
+                    <div th:if="${min}!= null" class="error">
+                        <p th:text="${min}"></p>
+                    </div>
+                    <div th:if="${max}!= null" class="error">
+                        <p th:text="${max}"></p>
+                    </div>
                 </div>
 
-                <div class="half2">
-
-                </div>
+                <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
@@ -88,6 +90,5 @@
         </form>
     </div>
 </div>
-
 </body>
 </html>
