@@ -27,10 +27,12 @@
                 Incorrect email and/or password
             </div>
             <div class="input_field">
-                <input class="form_input" type="text" id="username" name="username" placeholder="email" >
+                <input class="form_input" type="text" id="username" name="username" placeholder="email"
+                th:value="${username}">
             </div>
             <div class="input_field">
-                <input class="form_input" type="password" id="password" name="password" placeholder="password"  >
+                <input class="form_input" type="password" id="password" name="password" placeholder="password"
+                       th:value="${password}" >
             </div>
             <div>
                 <input class="button-login" type="submit" value="Login">

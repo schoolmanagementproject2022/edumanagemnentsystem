@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.security.config;
 
 
 import com.epam.edumanagementsystem.security.handler.CustomAccessDeniedHandler;
+import com.epam.edumanagementsystem.security.handler.CustomAuthenticationFailureHandler;
 import com.epam.edumanagementsystem.security.impl.CustomUserDetailsService;
 
 import com.epam.edumanagementsystem.security.handler.CustomLoginSuccessHandler;
@@ -20,12 +21,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 public class SecurityConfig {
 
     @Autowired
     private CustomLoginSuccessHandler customLoginSuccessHandler;
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -56,23 +62,26 @@ public class SecurityConfig {
         return new CustomAccessDeniedHandler();
     }
 
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
 
                 .authorizeRequests()
-                .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                .mvcMatchers("/teachers", "/parents", "/students", "/classes").hasAuthority("ADMIN")
-                .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
+                    .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
+                    .mvcMatchers("/teachers", "/parents", "/students", "/classes").hasAuthority("ADMIN")
+                    .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .permitAll()
-                .successHandler(customLoginSuccessHandler).and().csrf().disable()
+                    .loginPage("/login")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .permitAll()
+                    .failureHandler(customAuthenticationFailureHandler)
+                    .successHandler(customLoginSuccessHandler).and().csrf().disable()
                 .build();
     }
 }
