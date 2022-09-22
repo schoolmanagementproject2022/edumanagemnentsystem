@@ -15,6 +15,4 @@ public interface ParentService {
 
     List<Parent> findAll();
 
-    Optional<Parent> findByEmail(String email);
-
 }

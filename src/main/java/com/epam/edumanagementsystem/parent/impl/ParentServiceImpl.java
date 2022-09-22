@@ -39,8 +39,4 @@ public class ParentServiceImpl implements ParentService {
         return parentRepository.findAll();
     }
 
-    @Override
-    public Optional<Parent> findByEmail(String email) {
-        return parentRepository.findByEmail(email);
-    }
 }

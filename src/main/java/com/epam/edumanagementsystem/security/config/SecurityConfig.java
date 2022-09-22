@@ -70,7 +70,7 @@ public class SecurityConfig {
 
                 .authorizeRequests()
                     .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                    .mvcMatchers("/teachers", "/parents", "/students", "/classes").hasAuthority("ADMIN")
+                    .mvcMatchers("/teachers", "/parents", "/students", "/classes","/years").hasAuthority("ADMIN")
                     .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler)

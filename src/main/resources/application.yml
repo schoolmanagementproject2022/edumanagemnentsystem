@@ -1,17 +1,19 @@
 spring:
+
   mvc:
     static-path-pattern: /static/**
+
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/edumanagement
-    username: postgres
+    url: jdbc:postgresql://edu-db:5432/edumanagement
+    username: root
     password: root
 
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
@@ -20,4 +22,4 @@ spring:
     enabled: true
 
 server:
-  port: 8083
+  port: 8082
