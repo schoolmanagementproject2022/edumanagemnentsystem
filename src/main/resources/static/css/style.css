@@ -281,7 +281,6 @@ form {
 
 .halfSection {
     margin-top: 27%;
-    margin-left: 27%;
     display: inline-block;
 }
 
@@ -340,4 +339,10 @@ form {
 .form_input:focus {
     outline: none !important;
     border: 1px solid #01A7F0;
+}
+.startAcademicYear{
+    margin-right: 0;
+}
+.endAcademicYear{
+    margin-left: 0;
 }
