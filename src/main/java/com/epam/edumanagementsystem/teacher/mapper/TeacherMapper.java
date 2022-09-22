@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class TeacherMapper {
     public static Teacher toTeacher(TeacherDto teacherDto) {
         Teacher teacher = new Teacher();

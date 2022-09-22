@@ -1,10 +1,5 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
-import com.epam.edumanagementsystem.admin.rest.service.AdminService;
-import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import com.epam.edumanagementsystem.parent.rest.service.ParentService;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
-import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;

@@ -19,6 +19,7 @@ public class StudentServiceImpl implements StudentService {
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
+
     @Override
     public List<StudentDto> findAll() {
         return StudentMapper.toStudentDtoList(studentRepository.findAll());

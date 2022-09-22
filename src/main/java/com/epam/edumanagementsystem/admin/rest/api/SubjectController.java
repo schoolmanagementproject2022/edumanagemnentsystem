@@ -21,10 +21,12 @@ import java.util.List;
 public class SubjectController {
     private final SubjectService subjectService;
     private final TeacherService teacherService;
+
     public SubjectController(SubjectService subjectService, TeacherService teacherService) {
         this.subjectService = subjectService;
         this.teacherService = teacherService;
     }
+
     @GetMapping()
     public String getAll(ModelMap modelMap) {
         List<TeacherDto> teachers = teacherService.findAll();
@@ -34,11 +36,12 @@ public class SubjectController {
         modelMap.addAttribute("subject", new Subject());
         return "subjectSection";
     }
+
     @PostMapping
     public String createSubject(@ModelAttribute("subject") @Valid Subject subject, BindingResult bindingResult, Model model) {
         List<Subject> all = subjectService.findAll();
         model.addAttribute("subjects", all);
-        List<TeacherDto> allTeacher=teacherService.findAll();
+        List<TeacherDto> allTeacher = teacherService.findAll();
         model.addAttribute("teachers", allTeacher);
         for (Subject subject1 : all) {
             if (subject1.getName().equalsIgnoreCase(subject.getName())) {

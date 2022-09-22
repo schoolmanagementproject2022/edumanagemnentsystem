@@ -20,6 +20,7 @@ public class AcademicServiceImpl implements AcademicClassService {
     public AcademicServiceImpl(AcademicClassRepository academicClassRepository) {
         this.academicClassRepository = academicClassRepository;
     }
+
     @Override
     public void create(AcademicClass academicClass) {
         academicClassRepository.save(academicClass);

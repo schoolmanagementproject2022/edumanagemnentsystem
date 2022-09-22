@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.model.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Objects;
+
 @Entity
 @Table(name = "academicClass")
 public class AcademicClass {

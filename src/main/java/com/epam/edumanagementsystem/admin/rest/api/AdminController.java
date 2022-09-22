@@ -19,7 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/admins")
 public class AdminController {
-
     private final AdminService adminService;
 
     @Autowired
