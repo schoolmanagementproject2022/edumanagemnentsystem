@@ -1,12 +1,11 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
+import com.epam.edumanagementsystem.admin.model.dto.AcademicYearDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicYearService;
-import org.hibernate.type.LocalDateType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,24 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/years")
 public class AcademicYearController {
+    private final AcademicYearService academicYearService;
+    private final String invalidMsg = "Wrong selected dates";
+    private final String minRangeMsg = "Academic Year can’t be less than 30 days";
+    private final LocalDate now = LocalDate.now();
 
     public AcademicYearController(AcademicYearService academicYearService) {
         this.academicYearService = academicYearService;
     }
 
-    private final AcademicYearService academicYearService;
-    private final String startDateBiggerEndDate = "Start Date can not be bigger then End Date";
-    private final String endDateVeryBigger = "End Date can not be bigger Start Date then 10 year";
-
     @GetMapping
     public String openAcademicYearSection(Model model) {
-        List<AcademicYear> academicYears = academicYearService.findAll();
+        List<AcademicYearDto> academicYears = academicYearService.findAll();
         model.addAttribute("academicYears", academicYears);
         model.addAttribute("academicYear", new AcademicYear());
         return "academicYearSection";
@@ -40,34 +38,44 @@ public class AcademicYearController {
     @PostMapping
     public String create(@ModelAttribute("academicYear") @Valid AcademicYear academicYear,
                          BindingResult result, Model model) {
-        List<AcademicYear> academicYearList = academicYearService.findAll();
-        model.addAttribute("academicYears", academicYearList);
-        LocalDate date = LocalDate.parse("2020-01-08");
-        int year = date.getYear();
-        if (academicYear.getStartDate() < year) {
-            String startDateSmaller = "Start Date can not be smaller then" + year;
-            result.addError(new ObjectError(startDateSmaller, "Start Date smaller then this year"));
-            if (result.hasErrors()) {
-                model.addAttribute("DateValidError", startDateSmaller);
-                return "academicYearSection";
-            }
-        } else if (academicYear.getEndDate() < academicYear.getStartDate()) {
+        LocalDate endDate = academicYear.getEndDate();
+        LocalDate startDate = academicYear.getStartDate();
+        List<AcademicYearDto> academicYears = academicYearService.findAll();
+        model.addAttribute("academicYears", academicYears);
 
-            result.addError(new ObjectError(startDateBiggerEndDate, "Start Date bigger then End Date"));
-            if (result.hasErrors()) {
-                model.addAttribute("DateValidError", startDateBiggerEndDate);
+        if (result.hasFieldErrors()) {
+            if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
+                if (startDate.isBefore(now)) {
+                    model.addAttribute("invalid", invalidMsg);
+                }
+                return "academicYearSection";
+            } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
+                if (endDate.isBefore(now)) {
+                    model.addAttribute("invalid", invalidMsg);
+                }
+                return "academicYearSection";
+            } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 return "academicYearSection";
             }
-        } else if ((academicYear.getEndDate() - academicYear.getStartDate()) > 10) {
-            result.addError(new ObjectError(endDateVeryBigger, "End Date very bigger"));
-            if (result.hasErrors()) {
-                model.addAttribute("DateValidError", endDateVeryBigger);
-                return "academicYearSection";
-            }
-        } else {
-            academicYearService.create(academicYear);
-            return "redirect:/years";
         }
-        return "academicYearSection";
+        if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
+            model.addAttribute("invalid", invalidMsg);
+            return "academicYearSection";
+        } else if (endDate.getYear() == startDate.getYear()) {
+            if (endDate.getMonth().getValue() == startDate.getMonth().getValue()) {
+                model.addAttribute("min", minRangeMsg);
+                return "academicYearSection";
+            } else if (endDate.getMonth().getValue() - startDate.getMonth().getValue() == 1) {
+                if (endDate.getMonth().maxLength() + endDate.getDayOfMonth() - startDate.getDayOfMonth() < 30) {
+                    model.addAttribute("min", minRangeMsg);
+                    return "academicYearSection";
+                }
+            }
+        } else if (endDate.getYear() > now.getYear() + 10) {
+            model.addAttribute("max", "Academic Year can’t be more than 10 year");
+            return "academicYearSection";
+        }
+        academicYearService.create(academicYear);
+        return "redirect:/years";
     }
 }

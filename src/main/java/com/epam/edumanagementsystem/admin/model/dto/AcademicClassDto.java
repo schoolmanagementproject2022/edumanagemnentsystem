@@ -6,9 +6,9 @@ public class AcademicClassDto {
     private Long id;
     private String classNumber;
 
-    public AcademicClassDto(){
-
+    public AcademicClassDto() {
     }
+
     public AcademicClassDto(Long id, String classNumber) {
         this.id = id;
         this.classNumber = classNumber;

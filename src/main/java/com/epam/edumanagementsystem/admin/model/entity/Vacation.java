@@ -8,27 +8,31 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table
-public class AcademicYear {
+@Table(name = "vacation")
+public class Vacation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Please, fill the required fields")
     private LocalDate startDate;
+
     @Column(name = "end_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     @NotNull(message = "Please, fill the required fields")
     private LocalDate endDate;
 
-    public AcademicYear() {
-    }
-
-    public AcademicYear(Long id, LocalDate startDate, LocalDate endDate) {
+    public Vacation(Long id, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Vacation() {
+
     }
 
     public Long getId() {
@@ -59,8 +63,8 @@ public class AcademicYear {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AcademicYear that = (AcademicYear) o;
-        return Objects.equals(id, that.id) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate);
+        Vacation vacation = (Vacation) o;
+        return Objects.equals(id, vacation.id) && Objects.equals(startDate, vacation.startDate) && Objects.equals(endDate, vacation.endDate);
     }
 
     @Override
@@ -70,11 +74,10 @@ public class AcademicYear {
 
     @Override
     public String toString() {
-        return "AcademicYear{" +
+        return "Vacation{" +
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
     }
 }
-

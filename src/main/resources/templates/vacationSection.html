@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/static/js/passwordGenerator.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Academic Years Page</title>
+    <title>Vacation</title>
 </head>
 
 <body>
@@ -21,9 +20,8 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
         <div class="list">
-            <div class="list-items" th:each="academicYear : ${academicYears}">
-                <p class="startAcademicYear" th:text="${academicYear.getStartDate().getYear() + '-'
-                 + academicYear.getEndDate().getYear()}">Academic Year</p>
+            <div class="list-items" th:each="vacation : ${vacations}">
+                <p class="item" th:text="${vacation.getStartDate() + ' - ' + vacation.getEndDate}">Vacation</p>
             </div>
         </div>
     </div>
@@ -33,17 +31,15 @@
     <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-
-        <h1>New Academic Year</h1>
-        <form id="form" class="form" th:method="POST" th:action="@{/years}" th:object="${academicYear}">
-
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${min} !=null
-                                                      or ${invalid}!=null or ${max}!=null">
+        <h1>New vacation</h1>
+        <form id="form" class="form" th:method="POST" th:action="@{/vacations}" th:object="${vacation}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${invalid}">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
+                    <div id="error"></div>
                     <label class="popup-label-title">Start Date <span style="color:#A30014">* </span>
                         <span class="check-validation-date"></span>
                     </label>
@@ -52,10 +48,11 @@
                            th:name="startDate"
                            th:value="*{startDate}"
                            th:field="*{startDate}"
-                           th:id="startDate"
-                    />
+                           th:id="startDate"/>
                     <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                         th:errors="*{startDate}">
+                         th:errors="*{startDate}"></div>
+                    <div th:if="${invalid}!= null" class="error">
+                        <p th:text="${invalid}"></p>
                     </div>
 
                     <label class="popup-label-title">End Date <span style="color:#A30014">* </span>
@@ -66,22 +63,13 @@
                            th:name="endDate"
                            th:value="*{endDate}"
                            th:field="*{endDate}"
-                           th:id="endDate"
-                    />
+                           th:id="endDate"/>
                     <div class="error" th:if="${#fields.hasErrors('endDate')}"
-                         th:errors="*{endDate}">
-                    </div>
+                         th:errors="*{endDate}"></div>
                     <div th:if="${invalid}!= null" class="error">
                         <p th:text="${invalid}"></p>
                     </div>
-                    <div th:if="${min}!= null" class="error">
-                        <p th:text="${min}"></p>
-                    </div>
-                    <div th:if="${max}!= null" class="error">
-                        <p th:text="${max}"></p>
-                    </div>
                 </div>
-
                 <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
@@ -90,5 +78,6 @@
         </form>
     </div>
 </div>
+
 </body>
 </html>

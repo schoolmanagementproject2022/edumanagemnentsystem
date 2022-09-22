@@ -4,14 +4,14 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://edu-db:5432/edumanagement
-    username: root
+    url: jdbc:postgresql://localhost:5432/edumanagement
+    username: postgres
     password: root
 
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
@@ -20,4 +20,4 @@ spring:
     enabled: true
 
 server:
-  port: 8082
+  port: 8083
