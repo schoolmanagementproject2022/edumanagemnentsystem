@@ -1,5 +1,7 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Objects;
@@ -14,6 +16,7 @@ public class AcademicClass {
 
     @Size(max = 50, message = "Symbols can't be more than 50")
     @Column(unique = true)
+    @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
 
     public AcademicClass(Long id, String classNumber) {

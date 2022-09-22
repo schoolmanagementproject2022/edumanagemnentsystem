@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.student.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,10 +26,8 @@ public class Student {
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
-    @Column(name = "email", unique = true)
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
-    private String email;
+    @OneToOne
+    private User user;
     @Column(name = "address")
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
@@ -48,7 +47,7 @@ public class Student {
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Please, fill the required fields")
     private BloodGroup bloodGroup;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Parent parent;
     @OneToOne
     @NotNull(message = "Please, fill the required fields")
@@ -57,7 +56,6 @@ public class Student {
     public Student(Long id,
                    String name,
                    String surname,
-                   String email,
                    String address,
                    LocalDate date,
                    Gender gender,
@@ -68,7 +66,6 @@ public class Student {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.email = email;
         this.address = address;
         this.date = date;
         this.gender = gender;
@@ -104,14 +101,6 @@ public class Student {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getAddress() {
@@ -170,17 +159,25 @@ public class Student {
         this.academicClass = academicClass;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(surname, student.surname) && Objects.equals(email, student.email) && Objects.equals(address, student.address) && Objects.equals(date, student.date) && gender == student.gender && Objects.equals(generatePassword, student.generatePassword) && bloodGroup == student.bloodGroup && Objects.equals(parent, student.parent) && Objects.equals(academicClass, student.academicClass);
+        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(surname, student.surname) && Objects.equals(user, student.user) && Objects.equals(address, student.address) && Objects.equals(date, student.date) && gender == student.gender && Objects.equals(generatePassword, student.generatePassword) && bloodGroup == student.bloodGroup && Objects.equals(parent, student.parent) && Objects.equals(academicClass, student.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, address, date, gender, generatePassword, bloodGroup, parent, academicClass);
+        return Objects.hash(id, name, surname, user, address, date, gender, generatePassword, bloodGroup, parent, academicClass);
     }
 
     @Override
@@ -189,7 +186,7 @@ public class Student {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
+                ", user=" + user +
                 ", address='" + address + '\'' +
                 ", date=" + date +
                 ", gender=" + gender +
