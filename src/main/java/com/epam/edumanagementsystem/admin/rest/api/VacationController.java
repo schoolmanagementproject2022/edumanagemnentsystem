@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
-import com.epam.edumanagementsystem.admin.mapper.VacationMapper;
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
 import com.epam.edumanagementsystem.admin.model.entity.Vacation;
 import com.epam.edumanagementsystem.admin.rest.service.VacationService;
@@ -41,7 +40,6 @@ public class VacationController {
                          BindingResult result, Model model) {
         List<VacationDto> vacationDtos = vacationService.findAll();
         model.addAttribute("vacations", vacationDtos);
-        List<Vacation> vacations = VacationMapper.toListOfVacations(vacationDtos);
 
         if (result.hasErrors()) {
             if (result.hasFieldErrors("startDate")) {
@@ -63,6 +61,5 @@ public class VacationController {
             return "redirect:/vacations";
         }
     }
-
 }
 
