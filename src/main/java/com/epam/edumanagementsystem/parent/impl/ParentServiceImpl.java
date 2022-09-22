@@ -1,8 +1,11 @@
 package com.epam.edumanagementsystem.parent.impl;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +30,8 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public void save(Parent parent) {
-        parentRepository.save(parent);
+    public void save(ParentDto parentDto, UserService userService) {
+        parentRepository.save(ParentMapper.toParent(parentDto));
     }
 
     @Override
@@ -36,8 +39,4 @@ public class ParentServiceImpl implements ParentService {
         return parentRepository.findAll();
     }
 
-    @Override
-    public Optional<Parent> findByEmail(String email) {
-        return parentRepository.findByEmail(email);
-    }
 }

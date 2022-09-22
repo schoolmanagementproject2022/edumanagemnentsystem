@@ -20,8 +20,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void create(Teacher teacher) {
-        teacherRepository.save(teacher);
+    public void create(TeacherDto teacherDto) {
+        teacherRepository.save(TeacherMapper.toTeacher(teacherDto));
     }
 
     @Override

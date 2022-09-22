@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -19,21 +20,19 @@ public class Teacher {
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
-    @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
-    private String email;
+    @OneToOne
+    private User user;
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     public Teacher() {
     }
 
-    public Teacher(Long id, String name, String surname, String email, String password) {
+    public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.email = email;
+        this.user = user;
         this.password = password;
     }
 
@@ -61,12 +60,12 @@ public class Teacher {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getPassword() {
@@ -82,12 +81,12 @@ public class Teacher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(surname, teacher.surname) && Objects.equals(email, teacher.email) && Objects.equals(password, teacher.password);
+        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(surname, teacher.surname) && Objects.equals(user, teacher.user) && Objects.equals(password, teacher.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, password);
+        return Objects.hash(id, name, surname, user, password);
     }
 
     @Override
@@ -96,7 +95,7 @@ public class Teacher {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
+                ", user=" + user +
                 ", password='" + password + '\'' +
                 '}';
     }

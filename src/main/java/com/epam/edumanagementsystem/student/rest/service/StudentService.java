@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StudentService {
 
-    Student create(Student student);
+    Student create(StudentDto studentDto);
 
     String delete(StudentDto studentDto);
 
