@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -53,8 +54,8 @@ public class StudentServiceImpl implements StudentService {
         if (studentDto.getEmail() != null) {
             student.getUser().setEmail(studentDto.getEmail());
         }
-        if (studentDto.getGeneratePassword() != null) {
-            student.setGeneratePassword(studentDto.getGeneratePassword());
+        if (studentDto.getPassword() != null) {
+            student.setPassword(studentDto.getPassword());
         }
         if (studentDto.getAddress() != null) {
             student.setAddress(studentDto.getAddress());
@@ -83,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
         student.setName(studentDto.getName());
         student.setSurname(studentDto.getSurname());
         student.getUser().setEmail(studentDto.getEmail());
-        student.setGeneratePassword(studentDto.getGeneratePassword());
+        student.setPassword(studentDto.getPassword());
         student.setAddress(studentDto.getAddress());
         student.setDate(studentDto.getDate());
         student.setBloodGroup(studentDto.getBloodGroup());
@@ -91,5 +92,9 @@ public class StudentServiceImpl implements StudentService {
         student.setGender(studentDto.getGender());
         student.setAcademicClass(studentDto.getAcademicClass());
         return StudentMapper.toStudentDto(studentRepository.save(student));
+    }
+    @Override
+    public Optional<Student> findByEmail(String email) {
+        return studentRepository.findByEmail(email);
     }
 }

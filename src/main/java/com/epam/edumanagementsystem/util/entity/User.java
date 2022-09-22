@@ -17,10 +17,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
+
+    @NotBlank
+    private String role;
 
     @OneToOne(mappedBy = "user")
     private Student student;
@@ -35,9 +39,10 @@ public class User {
     private Teacher teacher;
 
 
-    public User(Long id, String email) {
+    public User(Long id,  String email, String role) {
         this.id = id;
         this.email = email;
+        this.role = role;
     }
 
     public User() {}
@@ -58,17 +63,26 @@ public class User {
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(parent, user.parent);
+        return id.equals(user.id) && email.equals(user.email) &&
+                role.equals(user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, parent);
+        return Objects.hash(id, email, role);
     }
 
     @Override
@@ -76,7 +90,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", parent=" + parent +
                 '}';
     }
 }

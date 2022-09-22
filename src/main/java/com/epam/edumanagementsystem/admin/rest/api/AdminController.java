@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -20,11 +21,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/admins")
 public class AdminController {
+
+    private final PasswordEncoder bcryptPasswordEncoder;
     private final AdminService adminService;
     private final UserService userService;
 
     @Autowired
-    public AdminController(AdminService adminService, UserService userService) {
+    public AdminController(PasswordEncoder bcryptPasswordEncoder,
+                           AdminService adminService, UserService userService) {
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.adminService = adminService;
         this.userService = userService;
     }
@@ -38,7 +43,8 @@ public class AdminController {
     }
 
     @PostMapping
-    public String addAdmin(@ModelAttribute("admin") @Valid AdminDto adminDto, BindingResult result, ModelMap modelMap) {
+    public String addAdmin(@ModelAttribute("admin") @Valid AdminDto adminDto,
+                           BindingResult result, ModelMap modelMap) {
         List<AdminDto> allAdmins = adminService.findAllAdmins();
         modelMap.addAttribute("admins", allAdmins);
         for (User user : userService.findAll()) {
@@ -47,6 +53,7 @@ public class AdminController {
                 return "adminSection";
             }
         }
+
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
                 if (!EmailValidation.validate(adminDto.getEmail())) {
@@ -59,6 +66,7 @@ public class AdminController {
             modelMap.addAttribute("invalid", "Email is invalid");
             return "adminSection";
         }
+        adminDto.setPassword(bcryptPasswordEncoder.encode(adminDto.getPassword()));
         adminService.addAdmin(adminDto, userService);
         return "redirect:/admins";
     }

@@ -113,10 +113,10 @@
                 <div class="half2">
                     <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
                     <input type="text" class="form_input" placeholder="Create Password" id="password"
-                           th:name="generatePassword" readonly
-                           th:value="${#object.generatePassword}">
-                    <div class="error" th:if="${#fields.hasErrors('generatePassword')}"
-                         th:errors="*{generatePassword}"></div>
+                           th:name="password" readonly
+                           th:value="${#object.password}">
+                    <div class="error" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}"></div>
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>

@@ -8,26 +8,35 @@ import java.util.Objects;
 public class AdminDto {
 
     private Long id;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String username;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
+
+    @NotBlank
+    private String role= "ADMIN";
+
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     public AdminDto() {
     }
 
-    public AdminDto(Long id, String username, String surname, String email, String password) {
+    public AdminDto(Long id, String username, String surname, String email,
+                    String role, String password) {
         this.id = id;
         this.username = username;
         this.surname = surname;
         this.email = email;
+        this.role = role;
         this.password = password;
     }
 
@@ -75,17 +84,27 @@ public class AdminDto {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AdminDto adminDto = (AdminDto) o;
-        return Objects.equals(id, adminDto.id) && Objects.equals(username, adminDto.username) && Objects.equals(surname, adminDto.surname) && Objects.equals(email, adminDto.email) && Objects.equals(password, adminDto.password);
+        return id.equals(adminDto.id) && username.equals(adminDto.username) &&
+                surname.equals(adminDto.surname) && email.equals(adminDto.email) &&
+                role.equals(adminDto.role) && password.equals(adminDto.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, surname, email, password);
+        return Objects.hash(id, username, surname, email, role, password);
     }
 
     @Override
@@ -95,6 +114,7 @@ public class AdminDto {
                 ", username='" + username + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

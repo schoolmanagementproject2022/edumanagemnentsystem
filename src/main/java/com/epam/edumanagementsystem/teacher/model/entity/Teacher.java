@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -15,21 +16,27 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+
     @OneToOne
     private User user;
+
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet = new HashSet<>();
 
-    public Teacher() {
-    }
+   public Teacher(){
+
+   }
 
     public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;
@@ -40,8 +47,6 @@ public class Teacher {
         this.subjectSet = subjectSet;
     }
 
-    public Teacher() {
-    }
 
     public Set<Subject> getSubjectSet() {
         return new HashSet<Subject>();
@@ -97,7 +102,10 @@ public class Teacher {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(surname, teacher.surname) && Objects.equals(user, teacher.user) && Objects.equals(password, teacher.password);
+        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) &&
+                Objects.equals(surname, teacher.surname) &&
+                Objects.equals(user, teacher.user) &&
+                Objects.equals(password, teacher.password);
     }
 
     @Override

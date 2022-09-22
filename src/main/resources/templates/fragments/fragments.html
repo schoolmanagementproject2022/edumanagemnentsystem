@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 
 <th:block th:fragment="container">
     <div class="container">
@@ -11,7 +11,7 @@
             </div>
             <div class="topnav-right-side">
                 <div class="nav-link-wrapper">
-                    <a>Name Surname</a>
+                    <a th:text="${#authentication.principal.getUsername()}"></a>
                 </div>
             </div>
         </div>

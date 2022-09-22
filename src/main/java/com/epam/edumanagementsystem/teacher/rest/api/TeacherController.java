@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,11 +21,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/teachers")
 public class TeacherController {
+
+    private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
     private final UserService userService;
 
     @Autowired
-    public TeacherController(TeacherService teacherService, UserService userService) {
+    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
+                             UserService userService) {
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
     }
@@ -62,6 +67,7 @@ public class TeacherController {
             model.addAttribute("invalid", "Email is invalid");
             return "teacherSection";
         }
+        teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
         teacherService.create(teacherDto);
         return "redirect:/teachers";
     }
