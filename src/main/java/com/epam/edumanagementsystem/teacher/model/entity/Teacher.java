@@ -5,12 +5,13 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
 public class Teacher {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +25,8 @@ public class Teacher {
     private User user;
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+    @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
+    private Set<Subject> subjectSet = new HashSet<>();
 
     public Teacher() {
     }
@@ -34,7 +37,20 @@ public class Teacher {
         this.surname = surname;
         this.user = user;
         this.password = password;
+        this.subjectSet = subjectSet;
     }
+
+    public Teacher() {
+    }
+
+    public Set<Subject> getSubjectSet() {
+        return new HashSet<Subject>();
+    }
+
+    public void setSubjectSet(Set<Subject> subjectSet) {
+        this.subjectSet = subjectSet;
+    }
+
 
     public Long getId() {
         return id;

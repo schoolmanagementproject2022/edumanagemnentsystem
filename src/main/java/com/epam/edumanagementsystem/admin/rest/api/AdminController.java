@@ -20,7 +20,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/admins")
 public class AdminController {
-
     private final AdminService adminService;
     private final UserService userService;
 
@@ -48,7 +47,6 @@ public class AdminController {
                 return "adminSection";
             }
         }
-
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
                 if (!EmailValidation.validate(adminDto.getEmail())) {

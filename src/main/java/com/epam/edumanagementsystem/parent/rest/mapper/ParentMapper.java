@@ -47,7 +47,6 @@ public class ParentMapper {
         parent.setUser(userService.findByEmail(user.getEmail()));
         return parent;
     }
-
     public static ParentDto toParentDto(Parent parent) {
         ParentDto parentDto = new ParentDto();
         parentDto.setId(parent.getId());

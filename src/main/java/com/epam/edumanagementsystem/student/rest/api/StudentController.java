@@ -41,6 +41,7 @@ public class StudentController {
         this.userService = userService;
         this.parentService = parentService;
         this.academicClassService = academicClassService;
+
     }
 
     @GetMapping
@@ -58,6 +59,7 @@ public class StudentController {
     public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
                                        Model model) {
+
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
@@ -69,6 +71,8 @@ public class StudentController {
                 return "studentSection";
             }
         }
+
+
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
                 if (!EmailValidation.validate(studentDto.getEmail())) {

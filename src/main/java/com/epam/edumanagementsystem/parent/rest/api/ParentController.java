@@ -40,6 +40,7 @@ public class ParentController {
     @PostMapping()
     public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
                              ModelMap modelMap) {
+
         modelMap.addAttribute("parents", parentService.findAll());
 
         for (User user : userService.findAll()) {

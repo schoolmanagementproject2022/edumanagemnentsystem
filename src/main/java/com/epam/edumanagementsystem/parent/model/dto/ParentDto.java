@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ParentDto {
-
     private Long id;
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
