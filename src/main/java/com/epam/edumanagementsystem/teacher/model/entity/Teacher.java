@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -40,9 +41,6 @@ public class Teacher {
         this.subjectSet = subjectSet;
     }
 
-    public Teacher() {
-    }
-
     public Set<Subject> getSubjectSet() {
         return new HashSet<Subject>();
     }
@@ -51,6 +49,9 @@ public class Teacher {
         this.subjectSet = subjectSet;
     }
 
+    public String getNameSurname() {
+        return name + " " + surname;
+    }
 
     public Long getId() {
         return id;

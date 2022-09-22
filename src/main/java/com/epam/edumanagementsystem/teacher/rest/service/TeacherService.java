@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.teacher.rest.service;
 
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ public interface TeacherService {
 
     List<TeacherDto> findAll();
 
-    TeacherDto getTeacherById(Long id);
+    Teacher getTeacherById(Long id);
 }

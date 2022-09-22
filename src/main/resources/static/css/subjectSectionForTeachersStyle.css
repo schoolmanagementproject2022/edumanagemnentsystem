@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -51,7 +50,6 @@ body {
     color: #01A7F0;
 }
 
-
 /*Main part styles*/
 .main-wrapper {
     width: 100%;
@@ -64,12 +62,11 @@ body {
 
 /*Sidebar styles*/
 .sidebar {
-    width: 17%;
+    width: 21%;
     padding: 0px;
     background-color: #555555;
     margin-left: 0px;
-    height: 96vh
-
+    height: 96vh;
 }
 
 .sidebar a {
@@ -79,7 +76,6 @@ body {
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
-
 }
 
 .sidebar a:hover {
@@ -103,7 +99,6 @@ body {
     transition: all 0.5s ease;
     height: 7%;
 }
-
 
 .button {
     background-color: #555555;
@@ -137,31 +132,10 @@ body {
     color: #01A7F0;
 }
 
-.list {
-    width: 91%;
-    padding: 0px;
-    background-color: #555555;
-    margin: 50px;
-    height: 65vh;
-    margin-top: 60px;
-    margin-left: 35px;
-    overflow: scroll;
-}
-
 #date {
     width: 80%;
 !important;
     cursor: pointer;
-
-}
-
-.list-items p {
-    display: block;
-    color: #FFFFFF;
-    padding: 10px;
-    text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
 }
 
 .list-items p:hover {
@@ -180,23 +154,6 @@ body {
 }
 
 /*Pop up part style*/
-.show-btn {
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    width: 102px;
-    text-align: center;
-    background-color: #555555;
-    position: absolute;
-    top: 11%;
-    left: 91%;
-    border-radius: 6px;
-    border-color: #aaaaaa;
-    transform: translate(-50%, -50%);
-    color: #01A7F0;
-}
-
-
 .show-btn:hover {
     border-color: #01A7F0;
 }
@@ -246,7 +203,6 @@ h1 {
     text-align: left;
     color: #007EB4;
     margin-top: 0px;
-
 }
 
 form {
@@ -273,11 +229,11 @@ form {
     width: 50%;
     margin-left: 20%;
     height: 253px;
-
 }
 
 .halfSection {
     margin-top: 27%;
+    margin-left: 27%;
     display: inline-block;
 }
 
@@ -307,7 +263,7 @@ form {
 }
 
 .popup-label-title {
-    font-size: 0.8em;
+    font-size: 17px;
     height: 1.2em;
     margin-top: 20px;
 }
@@ -331,36 +287,111 @@ form {
     color: #01A7F0 !important;
 }
 
+.allTab {
+    background-color: #333333;
+    color: #01A7F0 !important;
+}
+
 .form_input:focus {
     outline: none !important;
     border: 1px solid #01A7F0;
 }
 
-.startAcademicYear {
-    margin-right: 0;
+.sidebar2 {
+    margin-top: 3%;
+    margin-right: 3%;
+    width: 20%;
+    padding: 24px;
+    background-color: #555555;
+    margin-left: -26px;
+    height: 5%;
+    cursor: pointer;
+    text-align: left;
 }
 
-.endAcademicYear {
-    margin-left: 0;
-}
-
-.selectTeacher {
-    margin-top: 40px;
-}
-
-.popup-label-title-subject {
+.sidebar2 a {
     font-size: 17px;
-    height: 1.2em;
-    margin-top: 20px;
+    color: #01A7F0;
+    display: block;
+    padding: 13px;
+    text-decoration: blink;
+    margin-top: -24px;
+    text-align: left;
+    margin-inline-start: -21px;
+    font-weight: bold;
 }
 
-.list-items a {
+.sidebar2 a:hover {
+    color: white;
+}
+
+.show-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 102px;
+    text-align: center;
+    background-color: #555555;
+    position: absolute;
+    top: 10%;
+    left: 76%;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    transform: translate(-50%, -50%);
+    color: #01A7F0;
+}
+
+.item {
     display: block;
     color: #FFFFFF;
     padding: 10px;
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
+    font-size: 19px;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
+}
+
+.list {
+    width: 91%;
+    padding: 0px;
+    background-color: #555555;
+    margin: 50px;
+    height: 65vh;
+    margin-top: 90px;
+    margin-left: 35px;
+    overflow: scroll;
+}
+
+.selectTeacher {
+    margin-top: 6px;
+}
+
+/*for url*/
+.url-path {
+    margin-left: 0px;
+    display: flex;
+    width: 0px;
+    height: 0px;
+    margin-top: 0%;
+}
+
+.a-url {
+    margin-right: -34px;
+    margin-top: 23px;
+    margin-left: -18%;
+    padding-left: 46px;
+    text-decoration: none;
+    color: #2b80a5;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.a-url:hover {
+    font-size: 110%;
+}
+
+option {
+    width: 100%;
 }
