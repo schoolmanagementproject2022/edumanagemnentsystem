@@ -12,15 +12,21 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
+import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private SuperAdminRepository superAdminRepository;
     @Autowired
@@ -43,47 +49,58 @@ public class CustomUserDetailsService implements UserDetailsService {
             user.setRole("SUPER_ADMIN");
             return new SecurityUser(user);
         }
-        if (adminRepository.findByEmail(username).isPresent()) {
-            Admin admin = adminRepository.findByEmail(username).get();
-            CurrentUser user = new CurrentUser();
-            user.setName(admin.getUsername());
-            user.setSurname(admin.getSurname());
-            user.setEmail(admin.getEmail());
-            user.setPassword(admin.getPassword());
-            user.setRole("ADMIN");
-            return new SecurityUser(user);
+        if (userRepository.findByEmail(username).isPresent()) {
+            User foundUser = userRepository.findByEmail(username).get();
+            String foundUserRole = foundUser.getRole();
+            Long foundUserId = foundUser.getId();
 
-        } else if (teacherRepository.findByEmail(username).isPresent()) {
-            Teacher teacher = teacherRepository.findByEmail(username).get();
-            CurrentUser user = new CurrentUser();
-            user.setName(teacher.getName());
-            user.setSurname(teacher.getSurname());
-            user.setEmail(teacher.getEmail());
-            user.setPassword(teacher.getPassword());
-            user.setRole("TEACHER");
-            return new SecurityUser(user);
 
-        } else if (parentRepository.findByEmail(username).isPresent()) {
-            Parent parent = parentRepository.findByEmail(username).get();
-            CurrentUser user = new CurrentUser();
-            user.setName(parent.getName());
-            user.setSurname(parent.getSurname());
-            user.setEmail(parent.getEmail());
-            user.setPassword(parent.getPassword());
-            user.setRole("PARENT");
-            return new SecurityUser(user);
+            if (foundUserRole.equalsIgnoreCase("ADMIN")) {
+                Admin admin = adminRepository.findById(foundUserId).get();
 
-        } else if (studentRepository.findByEmail(username).isPresent()) {
-            Student student = studentRepository.findByEmail(username).get();
-            CurrentUser user = new CurrentUser();
-            user.setName(student.getName());
-            user.setSurname(student.getSurname());
-            user.setEmail(student.getEmail());
-            user.setPassword(student.getPassword());
-            user.setRole("STUDENT");
-            return new SecurityUser(user);
+                CurrentUser user = new CurrentUser();
+                user.setName(admin.getUsername());
+                user.setSurname(admin.getSurname());
+                user.setEmail(admin.getUser().getEmail());
+                user.setPassword(admin.getPassword());
+                user.setRole(admin.getUser().getRole());
+                return new SecurityUser(user);
+
+            } else if (foundUserRole.equalsIgnoreCase("TEACHER")) {
+                Teacher teacher = teacherRepository.findById(foundUserId).get();
+
+                CurrentUser user = new CurrentUser();
+                user.setName(teacher.getName());
+                user.setSurname(teacher.getSurname());
+                user.setEmail(teacher.getUser().getEmail());
+                user.setPassword(teacher.getPassword());
+                user.setRole(teacher.getUser().getRole());
+                return new SecurityUser(user);
+
+            } else if (foundUserRole.equalsIgnoreCase("PARENT")) {
+                Parent parent = parentRepository.findById(foundUserId).get();
+
+                CurrentUser user = new CurrentUser();
+                user.setName(parent.getName());
+                user.setSurname(parent.getSurname());
+                user.setEmail(parent.getUser().getEmail());
+                user.setPassword(parent.getPassword());
+                user.setRole(parent.getUser().getRole());
+                return new SecurityUser(user);
+
+            } else if (foundUserRole.equalsIgnoreCase("STUDENT")) {
+                Student student = studentRepository.findById(foundUserId).get();
+
+                CurrentUser user = new CurrentUser();
+                user.setName(student.getName());
+                user.setSurname(student.getSurname());
+                user.setEmail(student.getUser().getEmail());
+                user.setPassword(student.getPassword());
+                user.setRole(student.getUser().getRole());
+                return new SecurityUser(user);
+            }
         }
-
         throw new UsernameNotFoundException("User '" + username + "' not found");
     }
 }
+

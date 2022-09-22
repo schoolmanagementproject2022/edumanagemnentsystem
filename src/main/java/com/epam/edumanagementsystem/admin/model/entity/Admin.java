@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -13,28 +14,29 @@ public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String username;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+
     @NotBlank(message = "Please, fill the required fields")
     private String password;
-    @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
-    private String email;
+
+    @OneToOne
+    private User user;
 
     public Admin() {
     }
 
-    public Admin(Long id, String username, String surname, String password, String email) {
+    public Admin(Long id, String username, String surname, String password) {
         this.id = id;
         this.username = username;
         this.surname = surname;
         this.password = password;
-        this.email = email;
     }
 
     public String getNameSurname() {
@@ -73,12 +75,12 @@ public class Admin {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -86,11 +88,22 @@ public class Admin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Admin admin = (Admin) o;
-        return Objects.equals(id, admin.id) && Objects.equals(username, admin.username) && Objects.equals(surname, admin.surname) && Objects.equals(password, admin.password) && Objects.equals(email, admin.email);
+        return Objects.equals(id, admin.id) && Objects.equals(username, admin.username) && Objects.equals(surname, admin.surname) && Objects.equals(password, admin.password) && Objects.equals(user, admin.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, surname, password, email);
+        return Objects.hash(id, username, surname, password, user);
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

@@ -79,7 +79,7 @@
                            th:type="text"
                            th:name="address"
                            th:id="address"
-                           placeholder="Country/Region/City/Etc"
+                           placeholder="Country/Region/City/Etc."
                            th:value="${#object.address}"/>
                     <div class="error" th:if="${#fields.hasErrors('address')}"
                          th:errors="*{address}"></div>
@@ -101,8 +101,8 @@
                     <label class="popup-label-title">Linked Class <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
-                        <option th:value="*{academicClass}">Class</option>
-                        <option th:each="class : ${classes}" th:value="${class.id}"
+                        <option class="short" data-limit="23" th:value="*{academicClass}">Class</option>
+                        <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
                     <div class="error" th:if="${#fields.hasErrors('academicClass')}"
@@ -124,8 +124,9 @@
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
-                            <option th:value="*{bloodGroup}">Blood Group</option>
-                            <option th:each="bloodGroup : ${bloodGroups}" th:value="${bloodGroup}"
+                            <option class="short" data-limit="23" th:value="*{bloodGroup}">Blood Group</option>
+                            <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
+                                    th:value="${bloodGroup}"
                                     th:text="${bloodGroup.bloodGroup}"></option>
                         </select>
                         <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
@@ -133,8 +134,8 @@
 
                         <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
-                            <option th:value="*{gender}">Gender</option>
-                            <option th:each="gender : ${genders}" th:value="${gender}"
+                            <option class="short" data-limit="23" th:value="*{gender}">Gender</option>
+                            <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
                                     th:text="${gender.gender}"></option>
                         </select>
                         <div class="error" th:if="${#fields.hasErrors('gender')}"
@@ -142,8 +143,8 @@
 
                         <label class="popup-label-title">Linked Parent</label>
                         <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
-                            <option th:value="*{parent}">Parent</option>
-                            <option th:each="parent : ${parents}" th:value="${parent.id}"
+                            <option class="short" data-limit="23" th:value="*{parent}">Parent</option>
+                            <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
                                     th:text="${parent.getNameAndSurname}"></option>
                         </select>
                         <div class="error" th:if="${#fields.hasErrors('parent')}"
@@ -158,4 +159,43 @@
     </div>
 </div>
 </body>
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    yyyy = yyyy - 3;
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("date").setAttribute("max", today);
+
+
+    function shortString(selector) {
+        const elements = document.querySelectorAll(selector);
+        const tail = '...';
+        if (elements && elements.length) {
+            for (const element of elements) {
+                let text = element.innerText;
+                if (element.hasAttribute('data-limit')) {
+                    if (text.length > element.dataset.limit) {
+                        element.innerText = `${text.substring(0, element.dataset.limit - tail.length).trim()}${tail}`;
+                    }
+                } else {
+                    throw Error('Cannot find attribute \'data-limit\'');
+                }
+            }
+        }
+    }
+
+    window.onload = function () {
+        shortString('.short');
+    };
+
+</script>
 </html>

@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.parent.model.entity;
 
+import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -13,25 +14,24 @@ public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
-    @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
-    private String email;
+
+    @OneToOne
+    private User user;
+
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
-    public Parent(Long id, String name, String surname, String email, String password) {
+    public Parent(Long id, User user) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
+        this.user = user;
     }
 
     public Parent() {
@@ -61,14 +61,6 @@ public class Parent {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -77,8 +69,16 @@ public class Parent {
         this.password = password;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getNameAndSurname() {
-        return this.name + " " + this.surname;
+        return this.getName() + " " + this.getSurname();
     }
 
     @Override
@@ -86,12 +86,12 @@ public class Parent {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Parent parent = (Parent) o;
-        return Objects.equals(id, parent.id) && Objects.equals(name, parent.name) && Objects.equals(surname, parent.surname) && Objects.equals(email, parent.email) && Objects.equals(password, parent.password);
+        return Objects.equals(id, parent.id) && Objects.equals(name, parent.name) && Objects.equals(surname, parent.surname) && Objects.equals(password, parent.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, password);
+        return Objects.hash(id, name, surname, password);
     }
 
     @Override
@@ -100,7 +100,6 @@ public class Parent {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
+
     private final TeacherRepository teacherRepository;
 
     @Autowired
@@ -22,8 +23,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void create(Teacher teacher) {
-        teacherRepository.save(teacher);
+    public void create(TeacherDto teacherDto) {
+        teacherRepository.save(TeacherMapper.toTeacher(teacherDto));
     }
 
     @Override
@@ -37,6 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacherById = teacherRepository.getTeacherById(id);
         return TeacherMapper.toDto(teacherById);
     }
+
     @Override
     public Optional<Teacher> findByEmail(String email) {
         return teacherRepository.findByEmail(email);

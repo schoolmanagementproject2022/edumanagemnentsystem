@@ -13,4 +13,5 @@ public interface ParentRepository extends JpaRepository<Parent, Long> {
 
     @Query(value = "SELECT * FROM parent WHERE LOWER(email) = LOWER(?1)", nativeQuery = true)
     Optional<Parent> findByEmail(String email);
+
 }

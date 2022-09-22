@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.student.rest.service;
 
-import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
@@ -9,7 +8,7 @@ import java.util.Optional;
 
 public interface StudentService {
 
-    Student create(Student student);
+    Student create(StudentDto studentDto);
 
     String delete(StudentDto studentDto);
 

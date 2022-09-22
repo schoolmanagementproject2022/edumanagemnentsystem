@@ -1,10 +1,10 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
-import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
+import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -24,11 +24,14 @@ public class TeacherController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
+    private final UserService userService;
 
     @Autowired
-    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService) {
+    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
+                             UserService userService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -40,14 +43,13 @@ public class TeacherController {
     }
 
     @PostMapping
-    public String createTeacher(@ModelAttribute("teacher") @Valid Teacher teacher,
+    public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result, Model model) {
         List<TeacherDto> allTeachersDto = teacherService.findAll();
         model.addAttribute("teachers", allTeachersDto);
 
-        List<Teacher> teachers = TeacherMapper.toListOfTeachers(allTeachersDto);
-        for (Teacher teach : teachers) {
-            if (teach.getEmail().equals(teacher.getEmail())) {
+        for (User user : userService.findAll()) {
+            if (teacherDto.getEmail().equalsIgnoreCase(user.getEmail())) {
                 model.addAttribute("duplicated", "A user with the specified email already exists");
                 return "teacherSection";
             }
@@ -55,18 +57,18 @@ public class TeacherController {
 
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(teacher.getEmail())) {
+                if (!EmailValidation.validate(teacherDto.getEmail())) {
                     model.addAttribute("invalid", "Email is invalid");
                     return "teacherSection";
                 }
             }
             return "teacherSection";
-        } else if (!EmailValidation.validate(teacher.getEmail())) {
+        } else if (!EmailValidation.validate(teacherDto.getEmail())) {
             model.addAttribute("invalid", "Email is invalid");
             return "teacherSection";
         }
-        teacher.setPassword(bcryptPasswordEncoder.encode(teacher.getPassword()));
-        teacherService.create(teacher);
+        teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
+        teacherService.create(teacherDto);
         return "redirect:/teachers";
     }
 }

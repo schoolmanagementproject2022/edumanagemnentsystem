@@ -4,21 +4,61 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class StudentDto {
+
     private Long id;
+
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
+
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
+
+    @NotBlank
+    private String role= "PARENT";
+
+    @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String address;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Please, fill the required fields")
     private LocalDate date;
-    private BloodGroup bloodGroup;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Please, fill the required fields")
     private Gender gender;
+
+    @NotBlank(message = "Please, fill the required fields")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Please, fill the required fields")
+    private BloodGroup bloodGroup;
+
+    @OneToOne(fetch = FetchType.LAZY)
     private Parent parent;
+
+    @OneToOne
+    @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
 
     public StudentDto(Long id,
@@ -140,6 +180,13 @@ public class StudentDto {
         this.academicClass = academicClass;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     @Override
     public boolean equals(Object o) {

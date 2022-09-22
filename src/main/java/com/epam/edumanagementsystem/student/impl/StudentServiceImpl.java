@@ -32,8 +32,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student create(Student student) {
-        return studentRepository.save(student);
+    public Student create(StudentDto studentDto) {
+        return studentRepository.save(StudentMapper.toStudent(studentDto));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class StudentServiceImpl implements StudentService {
             student.setSurname(studentDto.getSurname());
         }
         if (studentDto.getEmail() != null) {
-            student.setEmail(studentDto.getEmail());
+            student.getUser().setEmail(studentDto.getEmail());
         }
         if (studentDto.getPassword() != null) {
             student.setPassword(studentDto.getPassword());
@@ -83,7 +83,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(studentDto.getId()).orElseThrow(RuntimeException::new);
         student.setName(studentDto.getName());
         student.setSurname(studentDto.getSurname());
-        student.setEmail(studentDto.getEmail());
+        student.getUser().setEmail(studentDto.getEmail());
         student.setPassword(studentDto.getPassword());
         student.setAddress(studentDto.getAddress());
         student.setDate(studentDto.getDate());
