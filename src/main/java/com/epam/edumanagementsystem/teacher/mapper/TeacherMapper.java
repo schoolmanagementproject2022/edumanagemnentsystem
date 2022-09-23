@@ -65,7 +65,7 @@ public class TeacherMapper {
     public static List<Teacher> toListOfTeachers(List<TeacherDto> teachersDto) {
         List<Teacher> teachers = new ArrayList<>();
         for (TeacherDto teacherDto : teachersDto) {
-            teachers.add(toTeacher(teacherDto));
+            teachers.add(toTeacherWithoutSavingUser(teacherDto));
         }
         return teachers;
     }

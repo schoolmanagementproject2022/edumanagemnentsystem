@@ -12,6 +12,7 @@ public interface TeacherService {
 
     List<TeacherDto> findAll();
 
-    TeacherDto getTeacherById(Long id);
+    Teacher getTeacherById(Long id);
+
     Optional<Teacher> findByEmail(String email);
 }

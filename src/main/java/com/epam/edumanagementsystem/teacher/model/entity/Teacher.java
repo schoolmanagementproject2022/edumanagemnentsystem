@@ -56,6 +56,9 @@ public class Teacher {
         this.subjectSet = subjectSet;
     }
 
+    public String getNameSurname() {
+        return name + " " + surname;
+    }
 
     public Long getId() {
         return id;
