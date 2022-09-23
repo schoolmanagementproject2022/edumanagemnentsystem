@@ -42,6 +42,11 @@ public class AdminServiceImpl implements AdminService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Admin findByUserId(Long id) {
+        return adminRepository.findByUserId(id);
+    }
+
     public AdminDto adminDTOConvert(Admin admin) {
         AdminDto adminDTO = new AdminDto();
         adminDTO.setUsername(admin.getUsername());

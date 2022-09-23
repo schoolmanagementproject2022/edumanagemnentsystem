@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -93,8 +92,9 @@ public class StudentServiceImpl implements StudentService {
         student.setAcademicClass(studentDto.getAcademicClass());
         return StudentMapper.toStudentDto(studentRepository.save(student));
     }
+
     @Override
-    public Optional<Student> findByEmail(String email) {
-        return studentRepository.findByEmail(email);
+    public Student findByUserId(Long id) {
+        return studentRepository.findByUserId(id);
     }
 }

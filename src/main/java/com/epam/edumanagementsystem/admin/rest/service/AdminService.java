@@ -13,4 +13,5 @@ public interface AdminService {
     void addAdmin(AdminDto adminDto, UserService userService);
 
     List<AdminDto> findAllAdmins();
+    Admin findByUserId(Long id);
 }

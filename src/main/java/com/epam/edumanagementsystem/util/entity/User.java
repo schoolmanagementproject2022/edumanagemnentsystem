@@ -18,7 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "email")
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;

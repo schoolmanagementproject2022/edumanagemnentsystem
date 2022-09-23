@@ -39,4 +39,8 @@ public class ParentServiceImpl implements ParentService {
         return parentRepository.findAll();
     }
 
+    @Override
+    public Parent findByUserId(Long id) {
+        return parentRepository.findByUserId(id);
+    }
 }

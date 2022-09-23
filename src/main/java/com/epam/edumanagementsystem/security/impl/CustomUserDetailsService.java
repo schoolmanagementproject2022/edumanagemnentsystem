@@ -56,7 +56,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
             if (foundUserRole.equalsIgnoreCase("ADMIN")) {
-                Admin admin = adminRepository.findById(foundUserId).get();
+                Admin admin = adminRepository.findByUserId(foundUserId);
 
                 CurrentUser user = new CurrentUser();
                 user.setName(admin.getUsername());
@@ -67,7 +67,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("TEACHER")) {
-                Teacher teacher = teacherRepository.findById(foundUserId).get();
+                Teacher teacher = teacherRepository.findByUserId(foundUserId);
 
                 CurrentUser user = new CurrentUser();
                 user.setName(teacher.getName());
@@ -78,7 +78,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("PARENT")) {
-                Parent parent = parentRepository.findById(foundUserId).get();
+                Parent parent = parentRepository.findByUserId(foundUserId);
 
                 CurrentUser user = new CurrentUser();
                 user.setName(parent.getName());
@@ -89,7 +89,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("STUDENT")) {
-                Student student = studentRepository.findById(foundUserId).get();
+                Student student = studentRepository.findByUserId(foundUserId);
 
                 CurrentUser user = new CurrentUser();
                 user.setName(student.getName());
