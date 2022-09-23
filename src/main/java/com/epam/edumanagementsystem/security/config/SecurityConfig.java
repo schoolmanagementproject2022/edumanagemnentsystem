@@ -7,6 +7,8 @@ import com.epam.edumanagementsystem.security.impl.CustomUserDetailsService;
 
 import com.epam.edumanagementsystem.security.handler.CustomLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -63,7 +65,6 @@ public class SecurityConfig {
     }
 
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -73,14 +74,13 @@ public class SecurityConfig {
                     .mvcMatchers("/teachers", "/parents", "/students", "/classes","/years").hasAuthority("ADMIN")
                     .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                .exceptionHandling()
                 .and()
                 .formLogin()
                     .loginPage("/login")
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
-                    .failureHandler(customAuthenticationFailureHandler)
                     .successHandler(customLoginSuccessHandler).and().csrf().disable()
                 .build();
     }
