@@ -46,22 +46,17 @@ public class SubjectController {
         List<TeacherDto> allTeacher = teacherService.findAll();
         model.addAttribute("teachers", allTeacher);
 
+        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
+        for (Character character : list) {
+            if (subject.getName().contains(character.toString())) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+                return "subjectSection";
+            }
+        }
+
         for (Subject subject1 : all) {
             if (subject1.getName().equalsIgnoreCase(subject.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
-                return "subjectSection";
-            }
-            if (subject.getName().contains("#")
-                    || subject.getName().contains("%")
-                    || subject.getName().contains("?")
-                    || subject.getName().contains("/")
-                    || subject.getName().contains(";")
-                    || subject.getName().contains(".")
-                    || subject.getName().contains("[")
-                    || subject.getName().contains("]")
-                    || subject.getName().contains("}")
-                    || subject.getName().contains("{")) {
-                model.addAttribute("invalidURL", "#%?/;.[]{} symbols can’t be used");
                 return "subjectSection";
             }
         }
@@ -111,4 +106,3 @@ public class SubjectController {
         return "redirect:/subjects/" + name + "/teachers";
     }
 }
-
