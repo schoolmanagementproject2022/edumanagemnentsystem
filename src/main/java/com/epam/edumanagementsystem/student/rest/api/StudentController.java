@@ -13,6 +13,7 @@ import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,15 +29,18 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
+
+    private final PasswordEncoder bcryptPasswordEncoder;
     private final StudentService studentService;
     private final UserService userService;
     private final ParentService parentService;
     private final AcademicClassService academicClassService;
 
     @Autowired
-    public StudentController(StudentService studentService,
+    public StudentController(PasswordEncoder bcryptPasswordEncoder, StudentService studentService,
                              UserService userService, ParentService parentService,
                              AcademicClassService academicClassService) {
+        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.studentService = studentService;
         this.userService = userService;
         this.parentService = parentService;
@@ -85,6 +89,7 @@ public class StudentController {
             model.addAttribute("invalid", "Email is invalid");
             return "studentSection";
         }
+        studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
         studentService.create(studentDto);
         return "redirect:/students";
     }
@@ -100,5 +105,4 @@ public class StudentController {
     public List<AcademicClassDto> findAllClasses() {
         return academicClassService.findAll();
     }
-
 }

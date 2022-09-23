@@ -4,23 +4,26 @@ import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.context.annotation.Lazy;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
-
     @Lazy
     private static UserService userService;
 
-
+    @Autowired
     public AdminServiceImpl(AdminRepository adminRepository, UserService userService) {
         this.adminRepository = adminRepository;
         this.userService = userService;
@@ -44,6 +47,7 @@ public class AdminServiceImpl implements AdminService {
         adminDTO.setUsername(admin.getUsername());
         adminDTO.setSurname(admin.getSurname());
         adminDTO.setEmail(admin.getUser().getEmail());
+        adminDTO.setRole(admin.getUser().getRole());
         return adminDTO;
     }
 
@@ -54,6 +58,7 @@ public class AdminServiceImpl implements AdminService {
         admin.setUsername(adminDto.getUsername());
         admin.setSurname(adminDto.getSurname());
         user.setEmail(adminDto.getEmail());
+        user.setRole(adminDto.getRole());
         User save = userService.save(user);
         admin.setPassword(adminDto.getPassword());
         admin.setUser(save);
@@ -66,8 +71,8 @@ public class AdminServiceImpl implements AdminService {
         admin.setUsername(adminDto.getUsername());
         admin.setSurname(adminDto.getSurname());
         user.setEmail(adminDto.getEmail());
+        user.setRole(adminDto.getRole());
         admin.setUser(userService.findByEmail(user.getEmail()));
         return admin;
     }
-
 }

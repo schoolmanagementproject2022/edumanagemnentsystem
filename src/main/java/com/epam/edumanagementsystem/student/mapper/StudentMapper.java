@@ -30,10 +30,11 @@ public class StudentMapper {
         student.setAddress(studentDto.getAddress());
         student.setBloodGroup(studentDto.getBloodGroup());
         student.setGender(studentDto.getGender());
-        student.setGeneratePassword(studentDto.getGeneratePassword());
+        student.setPassword(studentDto.getPassword());
         student.setParent(studentDto.getParent());
         student.setAcademicClass(studentDto.getAcademicClass());
         user.setEmail(studentDto.getEmail());
+        user.setRole(studentDto.getRole());
         student.setUser(userService.save(user));
         return student;
     }
@@ -47,7 +48,7 @@ public class StudentMapper {
         student.setAddress(studentDto.getAddress());
         student.setBloodGroup(studentDto.getBloodGroup());
         student.setGender(studentDto.getGender());
-        student.setGeneratePassword(studentDto.getGeneratePassword());
+        student.setPassword(studentDto.getPassword());
         student.setParent(studentDto.getParent());
         student.setAcademicClass(studentDto.getAcademicClass());
         student.setUser(userService.findByEmail(studentDto.getEmail()));
@@ -60,11 +61,12 @@ public class StudentMapper {
         studentDto.setName(student.getName());
         studentDto.setSurname(student.getSurname());
         studentDto.setEmail(student.getUser().getEmail());
+        studentDto.setRole(student.getUser().getRole());
         studentDto.setDate(student.getDate());
         studentDto.setAddress(student.getAddress());
         studentDto.setBloodGroup(student.getBloodGroup());
         studentDto.setGender(student.getGender());
-        studentDto.setGeneratePassword(student.getGeneratePassword());
+        studentDto.setPassword(student.getPassword());
         studentDto.setParent(student.getParent());
         studentDto.setAcademicClass(student.getAcademicClass());
         return studentDto;

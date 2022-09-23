@@ -7,15 +7,22 @@ import java.util.Objects;
 
 public class ParentDto {
     private Long id;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
+
+    @NotBlank
+    private String role= "PARENT";
+
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
@@ -67,17 +74,27 @@ public class ParentDto {
         return this.name + " " + this.surname;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ParentDto parentDto = (ParentDto) o;
-        return Objects.equals(id, parentDto.id) && Objects.equals(name, parentDto.name) && Objects.equals(surname, parentDto.surname) && Objects.equals(email, parentDto.email) && Objects.equals(password, parentDto.password);
+        return id.equals(parentDto.id) && name.equals(parentDto.name) &&
+                surname.equals(parentDto.surname) && email.equals(parentDto.email) &&
+                role.equals(parentDto.role) && password.equals(parentDto.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, password);
+        return Objects.hash(id, name, surname, email, role, password);
     }
 
     @Override
@@ -87,6 +104,7 @@ public class ParentDto {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

@@ -40,9 +40,9 @@ public class Student {
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Please, fill the required fields")
     private Gender gender;
-    @Column(name = "generate_password")
+    @Column(name = "password")
     @NotBlank(message = "Please, fill the required fields")
-    private String generatePassword;
+    private String password;
     @Column(name = "blood_group")
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Please, fill the required fields")
@@ -59,7 +59,7 @@ public class Student {
                    String address,
                    LocalDate date,
                    Gender gender,
-                   String generatePassword,
+                   String password,
                    BloodGroup bloodGroup,
                    Parent parent,
                    AcademicClass academicClass) {
@@ -69,7 +69,7 @@ public class Student {
         this.address = address;
         this.date = date;
         this.gender = gender;
-        this.generatePassword = generatePassword;
+        this.password = password;
         this.bloodGroup = bloodGroup;
         this.parent = parent;
         this.academicClass = academicClass;
@@ -135,12 +135,12 @@ public class Student {
         this.bloodGroup = bloodGroup;
     }
 
-    public String getGeneratePassword() {
-        return generatePassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setGeneratePassword(String generatePassword) {
-        this.generatePassword = generatePassword;
+    public void setPassword(String generatePassword) {
+        this.password = generatePassword;
     }
 
     public Parent getParent() {
@@ -172,12 +172,18 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(id, student.id) && Objects.equals(name, student.name) && Objects.equals(surname, student.surname) && Objects.equals(user, student.user) && Objects.equals(address, student.address) && Objects.equals(date, student.date) && gender == student.gender && Objects.equals(generatePassword, student.generatePassword) && bloodGroup == student.bloodGroup && Objects.equals(parent, student.parent) && Objects.equals(academicClass, student.academicClass);
+        return Objects.equals(id, student.id) && Objects.equals(name, student.name) &&
+                Objects.equals(surname, student.surname) && Objects.equals(user, student.user) &&
+                Objects.equals(address, student.address) && Objects.equals(date, student.date) &&
+                gender == student.gender && Objects.equals(password, student.password) &&
+                bloodGroup == student.bloodGroup && Objects.equals(parent, student.parent) &&
+                Objects.equals(academicClass, student.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, user, address, date, gender, generatePassword, bloodGroup, parent, academicClass);
+        return Objects.hash(id, name, surname, user, address, date, gender,
+                password, bloodGroup, parent, academicClass);
     }
 
     @Override
@@ -190,7 +196,7 @@ public class Student {
                 ", address='" + address + '\'' +
                 ", date=" + date +
                 ", gender=" + gender +
-                ", generatePassword='" + generatePassword + '\'' +
+                ", generatePassword='" + password + '\'' +
                 ", bloodGroup=" + bloodGroup +
                 ", parent=" + parent +
                 ", academicClass=" + academicClass +

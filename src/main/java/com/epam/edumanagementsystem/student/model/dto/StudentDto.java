@@ -19,31 +19,44 @@ import java.util.Objects;
 public class StudentDto {
 
     private Long id;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
+
+    @NotBlank
+    private String role= "PARENT";
+
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String address;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Please, fill the required fields")
     private LocalDate date;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Please, fill the required fields")
     private Gender gender;
+
     @NotBlank(message = "Please, fill the required fields")
-    private String generatePassword;
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Please, fill the required fields")
     private BloodGroup bloodGroup;
+
     @OneToOne(fetch = FetchType.LAZY)
     private Parent parent;
+
     @OneToOne
     @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
@@ -56,7 +69,7 @@ public class StudentDto {
                       LocalDate date,
                       BloodGroup bloodGroup,
                       Gender gender,
-                      String generatePassword,
+                      String password,
                       Parent parent,
                       AcademicClass academicClass) {
         this.id = id;
@@ -67,7 +80,7 @@ public class StudentDto {
         this.date = date;
         this.bloodGroup = bloodGroup;
         this.gender = gender;
-        this.generatePassword = generatePassword;
+        this.password = password;
         this.parent = parent;
         this.academicClass = academicClass;
     }
@@ -139,12 +152,12 @@ public class StudentDto {
         this.gender = gender;
     }
 
-    public String getGeneratePassword() {
-        return generatePassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setGeneratePassword(String generatePassword) {
-        this.generatePassword = generatePassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNameAndSurname() {
@@ -167,18 +180,30 @@ public class StudentDto {
         this.academicClass = academicClass;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentDto that = (StudentDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(address, that.address) && Objects.equals(date, that.date) && bloodGroup == that.bloodGroup && gender == that.gender && Objects.equals(generatePassword, that.generatePassword) && Objects.equals(parent, that.parent) && Objects.equals(academicClass, that.academicClass);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(surname, that.surname) && Objects.equals(email, that.email) &&
+                Objects.equals(address, that.address) && Objects.equals(date, that.date) &&
+                bloodGroup == that.bloodGroup && gender == that.gender && Objects.equals(password, that.password)
+                && Objects.equals(parent, that.parent) && Objects.equals(academicClass, that.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, address, date, bloodGroup, gender, generatePassword, parent, academicClass);
+        return Objects.hash(id, name, surname, email, address, date,
+                bloodGroup, gender, password, parent, academicClass);
     }
 
     @Override
@@ -192,7 +217,7 @@ public class StudentDto {
                 ", date=" + date +
                 ", bloodGroup=" + bloodGroup +
                 ", gender=" + gender +
-                ", generatePassword='" + generatePassword + '\'' +
+                ", generatePassword='" + password + '\'' +
                 ", parent=" + parent +
                 ", academicClass=" + academicClass +
                 '}';
