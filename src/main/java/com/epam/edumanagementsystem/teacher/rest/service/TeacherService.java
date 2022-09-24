@@ -14,5 +14,5 @@ public interface TeacherService {
 
     Teacher getTeacherById(Long id);
 
-    Optional<Teacher> findByEmail(String email);
+    Teacher findByUserId(Long id);
 }

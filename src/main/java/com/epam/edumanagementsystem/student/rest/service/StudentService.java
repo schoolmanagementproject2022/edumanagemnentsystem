@@ -20,5 +20,5 @@ public interface StudentService {
 
     StudentDto getById(Long id);
 
-    Optional<Student> findByEmail(String email);
+    Student findByUserId(Long id);
 }

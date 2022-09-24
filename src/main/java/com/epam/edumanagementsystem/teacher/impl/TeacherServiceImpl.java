@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.teacher.impl;
 
-import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -35,12 +33,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher getTeacherById(Long id) {
-        Teacher teacherById = teacherRepository.getTeacherById(id);
-        return teacherById;
+        return teacherRepository.getTeacherById(id);
     }
 
     @Override
-    public Optional<Teacher> findByEmail(String email) {
-        return teacherRepository.findByEmail(email);
+    public Teacher findByUserId(Long id) {
+        return teacherRepository.findByUserId(id);
     }
 }
