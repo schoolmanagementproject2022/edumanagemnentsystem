@@ -32,9 +32,9 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherDto getTeacherById(Long id) {
+    public Teacher getTeacherById(Long id) {
         Teacher teacherById = teacherRepository.getTeacherById(id);
-        return TeacherMapper.toDto(teacherById);
+        return teacherById;
     }
 
     @Override
