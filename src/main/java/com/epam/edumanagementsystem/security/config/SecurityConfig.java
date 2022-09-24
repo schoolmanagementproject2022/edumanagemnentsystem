@@ -71,8 +71,9 @@ public class SecurityConfig {
 
                 .authorizeRequests()
                     .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                    .mvcMatchers("/teachers", "/parents", "/students", "/classes","/years","/vacations","subjects").hasAuthority("ADMIN")
+                    .mvcMatchers("/teachers", "/parents", "/students", "/classes", "/years", "/vacations", "/subjects").hasAuthority("ADMIN")
                     .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
+                    .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .and()
@@ -81,7 +82,8 @@ public class SecurityConfig {
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .permitAll()
-                    .successHandler(customLoginSuccessHandler).and().csrf().disable()
+                .failureHandler(customAuthenticationFailureHandler)
+                .successHandler(customLoginSuccessHandler).and().csrf().disable()
                 .build();
     }
 }
