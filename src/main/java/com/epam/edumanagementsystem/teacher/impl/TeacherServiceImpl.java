@@ -33,8 +33,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher getTeacherById(Long id) {
-        Teacher teacherById = teacherRepository.getTeacherById(id);
-        return teacherById;
+        return teacherRepository.getTeacherById(id);
     }
 
     @Override

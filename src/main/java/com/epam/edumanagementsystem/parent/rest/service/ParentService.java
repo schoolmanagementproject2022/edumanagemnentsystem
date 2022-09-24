@@ -1,12 +1,10 @@
 package com.epam.edumanagementsystem.parent.rest.service;
 
-import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.util.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ParentService {
 
@@ -15,6 +13,7 @@ public interface ParentService {
     void save(ParentDto parent, UserService userService);
 
     List<Parent> findAll();
+
     Parent findByUserId(Long id);
 
 }
