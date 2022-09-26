@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @ControllerAdvice
 public class ControllerAdviceController {
@@ -44,11 +46,13 @@ public class ControllerAdviceController {
         if (request.getRequestURI().contains("/")) {
             String[] path = request.getRequestURI().split("/");
             if (path.length > 2) {
-                return path[path.length - (path.length - 2)];
+                String decode = URLDecoder.decode(path[path.length - (path.length - 2)], StandardCharsets.UTF_8);
+                return decode;
             } else if (path.length == 2) {
-                return path[path.length - 1];
+                String decoded = URLDecoder.decode(path[path.length - 1], StandardCharsets.UTF_8);
+                return decoded;
             }
         }
-        return request.getRequestURI();
+        return URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
     }
 }

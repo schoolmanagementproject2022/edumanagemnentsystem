@@ -326,6 +326,17 @@ form {
     border-width: 1.5px;
 }
 
+
+.form_input_subjectName {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block;
+    width: 116%;
+    border-radius: 4px;
+    border-width: 1.5px;
+    padding: 5px;
+}
+
 .activeTab {
     background-color: #333333;
     color: #01A7F0 !important;
