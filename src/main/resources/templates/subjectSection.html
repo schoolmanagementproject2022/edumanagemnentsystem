@@ -11,6 +11,7 @@
     <script src="/static/js/popupControl.js"></script>
     <title>Subject Page</title>
 </head>
+
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
@@ -53,7 +54,7 @@
                     </div>
                     <div class="selectTeacher">
                         <label class="popup-label-title-subject" for="teacher">Teachers</label>
-                        <select id="teacher" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple>
+                        <select id="teacher" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple >
                             <option
                                     th:each="teacher:${teachers}"
                                     th:text="${teacher.name}"
@@ -78,6 +79,7 @@
             allowClear: true
         });
     });
+
 </script>
 </body>
 </html>
