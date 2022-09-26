@@ -23,14 +23,12 @@ public class LoginController {
         return "redirect:/";
     }
     @PostMapping()
-    public String login(@RequestParam (name = "username") String username,
-                        @RequestParam (name = "password") String password, Model model) {
+    public String login(@RequestParam (name = "username") String username, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             if(!username.isBlank()){
                 model.addAttribute("username",username);
-                model.addAttribute("password",password);
             }
             return "login";
         }

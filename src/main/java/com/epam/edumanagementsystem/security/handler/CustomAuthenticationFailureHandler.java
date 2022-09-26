@@ -17,11 +17,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException exception) throws IOException, ServletException {
 
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
 
         if (request.getSession() != null) {
             request.getSession().setAttribute("username", username);
-            request.getSession().setAttribute("password", password);
             request.getRequestDispatcher("/login?error").forward(request, response);
         }
     }
