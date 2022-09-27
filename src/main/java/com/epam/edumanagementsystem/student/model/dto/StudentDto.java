@@ -58,7 +58,6 @@ public class StudentDto {
     private Parent parent;
 
     @OneToOne
-    @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
 
     public StudentDto(Long id,
