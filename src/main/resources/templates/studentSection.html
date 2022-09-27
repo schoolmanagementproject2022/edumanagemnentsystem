@@ -98,7 +98,7 @@
                     <div class="error" th:if="${#fields.hasErrors('date')}"
                          th:errors="*{date}"></div>
 
-                    <label class="popup-label-title">Linked Class <span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title">Linked Class</label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
                         <option class="short" data-limit="23" th:value="*{academicClass}">Class</option>
