@@ -13,6 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +57,9 @@ public class SubjectController {
             }
         }
 
+        String replacedName = subject.getName().replace(" ","");
+        subject.setName(replacedName);
+
         for (Subject subject1 : all) {
             if (subject1.getName().equalsIgnoreCase(subject.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
@@ -63,12 +69,15 @@ public class SubjectController {
         if (bindingResult.hasErrors()) {
             return "subjectSection";
         }
+        String decoded = URLDecoder.decode(subject.getName(), StandardCharsets.UTF_8);
+        subject.setName(decoded);
         subjectService.create(subject);
         return "redirect:/subjects";
     }
 
     @GetMapping("/{name}/teachers")
     public String openSubjectForTeacherCreation(@PathVariable("name") String name, Model model) {
+
         Set<Teacher> result = new HashSet<>();
         Set<Teacher> allTeachersInSubject = subjectService.findAllTeachers(name);
         List<Teacher> allTeachers = TeacherMapper.toListOfTeachers(teacherService.findAll());
@@ -95,11 +104,28 @@ public class SubjectController {
     @PostMapping("{name}/teachers")
     public String addNewTeacher(@ModelAttribute("existingSubject") Subject subject,
                                 @PathVariable("name") String name, Model model) {
+
+        Set<Teacher> result = new HashSet<>();
         Set<Teacher> allTeachersInSubject = subjectService.findAllTeachers(name);
         model.addAttribute("teachers", allTeachersInSubject);
+        List<Teacher> allTeachers = TeacherMapper.toListOfTeachers(teacherService.findAll());
 
         if (subject.getTeacherSet().size() == 0) {
             model.addAttribute("blank", "There is no new selection.");
+            if (allTeachersInSubject.size() == 0) {
+                result.addAll(allTeachers);
+                model.addAttribute("teachersToSelect", result);
+                return "subjectSectionForTeachers";
+            } else if (allTeachersInSubject.size() == allTeachers.size()) {
+                return "subjectSectionForTeachers";
+            } else {
+                for (Teacher teacher : allTeachers) {
+                    if (!allTeachersInSubject.contains(teacher)) {
+                        result.add(teacher);
+                    }
+                }
+            }
+            model.addAttribute("teachersToSelect", result);
             return "subjectSectionForTeachers";
         }
         subjectService.update(subject);

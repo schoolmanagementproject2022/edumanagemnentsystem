@@ -40,9 +40,9 @@
 
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title-subject" for="email">Subject name <span
+                    <label class="popup-label-title-subject" for="name">Subject name <span
                             style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="name" id="email" th:value="${#object.name}"/>
+                    <input class="form_input_subjectName" type="text" th:name="name" id="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
                     <div th:if="${duplicated}!= null" class="error">
@@ -56,7 +56,7 @@
                         <select id="teacher" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple>
                             <option
                                     th:each="teacher:${teachers}"
-                                    th:text="${teacher.name}"
+                                    th:text="${teacher.getNameSurname()}"
                                     th:value="${teacher.id}">
                             </option>
                         </select>
