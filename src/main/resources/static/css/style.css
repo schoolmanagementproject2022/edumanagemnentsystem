@@ -12,6 +12,9 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+  .select2-results__option--selected { display: none;}
+}
+
 .container {
     width: 100%;
     margin: 0 auto;
