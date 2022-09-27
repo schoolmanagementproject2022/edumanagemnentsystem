@@ -395,3 +395,5 @@ form {
 option {
     width: 100%;
 }
+
+.select2-results__option--selected { display: none;}
