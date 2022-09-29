@@ -50,7 +50,6 @@ public class Student {
     @OneToOne(fetch = FetchType.LAZY)
     private Parent parent;
     @OneToOne
-    @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
 
     public Student(Long id,

@@ -10,6 +10,39 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#startDate" ).datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true
+            });
+            $( "#endDate" ).datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true
+            });
+        } );
+
+    </script>
+    <style>
+        .ui-datepicker .ui-datepicker-header {
+            position: relative;
+            padding: 7px 0;
+            background: #01A7F0;
+            border: 0;
+            margin: -1px;
+            border-radius: 0;
+        }
+        .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+            border: 1px solid #01A7F0;
+            background: #01A7F0;
+            color: #111111;
+        }
+    </style>
     <title>Vacation</title>
 </head>
 
@@ -43,8 +76,8 @@
                     <label class="popup-label-title">Start Date <span style="color:#A30014">* </span>
                         <span class="check-validation-date"></span>
                     </label>
-                    <input class="form_input"
-                           th:type="date"
+                    <input class="form_input" placeholder="Date pick"
+                           th:type="text"
                            th:name="startDate"
                            th:value="*{startDate}"
                            th:field="*{startDate}"
@@ -59,7 +92,7 @@
                         <span class="check-validation-date"></span>
                     </label>
                     <input class="form_input" placeholder="Date pick"
-                           th:type="date"
+                           th:type="text"
                            th:name="endDate"
                            th:value="*{endDate}"
                            th:field="*{endDate}"
@@ -78,6 +111,7 @@
         </form>
     </div>
 </div>
+
 
 </body>
 </html>
