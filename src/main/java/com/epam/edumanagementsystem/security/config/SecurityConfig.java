@@ -17,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import javax.validation.constraints.NotNull;
+
 @Configuration
 public class SecurityConfig {
 
@@ -55,7 +57,7 @@ public class SecurityConfig {
 
                 .authorizeRequests()
                     .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                    .mvcMatchers("/teachers", "/parents", "/students", "/classes", "/years", "/vacations", "/subjects").hasAuthority("ADMIN")
+                    .mvcMatchers("/teachers", "/parents", "/students", "/classes", "/years", "/vacations", "/subjects" , "/courses").hasAuthority("ADMIN")
                     .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                     .anyRequest().authenticated()
                 .and()
