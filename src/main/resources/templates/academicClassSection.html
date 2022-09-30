@@ -19,7 +19,7 @@
 
         <div class="list">
             <div class="list-items" th:each="academicClass : ${academicClasses}">
-                <p class="item" th:text="${academicClass.getClassNumber()}"> Academic Classes </p>
+                <a th:href="@{'/classes/'+${academicClass.getClassNumber()} + '/courses'}" th:text="${academicClass.getClassNumber()}"></a>
             </div>
         </div>
     </div>

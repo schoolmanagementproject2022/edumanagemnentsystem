@@ -1,9 +1,11 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,13 +20,35 @@ public class AcademicClass {
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
+    @OneToMany
+    private List<AcademicCourse> academicCourse;
+    @OneToMany
+    private List<Teacher> teacher;
 
-    public AcademicClass(Long id, String classNumber) {
+    public AcademicClass(Long id, String classNumber, List <AcademicCourse> academicCourse, List<Teacher> teacher) {
         this.id = id;
         this.classNumber = classNumber;
+        this.academicCourse = academicCourse;
+        this.teacher = teacher;
     }
 
     public AcademicClass() {
+    }
+
+    public List<AcademicCourse> getAcademicCourse() {
+        return academicCourse;
+    }
+
+    public void setAcademicCourse(List<AcademicCourse> academicCourse) {
+        this.academicCourse = academicCourse;
+    }
+
+    public List<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(List<Teacher> teacher) {
+        this.teacher = teacher;
     }
 
     public void setId(Long id) {
