@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
@@ -34,9 +35,12 @@ public class Teacher {
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet = new HashSet<>();
 
-   public Teacher(){
+    @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    private Set<AcademicCourse> academicCourseSet = new HashSet<>();
 
-   }
+    public Teacher(){
+
+    }
 
     public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;

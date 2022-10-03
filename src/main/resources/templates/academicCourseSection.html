@@ -21,7 +21,7 @@
 
         <div class="list">
             <div class="list-items" th:each="academicCourse : ${academicCourses}">
-                <p class="item" th:text="${academicCourse.getName()}">Academic Courses</p>
+                <a class="item" th:text="${academicCourse.getName()}" th:href="@{'/courses/' + ${academicCourse.getName()} + '/teachers'}">Academic Courses</a>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                             th:field="*{subject}">
                         <option  th:value="*{subject}"></option>
                         <option  th:each="subject : ${subjects}" th:value="${subject.id}"
-                                th:text="${subject.getName()}"></option>
+                                 th:text="${subject.getName()}"></option>
                     </select>
                     <div class="error" th:if="${#fields.hasErrors('subject')}"
                          th:errors="*{subject}"></div>
