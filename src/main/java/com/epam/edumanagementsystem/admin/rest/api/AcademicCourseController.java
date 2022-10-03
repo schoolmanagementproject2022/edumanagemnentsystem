@@ -57,12 +57,17 @@ public class AcademicCourseController {
         }
 
         if (result.hasErrors()) {
+            if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
+                return "academicCourseSection";
+            }
             if (result.hasFieldErrors("name")) {
                 return "academicCourseSection";
-            }else if (result.hasFieldErrors("subject")) {
+            }
+            if (result.hasFieldErrors("subject")) {
                 return "academicCourseSection";
             }
         }
+
         academicCourseService.create(academicCourse);
         return "redirect:/courses";
     }
