@@ -3,7 +3,6 @@ package com.epam.edumanagementsystem.admin.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ public class AcademicCourseDto {
     private Long id;
     private String name;
     private Subject subject;
-    private Set<Teacher> teacher = new HashSet<>();
+    private Set<Teacher> teacher;
 
     public AcademicCourseDto() {
     }

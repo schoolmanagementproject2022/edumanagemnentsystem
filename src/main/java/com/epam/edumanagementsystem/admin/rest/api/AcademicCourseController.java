@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,14 @@ public class AcademicCourseController {
         List<Subject> allSubjects = subjectService.findAll();
         model.addAttribute("subjects", allSubjects);
 
+        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
+        for (Character character : list) {
+            if (academicCourse.getName().contains(character.toString())) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+                return "academicCourseSection";
+            }
+        }
+
         for (AcademicCourseDto aCourse : all) {
             if (aCourse.getName().equalsIgnoreCase(academicCourse.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
@@ -58,6 +67,8 @@ public class AcademicCourseController {
 
         if (result.hasErrors()) {
             if (result.hasFieldErrors("name")) {
+                return "academicCourseSection";
+            }else if (result.hasFieldErrors("subject")){
                 return "academicCourseSection";
             }
         }
@@ -85,23 +96,27 @@ public class AcademicCourseController {
     public String addNewTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourse academicCourse,
                                 @PathVariable("name") String name, Model model) {
 
+
         Set<Teacher> result = new HashSet<>();
         Set<Teacher> allTeacherSet = academicCourseService.findAcademicCourseByAcademicCourseName(name)
                 .getSubject().getTeacherSet();
         Set<Teacher> allTeachersInAcademicCourse = academicCourseService.findAllTeachersByAcademicCourseName(name);
-        model.addAttribute("teachers", allTeachersInAcademicCourse);
+        model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
 
-
-        if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
+        if (academicCourse.getTeacher().size() == 0) {
             model.addAttribute("blank", "There is no new selection.");
-            return "academicCourseSectionForTeachers";
-        } else {
-            for (Teacher teacher : allTeacherSet) {
-                if (!allTeachersInAcademicCourse.contains(teacher)) {
-                    result.add(teacher);
+            if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
+                return "academicCourseSectionForTeachers";
+            } else {
+                for (Teacher teacher : allTeacherSet) {
+                    if (!allTeachersInAcademicCourse.contains(teacher)) {
+                        result.add(teacher);
+                    }
                 }
             }
-            model.addAttribute("teachersToSelect", result);
+            model.addAttribute("teachers", result);
+            return "academicCourseSectionForTeachers";
+
         }
         academicCourseService.update(academicCourse);
         return "redirect:/courses/" + name + "/teachers";
