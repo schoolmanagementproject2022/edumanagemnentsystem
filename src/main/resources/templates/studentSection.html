@@ -124,7 +124,7 @@
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
-                            <option th:if="*{bloodGroup}" th:text="'Blood Group'" class="short" data-limit="23" th:value="null"></option>
+                            <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23" th:value="null"></option>
                             <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
                                     th:value="${bloodGroup}"
                                     th:text="${bloodGroup.bloodGroup}"></option>
