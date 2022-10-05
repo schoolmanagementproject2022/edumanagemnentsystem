@@ -1,14 +1,13 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "academic_course")
@@ -34,6 +33,9 @@ public class AcademicCourse {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher = new HashSet<>();
+
+    @ManyToMany
+    private List<CoursesForTimetable> coursesForTimetableCourses = new ArrayList<>();
 
     public AcademicCourse() {
     }
@@ -77,6 +79,14 @@ public class AcademicCourse {
         this.teacher = teacher;
     }
 
+    public List<CoursesForTimetable> getCoursesForTimetableCourses() {
+        return coursesForTimetableCourses;
+    }
+
+    public void setCoursesForTimetableCourses(List<CoursesForTimetable> coursesForTimetableCourses) {
+        this.coursesForTimetableCourses = coursesForTimetableCourses;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,6 +107,7 @@ public class AcademicCourse {
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
                 ", teacher=" + teacher +
+                ", coursesForTimetableCourses=" + coursesForTimetableCourses +
                 '}';
     }
 }
