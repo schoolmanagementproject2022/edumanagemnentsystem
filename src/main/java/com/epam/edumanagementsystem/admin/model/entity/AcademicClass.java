@@ -21,12 +21,14 @@ public class AcademicClass {
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicClass_teacher_mapping",
             joinColumns = @JoinColumn(name = "academicClass_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teacher;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicClass_academicCourse_mapping",

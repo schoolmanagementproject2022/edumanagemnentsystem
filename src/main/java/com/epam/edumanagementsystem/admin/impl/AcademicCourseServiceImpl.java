@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -45,6 +46,15 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     public List<AcademicCourseDto> findAll() {
         List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
         return AcademicCourseMapper.toListOfAcademicCourseDto(academicCourses);
+    }
+    public Set<Teacher> findAllTeacher(){
+        Set<Teacher> teachersByAcademicCourse=new HashSet<>();
+        List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
+        for (AcademicCourse academicCourse:academicCourses){
+           Set <Teacher> result=academicCourse.getTeacher();
+           teachersByAcademicCourse.addAll(result);
+        }
+        return teachersByAcademicCourse;
     }
 
     @Override

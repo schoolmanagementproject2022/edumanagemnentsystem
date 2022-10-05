@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
+    <link href="/static/css/academicCourseForAcademicClass.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
@@ -24,11 +24,11 @@
             <p class="a-url">/</p>
             <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
             <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Teachers'}"></a>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Courses'}"></a>
         </div>
 
         <div class="list">
-            <div class="list-items" th:each="course : ${courses}">
+            <div class="list-items" th:each="course : ${academicCourseSet}">
                 <p class="item" th:text="${course.getName()}"> Course </p>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <div class="selectTeacher">
                         <select class="form_input"  id="course" name="academicCourseSet" th:field="*{academicCourseSet}" style="width: 250px" >
                             <option th:if="*{academicCourseSet  == null}" th:value="null" th:text="'Select Course'"></option>
-                            <option th:each="select : ${academicCoursesToSelect}"
+                            <option th:each="select : ${academicCourseSet}"
                                     th:value="${select.id}" th:text="${select.getName()}"></option>
                         </select>
                         <div th:if="${blank}!= null" class="error">
@@ -66,8 +66,8 @@
                     <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
                     <div class="selectTeacher">
                         <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}" style="width: 250px">
-                            <option th:if="*{teacher  == null}" th:value="null" th:text="'Select Teacher'"></option>
-                            <option th:each="select : ${teachersToSelect}"
+                            <option th:if="*{teacher== null}" th:value="null" th:text="'Select Teacher'"></option>
+                            <option th:each="select : ${allTeacherByAcademicCourse}"
                                     th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
                         </select>
                         <div th:if="${blank}!= null" class="error">
