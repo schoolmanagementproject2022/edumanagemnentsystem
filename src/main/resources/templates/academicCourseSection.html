@@ -54,7 +54,7 @@
                     <label class="popup-label-title">Subject <span style="color:#A30014">*</span></label>
                     <select class="form_input" name="subject" id="subject"
                             th:field="*{subject}">
-                        <option  th:value="*{subject}"></option>
+                        <option th:if="*{subject  == null}" th:value="null" th:text="'Select Subject'"></option>
                         <option  th:each="subject : ${subjects}" th:value="${subject.id}"
                                 th:text="${subject.getName()}"></option>
                     </select>
