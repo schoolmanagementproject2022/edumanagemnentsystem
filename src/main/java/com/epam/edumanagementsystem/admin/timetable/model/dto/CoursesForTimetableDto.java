@@ -4,16 +4,19 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class CoursesForTimetableDto {
 
+
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotNull(message = "Please, fill the required fields")
     private AcademicCourse academicCourse;
-    @NotBlank(message = "Please, fill the required fields")
+
+    @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
 
     @NotBlank(message = "Please, fill the required fields")
@@ -23,7 +26,8 @@ public class CoursesForTimetableDto {
     public CoursesForTimetableDto() {
     }
 
-    public CoursesForTimetableDto(AcademicCourse academicCourse, AcademicClass academicClass, String dayOfWeek) {
+    public CoursesForTimetableDto(AcademicCourse academicCourse, AcademicClass academicClass,
+                                  String dayOfWeek) {
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;

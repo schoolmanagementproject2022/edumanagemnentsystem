@@ -27,17 +27,13 @@ public class AcademicCourse {
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {CascadeType.ALL})
-    @JoinTable(name = "academicCourse_teacher_mapping",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicCourse_teacher_mapping",joinColumns = @JoinColumn(name = "teacher_id"),
+                                                inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher = new HashSet<>();
+
     @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<CoursesForTimetable> coursesForTimetableCourses = new ArrayList<>();
 
 
     public AcademicCourse() {
@@ -82,12 +78,12 @@ public class AcademicCourse {
         this.teacher = teacher;
     }
 
-    public List<CoursesForTimetable> getCoursesForTimetableCourses() {
-        return coursesForTimetableCourses;
+    public Set<AcademicClass> getAcademicClass() {
+        return academicClass;
     }
 
-    public void setCoursesForTimetableCourses(List<CoursesForTimetable> coursesForTimetableCourses) {
-        this.coursesForTimetableCourses = coursesForTimetableCourses;
+    public void setAcademicClass(Set<AcademicClass> academicClass) {
+        this.academicClass = academicClass;
     }
 
     @Override
@@ -95,7 +91,8 @@ public class AcademicCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+               Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
@@ -110,7 +107,6 @@ public class AcademicCourse {
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
                 ", teacher=" + teacher +
-                ", coursesForTimetableCourses=" + coursesForTimetableCourses +
                 '}';
     }
 }
