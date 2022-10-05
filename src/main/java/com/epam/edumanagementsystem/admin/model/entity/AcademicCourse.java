@@ -1,11 +1,14 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "academic_course")
@@ -25,13 +28,21 @@ public class AcademicCourse {
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
 
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicCourse_teacher_mapping",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
+    private Set<Teacher> teacher = new HashSet<>();
+
     public AcademicCourse() {
     }
 
-    public AcademicCourse(Long id, String academicCourseName, Subject subject) {
+    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher) {
         this.id = id;
-        this.name = academicCourseName;
+        this.name = name;
         this.subject = subject;
+        this.teacher = teacher;
     }
 
     public Long getId() {
@@ -58,25 +69,34 @@ public class AcademicCourse {
         this.subject = subject;
     }
 
+    public Set<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Set<Teacher> teacher) {
+        this.teacher = teacher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject);
+        return Objects.hash(id, name, subject, teacher);
     }
 
     @Override
     public String toString() {
         return "AcademicCourse{" +
                 "id=" + id +
-                ", academicCourseName='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", subject=" + subject +
+                ", teacher=" + teacher +
                 '}';
     }
 }
