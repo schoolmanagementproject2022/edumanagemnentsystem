@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/static/js/popupControl.js"></script>
+    <title>Teachers in subject Page</title>
+
+</head>
+<body>
+<div class="header" id="header">
+    <div th:insert="fragments/fragments :: container"></div>
+    <div class="main-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+
+        <div class="url-path">
+            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Subjects'}"></a>
+            <p class="a-url">/</p>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/teachers'}" th:text="${middleUrl}"></a>
+            <p class="a-url">/</p>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${lastUrl}"></a>
+        </div>
+
+        <div class="list">
+            <div class="list-items" th:each="class : ${existingClasses}">
+                <p class="item" th:text="${class.getClassNumber()}"> Class </p>
+            </div>
+        </div>
+        <div class="sidebar2">
+            <a th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${allUrl}}">Teachers</a>
+            <a th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${allUrl}}">Classes</a>
+        </div>
+        <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
+    </div>
+</div>
+
+<div class="create">
+    <div class="popup-container" id="popup-container">
+        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+        <h1>Add Teacher</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingCourse}">
+
+            <script th:inline="javascript" th:if="${blank} != null">
+                PopUpShow();
+            </script>
+
+            <div class="popup-wrapper">
+                <div class="half">
+                    <label class="popup-label-title">Class<span style="color:#A30014">*</span></label>
+                    <div class="selectTeacher">
+                        <select class="form_input" th:name="academicClasses" th:id="academicClasses" th:field="*{academicClasses}">
+                            <option class="short" data-limit="23" th:value="*{academicClasses}">Class</option>
+                            <option class="short" data-limit="23" th:each="class : ${academicClasses}" th:value="${class.id}"
+                                    th:text="${class.getClassNumber()}"></option>
+                        </select>
+                        <label class="popup-label-title">Teacher<span style="color:#A30014">*</span></label>
+                        <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px">
+                            <option th:each="select : ${teachersToSelect}"
+                                    th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
+                        </select>
+                        <div th:if="${blank}!= null" class="error">
+                            <p th:text="${blank}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
