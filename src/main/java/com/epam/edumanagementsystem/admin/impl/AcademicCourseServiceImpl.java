@@ -3,7 +3,6 @@ package com.epam.edumanagementsystem.admin.impl;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -26,6 +25,10 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     @Override
     public AcademicCourse findAcademicCourseByAcademicCourseName(String name) {
         return academicCourseRepository.findAcademicCourseByName(name);
+    }
+    @Override
+    public AcademicCourse findAcademicCourseByAcademicCourseUrlName(String name) {
+        return academicCourseRepository.findAcademicCourseByUrlName(name);
     }
 
     @Override

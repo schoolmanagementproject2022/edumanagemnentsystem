@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/academicCourseSectionForTeachersStyle.css" rel="stylesheet">
+    <link href="/static/css/academicCourseSectionForTeachersStyleChisht.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
@@ -19,41 +19,46 @@
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
     <div class="middle" id="middle">
-        <div class="url-path">
-            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Course'}"></a>
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Teachers'}"></a>
+        <div class="url-add">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Course'}"></a>
+                <p class="a-url">/</p>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+                <p class="a-url">/</p>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Teachers'}"></a>
+            </div>
+
         </div>
-        <div class="list">
-            <div class="list-items" th:each="teacher : ${teachersInAcademicCourse}">
-                <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+        <div class="list-sidebar2">
+
+            <div class="list">
+                <div class="add-button">
+                    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b>
+                    </button>
+                </div>
+                <div class="list-items" th:each="teacher : ${teachersInAcademicCourse}">
+                    <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+                </div>
+            </div>
+            <div class="sidebar2 header" id="sidebar2">
+                <a class="item"
+                   th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${allUrl}}">Teachers</a>
+                <a class="item"
+                   th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${allUrl}}">Classes</a>
             </div>
         </div>
     </div>
-    <div class="sidebar2 header" id="sidebar2">
-
-        <a class="item"
-           th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${allUrl}}">Teachers</a>
-        <a class="item"
-           th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${allUrl}}">Classes</a>
-    </div>
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>Add Teacher</h1>
-
         <form id="form" class="form" th:method="POST"  th:action="@{${allTab}}" th:object="${existingAcademicCourse}">
-
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();
             </script>
-
             <div class="popup-wrapper">
                 <div class="half">
                     <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
@@ -67,7 +72,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>

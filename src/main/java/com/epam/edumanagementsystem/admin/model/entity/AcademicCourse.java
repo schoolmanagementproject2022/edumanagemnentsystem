@@ -23,6 +23,8 @@ public class AcademicCourse {
     @NotBlank(message = "Please, fill the required fields")
     private String name;
 
+    private String urlName;
+
     @ManyToOne
     @JoinColumn(name = "subject_id")
     @NotNull(message = "Please, fill the required fields")
@@ -38,9 +40,10 @@ public class AcademicCourse {
     public AcademicCourse() {
     }
 
-    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher) {
+    public AcademicCourse(Long id, String name, String urlName, Subject subject, Set<Teacher> teacher) {
         this.id = id;
         this.name = name;
+        this.urlName = urlName;
         this.subject = subject;
         this.teacher = teacher;
     }
@@ -59,6 +62,14 @@ public class AcademicCourse {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrlName() {
+        return urlName;
+    }
+
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
     }
 
     public Subject getSubject() {
@@ -82,12 +93,12 @@ public class AcademicCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(urlName, that.urlName) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, teacher);
+        return Objects.hash(id, name, urlName, subject, teacher);
     }
 
     @Override
@@ -95,6 +106,7 @@ public class AcademicCourse {
         return "AcademicCourse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", urlName='" + urlName + '\'' +
                 ", subject=" + subject +
                 ", teacher=" + teacher +
                 '}';

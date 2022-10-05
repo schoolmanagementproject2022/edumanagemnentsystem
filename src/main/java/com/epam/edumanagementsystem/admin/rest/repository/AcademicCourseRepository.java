@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AcademicCourseRepository extends JpaRepository<AcademicCourse, Long> {
     AcademicCourse findAcademicCourseByName(String name);
+
+    AcademicCourse findAcademicCourseByUrlName(String name);
+
 }
