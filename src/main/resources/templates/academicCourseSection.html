@@ -20,8 +20,8 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
         <div class="list">
-            <div class="list-items" th:each="academicCourse : ${academicCourses}">
-                <p class="item" th:text="${academicCourse.getName()}">Academic Courses</p>
+            <div class="list-items" th:each="academicClass : ${academicCourses}">
+                <a th:href="@{'/courses/'+${academicClass.getName()} + '/teachers'}" th:text="${academicClass.getName()}"></a>
             </div>
         </div>
     </div>

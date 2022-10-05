@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.hibernate.validator.constraints.NotBlank;
@@ -30,7 +31,42 @@ public class Teacher {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicCourse_teacher_mapping",
+            joinColumns = @JoinColumn(name = "academicCourse_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+private Set<AcademicCourse> academicCourseSet=new HashSet<>();
 
+    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<AcademicCourse> academicCourses, Set<Subject> subjectSet) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.user = user;
+        this.password = password;
+        this.academicCourseSet = academicCourseSet;
+        this.academicCourses = academicCourses;
+        this.subjectSet = subjectSet;
+    }
+
+    public Set<AcademicCourse> getAcademicCourseSet() {
+        return academicCourseSet;
+    }
+
+    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
+        this.academicCourseSet = academicCourseSet;
+    }
+
+    public Set<AcademicCourse> getAcademicCourses() {
+        return academicCourses;
+    }
+
+    public void setAcademicCourses(Set<AcademicCourse> academicCourses) {
+        this.academicCourses = academicCourses;
+    }
+
+    @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
+    private Set<AcademicCourse> academicCourses = new HashSet<>();
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet = new HashSet<>();
 

@@ -5,8 +5,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "academicClass")
@@ -21,27 +23,30 @@ public class AcademicClass {
     @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
     @OneToMany
-    private List<AcademicCourse> academicCourse;
-    @OneToMany
     private List<Teacher> teacher;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicClass_academicCourse_mapping",
+            joinColumns = @JoinColumn(name = "academicCourse_id"),
+            inverseJoinColumns = @JoinColumn(name = "academicClass_id"))
+    private Set<AcademicCourse> academicCourseSet = new HashSet<>();
+    public Set<AcademicCourse> getAcademicCourseSet() {
+        return academicCourseSet;
+    }
 
-    public AcademicClass(Long id, String classNumber, List <AcademicCourse> academicCourse, List<Teacher> teacher) {
+    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
+        this.academicCourseSet = academicCourseSet;
+    }
+
+    public AcademicClass(Long id, String classNumber, Set <AcademicCourse> academicCourse, List<Teacher> teacher) {
         this.id = id;
         this.classNumber = classNumber;
-        this.academicCourse = academicCourse;
         this.teacher = teacher;
     }
 
     public AcademicClass() {
     }
 
-    public List<AcademicCourse> getAcademicCourse() {
-        return academicCourse;
-    }
-
-    public void setAcademicCourse(List<AcademicCourse> academicCourse) {
-        this.academicCourse = academicCourse;
-    }
 
     public List<Teacher> getTeacher() {
         return teacher;
@@ -72,19 +77,11 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber);
-    }
-
-    @Override
-    public String toString() {
-        return "AcademicClass{" +
-                "id=" + id +
-                ", classNumber='" + classNumber + '\'' +
-                '}';
+        return Objects.hash(id, classNumber, teacher, academicCourseSet);
     }
 }

@@ -1,11 +1,14 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "academic_course")
@@ -19,18 +22,45 @@ public class AcademicCourse {
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String name;
-
+    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
+    private Set<AcademicClass> academicClassSet = new HashSet<>();
     @ManyToOne
     @JoinColumn(name = "subject_id")
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
 
-    public AcademicCourse() {
+    public Set<Teacher> getTeacherSet() {
+        return teacherSet;
     }
 
-    public AcademicCourse(Long id, String academicCourseName, Subject subject) {
+    public void setTeacherSet(Set<Teacher> teacherSet) {
+        this.teacherSet = teacherSet;
+    }
+
+    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
+    private Set<Teacher> teacherSet=new HashSet<>();
+
+    public AcademicCourse(Long id, String name, Set<AcademicClass> academicClassSet, Subject subject) {
         this.id = id;
-        this.name = academicCourseName;
+        this.name = name;
+        this.academicClassSet = academicClassSet;
+        this.subject = subject;
+    }
+    public AcademicCourse() {
+    }
+    public Set<AcademicClass> getAcademicClassSet() {
+        return academicClassSet;
+    }
+
+    public void setAcademicClassSet(Set<AcademicClass> academicClassSet) {
+        this.academicClassSet = academicClassSet;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
@@ -50,14 +80,6 @@ public class AcademicCourse {
         this.name = name;
     }
 
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,14 +91,5 @@ public class AcademicCourse {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, subject);
-    }
-
-    @Override
-    public String toString() {
-        return "AcademicCourse{" +
-                "id=" + id +
-                ", academicCourseName='" + name + '\'' +
-                ", subject=" + subject +
-                '}';
     }
 }

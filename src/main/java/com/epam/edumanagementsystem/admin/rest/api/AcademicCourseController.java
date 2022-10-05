@@ -1,33 +1,34 @@
 package com.epam.edumanagementsystem.admin.rest.api;
-
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/courses")
 public class AcademicCourseController {
     private final AcademicCourseService academicCourseService;
     private final SubjectService subjectService;
+    private final TeacherService teacherService;
 
     @Autowired
-    public AcademicCourseController(AcademicCourseService academicCourseService, SubjectService subjectService) {
+    public AcademicCourseController(AcademicCourseService academicCourseService, SubjectService subjectService, TeacherService teacherService) {
         this.academicCourseService = academicCourseService;
         this.subjectService = subjectService;
+        this.teacherService = teacherService;
     }
 
     @GetMapping
@@ -38,6 +39,17 @@ public class AcademicCourseController {
         model.addAttribute("subjects", all);
         model.addAttribute("academicCourse", new AcademicCourseDto());
         return "academicCourseSection";
+    }
+
+    @GetMapping("/{name}/teachers")
+    public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model){
+
+        AcademicCourse academicCourse = academicCourseService.findByName(name);
+        Subject subject = academicCourse.getSubject();
+        Set<Teacher> teacherSet = subject.getTeacherSet();
+        model.addAttribute("teachers",teacherSet);
+        model.addAttribute("existingCourse",academicCourse);
+        return "teacherForAcademicCourse";
     }
 
     @PostMapping
@@ -63,5 +75,16 @@ public class AcademicCourseController {
         }
         academicCourseService.create(academicCourse);
         return "redirect:/courses";
+    }
+
+    @PostMapping("{name}/teachers")
+    public String addNewTeacher(@ModelAttribute("existingCourse") AcademicCourse academicCourse,
+                                @PathVariable("name") String name, Model model) {
+        List<TeacherDto> allTeacher=teacherService.findAll();
+        
+        AcademicCourse byName = academicCourseService.findByName(name);
+        academicCourseService.update(academicCourse);
+        model.addAttribute("teachers", allTeacher);
+        return "redirect:/courses/" + name + "/teachers";
     }
 }

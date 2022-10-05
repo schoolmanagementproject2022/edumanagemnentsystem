@@ -4,7 +4,7 @@ import com.epam.edumanagementsystem.admin.model.entity.Subject;
 
 public class AcademicCourseDto {
     private Long id;
-    private String name;
+    private String academicCourseName;
     private Subject subject;
 
     public AcademicCourseDto() {
@@ -13,7 +13,7 @@ public class AcademicCourseDto {
 
     public AcademicCourseDto(Long id, String academicCourseName, Subject subject) {
         this.id = id;
-        this.name = academicCourseName;
+        this.academicCourseName = academicCourseName;
         this.subject = subject;
     }
 
@@ -26,11 +26,11 @@ public class AcademicCourseDto {
     }
 
     public String getName() {
-        return name;
+        return academicCourseName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.academicCourseName = name;
     }
 
     public Subject getSubject() {
