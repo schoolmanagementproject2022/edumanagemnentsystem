@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
@@ -7,7 +8,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,37 +31,37 @@ public class Teacher {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
-
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicCourse_teacher_mapping",
+            joinColumns = @JoinColumn(name = "academicCourse_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+    private Set<AcademicCourse> academicCourseSet;
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
-    private Set<Subject> subjectSet = new HashSet<>();
-
+    private Set<Subject> subjectSet;
     @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
-    private Set<AcademicCourse> academicCourseSet = new HashSet<>();
+    private Set<AcademicClass> academicClass;
 
-    public Teacher(){
-
+    public Teacher() {
     }
 
-    public Teacher(Long id, String name, String surname, User user, String password) {
+    public Set<AcademicClass> getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(Set<AcademicClass> academicClass) {
+        this.academicClass = academicClass;
+    }
+
+    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet, Set<AcademicClass> academicClassSet) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.user = user;
         this.password = password;
+        this.academicCourseSet = academicCourseSet;
         this.subjectSet = subjectSet;
-    }
-
-
-    public Set<Subject> getSubjectSet() {
-        return new HashSet<Subject>();
-    }
-
-    public void setSubjectSet(Set<Subject> subjectSet) {
-        this.subjectSet = subjectSet;
-    }
-
-    public String getNameSurname() {
-        return name + " " + surname;
+        this.academicClass = academicClassSet;
     }
 
     public Long getId() {
@@ -104,30 +104,35 @@ public class Teacher {
         this.password = password;
     }
 
+    public Set<AcademicCourse> getAcademicCourseSet() {
+        return academicCourseSet;
+    }
+
+    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
+        this.academicCourseSet = academicCourseSet;
+    }
+
+    public Set<Subject> getSubjectSet() {
+        return subjectSet;
+    }
+    public String getNameSurname() {
+        return name + " " + surname;
+    }
+
+    public void setSubjectSet(Set<Subject> subjectSet) {
+        this.subjectSet = subjectSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Teacher teacher = (Teacher) o;
-        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) &&
-                Objects.equals(surname, teacher.surname) &&
-                Objects.equals(user, teacher.user) &&
-                Objects.equals(password, teacher.password);
+        return Objects.equals(id, teacher.id) && Objects.equals(name, teacher.name) && Objects.equals(surname, teacher.surname) && Objects.equals(user, teacher.user) && Objects.equals(password, teacher.password);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, user, password);
-    }
-
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", user=" + user +
-                ", password='" + password + '\'' +
-                '}';
     }
 }
