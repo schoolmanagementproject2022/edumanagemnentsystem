@@ -1,13 +1,12 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "academicClass")
@@ -34,11 +33,41 @@ public class AcademicClass {
             inverseJoinColumns = @JoinColumn(name = "academicClass_id"))
     private Set<AcademicCourse> academicCourseSet = new HashSet<>();
 
+    @ManyToMany
+    private List<CoursesForTimetable> coursesForTimetableList = new ArrayList<>();
+
+    public AcademicClass() {
+    }
+
     public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getClassNumber() {
+        return classNumber;
+    }
+
+    public void setClassNumber(String classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public Set<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Set<Teacher> teacher) {
+        this.teacher = teacher;
     }
 
     public Set<AcademicCourse> getAcademicCourseSet() {
@@ -49,33 +78,12 @@ public class AcademicClass {
         this.academicCourseSet = academicCourseSet;
     }
 
-
-    public AcademicClass() {
+    public List<CoursesForTimetable> getCoursesForTimetableList() {
+        return coursesForTimetableList;
     }
 
-
-    public Set<Teacher> getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Set<Teacher> teacher) {
-        this.teacher = teacher;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setClassNumber(String classNumber) {
-        this.classNumber = classNumber;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getClassNumber() {
-        return classNumber;
+    public void setCoursesForTimetableList(List<CoursesForTimetable> coursesForTimetableList) {
+        this.coursesForTimetableList = coursesForTimetableList;
     }
 
     @Override
@@ -89,5 +97,16 @@ public class AcademicClass {
     @Override
     public int hashCode() {
         return Objects.hash(id, classNumber);
+    }
+
+    @Override
+    public String toString() {
+        return "AcademicClass{" +
+                "id=" + id +
+                ", classNumber='" + classNumber + '\'' +
+                ", teacher=" + teacher +
+                ", academicCourseSet=" + academicCourseSet +
+                ", coursesForTimetableList=" + coursesForTimetableList +
+                '}';
     }
 }

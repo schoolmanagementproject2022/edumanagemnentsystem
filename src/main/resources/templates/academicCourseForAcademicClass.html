@@ -35,7 +35,17 @@
         <div class="sidebar2">
             <a th:classappend="${allUrl eq '/classes/ + ${middleUrl} + /courses' ? 'activeTab' : 'notActiveTab'}"
                th:href="@{${allUrl}}">courses</a>
+            <a th:classappend="${activeTab eq 'timetable' ? 'activeTab' : 'notActiveTab'}" href="/timetable" class="item">Timetable</a>-->
         </div>
+
+<!--        <div class="sidebar2">-->
+<!--            <a href="#clasroom" class="item">Classroom</a>-->
+<!--            <a href="#students" class="item">Students</a>-->
+<!--            <a th:classappend="${allUrl eq '/classes/ + ${middleUrl} + /courses' ? 'activeTab' : 'notActiveTab'}"-->
+<!--               th:href="@{${allUrl}}">courses</a>-->
+<!--            <a href="#teachers" class="item">Teachers</a>-->
+<!--            <a th:classappend="${activeTab eq 'timetable' ? 'activeTab' : 'notActiveTab'}" href="/timetable" class="item">Timetable</a>-->
+<!--        </div>-->
         <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
     </div>
 </div>

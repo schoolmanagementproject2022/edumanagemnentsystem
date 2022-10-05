@@ -146,6 +146,7 @@ body {
 }
 
 .dates{
+    width: 50%;
     margin: 0px;
     padding: 0px;
     display: flex;
@@ -168,6 +169,7 @@ body {
 }
 
 .create{
+    width: 50%;
     margin: 0px;
     padding: 0px;
     display: flex;
@@ -181,7 +183,7 @@ body {
     font-size: 23px;
     border-radius: 0px;
     width: 215px;
-    margin-left: 396px;
+    margin-left: 275px;
 }
 
 .timetable{
@@ -407,7 +409,7 @@ form {
 
 .form_input {
     margin-top: 6px;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
     display: block;
     width: 100%;
     border-radius: 1px;

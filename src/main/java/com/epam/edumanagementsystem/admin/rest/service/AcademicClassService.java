@@ -16,9 +16,13 @@ public interface AcademicClassService {
     List<AcademicClassDto> findAll();
 
     AcademicClassDto getById(Long id);
+
     AcademicClass findByName(String name);
+
     void update(AcademicClass academicClass);
+
     Set<AcademicCourse> findAllAcademicCourses(String name);
+
     Set<Teacher> findAllTeachers(String name);
 
 }

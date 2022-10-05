@@ -10,7 +10,9 @@ public interface CoursesForTimetableService {
 
     void create(CoursesForTimetableDto coursesForTimetableDto);
 
-    //    @Modifying
-//    @Query(nativeQuery = true, value = "UPDATE courses_table SET day_of_week = 'Not defined' WHERE courses_table.id =(?1);")
     void renameById(Long id);
+
+    void delete(Long id);
+
+    void deleteById(Long id);
 }

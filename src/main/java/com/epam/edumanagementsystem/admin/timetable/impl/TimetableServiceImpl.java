@@ -1,11 +1,8 @@
 package com.epam.edumanagementsystem.admin.timetable.impl;
 
+import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
+import com.epam.edumanagementsystem.admin.timetable.rest.repository.TimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
-import com.epam.edumanagementtimetabe.mapper.TimetableMapper;
-import com.epam.edumanagementtimetabe.model.dto.TimetableDto;
-import com.epam.edumanagementtimetabe.model.entity.Timetable;
-import com.epam.edumanagementtimetabe.rest.repository.TimetableRepository;
-import com.epam.edumanagementtimetabe.rest.service.TimetableService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +22,8 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public void create(TimetableDto timetableDto) {
-        timetableRepository.save(TimetableMapper.toTimetable(timetableDto));
+    public void create(Timetable timetable) {
+        timetableRepository.save(timetable);
     }
 
     @Override

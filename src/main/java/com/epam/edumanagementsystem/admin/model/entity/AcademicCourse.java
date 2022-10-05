@@ -36,8 +36,9 @@ public class AcademicCourse {
     @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<CoursesForTimetable> coursesForTimetableCourses = new ArrayList<>();
+
 
     public AcademicCourse() {
     }
