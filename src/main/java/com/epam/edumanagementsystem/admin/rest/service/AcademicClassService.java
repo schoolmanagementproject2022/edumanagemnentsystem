@@ -19,7 +19,7 @@ public interface AcademicClassService {
     AcademicClass findByName(String name);
     void update(AcademicClass academicClass);
     Set<AcademicCourse> findAllAcademicCourses(String name);
-    List<Teacher> findAllTeachers(String name);
+    Set<Teacher> findAllTeachers(String name);
 
 }
 

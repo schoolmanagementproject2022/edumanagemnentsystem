@@ -40,7 +40,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public AcademicClass findByName(String name) {
-        return academicClassRepository.findByclassNumber(name);
+        return academicClassRepository.findByClassNumber(name);
     }
 
     @Override
@@ -57,8 +57,9 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         }
 
         if (academicClass.getTeacher() != null) {
-          List<Teacher> teacher = academicClass.getTeacher();
-                byName.setTeacher(teacher);
+          Set<Teacher> teacher = academicClass.getTeacher();
+          for (Teacher teachers:teacher)
+                byName.getTeacher().add(teachers);
             }
 
         create(byName);
@@ -68,7 +69,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         return findByName(name).getAcademicCourseSet();
     }
     @Override
-    public List<Teacher> findAllTeachers(String name) {
+    public Set<Teacher> findAllTeachers(String name) {
         return findByName(name).getTeacher();
     }
 

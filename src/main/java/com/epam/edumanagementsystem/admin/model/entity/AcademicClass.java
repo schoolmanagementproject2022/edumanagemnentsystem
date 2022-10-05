@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,14 +21,26 @@ public class AcademicClass {
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
-    @OneToMany
-    private List<Teacher> teacher;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicClass_teacher_mapping",
+            joinColumns = @JoinColumn(name = "academicClass_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+    private Set<Teacher> teacher;
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicClass_academicCourse_mapping",
             joinColumns = @JoinColumn(name = "academicCourse_id"),
             inverseJoinColumns = @JoinColumn(name = "academicClass_id"))
     private Set<AcademicCourse> academicCourseSet = new HashSet<>();
+
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet) {
+        this.id = id;
+        this.classNumber = classNumber;
+        this.teacher = teacher;
+        this.academicCourseSet = academicCourseSet;
+    }
+
     public Set<AcademicCourse> getAcademicCourseSet() {
         return academicCourseSet;
     }
@@ -38,21 +49,16 @@ public class AcademicClass {
         this.academicCourseSet = academicCourseSet;
     }
 
-    public AcademicClass(Long id, String classNumber, Set <AcademicCourse> academicCourse, List<Teacher> teacher) {
-        this.id = id;
-        this.classNumber = classNumber;
-        this.teacher = teacher;
-    }
 
     public AcademicClass() {
     }
 
 
-    public List<Teacher> getTeacher() {
+    public Set<Teacher> getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(List<Teacher> teacher) {
+    public void setTeacher(Set<Teacher> teacher) {
         this.teacher = teacher;
     }
 
@@ -82,6 +88,6 @@ public class AcademicClass {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher, academicCourseSet);
+        return Objects.hash(id, classNumber);
     }
 }

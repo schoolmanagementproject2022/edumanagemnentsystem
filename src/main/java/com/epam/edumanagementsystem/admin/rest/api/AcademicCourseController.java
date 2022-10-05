@@ -5,7 +5,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
-import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/courses")
@@ -44,6 +44,10 @@ public class AcademicCourseController {
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
                          BindingResult result,
                          Model model) {
+        if(academicCourse.getName().contains(" ")){
+            String replace=academicCourse.getName().replace(" ", "");
+                academicCourse.setName(replace);
+        }
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
         List<Subject> allSubjects = subjectService.findAll();
@@ -70,7 +74,7 @@ public class AcademicCourseController {
             }
             if (result.hasFieldErrors("name")) {
                 return "academicCourseSection";
-            }else if (result.hasFieldErrors("subject")){
+            } else if (result.hasFieldErrors("subject")) {
                 return "academicCourseSection";
             }
             if (result.hasFieldErrors("subject")) {
