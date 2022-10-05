@@ -22,46 +22,27 @@ public class AcademicCourse {
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String name;
-    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
-    private Set<AcademicClass> academicClassSet = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "subject_id")
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
 
-    public Set<Teacher> getTeacherSet() {
-        return teacherSet;
-    }
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "academicCourse_teacher_mapping",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
+    private Set<Teacher> teacher = new HashSet<>();
 
-    public void setTeacherSet(Set<Teacher> teacherSet) {
-        this.teacherSet = teacherSet;
-    }
-
-    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
-    private Set<Teacher> teacherSet=new HashSet<>();
-
-    public AcademicCourse(Long id, String name, Set<AcademicClass> academicClassSet, Subject subject) {
-        this.id = id;
-        this.name = name;
-        this.academicClassSet = academicClassSet;
-        this.subject = subject;
-    }
     public AcademicCourse() {
     }
-    public Set<AcademicClass> getAcademicClassSet() {
-        return academicClassSet;
-    }
 
-    public void setAcademicClassSet(Set<AcademicClass> academicClassSet) {
-        this.academicClassSet = academicClassSet;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
+    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher) {
+        this.id = id;
+        this.name = name;
         this.subject = subject;
+        this.teacher = teacher;
     }
 
     public Long getId() {
@@ -80,16 +61,42 @@ public class AcademicCourse {
         this.name = name;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Set<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Set<Teacher> teacher) {
+        this.teacher = teacher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject);
+        return Objects.hash(id, name, subject, teacher);
+    }
+
+    @Override
+    public String toString() {
+        return "AcademicCourse{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subject=" + subject +
+                ", teacher=" + teacher +
+                '}';
     }
 }

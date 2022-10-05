@@ -70,9 +70,12 @@ private Set<AcademicCourse> academicCourseSet=new HashSet<>();
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet = new HashSet<>();
 
-   public Teacher(){
+    @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    private Set<AcademicCourse> academicCourseSet = new HashSet<>();
 
-   }
+    public Teacher(){
+
+    }
 
     public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;

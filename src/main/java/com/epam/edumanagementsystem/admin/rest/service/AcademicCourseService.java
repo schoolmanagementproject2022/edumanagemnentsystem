@@ -2,12 +2,12 @@ package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
 import java.util.List;
-import java.util.Set;
 
 public interface AcademicCourseService {
+
+    AcademicCourse findAcademicCourseByAcademicCourseName(String name);
 
     void create(AcademicCourse academicCourse);
 
@@ -15,8 +15,7 @@ public interface AcademicCourseService {
 
     List<AcademicCourseDto> findAll();
 
-    AcademicCourse findByName(String name);
-    Set<Teacher> findTeacherByAcademicCourseName(String name);
+    void update(AcademicCourse academicCourse);
 
-    public void update(AcademicCourse academicCourse);
+    Set<Teacher> findAllTeachersByAcademicCourseName(String name);
 }

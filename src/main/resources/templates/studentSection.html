@@ -101,7 +101,7 @@
                     <label class="popup-label-title">Linked Class</label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
-                        <option class="short" data-limit="23" th:value="*{academicClass}">Class</option>
+                        <option th:if="*{academicClass == null}" th:text="'Class'" class="short" data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
@@ -124,7 +124,7 @@
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
-                            <option class="short" data-limit="23" th:value="*{bloodGroup}">Blood Group</option>
+                            <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23" th:value="null"></option>
                             <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
                                     th:value="${bloodGroup}"
                                     th:text="${bloodGroup.bloodGroup}"></option>
@@ -134,7 +134,7 @@
 
                         <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
-                            <option class="short" data-limit="23" th:value="*{gender}">Gender</option>
+                            <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23" th:value="null"></option>
                             <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
                                     th:text="${gender.gender}"></option>
                         </select>
@@ -143,7 +143,7 @@
 
                         <label class="popup-label-title">Linked Parent</label>
                         <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
-                            <option class="short" data-limit="23" th:value="*{parent}">Parent</option>
+                            <option th:if="*{parent == null}" class="short" data-limit="23" th:text="'Parent'" th:value="null"></option>
                             <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
                                     th:text="${parent.getNameAndSurname}"></option>
                         </select>
