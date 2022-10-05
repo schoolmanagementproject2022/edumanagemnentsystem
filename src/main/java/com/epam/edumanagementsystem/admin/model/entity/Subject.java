@@ -26,22 +26,13 @@ public class Subject {
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teacherSet = new HashSet<>();
 
-    public Subject(Long id, String username, Set<Teacher> teacherSet) {
-        this.id = id;
-        this.name = username;
-        this.teacherSet = teacherSet;
-    }
-
-    public Set<Teacher> getTeacherSet() {
-        return teacherSet;
-    }
-
-    public void setTeacherSet(Set<Teacher> teacherSet) {
-        this.teacherSet = teacherSet;
-    }
-
-
     public Subject() {
+    }
+
+    public Subject(Long id, String name, Set<Teacher> teacherSet) {
+        this.id = id;
+        this.name = name;
+        this.teacherSet = teacherSet;
     }
 
     public Long getId() {
@@ -56,12 +47,24 @@ public class Subject {
         return name;
     }
 
-    public void setName(String username) {
-        this.name = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Teacher> getTeacherSet() {
+        return teacherSet;
+    }
+
+    public void setTeacherSet(Set<Teacher> teacherSet) {
+        this.teacherSet = teacherSet;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, teacherSet);
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", teacherSet=" + teacherSet +
+                '}';
     }
 }
