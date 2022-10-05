@@ -33,6 +33,8 @@ public class AcademicCourse {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher = new HashSet<>();
+    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.EAGER)
+    private Set<AcademicClass> academicClass;
 
     @ManyToMany
     private List<CoursesForTimetable> coursesForTimetableCourses = new ArrayList<>();
