@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AcademicClassRepository extends JpaRepository<AcademicClass, Long> {
+    AcademicClass findByClassNumber(String name);
 }

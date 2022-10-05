@@ -44,6 +44,10 @@ public class AcademicCourseController {
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
                          BindingResult result,
                          Model model) {
+        if(academicCourse.getName().contains(" ")){
+            String replace=academicCourse.getName().replace(" ", "");
+                academicCourse.setName(replace);
+        }
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
         List<Subject> allSubjects = subjectService.findAll();
@@ -65,9 +69,15 @@ public class AcademicCourseController {
         }
 
         if (result.hasErrors()) {
+            if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
+                return "academicCourseSection";
+            }
             if (result.hasFieldErrors("name")) {
                 return "academicCourseSection";
             } else if (result.hasFieldErrors("subject")) {
+                return "academicCourseSection";
+            }
+            if (result.hasFieldErrors("subject")) {
                 return "academicCourseSection";
             }
         }
@@ -77,6 +87,7 @@ public class AcademicCourseController {
         }else {
             academicCourse.setUrlName(academicCourse.getName());
         }
+
         academicCourseService.create(academicCourse);
         return "redirect:/courses";
     }
