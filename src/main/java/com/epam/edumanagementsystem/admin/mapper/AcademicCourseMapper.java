@@ -20,6 +20,7 @@ public class AcademicCourseMapper {
         academicCourse.setId(academicCourseDto.getId());
         academicCourse.setName(academicCourseDto.getName());
         academicCourse.setSubject(academicCourseDto.getSubject());
+        academicCourse.setTeacher(academicCourseDto.getTeacher());
         return academicCourse;
     }
 
@@ -28,6 +29,7 @@ public class AcademicCourseMapper {
         academicCourseDto.setId(academicCourse.getId());
         academicCourseDto.setName(academicCourse.getName());
         academicCourseDto.setSubject(academicCourse.getSubject());
+        academicCourseDto.setTeacher(academicCourse.getTeacher());
         return academicCourseDto;
     }
 

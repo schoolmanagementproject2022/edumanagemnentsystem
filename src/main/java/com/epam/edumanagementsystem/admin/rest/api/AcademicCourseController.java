@@ -5,18 +5,19 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/courses")
@@ -49,6 +50,14 @@ public class AcademicCourseController {
         List<Subject> allSubjects = subjectService.findAll();
         model.addAttribute("subjects", allSubjects);
 
+        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
+        for (Character character : list) {
+            if (academicCourse.getName().contains(character.toString())) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+                return "academicCourseSection";
+            }
+        }
+
         for (AcademicCourseDto aCourse : all) {
             if (aCourse.getName().equalsIgnoreCase(academicCourse.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
@@ -57,11 +66,66 @@ public class AcademicCourseController {
         }
 
         if (result.hasErrors()) {
+            if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
+                return "academicCourseSection";
+            }
             if (result.hasFieldErrors("name")) {
+                return "academicCourseSection";
+            }else if (result.hasFieldErrors("subject")){
+                return "academicCourseSection";
+            }
+            if (result.hasFieldErrors("subject")) {
                 return "academicCourseSection";
             }
         }
+
         academicCourseService.create(academicCourse);
         return "redirect:/courses";
+    }
+
+    @GetMapping("/{name}/teachers")
+    public String openAcademicCourseForTeacherCreation(@PathVariable("name") String name, Model model) {
+        AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseName(name);
+        Set<Teacher> result = new HashSet<>();
+        Set<Teacher> teachersInSubject = academicCourse.getSubject().getTeacherSet();
+        Set<Teacher> teachersInAcademicCourse = academicCourse.getTeacher();
+        for (Teacher teacher : teachersInSubject) {
+            if (!teachersInAcademicCourse.contains(teacher)) {
+                result.add(teacher);
+            }
+        }
+        model.addAttribute("teachers", result);
+        model.addAttribute("teachersInAcademicCourse", teachersInAcademicCourse);
+        return "academicCourseSectionForTeachers";
+    }
+
+    @PostMapping("{name}/teachers")
+    public String addNewTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourse academicCourse,
+                                @PathVariable("name") String name, Model model) {
+
+
+        Set<Teacher> result = new HashSet<>();
+        Set<Teacher> allTeacherSet = academicCourseService.findAcademicCourseByAcademicCourseName(name)
+                .getSubject().getTeacherSet();
+        Set<Teacher> allTeachersInAcademicCourse = academicCourseService.findAllTeachersByAcademicCourseName(name);
+        model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
+
+        if (academicCourse.getTeacher().size() == 0) {
+            model.addAttribute("blank", "There is no new selection.");
+            if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
+                return "academicCourseSectionForTeachers";
+            } else {
+                for (Teacher teacher : allTeacherSet) {
+                    if (!allTeachersInAcademicCourse.contains(teacher)) {
+                        result.add(teacher);
+                    }
+                }
+            }
+            model.addAttribute("teachers", result);
+            return "academicCourseSectionForTeachers";
+
+        }
+        academicCourseService.update(academicCourse);
+        return "redirect:/courses/" + name + "/teachers";
     }
 }

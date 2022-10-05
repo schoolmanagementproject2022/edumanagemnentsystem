@@ -55,4 +55,19 @@ public class ControllerAdviceController {
         }
         return URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
     }
+
+    @ModelAttribute("lastUrl")
+    public String lastUrl(HttpServletRequest request) {
+        if (request.getRequestURI().contains("/")) {
+            String[] path = request.getRequestURI().split("/");
+            if (path.length > 2) {
+                String decode = URLDecoder.decode(path[path.length - (path.length - 3)], StandardCharsets.UTF_8);
+                return decode;
+            } else if (path.length == 2) {
+                String decoded = URLDecoder.decode(path[path.length - 1], StandardCharsets.UTF_8);
+                return decoded;
+            }
+        }
+        return URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
+    }
 }
