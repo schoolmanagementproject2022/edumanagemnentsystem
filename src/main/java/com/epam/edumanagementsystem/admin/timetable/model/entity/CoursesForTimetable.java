@@ -15,10 +15,8 @@ public class CoursesForTimetable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "courses_table", joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "academic_course_id"))
-    private List<AcademicCourse> academicCourse;
+    @Column(name = "academic_course_name")
+    private String academicCourse;
 
     @ManyToMany
     @JoinTable(name = "courses_table", joinColumns = @JoinColumn(name = "id"),
@@ -31,7 +29,8 @@ public class CoursesForTimetable {
     public CoursesForTimetable() {
     }
 
-    public CoursesForTimetable(List<AcademicCourse> academicCourse, List<AcademicClass> academicClass, String dayOfWeek) {
+    public CoursesForTimetable(Long id, String academicCourse, List<AcademicClass> academicClass, String dayOfWeek) {
+        this.id = id;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;
@@ -41,15 +40,15 @@ public class CoursesForTimetable {
         return id;
     }
 
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public List<AcademicCourse> getAcademicCourse() {
+    public String getAcademicCourse() {
         return academicCourse;
     }
 
-    public void setAcademicCourse(List<AcademicCourse> academicCourse) {
+    public void setAcademicCourse(String academicCourse) {
         this.academicCourse = academicCourse;
     }
 
@@ -74,7 +73,7 @@ public class CoursesForTimetable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CoursesForTimetable that = (CoursesForTimetable) o;
-        return Objects.equals(id, that.id) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(academicClass, that.academicClass) && Objects.equals(dayOfWeek, that.dayOfWeek);
+        return id.equals(that.id) && academicCourse.equals(that.academicCourse) && academicClass.equals(that.academicClass) && dayOfWeek.equals(that.dayOfWeek);
     }
 
     @Override
@@ -86,8 +85,8 @@ public class CoursesForTimetable {
     public String toString() {
         return "CoursesForTimetable{" +
                 "id=" + id +
-                ", academicCourse=" + academicCourse +
-                ", academicClassSet=" + academicClass +
+                ", academicCourse='" + academicCourse + '\'' +
+                ", academicClass=" + academicClass +
                 ", dayOfWeek='" + dayOfWeek + '\'' +
                 '}';
     }

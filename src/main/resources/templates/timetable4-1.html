@@ -132,10 +132,9 @@
                             <div class="single_lesson_wrapper">
 
                                 <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                    <!--                                    <p th:each="lesson : ${lessons.values()}"> </p>-->
                                     <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
                                             class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.id}">Name</a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
 
                             </div>

@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public class CoursesForTimetableServiceImpl implements CoursesForTimetableService {
 
+
     private final CoursesForTimetableRepository coursesRepository;
 
     @Autowired
@@ -30,7 +31,7 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     @Override
     public void create(CoursesForTimetableDto coursesForTimetableDto) {
         coursesRepository.create(coursesForTimetableDto.getDayOfWeek(),
-                coursesForTimetableDto.getAcademicCourse().getId(),
+                coursesForTimetableDto.getAcademicCourse().getName(),
                 coursesForTimetableDto.getAcademicClass().getId());
     }
 

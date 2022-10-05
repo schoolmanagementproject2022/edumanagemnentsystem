@@ -48,7 +48,6 @@ public class TimetableController {
         model.addAttribute("academicClass", academicClassService.findByName("5A"));
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
         model.addAttribute("timetable", new Timetable());
-
         return "timetable4-1";
     }
 
@@ -124,7 +123,6 @@ public class TimetableController {
         }
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courses", academicCourseService.findAll());
-
         coursesService.create(coursesForTimetableDto);
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
         model.addAttribute("academicClass", academicClassService.findByName("5A"));
@@ -132,12 +130,10 @@ public class TimetableController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id, Model model) {
+    public String delete(@PathVariable("id") Long id) {
         if (id != null) {
             coursesService.delete(id);
         }
         return "redirect:/timetable/creation";
     }
-
-
 }

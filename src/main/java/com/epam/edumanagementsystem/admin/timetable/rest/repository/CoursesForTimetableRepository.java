@@ -12,9 +12,9 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     List<CoursesForTimetable> findByDayOfWeek(String dayOfWeek);
 
     @Modifying(clearAutomatically = true)
-    @Query(nativeQuery = true, value = "insert into courses_table(day_of_week, academic_course_id, academic_class_id) " +
+    @Query(nativeQuery = true, value = "insert into courses_table(day_of_week, academic_course_name, academic_class_id) " +
             "values(?1,?2,?3)")
-    void create(String dayOfWeek, Long academicCourseId, Long academicClassId);
+    void create(String dayOfWeek, String academicCourseName, Long academicClassId);
 
     @Modifying(clearAutomatically = true)
     @Query(nativeQuery = true, value = "UPDATE courses_table SET academic_class_id = '0' WHERE id =(?1);")
