@@ -56,7 +56,6 @@ public class AcademicClass {
     public AcademicClass() {
     }
 
-
     public Set<Teacher> getTeacher() {
         return teacher;
     }
@@ -86,7 +85,7 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) ;
     }
 
     @Override
