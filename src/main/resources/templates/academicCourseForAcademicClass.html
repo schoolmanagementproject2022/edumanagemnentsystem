@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
+    <link href="/static/css/academicCourseForAcademicClass.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
@@ -16,59 +16,69 @@
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <div class="main-wrapper">
-        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-
+</div>
+<div class="main-wrapper">
+    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="middle" id="middle">
         <div class="url-path">
-            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Classes'}"></a>
+            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
             <p class="a-url">/</p>
             <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
             <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Teachers'}"></a>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Courses'}"></a>
         </div>
 
         <div class="list">
-            <div class="list-items" th:each="course : ${courses}">
+            <div class="list-items" th:each="course : ${academicCourseSet}">
                 <p class="item" th:text="${course.getName()}"> Course </p>
             </div>
         </div>
-        <div class="sidebar2">
-            <a th:classappend="${allUrl eq '/classes/ + ${middleUrl} + /courses' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">courses</a>
-        </div>
-        <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
     </div>
+    <div class="sidebar2">
+        <a href="#clasroom" class="item">Classroom</a>
+        <a href="#students" class="item">Students</a>
+        <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${allUrl}}">Courses</a>
+        <a href="#teachers" class="item">Teachers</a>
+        <a href="#timetable" class="item">Timetable</a></div>
+    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
 
 <div class="create">
     <div class="popup-container" id="popup-container">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-        <h1>New Academic course</h1>
-        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingAcademicClass}">
-
+        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+        <h1>New course</h1>
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingClass}">
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title" for="course">Academic course<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="course">Academic course<span
+                            style="color:#A30014">*</span></label>
                     <div class="selectTeacher">
-                        <select class="form_input"  id="course" name="academicCourseSet" th:field="*{academicCourseSet}" style="width: 250px" >
-                            <option th:if="*{academicCourseSet  == null}" th:value="null" th:text="'Select Course'"></option>
-                            <option th:each="select : ${academicCoursesToSelect}"
+                        <select class="form_input" id="course" name="academicCourseSet"
+                                th:field="*{academicCourseSet}" style="width: 250px"
+                                onchange="populate(this.id, 'teacher')">
+                            <option th:if="*{academicCourseSet  == null}" th:value="null"
+                                    th:text="'Select Course'"></option>
+                            <option th:each="select : ${coursesForSelect}"
                                     th:value="${select.id}" th:text="${select.getName()}"></option>
                         </select>
                         <div th:if="${blank}!= null" class="error">
                             <p th:text="${blank}"></p>
                         </div>
                     </div>
-                    <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="teacher">Teachers<span
+                            style="color:#A30014">*</span></label>
                     <div class="selectTeacher">
-                        <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}" style="width: 250px">
-                            <option th:if="*{teacher  == null}" th:value="null" th:text="'Select Teacher'"></option>
-                            <option th:each="select : ${teachersToSelect}"
-                                    th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
+                        <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
+                                style="width: 250px">
+                            <option th:if="*{teacher  == null}" th:value="null"
+                                    th:text="'Select Course'"></option>
+                           <option th:each="teacher : ${allTeacherByAcademicCourse}"
+                                  th:value="${teacher.id}" th:text="${teacher.getNameSurname()}"></option>-
                         </select>
                         <div th:if="${blank}!= null" class="error">
                             <p th:text="${blank}"></p>
@@ -86,24 +96,22 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(
-		$('#course').change(
-    		function() {
-        		$.getJSON("http://localhost:8082/classes/teachersByCourse"),{
-         	courseId : $(this).val(),
-                ajax : true
-            },function(data) {
-            		var html = '<option value=""></option>';
-                var len = data.length;
-                for ( var i = 0; i < len; i++) {
-                    html += '<option value="' + data[i].id+ '">'
-                            + data[i].name + '</option>';
-                }
-                $('#teacher').html(html);
-            }
-        }
-    )
-)
+    function populate(s1,s2){
+    var s1=document.getElement(s1);
+    var s2=document.getElement(s2);
+    s2.innerHTML="";
+    if(s1.value==select.id){
+    var optionArray=['select.getTeacher()|select.getTeacher()'];
+    }
+    for(var option in optionArray){
+    var pair=optionArray[option].split("|");
+  var newOption=document.createElement("option");
+  newOption.value=pair[0];
+  newOption.innerHTML=pair[1];
+  s2.option.add(newOption);
+    }
+ }
+
 </script>
 </body>
 </html>
