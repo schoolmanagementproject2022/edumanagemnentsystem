@@ -191,7 +191,7 @@ body {
     padding: 0px;
     background-color:#D7D7D7;
     display: flex;
-    margin-top: 10px;
+    margin-top: 6%;
     border: solid 0.5px #007EB4;
 }
 
@@ -448,4 +448,24 @@ form {
     margin-right: 59px;
     background-color: #555555;
     color: #FFFFFF
+}
+
+.show-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 102px;
+    text-align: center;
+    background-color: #555555;
+    position: absolute;
+    top: 12%;
+    left: 90%;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    transform: translate(-50%, -50%);
+    color: #01A7F0;
+}
+
+.show-btn:hover {
+    border-color: #01A7F0;
 }

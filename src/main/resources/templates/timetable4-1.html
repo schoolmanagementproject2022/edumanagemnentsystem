@@ -28,22 +28,6 @@
             });
         });
     </script>
-    <!--    <script>-->
-    <!--        function f() {-->
-    <!--            var today = new Date();-->
-    <!--            var dd = today.getDate();-->
-    <!--            var mm = today.getMonth() + 1;-->
-    <!--            var yyyy = today.getFullYear();-->
-    <!--            if (dd < 10) {-->
-    <!--                dd = '0' + dd-->
-    <!--            }-->
-    <!--            if (mm < 10) {-->
-    <!--                mm = '0' + mm-->
-    <!--            }-->
-    <!--            today = yyyy + '-' + mm + '-' + dd;-->
-    <!--            document.getElementById("date").setAttribute("min", today);-->
-    <!--        }-->
-    <!--    </script>-->
     <style>
         .ui-datepicker .ui-datepicker-header {
             position: relative;
@@ -73,16 +57,16 @@
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
     <div class="middle">
-<!--        <div class="url-path">-->
-<!--            &lt;!&ndash; todo &ndash;&gt;-->
-<!--            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>-->
-<!--            &lt;!&ndash;        change&ndash;&gt;-->
-<!--            <p class="a-url">/</p>-->
-<!--            <a class="a-url"  th:href="${allUrl}" th:text="${middleUrl}"></a>-->
-<!--            &lt;!&ndash;        change&ndash;&gt;-->
-<!--            <p class="a-url">/</p>-->
-<!--            <a class="a-url"  th:href="${activeTab}" th:text="${'Timetable'}"></a>-->
-<!--        </div>-->
+        <div class="url-path">
+            <!-- todo -->
+            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
+            <!--        change-->
+            <p class="a-url">/</p>
+            <a class="a-url"  th:href="${allUrl}" th:text="${middleUrl}"></a>
+            <!--        change-->
+            <p class="a-url">/</p>
+            <a class="a-url"  th:href="${activeTab}" th:text="${'Timetable'}"></a>
+        </div>
 
         <div class="main-down">
             <div class="form-timetable">
@@ -121,7 +105,7 @@
                         </div>
                         <div class="create">
                             <input id="class" type="hidden" name="class" th:value="5A"/>
-                            <button type="submit" class="button"><b>Create Timetable</b></button>
+                            <button type="submit" class="show-btn"><b>Create</b></button>
                         </div>
                     </div>
                 </form>
