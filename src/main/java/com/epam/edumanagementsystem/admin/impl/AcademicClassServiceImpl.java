@@ -50,7 +50,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
             byName.setClassNumber(academicClass.getClassNumber());
         }
         if (academicClass.getAcademicCourseSet() != null) {
-            Set<AcademicCourse> academicCourse = academicClass.getAcademicCourseSet();
+            List<AcademicCourse> academicCourse = academicClass.getAcademicCourseSet();
             for (AcademicCourse academicCourse1 : academicCourse) {
                 byName.getAcademicCourseSet().add(academicCourse1);
             }
@@ -65,8 +65,9 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         create(byName);
     }
         @Override
-    public Set<AcademicCourse> findAllAcademicCourses(String name) {
-        return findByName(name).getAcademicCourseSet();
+    public List<AcademicCourse> findAllAcademicCourses(String name) {
+            List<AcademicCourse> academicCourseSet = findByName(name).getAcademicCourseSet();
+            return academicCourseSet;
     }
     @Override
     public Set<Teacher> findAllTeachers(String name) {

@@ -16,11 +16,12 @@
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <div class="main-wrapper">
-        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-
+</div>
+<div class="main-wrapper">
+    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="middle" id="middle">
         <div class="url-path">
-            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Classes'}"></a>
+            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
             <p class="a-url">/</p>
             <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
             <p class="a-url">/</p>
@@ -32,30 +33,35 @@
                 <p class="item" th:text="${course.getName()}"> Course </p>
             </div>
         </div>
-        <div class="sidebar2">
-            <a th:classappend="${allUrl eq '/classes/ + ${middleUrl} + /courses' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">courses</a>
-        </div>
-        <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
     </div>
+       <div class="sidebar2">
+        <a href="#clasroom" class="item">Classroom</a>
+        <a href="#students" class="item">Students</a>
+        <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${allUrl}}">Courses</a>
+        <a href="#teachers" class="item">Teachers</a>
+        <a href="#timetable" class="item">Timetable</a></div>
+    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
 
 <div class="create">
     <div class="popup-container" id="popup-container">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>New Academic course</h1>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingAcademicClass}">
-
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title" for="course">Academic course<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="course">Academic course<span
+                            style="color:#A30014">*</span></label>
                     <div class="selectTeacher">
-                        <select class="form_input"  id="course" name="academicCourseSet" th:field="*{academicCourseSet}" style="width: 250px" >
-                            <option th:if="*{academicCourseSet  == null}" th:value="null" th:text="'Select Course'"></option>
+                        <select class="form_input" id="course" name="academicCourseSet"
+                                th:field="*{academicCourseSet}" style="width: 250px">
+                            <option th:if="*{academicCourseSet  == null}" th:value="null"
+                                    th:text="'Select Course'"></option>
                             <option th:each="select : ${academicCourseSet}"
                                     th:value="${select.id}" th:text="${select.getName()}"></option>
                         </select>
@@ -63,9 +69,11 @@
                             <p th:text="${blank}"></p>
                         </div>
                     </div>
-                    <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="teacher">Teachers<span
+                            style="color:#A30014">*</span></label>
                     <div class="selectTeacher">
-                        <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}" style="width: 250px">
+                        <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
+                                style="width: 250px">
                             <option th:if="*{teacher== null}" th:value="null" th:text="'Select Teacher'"></option>
                             <option th:each="select : ${allTeacherByAcademicCourse}"
                                     th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
@@ -86,24 +94,24 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(
-		$('#course').change(
-    		function() {
-        		$.getJSON("http://localhost:8082/classes/teachersByCourse"),{
-         	courseId : $(this).val(),
-                ajax : true
-            },function(data) {
-            		var html = '<option value=""></option>';
-                var len = data.length;
-                for ( var i = 0; i < len; i++) {
-                    html += '<option value="' + data[i].id+ '">'
+    $(document).ready(
+        $('#course').change(
+            function () {
+                $.getJSON("http://localhost:8082/classes/teachersByCourse"), {
+                    courseId: $(this).val(),
+                    ajax: true
+                }, function (data) {
+                    var html = '<option value=""></option>';
+                    var len = data.length;
+                    for (var i = 0; i < len; i++) {
+                        html += '<option value="' + data[i].id + '">'
                             + data[i].name + '</option>';
+                    }
+                    $('#teacher').html(html);
                 }
-                $('#teacher').html(html);
             }
-        }
+        )
     )
-)
 </script>
 </body>
 </html>

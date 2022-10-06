@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -85,40 +86,78 @@ public class AcademicClassController {
 
     @GetMapping("/{name}/courses")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
-        List<AcademicCourseDto> academicCourseSet = academicCourseService.findAll();
+        Set<AcademicCourse> result = new HashSet<>();
+        Set<Teacher> resultTeacher = new HashSet<>();
+        List<AcademicCourse> academicCourseInAcademicClass = academicClassService.findAllAcademicCourses(name);
+        Set<Teacher> teacherInAcademicClass = academicClassService.findAllTeachers(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
-        model.addAttribute("academicCourseSet", academicCourseSet);
+        List<AcademicCourse> allAcademicCourse = academicCourseService.findAllCourse();
+        model.addAttribute("academicCourseSet", academicCourseInAcademicClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingAcademicClass", academicClassService.findByName(name));
+        if (academicCourseInAcademicClass.size() == 0 && teacherInAcademicClass.size() == 0) {
+            resultTeacher.addAll(allTeachersByAcademicCourse);
+            result.addAll(allAcademicCourse);
+            model.addAttribute("teacherToSelect", resultTeacher);
+            model.addAttribute("academicCourseToSelect", result);
+            return "academicCourseForAcademicClass";
+        } else if (academicCourseInAcademicClass.size() == allAcademicCourse.size() && teacherInAcademicClass.size() == allTeachersByAcademicCourse.size()) {
+            return "academicCourseForAcademicClass";
+        } else {
+            for (AcademicCourse academicCourse : allAcademicCourse) {
+                if (!academicCourseInAcademicClass.contains(academicCourse)) {
+                    result.add(academicCourse);
+                }
+            }
+            for (Teacher teacher : allTeachersByAcademicCourse) {
+                if (!teacherInAcademicClass.contains(teacher)) {
+                    resultTeacher.add(teacher);
+                }
+            }
+        }
+        model.addAttribute("academicCourseToSelect", result);
 
+        model.addAttribute("teachersToSelect", resultTeacher);
         return "academicCourseForAcademicClass";
     }
 
     @PostMapping("{name}/courses")
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingAcademicClass") AcademicClass academicClass,
                                                  @PathVariable("name") String name, Model model) {
-        List<AcademicCourseDto> result = new ArrayList<>();
+       academicClass.setClassNumber(name);
+        List<AcademicCourse> result = new ArrayList<>();
         List<Teacher> resultTeacher = new ArrayList<>();
-        List<AcademicCourseDto> academicCourseSet = academicCourseService.findAll();
+        List<AcademicCourse> academicCourseInAcademicClass = academicClassService.findAllAcademicCourses(name);
+        Set<Teacher> teacherInAcademicClass = academicClassService.findAllTeachers(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
-        Set<AcademicCourse> allAcademicCoursesInAcademicClass = academicClassService.findAllAcademicCourses(name);
-
-        model.addAttribute("academicCourseSet", academicCourseSet);
+        List<AcademicCourse> allAcademicCourse = academicCourseService.findAllCourse();
+        model.addAttribute("academicCourseSet", academicCourseInAcademicClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingAcademicClass", academicClassService.findByName(name));
-        academicClass.setClassNumber(name);
-        if (academicClass.getAcademicCourseSet().size() == 0) {
-            model.addAttribute("blank", "there is no selection");
-            return "academicCourseForAcademicClass";
-        }
-        if (academicClass.getTeacher().size() == 0) {
-            model.addAttribute("blank", "there is no selection");
-            return "academicCourseForAcademicClass";
-        }
-        if (allAcademicCoursesInAcademicClass.size() == 0) {
-            result.addAll(academicCourseSet);
-            return "academicCourseForAcademicClass";
 
+
+        if (academicClass.getAcademicCourseSet().size() == 0) {
+            model.addAttribute("blank", "There is no new selection.");
+            if (academicCourseInAcademicClass.size() == 0 && teacherInAcademicClass.size() == 0) {
+                resultTeacher.addAll(allTeachersByAcademicCourse);
+                result.addAll(allAcademicCourse);
+                model.addAttribute("teacherToSelect", resultTeacher);
+                model.addAttribute("academicCourseToSelect", result);
+                return "academicCourseForAcademicClass";
+            } else if (academicCourseInAcademicClass.size() == allAcademicCourse.size() && teacherInAcademicClass.size() == allTeachersByAcademicCourse.size()) {
+                return "academicCourseForAcademicClass";
+            } else {
+                for (AcademicCourse academicCourse : allAcademicCourse) {
+                    if (!academicCourseInAcademicClass.contains(academicCourse)) {
+                        result.add(academicCourse);
+                    }
+                }
+                for (Teacher teacher : allTeachersByAcademicCourse) {
+                    if (!teacherInAcademicClass.contains(teacher)) {
+                        resultTeacher.add(teacher);
+                    }
+                }
+            }
         }
         academicClassService.update(academicClass);
         return "redirect:/classes/" + name + "/courses";
