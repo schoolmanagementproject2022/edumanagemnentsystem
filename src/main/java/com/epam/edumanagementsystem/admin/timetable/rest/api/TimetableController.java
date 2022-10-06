@@ -134,7 +134,6 @@ public class TimetableController {
             return "timetable4-1";
         }
 
-        coursesService.create(coursesForTimetableDto);
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courses", academicCourseService.findAll());
 
