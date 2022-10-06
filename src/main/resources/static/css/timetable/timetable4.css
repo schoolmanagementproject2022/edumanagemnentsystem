@@ -178,7 +178,7 @@ body {
     color: green;
 }
 
-.middle{
+.middle {
     margin-left: 21%;
     width: 80%;
 }
@@ -276,6 +276,7 @@ body {
     font-size: 1.3em;
 
 }
+
 .sidebar a:hover {
     background-color: #333333;
     color: #01A7F0;
@@ -292,29 +293,29 @@ body {
 }
 
 /*Main top containing only link style*/
-.main-top{
-    background-color:  #AAAAAA;
+.main-top {
+    background-color: #AAAAAA;
     margin: 0;
     padding: 0px;
 }
 
-.link{
+.link {
     margin: 0;
     padding: 16px;
     background-color: #AAAAAA;
     display: flex;
 }
 
-.link a{
+.link a {
     text-decoration: none;
-    color:#007EB4;
+    color: #007EB4;
     text-align: left;
     font-size: 0.9em;
     font-weight: 600;
 }
 
 /*Main down containing dates,create timetable and lessons style*/
-.main-down{
+.main-down {
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
@@ -323,7 +324,7 @@ body {
 
 }
 
-.form-timetable{
+.form-timetable {
     margin: 0px;
     padding: 0px;
     margin-left: 47px;
@@ -333,7 +334,7 @@ body {
 
 }
 
-.dates_and_create{
+.dates_and_create {
     background-color: #AAAAAA;
     margin: 0;
     padding: 0px;
@@ -341,13 +342,13 @@ body {
     margin-top: 35px;
 }
 
-.dates{
+.dates {
     margin: 0px;
     padding: 0px;
     display: flex;
 }
 
-.date_half{
+.date_half {
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
@@ -357,19 +358,20 @@ body {
     font-weight: 600;
     margin-right: -34px;
 }
+
 .input_left {
     margin: 0;
     padding: 0px;
     margin-right: 80px;
 }
 
-.create{
+.create {
     margin: 0px;
     padding: 0px;
     display: flex;
 }
 
-.button{
+.button {
     color: #01A7F0;
     background-color: #555555;
     padding: 5px;
@@ -377,14 +379,14 @@ body {
     font-size: 23px;
     border-radius: 0px;
     width: 186px;
-    margin-left: 396px;
+    margin-left: 244px;
 }
 
-.timetable{
+.timetable {
     width: 80%;
     margin: 0;
     padding: 0px;
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     display: flex;
     margin-top: 10px;
     border: solid 0.5px #007EB4;
@@ -394,14 +396,15 @@ body {
     width: 50%;
     margin: 0;
     padding: 0px;
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
 }
-.dayHeader{
+
+.dayHeader {
     margin: 0;
     padding: 5px;
     background-color: #7F7F7F;
@@ -410,74 +413,82 @@ body {
     font-size: 0.8em;
     font-weight: 600;
 }
-.dayHeader a{
+
+.dayHeader a {
     text-align: center;
     color: #FFFFFF;
     background-color: #7F7F7F;
 }
-.add{
-    background-color:#D7D7D7;
+
+.add {
+    background-color: #D7D7D7;
     margin-bottom: 11px;
 }
-.plus{
+
+.plus {
     border-radius: 50%;
     padding: 10px;
     margin: 0px 48px;
-    border: solid 3px#007EB4;
+    border: solid 3px #007EB4;
     font-weight: 600;
     font-size: 23px;
     text-align: center;
-    color:#007EB4;
+    color: #007EB4;
 }
+
 /*Lessons section styles*/
-.lessons{
+.lessons {
     margin: 0;
     padding: 183px 0px;
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     position: relative;
 }
-.single_lesson_wrapper{
+
+.single_lesson_wrapper {
     margin: 0;
-    padding: 0px 10px;
+    padding: 0px 0px;
     background-color: #D7D7D7;
     position: absolute;
     top: 0px;
     flex-direction: column;
 }
-.single_item{
-    width: 93%;
+
+.single_item {
     margin: 0;
-    padding: 31px 10px;
+    padding: 23px 0px;
     background-color: #AAAAAA;
-    margin-top: 4px;
-    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 4px;
     flex-direction: column;
     display: flex;
     border-radius: 10px;
-    border: solid 0.5px#007EB4;
+    border: solid 0.5px #007EB4;
+    margin-left: 4px;
 }
 
-.single_item .btn{
+.single_item .btn {
     margin: 0;
     padding: 0px;
-    background-color:#AAAAAA;
-    margin-top: -30px;
-    margin-left: 25px;
+    background-color: #AAAAAA;
+    margin-top: -21px;
 }
+
 .single_item .close-btn {
-    right: 30px;
-    font-size: 19px;
+    font-size: 16px;
     cursor: pointer;
-    margin-left: 56px;
+    margin-left: 80px;
 }
+
 .close-btn:hover {
     color: red;
 }
-.title{
+
+.title {
     text-align: center;
     color: #007EB4;
     font-weight: bold;
     font-size: 0.7em;
+
 }
 
 
@@ -616,6 +627,7 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
+
 /*Button part styles*/
 .create-pop {
     display: block;

@@ -39,8 +39,7 @@
             <!--        when click on button must go to the 4.1html-->
         </div>
 
-        <div class="main-down" th:if="${timetable != null}" th:href="@{ ${lastUrl} +'/timetable/edit'}">
-            <!--            should redirect to edit if one exists and stay in 4html showing the lessons-->
+        <div class="main-down" th:if="${timetable != null}">
             <form class="form-timetable" action="#">
                 <div class="dates_and_create">
                     <div class="dates">
@@ -70,8 +69,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -83,8 +82,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -96,8 +95,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -109,8 +108,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -122,8 +121,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -135,8 +134,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -148,8 +147,8 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
+                                        <label class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
