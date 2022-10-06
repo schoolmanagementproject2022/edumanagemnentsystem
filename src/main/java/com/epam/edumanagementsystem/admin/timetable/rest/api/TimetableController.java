@@ -35,19 +35,20 @@ public class TimetableController {
         this.timetableService = timetableService;
     }
 
-    @GetMapping
-    public String get4(Model model) {
-        model.addAttribute("timetable", "timetable");
+    @GetMapping("/course/{name}")
+    public String get4(@PathVariable("name") String name, Model model) {
+        model.addAttribute("timetable", timetableService.getByName(name));
         return "timetable4";
     }
 
-    @GetMapping("/creation")
-    public String get4_1(Model model) {
+    @GetMapping("/{name}/creation")
+    public String get4_1(@PathVariable("name") String name, Model model) {
         model.addAttribute("courses", academicCourseService.findAll());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
-        model.addAttribute("academicClass", academicClassService.findByName("5A"));
+        model.addAttribute("academicClass", academicClassService.findByName(name));
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
         model.addAttribute("timetable", new Timetable());
+        model.addAttribute("class", name);
         return "timetable4-1";
     }
 

@@ -14,4 +14,6 @@ public interface TimetableService {
 
     Timetable getById(Long id);
 
+    Timetable getByName(String name);
+
 }

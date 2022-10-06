@@ -35,4 +35,9 @@ public class TimetableServiceImpl implements TimetableService {
     public Timetable getById(Long id) {
         return timetableRepository.findById(id).get();
     }
+
+    @Override
+    public Timetable getByName(String name) {
+        return timetableRepository.findByAcademicClass_ClassNumber(name);
+    }
 }
