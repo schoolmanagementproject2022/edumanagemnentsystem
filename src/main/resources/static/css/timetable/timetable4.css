@@ -371,15 +371,16 @@ body {
     display: flex;
 }
 
-.button {
+.create .button {
     color: #01A7F0;
     background-color: #555555;
-    padding: 5px;
     font-weight: 600;
     font-size: 23px;
     border-radius: 0px;
-    width: 186px;
+    width: 142px;
     margin-left: 244px;
+    padding: 0px;
+
 }
 
 .timetable {
@@ -446,7 +447,7 @@ body {
 
 .single_lesson_wrapper {
     margin: 0;
-    padding: 0px 0px;
+    padding: 0px 2px;
     background-color: #D7D7D7;
     position: absolute;
     top: 0px;
@@ -477,6 +478,10 @@ body {
     font-size: 16px;
     cursor: pointer;
     margin-left: 80px;
+    color:  #007EB4;;
+}
+.btn a{
+    text-decoration: none;
 }
 
 .close-btn:hover {
@@ -488,7 +493,6 @@ body {
     color: #007EB4;
     font-weight: bold;
     font-size: 0.7em;
-
 }
 
 
@@ -661,9 +665,4 @@ form {
     margin-right: 59px;
     background-color: #555555;
     color: #FFFFFF
-}
-
-.btn:hover {
-    background-color: #333333;
-    color: #01A7F0;
 }
