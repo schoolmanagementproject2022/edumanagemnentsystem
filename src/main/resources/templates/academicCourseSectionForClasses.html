@@ -1,79 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
+    <link href="/static/css/academicCourseSectionForTeachersStyle.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Teachers in subject Page</title>
-
+    <title>Academic Course For Classes</title>
 </head>
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <div class="main-wrapper">
-        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="middle" id="middle">
         <div class="url-path">
-            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Subjects'}"></a>
+            <a class="a-url" th:href="${'/' + firstUrl}" th:text="${'Academic Course'}"></a>
             <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/teachers'}" th:text="${middleUrl}"></a>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/teachers'}"
+               th:text="${middleUrl}"></a>
             <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${lastUrl}"></a>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Classes'}"></a>
         </div>
-
         <div class="list">
             <div class="list-items" th:each="class : ${existingClasses}">
                 <p class="item" th:text="${class.getClassNumber()}"> Class </p>
             </div>
         </div>
-        <div class="sidebar2">
-            <a th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">Teachers</a>
-            <a th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">Classes</a>
-        </div>
-        <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
     </div>
+    <div class="sidebar2 header" id="sidebar2">
+        <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'teachers'}}">Teachers</a>
+        <a class="item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${allUrl}}">Classes</a>
+    </div>
+    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
-
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1>Add Teacher</h1>
+        <h1>Add Class</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingCourse}">
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${newClass}">
 
-            <script th:inline="javascript" th:if="${blank} != null">
+            <script th:inline="javascript" th:if="${blank} or ${#fields.hasAnyErrors()}!= null">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title">Class<span style="color:#A30014">*</span></label>
-                    <div class="selectTeacher">
-                        <select class="form_input" th:name="academicClasses" th:id="academicClasses" th:field="*{academicClasses}">
-                            <option class="short" data-limit="23" th:value="*{academicClasses}">Class</option>
-                            <option class="short" data-limit="23" th:each="class : ${academicClasses}" th:value="${class.id}"
-                                    th:text="${class.getClassNumber()}"></option>
-                        </select>
-                        <label class="popup-label-title">Teacher<span style="color:#A30014">*</span></label>
-                        <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px">
-                            <option th:each="select : ${teachersToSelect}"
-                                    th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
-                        </select>
-                        <div th:if="${blank}!= null" class="error">
-                            <p th:text="${blank}"></p>
-                        </div>
+
+                    <label class="popup-label-title">Class</label>
+                    <select class="form_input"
+                            th:name="academicClass"
+                            th:id="academicClass"
+                            th:field="*{classNumber}">
+                        <option th:if="*{classNumber == null}" th:text="'Class'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="class : ${academicClasses}" th:value="${class.classNumber}"
+                                th:text="${class.classNumber}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('classNumber')}"
+                         th:errors="*{academicClass}"></div>
+
+
+                    <label class="popup-label-title">Teacher<span style="color:#A30014"> *</span></label>
+                    <select class="form_input" th:name="teacher" th:id="teacher" th:field="*{teacher}">
+                        <option th:if="*{teacher == null}" th:text="'Teacher'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="select : ${teachersToSelect}"
+                                th:value="${select.id}"
+                                th:text="${select.getNameSurname()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('teacher')}"
+                         th:errors="*{teacher}"></div>
+
+                    <div th:if="${blank}!= null" class="error">
+                        <p th:text="${blank}"></p>
                     </div>
                 </div>
-
                 <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
@@ -83,4 +93,27 @@
     </div>
 </div>
 </body>
+
+<script>
+    function shortString(selector) {
+        const elements = document.querySelectorAll(selector);
+        const tail = '...';
+        if (elements && elements.length) {
+            for (const element of elements) {
+                let text = element.innerText;
+                if (element.hasAttribute('data-limit')) {
+                    if (text.length > element.dataset.limit) {
+                        element.innerText = `${text.substring(0, element.dataset.limit - tail.length).trim()}${tail}`;
+                    }
+                } else {
+                    throw Error('Cannot find attribute \'data-limit\'');
+                }
+            }
+        }
+    }
+
+    window.onload = function () {
+        shortString('.short');
+    };
+</script>
 </html>
