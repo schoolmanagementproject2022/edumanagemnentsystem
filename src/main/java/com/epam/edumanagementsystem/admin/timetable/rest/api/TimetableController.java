@@ -46,7 +46,7 @@ public class TimetableController {
         model.addAttribute("courses", academicCourseService.findAll());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         model.addAttribute("academicClass", academicClassService.findByName(name));
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("class", name);
         return "timetable4-1";
@@ -67,7 +67,7 @@ public class TimetableController {
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
                     model.addAttribute("academicClass", academicClassService.findByName("5A"));
                     model.addAttribute("courses", academicCourseService.findAll());
-                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
                 }
                 return "timetable4-1";
             } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
@@ -76,14 +76,14 @@ public class TimetableController {
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
                     model.addAttribute("academicClass", academicClassService.findByName("5A"));
                     model.addAttribute("courses", academicCourseService.findAll());
-                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
                 }
                 return "timetable4-1";
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("academicClass", academicClassService.findByName("5A"));
                 model.addAttribute("courses", academicCourseService.findAll());
-                model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+                model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
                 return "timetable4-1";
             }
         }
@@ -92,7 +92,7 @@ public class TimetableController {
             model.addAttribute("courseForTable", new CoursesForTimetableDto());
             model.addAttribute("academicClass", academicClassService.findByName("5A"));
             model.addAttribute("courses", academicCourseService.findAll());
-            model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+            model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
             return "timetable4-1";
         }
 //        else if (endDate.getYear() - 1 > now.getYear()) {//end-start =12  max=12  10.05.2022-10.15.2022
@@ -108,7 +108,7 @@ public class TimetableController {
         AcademicClass byName = academicClassService.findByName(thisClass);
         timetable.setAcademicClass(byName);
         timetableService.create(timetable);
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
         return "redirect:/timetable";
     }
 
@@ -125,7 +125,7 @@ public class TimetableController {
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courses", academicCourseService.findAll());
         coursesService.create(coursesForTimetableDto);
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
         model.addAttribute("academicClass", academicClassService.findByName("5A"));
         return "timetable4-1";
     }
@@ -136,5 +136,27 @@ public class TimetableController {
             coursesService.delete(id);
         }
         return "redirect:/timetable/creation";
+    }
+
+
+    @GetMapping("/classes/{name}/timetable/edit")
+    public String openTimetableIfExists(@PathVariable("name") String academicClassName,
+                                        Model model) {
+
+        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        if (!timetableService.isPresentTimetableByAcademicClassId(academicClass.getId())) {
+
+            return "redirect:/timetable";
+
+        }
+
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDay("Tuesday"));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDay("Wednesday"));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDay("Thursday"));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDay("Friday"));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDay("Saturday"));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDay("Sunday"));
+        return "redirect:/classes/{name}/timetable/edit";
     }
 }

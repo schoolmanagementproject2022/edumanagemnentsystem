@@ -40,4 +40,9 @@ public class TimetableServiceImpl implements TimetableService {
     public Timetable getByName(String name) {
         return timetableRepository.findByAcademicClass_ClassNumber(name);
     }
+
+    @Override
+    public boolean isPresentTimetableByAcademicClassId(Long id) {
+        return timetableRepository.isPresentTimetableByAcademicClassId(id);
+    }
 }

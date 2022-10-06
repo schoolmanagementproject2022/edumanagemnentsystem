@@ -57,7 +57,7 @@ public class SecurityConfig {
 
                 .authorizeRequests()
                     .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                    .mvcMatchers("/teachers", "/parents", "/students", "/classes", "/years", "/vacations", "/subjects" , "/courses**", "/timetable**").hasAuthority("ADMIN")
+                    .mvcMatchers("/teachers", "/parents", "/students", "/classes", "/years", "/vacations", "/subjects" , "/courses/**", "/timetable/**").hasAuthority("ADMIN")
                     .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                     .anyRequest().authenticated()
                 .and()
