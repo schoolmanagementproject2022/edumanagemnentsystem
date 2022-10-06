@@ -6,7 +6,8 @@ import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimet
 import java.util.List;
 
 public interface CoursesForTimetableService {
-    List<CoursesForTimetable> getCoursesForMonday(String dayOfWeek);
+
+    List<CoursesForTimetable> getCoursesForDay(String dayOfWeek);
 
     void create(CoursesForTimetableDto coursesForTimetableDto);
 

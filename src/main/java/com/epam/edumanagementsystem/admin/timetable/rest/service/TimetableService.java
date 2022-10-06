@@ -16,4 +16,6 @@ public interface TimetableService {
 
     Timetable getByName(String name);
 
+    boolean isPresentTimetableByAcademicClassId(Long id);
+
 }
