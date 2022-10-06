@@ -44,10 +44,6 @@ public class AcademicCourseController {
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
                          BindingResult result,
                          Model model) {
-        if(academicCourse.getName().contains(" ")){
-            String replace=academicCourse.getName().replace(" ", "");
-                academicCourse.setName(replace);
-        }
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
         List<Subject> allSubjects = subjectService.findAll();
