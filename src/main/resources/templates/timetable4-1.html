@@ -73,20 +73,22 @@
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
     <div class="middle">
-<!--        <div class="url-path">-->
-<!--            &lt;!&ndash; todo &ndash;&gt;-->
-<!--            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>-->
-<!--            &lt;!&ndash;        change&ndash;&gt;-->
-<!--            <p class="a-url">/</p>-->
-<!--            <a class="a-url"  th:href="${allUrl}" th:text="${middleUrl}"></a>-->
-<!--            &lt;!&ndash;        change&ndash;&gt;-->
-<!--            <p class="a-url">/</p>-->
-<!--            <a class="a-url"  th:href="${activeTab}" th:text="${'Timetable'}"></a>-->
-<!--        </div>-->
+        <div class="url-path">
+            <!-- todo -->
+            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
+            <!--        change-->
+            <p class="a-url">/</p>
+            <a class="a-url"  th:href="${allUrl}" th:text="${middleUrl}"></a>
+            <!--        change-->
+            <p class="a-url">/</p>
+            <a class="a-url"  th:href="${activeTab}" th:text="${'Timetable'}"></a>
+            <p class="a-url">/</p>
+            <a class="a-url"  th:href="${allUrl}" th:text="${'Creation'}"></a>
+        </div>
 
         <div class="main-down">
             <div class="form-timetable">
-                <form th:method="POST" th:action="@{/timetable}" th:object="${timetable}">
+                <form th:method="POST" th:action="@{'/classes/timetable/creation'}" th:object="${timetable}">
                     <div class="dates_and_create">
                         <div class="dates">
                             <div class="date_half">
@@ -120,8 +122,8 @@
                             </div>
                         </div>
                         <div class="create">
-                            <input id="class" type="hidden" name="class" th:value="5A"/>
-                            <button type="submit" class="button"><b>Create Timetable</b></button>
+                            <input id="class" type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                            <button type="submit" class="button"><b>Create</b></button>
                         </div>
                     </div>
                 </form>
@@ -132,7 +134,7 @@
                             <div class="single_lesson_wrapper">
 
                                 <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}"><label
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -207,7 +209,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/timetable/creation'}"
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">

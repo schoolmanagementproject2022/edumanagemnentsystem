@@ -35,7 +35,7 @@
         <div class="sidebar2">
             <a th:classappend="${allUrl eq '/classes/ + ${middleUrl} + /courses' ? 'activeTab' : 'notActiveTab'}"
                th:href="@{${allUrl}}">courses</a>
-            <a th:classappend="${activeTab eq 'timetable' ? 'activeTab' : 'notActiveTab'}" th:href="@{'/timetable/' + 'course/' + ${middleUrl}}" class="item">Timetable</a>-->
+            <a th:classappend="${activeTab eq 'timetable' ? 'activeTab' : 'notActiveTab'}" th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>-->
         </div>
 
 <!--        <div class="sidebar2">-->
