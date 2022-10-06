@@ -35,20 +35,20 @@ public class AcademicClass {
     @JoinTable(name = "academicClass_academicCourse_mapping",
             joinColumns = @JoinColumn(name = "academicClass_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
-    private List<AcademicCourse> academicCourseSet;
+    private Set<AcademicCourse> academicCourseSet;
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, List<AcademicCourse> academicCourseSet) {
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
     }
 
-    public List<AcademicCourse> getAcademicCourseSet() {
+    public Set<AcademicCourse> getAcademicCourseSet() {
         return academicCourseSet;
     }
 
-    public void setAcademicCourseSet(List<AcademicCourse> academicCourseSet) {
+    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
         this.academicCourseSet = academicCourseSet;
     }
 
