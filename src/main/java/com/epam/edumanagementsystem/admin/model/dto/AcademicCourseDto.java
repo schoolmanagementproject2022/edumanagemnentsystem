@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
@@ -9,17 +10,16 @@ import java.util.Set;
 public class AcademicCourseDto {
     private Long id;
     private String name;
-    private String urlName;
     private Subject subject;
     private Set<Teacher> teacher;
+    private Set<AcademicClass> academicClassSet;
 
     public AcademicCourseDto() {
     }
 
-    public AcademicCourseDto(Long id, String name, String urlName, Subject subject, Set<Teacher> teacher) {
+    public AcademicCourseDto(Long id, String name, Subject subject, Set<Teacher> teacher) {
         this.id = id;
         this.name = name;
-        this.urlName = urlName;
         this.subject = subject;
         this.teacher = teacher;
     }
@@ -39,15 +39,6 @@ public class AcademicCourseDto {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getUrlName() {
-        return urlName;
-    }
-
-    public void setUrlName(String urlName) {
-        this.urlName = urlName;
-    }
-
     public Subject getSubject() {
         return subject;
     }
@@ -64,17 +55,25 @@ public class AcademicCourseDto {
         this.teacher = teacher;
     }
 
+    public Set<AcademicClass> getAcademicClassSet() {
+        return academicClassSet;
+    }
+
+    public void setAcademicClassSet(Set<AcademicClass> academicClassSet) {
+        this.academicClassSet = academicClassSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourseDto that = (AcademicCourseDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(urlName, that.urlName) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher) && Objects.equals(academicClassSet, that.academicClassSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, urlName, subject, teacher);
+        return Objects.hash(id, name, subject, teacher, academicClassSet);
     }
 
     @Override
@@ -82,7 +81,6 @@ public class AcademicCourseDto {
         return "AcademicCourseDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", urlName='" + urlName + '\'' +
                 ", subject=" + subject +
                 ", teacher=" + teacher +
                 '}';

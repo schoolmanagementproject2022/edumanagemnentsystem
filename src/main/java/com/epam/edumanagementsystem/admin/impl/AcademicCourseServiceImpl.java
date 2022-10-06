@@ -27,10 +27,6 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     public AcademicCourse findAcademicCourseByAcademicCourseName(String name) {
         return academicCourseRepository.findAcademicCourseByName(name);
     }
-    @Override
-    public AcademicCourse findAcademicCourseByAcademicCourseUrlName(String name) {
-        return academicCourseRepository.findAcademicCourseByUrlName(name);
-    }
 
     @Override
     public void create(AcademicCourse academicCourse) {
@@ -51,12 +47,13 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
         List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
         return AcademicCourseMapper.toListOfAcademicCourseDto(academicCourses);
     }
-    public Set<Teacher> findAllTeacher(){
-        Set<Teacher> teachersByAcademicCourse=new HashSet<>();
+
+    public Set<Teacher> findAllTeacher() {
+        Set<Teacher> teachersByAcademicCourse = new HashSet<>();
         List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
-        for (AcademicCourse academicCourse:academicCourses){
-           Set <Teacher> result=academicCourse.getTeacher();
-           teachersByAcademicCourse.addAll(result);
+        for (AcademicCourse academicCourse : academicCourses) {
+            Set<Teacher> result = academicCourse.getTeacher();
+            teachersByAcademicCourse.addAll(result);
         }
         return teachersByAcademicCourse;
     }

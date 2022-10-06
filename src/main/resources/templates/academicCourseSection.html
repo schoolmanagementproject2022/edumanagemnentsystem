@@ -21,8 +21,7 @@
 
         <div class="list">
             <div class="list-items" th:each="academicCourse : ${academicCourses}">
-                <a class="item" th:text="${academicCourse.getName()}"
-                   th:href="@{'/courses/' + ${academicCourse.getUrlName()} + '/teachers'}">Academic Courses</a>
+                <a class="item" th:text="${academicCourse.getName()}" th:href="@{'/courses/' + ${academicCourse.getName()} + '/teachers'}">Academic Courses</a>
             </div>
         </div>
     </div>

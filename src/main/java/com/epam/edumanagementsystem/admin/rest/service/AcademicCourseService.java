@@ -18,9 +18,8 @@ public interface AcademicCourseService {
     List<AcademicCourseDto> findAll();
 
     void update(AcademicCourse academicCourse);
+
     Set<Teacher> findAllTeacher();
 
     Set<Teacher> findAllTeachersByAcademicCourseName(String name);
-
-    AcademicCourse findAcademicCourseByAcademicCourseUrlName(String name);
 }

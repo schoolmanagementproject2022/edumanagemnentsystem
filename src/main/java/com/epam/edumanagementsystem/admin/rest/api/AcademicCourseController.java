@@ -44,6 +44,10 @@ public class AcademicCourseController {
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
                          BindingResult result,
                          Model model) {
+        if (academicCourse.getName().contains(" ")) {
+            String replace = academicCourse.getName().replace(" ", "");
+            academicCourse.setName(replace);
+        }
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
         List<Subject> allSubjects = subjectService.findAll();
@@ -77,12 +81,6 @@ public class AcademicCourseController {
                 return "academicCourseSection";
             }
         }
-        String name = academicCourse.getName();
-        if (name.contains(" ")){
-            academicCourse.setUrlName(name.replace(" ", "_"));
-        }else {
-            academicCourse.setUrlName(academicCourse.getName());
-        }
 
         academicCourseService.create(academicCourse);
         return "redirect:/courses";
@@ -90,7 +88,7 @@ public class AcademicCourseController {
 
     @GetMapping("/{name}/teachers")
     public String openAcademicCourseForTeacherCreation(@PathVariable("name") String name, Model model) {
-        AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseUrlName(name);
+        AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseName(name);
         Set<Teacher> result = new HashSet<>();
         Set<Teacher> teachersInSubject = academicCourse.getSubject().getTeacherSet();
         Set<Teacher> teachersInAcademicCourse = academicCourse.getTeacher();
@@ -108,12 +106,11 @@ public class AcademicCourseController {
     public String addNewTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourse academicCourse,
                                 @PathVariable("name") String name, Model model) {
 
+
         Set<Teacher> result = new HashSet<>();
-        AcademicCourse academicCourseByAcademicCourseUrlName = academicCourseService
-                .findAcademicCourseByAcademicCourseUrlName(name);
-        Set<Teacher> allTeacherSet = academicCourseByAcademicCourseUrlName.getSubject().getTeacherSet();
-        Set<Teacher> allTeachersInAcademicCourse = academicCourseService
-                .findAllTeachersByAcademicCourseName(academicCourseByAcademicCourseUrlName.getName());
+        Set<Teacher> allTeacherSet = academicCourseService.findAcademicCourseByAcademicCourseName(name)
+                .getSubject().getTeacherSet();
+        Set<Teacher> allTeachersInAcademicCourse = academicCourseService.findAllTeachersByAcademicCourseName(name);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
 
         if (academicCourse.getTeacher().size() == 0) {
@@ -131,8 +128,7 @@ public class AcademicCourseController {
             return "academicCourseSectionForTeachers";
 
         }
-        academicCourse.setName(academicCourseByAcademicCourseUrlName.getName());
         academicCourseService.update(academicCourse);
-        return "redirect:/courses/" + academicCourseByAcademicCourseUrlName.getUrlName() + "/teachers";
+        return "redirect:/courses/" + name + "/teachers";
     }
 }
