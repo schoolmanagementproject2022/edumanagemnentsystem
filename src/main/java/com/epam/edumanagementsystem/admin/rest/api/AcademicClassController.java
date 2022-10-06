@@ -115,14 +115,19 @@ public class AcademicClassController {
     @PostMapping("{name}/courses")
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClass academicClass,
                                                  @PathVariable("name") String name, Model model) {
+        List<AcademicCourse> result = new ArrayList<>();
+
         Set<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
-        model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingClass",new AcademicClass());
-        model.addAttribute("allCourses", allCourses);
-
+        for (AcademicCourse course : allCourses) {
+            if (!academicCoursesInClass.contains(course)){
+                result.add(course);
+            }
+        }
+        model.addAttribute("coursesForSelect", result);
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
 
@@ -133,18 +138,9 @@ public class AcademicClassController {
         AcademicClass findedClass = academicClassService.findByName(name);
         findedClass.getAcademicCourseSet().addAll(academicClass.getAcademicCourseSet());
         findedClass.getTeacher().addAll(academicClass.getTeacher());
-
-
         academicClassService.update(findedClass);
         return "redirect:/classes/" + name + "/courses";
     }
 
 
-    @GetMapping(value = "/teachersByCourse")
-    @ResponseBody
-    public Set<Teacher> getTeacher(@RequestParam String name) {
-        AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseName(name);
-        Set<Teacher> teacherSet = academicCourse.getTeacher();
-        return teacherSet;
-    }
 }
