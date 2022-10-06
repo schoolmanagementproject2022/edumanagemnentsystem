@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="/js/popupControlTimetable.js"></script>
+    <script src="/static/js/popupControlTimetable.js"></script>
     <title>Timetable</title>
 
 </head>
@@ -18,7 +18,7 @@
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
 </div>
-<div class="main-wrapper">
+<div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
     <div class="middle">
@@ -34,7 +34,7 @@
     </div>
         <div th:if="${timetable == null}">
             <p class="msg">There is no active Timetable.</p>
-            <button class="show-btn" id="show-btn" ><b>Create Timetable</b></button>
+            <a class="show-btn" th:href="@{'/timetable/' + ${lastUrl} + '/creation'}" id="show-btn"><b>Create Timetable</b></a>
             <!--        when click on button must go to the 4.1html-->
         </div>
 
@@ -136,17 +136,28 @@
 
     </div>
 
-<!--    <div class="popup-container" id="popup-container">-->
-<!--        <label class="close-btn" onclick="PopUpHide()" title="close">×</label>-->
+    <div class="create-pop">
 
-<!--        <script th:inline="javascript" th:if="${timetable} != null">-->
-<!--            PopUpShow();-->
-<!--        </script>-->
+        <div class="popup-container" id="popup-container">
+            <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
 
-<!--        <div class="popup-wrapper">-->
+            <!--            <form id="form" class="form" th:method="POST" th:action="@{/timetable/creation}">-->
 
-<!--        </div>-->
-<!--    </div>-->
+                    <script th:inline="javascript" th:if="${timetable}">
+                        PopUpShow();
+                    </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <p class="successText">Timetable created successfully.</p>
+                    <div class="error"></div>
+                </div>
+                <div name="btn-div">
+                    <button type="button" class="button-save" id="submit"><b>Ok</b></button>
+                </div>
+            </div>
+            <!--            </form>-->
+        </div>
+    </div>
 
 </div>
 </body>

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TimetableRepository extends JpaRepository<Timetable, Long> {
 
+    Timetable findByAcademicClass_ClassNumber(String name);
+
 }

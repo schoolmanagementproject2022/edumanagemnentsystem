@@ -502,3 +502,156 @@ body {
 .a-url:hover {
     font-size: 110%;
 }
+
+.popup-container {
+    display: none;
+    width: 437px;
+    height: 319px;
+    padding: 20px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.popup-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%);
+}
+
+.popup-container .close-btn {
+    position: absolute;
+    right: 20px;
+    border-width: 0px;
+    top: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+h1 {
+    text-align: left;
+    color: #007EB4;
+    margin-top: 0px;
+
+}
+
+form {
+    margin: 0px;
+    margin-left: 0px;
+    margin-right: 4px;
+}
+
+.popup-wrapper {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+.successText {
+    left: 10%;
+    font-size: 25px;
+    color: green;
+    display: inline-flex;
+    position: absolute;
+    top: 40%;
+}
+
+.half {
+    width: 50%;
+    padding: 0px;
+    margin-left: 0px;
+    height: 253px;
+}
+
+.half2 {
+    width: 50%;
+    margin-left: 20%;
+    height: 253px;
+
+}
+
+.halfSection {
+    margin-top: 27%;
+    display: inline-block;
+}
+
+.button-save {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 40%;
+    margin-left: -10%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+
+.popup-label-title {
+    font-size: 0.8em;
+    height: 1.2em;
+    margin-top: 20px;
+}
+
+.error {
+    font-size: 0.7em;
+    color: red;
+}
+
+.form_input {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block;
+    width: 100%;
+    border-radius: 1px;
+    border-width: 1.5px;
+}
+/*Button part styles*/
+.create-pop {
+    display: block;
+    transition: all 0.5s ease;
+    height: 7%;
+}
+
+
+.button {
+    background-color: #555555;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 7px;
+}
+
+.create-pop a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.create-pop a:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
+.btn {
+    padding: 5px;
+    border-radius: 5px;
+    float: right;
+    margin-right: 59px;
+    background-color: #555555;
+    color: #FFFFFF
+}
+
+.btn:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
