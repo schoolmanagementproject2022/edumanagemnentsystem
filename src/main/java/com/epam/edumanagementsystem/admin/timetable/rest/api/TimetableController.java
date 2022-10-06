@@ -53,7 +53,6 @@ public class TimetableController {
 
     @PostMapping("/classes/timetable/creation")
     public String createTimetable(@ModelAttribute("timetable") @Valid Timetable timetable, BindingResult result,
-                                  @RequestParam("class") String thisClass,
                                   Model model) {
         LocalDate startDate = timetable.getStartDate();
         LocalDate endDate = timetable.getEndDate();
@@ -65,7 +64,7 @@ public class TimetableController {
                 if (startDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
-                    model.addAttribute("academicClass", academicClassService.findByName(thisClass));
+                    model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
                     model.addAttribute("courses", academicCourseService.findAll());
                     model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
                 }
@@ -74,14 +73,14 @@ public class TimetableController {
                 if (endDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
-                    model.addAttribute("academicClass", academicClassService.findByName(thisClass));
+                    model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
                     model.addAttribute("courses", academicCourseService.findAll());
                     model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
                 }
                 return "timetable4-1";
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
-                model.addAttribute("academicClass", academicClassService.findByName(thisClass));
+                model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
                 model.addAttribute("courses", academicCourseService.findAll());
                 model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
                 return "timetable4-1";
@@ -90,7 +89,7 @@ public class TimetableController {
         if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
             model.addAttribute("invalid", invalidMsg);
             model.addAttribute("courseForTable", new CoursesForTimetableDto());
-            model.addAttribute("academicClass", academicClassService.findByName(thisClass));
+            model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
             model.addAttribute("courses", academicCourseService.findAll());
             model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
             return "timetable4-1";
@@ -105,7 +104,7 @@ public class TimetableController {
 //            }
 //            return "timetable4-1";
 //        }
-        AcademicClass byName = academicClassService.findByName(thisClass);
+        AcademicClass byName = academicClassService.findByName(timetable.getAcademicClass().getClassNumber());
         timetable.setAcademicClass(byName);
         timetableService.create(timetable);
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
@@ -132,11 +131,11 @@ public class TimetableController {
         return "timetable4-1";
     }
 
-    @GetMapping("/classes/course/delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
+    @GetMapping("/classes/course/delete/{id}/{class}")
+    public String delete(@PathVariable("id") Long id, @PathVariable("class") String className) {
         if (id != null) {
             coursesService.delete(id);
         }
-        return "redirect:/timetable/creation";
+        return "redirect:/classes/" +  className + "/timetable/creation";
     }
 }
