@@ -34,7 +34,7 @@
     </div>
         <div th:if="${timetable == null}">
             <p class="msg">There is no active Timetable.</p>
-            <a class="show-btn" th:href="@{'/timetable/' + ${lastUrl} + '/creation'}" id="show-btn"><b>Create Timetable</b></a>
+            <a class="show-btn" th:href="@{'/classes/' + ${middleUrl} + '/timetable' + '/creation'}" id="show-btn"><b>Create Timetable</b></a>
             <!--        when click on button must go to the 4.1html-->
         </div>
 

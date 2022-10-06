@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("/timetable")
 public class TimetableController {
 
     private final AcademicCourseService academicCourseService;
@@ -35,13 +34,13 @@ public class TimetableController {
         this.timetableService = timetableService;
     }
 
-    @GetMapping("/course/{name}")
+    @GetMapping("/classes/{name}/timetable")
     public String get4(@PathVariable("name") String name, Model model) {
         model.addAttribute("timetable", timetableService.getByName(name));
         return "timetable4";
     }
 
-    @GetMapping("/{name}/creation")
+    @GetMapping("/classes/{name}/timetable/creation")
     public String get4_1(@PathVariable("name") String name, Model model) {
         model.addAttribute("courses", academicCourseService.findAll());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
@@ -52,9 +51,10 @@ public class TimetableController {
         return "timetable4-1";
     }
 
-    @PostMapping
+    @PostMapping("/classes/timetable/creation")
     public String createTimetable(@ModelAttribute("timetable") @Valid Timetable timetable, BindingResult result,
-                                  @RequestParam("class") String thisClass, Model model) {
+                                  @RequestParam("class") String thisClass,
+                                  Model model) {
         LocalDate startDate = timetable.getStartDate();
         LocalDate endDate = timetable.getEndDate();
         LocalDate now = LocalDate.now();
@@ -65,7 +65,7 @@ public class TimetableController {
                 if (startDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
-                    model.addAttribute("academicClass", academicClassService.findByName("5A"));
+                    model.addAttribute("academicClass", academicClassService.findByName(thisClass));
                     model.addAttribute("courses", academicCourseService.findAll());
                     model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
                 }
@@ -74,14 +74,14 @@ public class TimetableController {
                 if (endDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
-                    model.addAttribute("academicClass", academicClassService.findByName("5A"));
+                    model.addAttribute("academicClass", academicClassService.findByName(thisClass));
                     model.addAttribute("courses", academicCourseService.findAll());
                     model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
                 }
                 return "timetable4-1";
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
-                model.addAttribute("academicClass", academicClassService.findByName("5A"));
+                model.addAttribute("academicClass", academicClassService.findByName(thisClass));
                 model.addAttribute("courses", academicCourseService.findAll());
                 model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
                 return "timetable4-1";
@@ -90,7 +90,7 @@ public class TimetableController {
         if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
             model.addAttribute("invalid", invalidMsg);
             model.addAttribute("courseForTable", new CoursesForTimetableDto());
-            model.addAttribute("academicClass", academicClassService.findByName("5A"));
+            model.addAttribute("academicClass", academicClassService.findByName(thisClass));
             model.addAttribute("courses", academicCourseService.findAll());
             model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
             return "timetable4-1";
@@ -112,25 +112,27 @@ public class TimetableController {
         return "redirect:/timetable";
     }
 
-    @PostMapping("/creation")
+    @PostMapping("/classes/{name}/timetable/course")
     public String post4_1(@ModelAttribute("courseForTable") @Valid CoursesForTimetableDto coursesForTimetableDto,
-                          BindingResult result, Model model) {
+                          BindingResult result, @PathVariable("name") String name,
+                          Model model) {
 
         if (result.hasErrors()) {
             model.addAttribute("courses", academicCourseService.findAll());
             model.addAttribute("timetable", new Timetable());
-            model.addAttribute("academicClass", academicClassService.findByName("5A"));
+            model.addAttribute("academicClass", academicClassService.findByName(name));
             return "timetable4-1";
         }
+
+        coursesService.create(coursesForTimetableDto);
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courses", academicCourseService.findAll());
-        coursesService.create(coursesForTimetableDto);
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
-        model.addAttribute("academicClass", academicClassService.findByName("5A"));
+        model.addAttribute("academicClass", academicClassService.findByName(name));
         return "timetable4-1";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/classes/course/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         if (id != null) {
             coursesService.delete(id);

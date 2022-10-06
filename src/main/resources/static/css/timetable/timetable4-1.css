@@ -267,14 +267,20 @@ body {
     padding: 0px;
     background-color:#AAAAAA;
     margin-top: -30px;
-    margin-left: 25px;
+    margin-left: 85%;
 }
 .single_item .close-btn {
     right: 30px;
     font-size: 19px;
     cursor: pointer;
-    margin-left: 56px;
+    margin: 0;
+    padding: 0;
 }
+
+.single_item a {
+    text-decoration: none;
+}
+
 .close-btn:hover {
     color: red;
 }
