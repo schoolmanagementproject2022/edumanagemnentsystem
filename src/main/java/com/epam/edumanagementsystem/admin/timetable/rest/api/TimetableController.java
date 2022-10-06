@@ -38,6 +38,13 @@ public class TimetableController {
     @GetMapping("/course/{name}")
     public String get4(@PathVariable("name") String name, Model model) {
         model.addAttribute("timetable", timetableService.getByName(name));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDay("Tuesday"));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDay("Wednesday"));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDay("Thursday"));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDay("Friday"));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDay("Saturday"));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDay("Sunday"));
         return "timetable4";
     }
 
