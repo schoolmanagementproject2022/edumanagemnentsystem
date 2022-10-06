@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface CoursesForTimetableRepository extends JpaRepository<CoursesForTimetable, Long> {
 
-    List<CoursesForTimetable> findByDayOfWeek(String dayOfWeek);
+    @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE day_of_week = (?1) AND academic_class_id = (?2)")
+    List<CoursesForTimetable> findByDayOfWeek(String dayOfWeek, Long academicClassId);
 
     @Modifying(clearAutomatically = true)
     @Query(nativeQuery = true, value = "insert into courses_table(day_of_week, academic_course_name, academic_class_id) " +
