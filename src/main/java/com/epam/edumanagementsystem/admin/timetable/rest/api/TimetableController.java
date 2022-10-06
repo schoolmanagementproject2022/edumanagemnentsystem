@@ -108,7 +108,7 @@ public class TimetableController {
         timetable.setAcademicClass(byName);
         timetableService.create(timetable);
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
-        return "redirect:/timetable";
+        return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
     }
 
     @PostMapping("/classes/{name}/timetable/course")
