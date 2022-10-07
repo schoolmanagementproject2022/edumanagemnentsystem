@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,19 +32,30 @@ public class AcademicCourse {
     @JoinTable(name = "academicCourse_teacher_mapping",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
-    private Set<Teacher> teacher = new HashSet<>();
-    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.EAGER)
-    private Set<AcademicClass> academicClass;
+    private Set<Teacher> teacher;
 
-    public AcademicCourse() {
+    public Set<AcademicClass> getAcademicClass() {
+        return academicClass;
     }
 
-    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher) {
+    public void setAcademicClass(Set<AcademicClass> academicClass) {
+        this.academicClass = academicClass;
+    }
+
+    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
+    private Set<AcademicClass> academicClass;
+
+    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher, Set<AcademicClass> academicClass) {
         this.id = id;
         this.name = name;
         this.subject = subject;
         this.teacher = teacher;
+        this.academicClass = academicClass;
     }
+
+    public AcademicCourse() {
+    }
+
 
     public Long getId() {
         return id;
@@ -79,17 +89,18 @@ public class AcademicCourse {
         this.teacher = teacher;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher) && Objects.equals(academicClass, that.academicClass);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, teacher, academicClass);
+        return Objects.hash(id, name, teacher);
     }
 
     @Override

@@ -29,6 +29,11 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
+    public List<AcademicCourse> findAllCourse() {
+        return academicCourseRepository.findAll();
+    }
+
+    @Override
     public void create(AcademicCourse academicCourse) {
         academicCourseRepository.save(academicCourse);
     }

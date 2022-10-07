@@ -78,7 +78,7 @@ body {
     background-color: #555555;
     margin-left: 0px;
     height: 96vh
-    
+
 }
 
 .sidebar a {
@@ -88,7 +88,7 @@ body {
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
-    
+
 }
 
 .sidebar a:hover {
@@ -163,7 +163,7 @@ body {
     width: 80%;
 !important;
     cursor: pointer;
-    
+
 }
 .list-items{
     width: 100% ;
@@ -264,7 +264,7 @@ h1 {
     text-align: left;
     color: #007EB4;
     margin-top: 0px;
-    
+
 }
 
 form {
@@ -291,7 +291,7 @@ form {
     width: 50%;
     margin-left: 20%;
     height: 253px;
-    
+
 }
 .halfSection {
     margin-top: 27%;

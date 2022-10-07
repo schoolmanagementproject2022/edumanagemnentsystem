@@ -11,6 +11,8 @@ public interface AcademicCourseService {
 
     AcademicCourse findAcademicCourseByAcademicCourseName(String name);
 
+    List<AcademicCourse> findAllCourse();
+
     void create(AcademicCourse academicCourse);
 
     AcademicCourseDto getById(Long id);
