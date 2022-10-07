@@ -164,7 +164,6 @@ public class TimetableController {
 
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courses", academicCourseService.findAll());
-
         coursesService.create(coursesForTimetableDto);
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClass("Monday",coursesForTimetableDto.getAcademicClass().getId()));
 
@@ -198,17 +197,28 @@ public class TimetableController {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         if (!timetableService.isPresentTimetableByAcademicClassId(academicClass.getId())) {
 
-            return "redirect:/timetable";
+            return "redirect:/classes/" + academicClassName + "/timetable";
 
         }
 
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
-        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDay("Tuesday"));
-        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDay("Wednesday"));
-        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDay("Thursday"));
-        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDay("Friday"));
-        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDay("Saturday"));
-        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDay("Sunday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClass("Monday",academicClass.getId()));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClass("Tuesday",academicClass.getId()));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClass("Wednesday",academicClass.getId()));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClass("Thursday",academicClass.getId()));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClass("Friday",academicClass.getId()));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClass("Saturday",academicClass.getId()));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClass("Sunday",academicClass.getId()));
         return "redirect:/classes/{name}/timetable/edit";
+    }
+
+    private Model putLessons(Model model, Long academicClassId) {
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClass("Monday",academicClassId));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClass("Tuesday",academicClassId));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClass("Wednesday",academicClassId));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClass("Thursday",academicClassId));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClass("Friday",academicClassId));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClass("Saturday",academicClassId));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClass("Sunday",academicClassId));
+        return model;
     }
 }
