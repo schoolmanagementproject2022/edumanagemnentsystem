@@ -19,7 +19,7 @@
 
         <div class="list">
             <div class="list-items" th:each="academicClass : ${academicClasses}">
-                <p class="item" th:text="${academicClass.getClassNumber()}"> Academic Classes </p>
+                <a th:href="@{'/classes/'+${academicClass.getClassNumber()} + '/courses'}" th:text="${academicClass.getClassNumber()}"></a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{/classes}" th:object="${academicClass}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidURL}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
@@ -48,6 +48,9 @@
                          th:errors="*{classNumber}"></div>
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
+                    </div>
+                    <div th:if="${invalidURL}!= null" class="error">
+                        <p th:text="${invalidURL}"></p>
                     </div>
                 </div>
                 <div class="half2"></div>

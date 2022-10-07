@@ -3,13 +3,13 @@ package com.epam.edumanagementsystem.admin.impl;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,6 +26,11 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     @Override
     public AcademicCourse findAcademicCourseByAcademicCourseName(String name) {
         return academicCourseRepository.findAcademicCourseByName(name);
+    }
+
+    @Override
+    public List<AcademicCourse> findAllCourse() {
+        return academicCourseRepository.findAll();
     }
 
     @Override
@@ -46,6 +51,16 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     public List<AcademicCourseDto> findAll() {
         List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
         return AcademicCourseMapper.toListOfAcademicCourseDto(academicCourses);
+    }
+
+    public Set<Teacher> findAllTeacher() {
+        Set<Teacher> teachersByAcademicCourse = new HashSet<>();
+        List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
+        for (AcademicCourse academicCourse : academicCourses) {
+            Set<Teacher> result = academicCourse.getTeacher();
+            teachersByAcademicCourse.addAll(result);
+        }
+        return teachersByAcademicCourse;
     }
 
     @Override
