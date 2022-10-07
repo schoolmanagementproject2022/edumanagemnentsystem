@@ -152,42 +152,102 @@
 
                     <div class="dayOfWeek">
                         <div class="dayHeader"><a>Wednesday</a></div>
-                        <div class="lessons"></div>
+                        <div class="lessons">
+
+                            <div class="single_lesson_wrapper">
+
+                                <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="add">
-                            <button type="button" onclick="PopUpShowTuesday()" class="plus" value="Wednesday"><b>+</b>
+                            <button type="button" onclick="PopUpShowWednesday()" class="plus" value="Wednesday"><b>+</b>
                             </button>
                         </div>
                     </div>
 
                     <div class="dayOfWeek">
                         <div class="dayHeader"><a>Thursday</a></div>
-                        <div class="lessons"></div>
+                        <div class="lessons">
+
+                            <div class="single_lesson_wrapper">
+
+                                <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="add">
-                            <button type="button" onclick="PopUpShow()" class="plus" value="Thursday"><b>+</b></button>
+                            <button type="button" onclick="PopUpShowThursday()" class="plus" value="Thursday"><b>+</b></button>
                         </div>
                     </div>
 
                     <div class="dayOfWeek">
                         <div class="dayHeader"><a>Friday</a></div>
-                        <div class="lessons"></div>
+                        <div class="lessons">
+
+                            <div class="single_lesson_wrapper">
+
+                                <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="add">
-                            <button type="button" onclick="PopUpShow()" class="plus" value="Friday"><b>+</b></button>
+                            <button type="button" onclick="PopUpShowFriday()" class="plus" value="Friday"><b>+</b></button>
                         </div>
                     </div>
 
                     <div class="dayOfWeek">
                         <div class="dayHeader"><a>Saturday</a></div>
-                        <div class="lessons"></div>
+                        <div class="lessons">
+
+                            <div class="single_lesson_wrapper">
+
+                                <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="add">
-                            <button type="button" onclick="PopUpShow()" class="plus" value="Saturday"><b>+</b></button>
+                            <button type="button" onclick="PopUpShowSaturday()" class="plus" value="Saturday"><b>+</b></button>
                         </div>
                     </div>
 
                     <div class="dayOfWeek">
                         <div class="dayHeader"><a>Sunday</a></div>
-                        <div class="lessons"></div>
+                        <div class="lessons">
+
+                            <div class="single_lesson_wrapper">
+
+                                <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <div class="add">
-                            <button type="button" onclick="PopUpShow()" class="plus" th:value="Sunday"><b>+</b></button>
+                            <button type="button" onclick="PopUpShowSunday()" class="plus" th:value="Sunday"><b>+</b></button>
                         </div>
                     </div>
                 </div>

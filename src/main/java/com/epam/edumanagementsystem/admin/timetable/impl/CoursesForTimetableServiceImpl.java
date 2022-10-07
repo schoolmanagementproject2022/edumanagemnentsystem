@@ -23,7 +23,7 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Transactional
     @Override
-    public List<CoursesForTimetable> getCoursesForDay(String dayOfWeek, Long academicClassId) {
+    public List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId) {
         return coursesRepository.findByDayOfWeek(dayOfWeek, academicClassId);
     }
 
