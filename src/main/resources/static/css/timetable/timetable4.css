@@ -284,65 +284,64 @@ body {
     background-color: #555555;
     font-weight: 600;
     font-size: 23px;
-    border-radius: 0px;
-    width: 142px;
-    margin-left: 244px;
+    border-radius: 5px;
+    width: 120px;
+    margin-left: 246px;
     padding: 0px;
-
 }
 
 .timetable {
-    width: 100%;
-    margin: 0;
-    padding: 0px;
-    background-color: #D7D7D7;
-    display: flex;
-    border: solid 0.5px #007EB4;
+width: 100%;
+margin: 0;
+padding: 0px;
+background-color: #D7D7D7;
+display: flex;
+border: solid 0.5px #007EB4;
 }
 
 .dayOfWeek {
-    width: 50%;
-    margin: 0;
-    padding: 0px;
-    background-color: #D7D7D7;
-    border: solid 0.5px #007EB4;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+width: 50%;
+margin: 0;
+padding: 0px;
+background-color: #D7D7D7;
+border: solid 0.5px #007EB4;
+overflow: hidden;
+display: flex;
+flex-wrap: wrap;
+flex-direction: column;
 }
 
 .dayHeader {
-    margin: 0;
-    padding: 0px;
-    background-color: #7F7F7F;
-    border-bottom: solid 0.5px #007EB4;
-    text-align: center;
+margin: 0;
+padding: 0px;
+background-color: #7F7F7F;
+border-bottom: solid 0.5px #007EB4;
+text-align: center;
 
 }
 
 .dayHeader a {
-    text-align: center;
-    color: #FFFFFF;
-    background-color: #7F7F7F;
-    font-size: 0.6em;
-    font-weight: 600;
+text-align: center;
+color: #FFFFFF;
+background-color: #7F7F7F;
+font-size: 0.6em;
+font-weight: 600;
 }
 
 .add {
-    background-color: #D7D7D7;
-    margin-bottom: 11px;
+background-color: #D7D7D7;
+margin-bottom: 11px;
 }
 
 .plus {
-    border-radius: 50%;
-    padding: 10px;
-    margin: 0px 48px;
-    border: solid 3px #007EB4;
-    font-weight: 600;
-    font-size: 23px;
-    text-align: center;
-    color: #007EB4;
+border-radius: 50%;
+padding: 10px;
+margin: 0px 48px;
+border: solid 3px #007EB4;
+font-weight: 600;
+font-size: 23px;
+text-align: center;
+color: #007EB4;
 }
 
 /*Lessons section styles*/

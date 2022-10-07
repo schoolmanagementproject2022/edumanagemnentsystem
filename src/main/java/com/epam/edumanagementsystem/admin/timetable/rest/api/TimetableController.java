@@ -114,7 +114,7 @@ public class TimetableController {
         AcademicClass byName = academicClassService.findByName(timetable.getAcademicClass().getClassNumber());
         timetable.setAcademicClass(byName);
         timetableService.create(timetable);
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
         return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
     }
 
