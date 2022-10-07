@@ -48,14 +48,14 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${newClass}">
 
-            <script th:inline="javascript" th:if="${blank} or ${#fields.hasAnyErrors()}!= null">
+            <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
 
-                    <label class="popup-label-title">Class</label>
+                    <label class="popup-label-title">Class <span style="color:#A30014"> *</span></label>
                     <select class="form_input"
                             th:name="academicClass"
                             th:id="academicClass"
@@ -65,9 +65,9 @@
                         <option class="short" data-limit="23" th:each="class : ${academicClasses}" th:value="${class.classNumber}"
                                 th:text="${class.classNumber}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('classNumber')}"
-                         th:errors="*{academicClass}"></div>
-
+                    <div th:if="${blankClass}!= null" class="error">
+                        <p th:text="${blankClass}"></p>
+                    </div>
 
                     <label class="popup-label-title">Teacher<span style="color:#A30014"> *</span></label>
                     <select class="form_input" th:name="teacher" th:id="teacher" th:field="*{teacher}">
