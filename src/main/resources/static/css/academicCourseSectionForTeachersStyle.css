@@ -63,6 +63,7 @@ body {
 
     /*Main part styles*/
 .main-wrapper {
+
     width: 100%;
     display: flex;
     padding: 0px;
@@ -203,13 +204,9 @@ body {
     padding: 5px;
     text-align: center;
     background-color: #555555;
-    /*position: absolute;*/
-    /*top: 11%;*/
-    /*left: 91%;*/
     margin-top: 20px;
     border-radius: 6px;
     border-color: #aaaaaa;
-    /*transform: translate(-50%, -50%);*/
     color: #01A7F0;
     align-self: flex-end;
 }
@@ -392,7 +389,7 @@ form {
     color: #01A7F0;
 }
 
-/*Main part styles*/
+    /*Main part styles*/
 .main-wrapper {
     width: 100%;
     display: flex;
@@ -402,7 +399,7 @@ form {
     position: fixed;
 }
 
-/*Sidebar styles*/
+    /*Sidebar styles*/
 .sidebar {
     width: 21%;
     padding: 0px;
@@ -434,7 +431,7 @@ form {
     font-size: 1.3em;
 }
 
-/*Button part styles*/
+    /*Button part styles*/
 .create {
     display: block;
     transition: all 0.5s ease;
@@ -494,7 +491,7 @@ form {
     font-size: 1.3em;
 }
 
-/*Pop up part style*/
+    /*Pop up part style*/
 .show-btn:hover {
     border-color: #01A7F0;
 }
@@ -690,7 +687,7 @@ form {
     margin-top: 6px;
 }
 
-/*for url*/
+    /*for url*/
 .url-path {
     width: 100%;
     display:flex;
@@ -735,12 +732,10 @@ form {
     width: 64%;
 }
 
-
 .activeTab {
     background-color: #333333;
     color: #01A7F0 !important;
 }
-
 
 .allTab {
     background-color: #333333;
