@@ -7,7 +7,7 @@
     <link href="/static/css/academicCourseSectionForTeachersStyle.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
     <title>teachers in academic course</title>
@@ -26,6 +26,7 @@
             <p class="a-url">/</p>
             <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Teachers'}"></a>
         </div>
+        <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
         <div class="list">
             <div class="list-items" th:each="teacher : ${teachersInAcademicCourse}">
                 <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
@@ -41,16 +42,13 @@
            th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'classes'}}">Classes</a>
     </div>
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
-</div>
 
+</div>
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>Add Teacher</h1>
-
-        <form id="form" class="form" th:method="POST"  th:action="@{${allTab}}" th:object="${existingAcademicCourse}">
-
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingAcademicCourse}">
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();
             </script>
@@ -78,7 +76,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#teacher').select2({
             placeholder: "Select teachers",
             allowClear: true
@@ -86,4 +84,5 @@
     });
 </script>
 </body>
+
 </html>
