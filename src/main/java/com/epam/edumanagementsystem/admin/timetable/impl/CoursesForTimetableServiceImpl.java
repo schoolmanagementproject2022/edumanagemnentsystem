@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.timetable.impl;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
@@ -23,8 +24,8 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Transactional
     @Override
-    public List<CoursesForTimetable> getCoursesForDay(String dayOfWeek) {
-        return coursesRepository.findByDayOfWeek(dayOfWeek);
+    public List<CoursesForTimetable> getCoursesForDayAndClassId(String dayOfWeek, List<AcademicClass> academicClasses) {
+        return coursesRepository.findByDayOfWeekAndAcademicClass(dayOfWeek, academicClasses);
     }
 
     @Transactional

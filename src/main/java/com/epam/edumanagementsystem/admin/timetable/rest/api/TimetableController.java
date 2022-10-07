@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.time.LocalDate;
 
 @Controller
@@ -36,23 +37,31 @@ public class TimetableController {
 
     @GetMapping("/classes/{name}/timetable")
     public String get4(@PathVariable("name") String name, Model model) {
+        AcademicClass byName = academicClassService.findByName(name);
         model.addAttribute("timetable", timetableService.getByName(name));
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
-        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDay("Tuesday"));
-        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDay("Wednesday"));
-        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDay("Thursday"));
-        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDay("Friday"));
-        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDay("Saturday"));
-        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDay("Sunday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(byName)));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(byName)));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(byName)));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(byName)));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(byName)));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(byName)));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(byName)));
         return "timetable4";
     }
 
     @GetMapping("/classes/{name}/timetable/creation")
     public String get4_1(@PathVariable("name") String name, Model model) {
+        AcademicClass byName = academicClassService.findByName(name);
         model.addAttribute("courses", academicCourseService.findAll());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         model.addAttribute("academicClass", academicClassService.findByName(name));
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(byName)));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(byName)));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(byName)));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(byName)));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(byName)));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(byName)));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(byName)));
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("class", name);
         return "timetable4-1";
@@ -73,7 +82,13 @@ public class TimetableController {
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
                     model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
                     model.addAttribute("courses", academicCourseService.findAll());
-                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(timetable.getAcademicClass())));
                 }
                 return "timetable4-1";
             } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
@@ -82,14 +97,26 @@ public class TimetableController {
                     model.addAttribute("courseForTable", new CoursesForTimetableDto());
                     model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
                     model.addAttribute("courses", academicCourseService.findAll());
-                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+                    model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(timetable.getAcademicClass())));
+                    model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(timetable.getAcademicClass())));
                 }
                 return "timetable4-1";
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
                 model.addAttribute("courses", academicCourseService.findAll());
-                model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+                model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(timetable.getAcademicClass())));
+                model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(timetable.getAcademicClass())));
+                model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(timetable.getAcademicClass())));
+                model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(timetable.getAcademicClass())));
+                model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(timetable.getAcademicClass())));
+                model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(timetable.getAcademicClass())));
+                model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(timetable.getAcademicClass())));
                 return "timetable4-1";
             }
         }
@@ -98,7 +125,13 @@ public class TimetableController {
             model.addAttribute("courseForTable", new CoursesForTimetableDto());
             model.addAttribute("academicClass", academicClassService.findByName(timetable.getAcademicClass().getClassNumber()));
             model.addAttribute("courses", academicCourseService.findAll());
-            model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
+            model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(timetable.getAcademicClass())));
+            model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(timetable.getAcademicClass())));
+            model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(timetable.getAcademicClass())));
+            model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(timetable.getAcademicClass())));
+            model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(timetable.getAcademicClass())));
+            model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(timetable.getAcademicClass())));
+            model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(timetable.getAcademicClass())));
             return "timetable4-1";
         }
 //        else if (endDate.getYear() - 1 > now.getYear()) {//end-start =12  max=12  10.05.2022-10.15.2022
@@ -114,7 +147,13 @@ public class TimetableController {
         AcademicClass byName = academicClassService.findByName(timetable.getAcademicClass().getClassNumber());
         timetable.setAcademicClass(byName);
         timetableService.create(timetable);
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForMonday("Monday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(timetable.getAcademicClass())));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(timetable.getAcademicClass())));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(timetable.getAcademicClass())));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(timetable.getAcademicClass())));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(timetable.getAcademicClass())));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(timetable.getAcademicClass())));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(timetable.getAcademicClass())));
         return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
     }
 
@@ -126,18 +165,31 @@ public class TimetableController {
         if (result.hasErrors()) {
             model.addAttribute("courses", academicCourseService.findAll());
             model.addAttribute("timetable", new Timetable());
-            model.addAttribute("academicClass", academicClassService.findByName(name));
+            AcademicClass byName = academicClassService.findByName(name);
+            model.addAttribute("academicClass", byName);
+            model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(byName)));
+            model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(byName)));
+            model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(byName)));
+            model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(byName)));
+            model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(byName)));
+            model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(byName)));
+            model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(byName)));
             return "timetable4-1";
         }
 
-        coursesService.create(coursesForTimetableDto);
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courses", academicCourseService.findAll());
 
         coursesService.create(coursesForTimetableDto);
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
-
-        model.addAttribute("academicClass", academicClassService.findByName(name));
+        AcademicClass byName = academicClassService.findByName(name);
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(byName)));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(byName)));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(byName)));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(byName)));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(byName)));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(byName)));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(byName)));
+        model.addAttribute("academicClass", byName);
 
         return "timetable4-1";
     }
@@ -158,17 +210,17 @@ public class TimetableController {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         if (!timetableService.isPresentTimetableByAcademicClassId(academicClass.getId())) {
 
-            return "redirect:/timetable";
+            return "redirect:/classes/" + academicClassName + "/timetable";
 
         }
 
-        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDay("Monday"));
-        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDay("Tuesday"));
-        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDay("Wednesday"));
-        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDay("Thursday"));
-        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDay("Friday"));
-        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDay("Saturday"));
-        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDay("Sunday"));
+        model.addAttribute("lessonsOfMonday", coursesService.getCoursesForDayAndClassId("Monday", List.of(academicClass)));
+        model.addAttribute("lessonsOfTuesday", coursesService.getCoursesForDayAndClassId("Tuesday", List.of(academicClass)));
+        model.addAttribute("lessonsOfWednesday", coursesService.getCoursesForDayAndClassId("Wednesday", List.of(academicClass)));
+        model.addAttribute("lessonsOfThursday", coursesService.getCoursesForDayAndClassId("Thursday", List.of(academicClass)));
+        model.addAttribute("lessonsOfFriday", coursesService.getCoursesForDayAndClassId("Friday", List.of(academicClass)));
+        model.addAttribute("lessonsOfSaturday", coursesService.getCoursesForDayAndClassId("Saturday", List.of(academicClass)));
+        model.addAttribute("lessonsOfSunday", coursesService.getCoursesForDayAndClassId("Sunday", List.of(academicClass)));
         return "redirect:/classes/{name}/timetable/edit";
     }
 }

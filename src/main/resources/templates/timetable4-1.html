@@ -133,7 +133,17 @@
 
                     <div class="dayOfWeek">
                         <div class="dayHeader"><a>Tuesday</a></div>
-                        <div class="lessons"></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+
+                                <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
+                                    <div class="btn"><a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                            class="close-btn" title="close">×</label></a></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+
+                            </div>
+                        </div>
                         <div class="add">
                             <button type="button" onclick="PopUpShowTuesday()" class="plus" value="Tuesday"><b>+</b>
                             </button>
@@ -189,7 +199,7 @@
 
 <div class="create-pop">
 
-    <div class="popup-container" id="popup-container">
+    <div class="popup-container" id="popup-container-monday">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
@@ -222,5 +232,229 @@
         </form>
     </div>
 </div>
+
+
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-tuesday">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>Add Lesson</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+              th:object="${courseForTable}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                PopUpShowTuesday();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Tuesday"/>
+                    <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                    <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
+                            th:field="*{academicCourse}">
+                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                                data-limit="23" th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
+                                th:text="${item.getName()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                         th:errors="*{academicCourse}"></div>
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-wednesday">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>Add Lesson</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+              th:object="${courseForTable}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                PopUpShowWednesday();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Wednesday"/>
+                    <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                    <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
+                            th:field="*{academicCourse}">
+                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                                data-limit="23" th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
+                                th:text="${item.getName()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                         th:errors="*{academicCourse}"></div>
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-thursday">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>Add Lesson</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+              th:object="${courseForTable}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                PopUpShowThursday();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Thursday"/>
+                    <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                    <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
+                            th:field="*{academicCourse}">
+                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                                data-limit="23" th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
+                                th:text="${item.getName()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                         th:errors="*{academicCourse}"></div>
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-friday">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>Add Lesson</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+              th:object="${courseForTable}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                PopUpShowFriday();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Friday"/>
+                    <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                    <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
+                            th:field="*{academicCourse}">
+                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                                data-limit="23" th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
+                                th:text="${item.getName()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                         th:errors="*{academicCourse}"></div>
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-saturday">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>Add Lesson</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+              th:object="${courseForTable}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                PopUpShowSaturday();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Saturday"/>
+                    <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                    <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
+                            th:field="*{academicCourse}">
+                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                                data-limit="23" th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
+                                th:text="${item.getName()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                         th:errors="*{academicCourse}"></div>
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-sunday">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1>Add Lesson</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+              th:object="${courseForTable}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+                PopUpShowSunday();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Sunday"/>
+                    <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
+                    <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
+                            th:field="*{academicCourse}">
+                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                                data-limit="23" th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
+                                th:text="${item.getName()}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                         th:errors="*{academicCourse}"></div>
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

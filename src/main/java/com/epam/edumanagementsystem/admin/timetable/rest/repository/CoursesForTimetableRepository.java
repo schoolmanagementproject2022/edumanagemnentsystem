@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.repository;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface CoursesForTimetableRepository extends JpaRepository<CoursesForTimetable, Long> {
 
-    List<CoursesForTimetable> findByDayOfWeek(String dayOfWeek);
+    List<CoursesForTimetable> findByDayOfWeekAndAcademicClass(String dayOfWeek, List<AcademicClass> academicClasses);
 
     @Modifying(clearAutomatically = true)
     @Query(nativeQuery = true, value = "insert into courses_table(day_of_week, academic_course_name, academic_class_id) " +
