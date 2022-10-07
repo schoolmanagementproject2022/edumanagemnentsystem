@@ -38,12 +38,39 @@ public class AcademicClass {
     @ManyToMany
     private List<CoursesForTimetable> coursesForTimetableList = new ArrayList<>();
 
+    public AcademicClass() {
+    }
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet) {
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, List<CoursesForTimetable> coursesForTimetableList) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
+        this.coursesForTimetableList = coursesForTimetableList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getClassNumber() {
+        return classNumber;
+    }
+
+    public void setClassNumber(String classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public Set<Teacher> getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Set<Teacher> teacher) {
+        this.teacher = teacher;
     }
 
     public Set<AcademicCourse> getAcademicCourseSet() {

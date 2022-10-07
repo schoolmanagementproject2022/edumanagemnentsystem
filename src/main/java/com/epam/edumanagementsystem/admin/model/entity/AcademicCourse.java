@@ -35,17 +35,6 @@ public class AcademicCourse {
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher;
 
-    public Set<AcademicClass> getAcademicClass() {
-        return academicClass;
-    }
-
-    public void setAcademicClass(Set<AcademicClass> academicClass) {
-        this.academicClass = academicClass;
-    }
-
-    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
-    private Set<AcademicClass> academicClass;
-
     public AcademicCourse() {
     }
 
@@ -54,7 +43,6 @@ public class AcademicCourse {
         this.name = name;
         this.subject = subject;
         this.teacher = teacher;
-        this.academicClass = academicClass;
     }
 
     public Long getId() {
