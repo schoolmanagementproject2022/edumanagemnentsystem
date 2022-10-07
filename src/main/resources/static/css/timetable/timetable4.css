@@ -56,18 +56,25 @@ body {
     display: flex;
     padding: 0px;
     background-color: #AAAAAA;
-    height: 96vh;
+    height: 100%;
     position: fixed;
+}
+
+.main {
+    width: 100%;
+    margin: 0;
+    padding: 0px;
+    background-color: #AAAAAA;
+    font-size: 1.3em;
+    overflow: hidden;
 }
 
 /*Sidebar styles*/
 .sidebar {
     width: 21%;
+    margin: 0;
     padding: 0px;
     background-color: #555555;
-    margin-left: 0px;
-    height: 96vh;
-    position: fixed;
 }
 
 .sidebar a {
@@ -84,17 +91,16 @@ body {
     color: #01A7F0;
 }
 
-.sidebar2 {
-    margin-top: 1.5%;
-    width: 15%;
+.sidebar-right {
+    width: 17%;
+    margin: 0;
+    padding: -92px 0px;
     background-color: #555555;
-    margin-left: 63%;
     cursor: pointer;
-    text-align: left;
-    position: fixed;
+    height: 35vh;
 }
 
-.sidebar2 a:hover {
+.sidebar-right a:hover {
     background-color: #333333;
     color: #01A7F0;
 }
@@ -179,10 +185,14 @@ body {
 }
 
 .middle {
-    margin-left: 21%;
-    width: 80%;
+    margin: 0;
+    padding: 0px;
+    background-color: #AAAAAA;
+    font-size: 1.3em;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
 }
-
 
 .activeTab {
     background-color: #333333;
@@ -192,104 +202,6 @@ body {
 .allTab {
     background-color: #333333;
     color: #01A7F0 !important;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-size: 16px;
-    color: #000000;
-    background: #ffffff;
-    font-family: "Montserrat", sans-serif;
-}
-
-
-/*Top part styles*/
-
-.container {
-    width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.topnav-wrapper {
-    background-color: #333333;
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.7em;
-    height: 1.4em;
-}
-
-.topnav-left-side {
-    margin-left: 14px;
-    margin-top: 3px;
-}
-
-.topnav-right-side {
-    margin-right: 14px;
-    margin-top: 3px;
-}
-
-.nav-link-wrapper {
-    height: 22px;
-    transition: border-bottom 0.5s;
-}
-
-.nav-link-wrapper a {
-    color: #FFFFFF;
-    text-decoration: none;
-    transition: color 0.5s;
-}
-
-.nav-link-wrapper a:hover {
-    color: #01A7F0;
-}
-
-/*Main part styles*/
-.main-wrapper {
-    width: 100%;
-    display: flex;
-    padding: 0px;
-    background-color: #AAAAAA;
-    height: 96vh;
-    position: fixed;
-}
-
-/*Sidebar styles*/
-.sidebar {
-    width: 21%;
-    padding: 0px;
-    background-color: #555555;
-    margin: 0;
-}
-
-.sidebar a {
-    display: block;
-    color: #FFFFFF;
-    padding: 13px;
-    text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
-
-}
-
-.sidebar a:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
-
-/*Main part style*/
-.main {
-    margin: 0;
-    padding: 0px;
-    background-color: #AAAAAA;
-    font-size: 1.3em;
-    overflow: hidden;
-
 }
 
 /*Main top containing only link style*/
@@ -327,114 +239,110 @@ body {
 .form-timetable {
     margin: 0px;
     padding: 0px;
-    margin-left: 47px;
-    margin-top: -12px;
-    margin-bottom: 14px;
-    width: 90%;
 
 }
 
 .dates_and_create {
-    background-color: #AAAAAA;
-    margin: 0;
-    padding: 0px;
-    display: flex;
-    margin-top: 35px;
+background-color: #AAAAAA;
+margin: 0;
+padding: 0px;
+display: flex;
+margin-top: 35px;
 }
 
 .dates {
-    margin: 0px;
-    padding: 0px;
-    display: flex;
+margin: 0px;
+padding: 0px;
+display: flex;
 }
 
 .date_half {
-    margin: 0;
-    padding: 0px;
-    background-color: #AAAAAA;
-    font-size: 0.8em;
-    height: 1.2em;
-    color: #555555;
-    font-weight: 600;
-    margin-right: -34px;
+margin: 0;
+padding: 0px;
+background-color: #AAAAAA;
+font-size: 0.8em;
+height: 1.2em;
+color: #555555;
+font-weight: 600;
+margin-right: -34px;
 }
 
 .input_left {
-    margin: 0;
-    padding: 0px;
-    margin-right: 80px;
+margin: 0;
+padding: 0px;
+margin-right: 80px;
 }
 
 .create {
-    margin: 0px;
-    padding: 0px;
-    display: flex;
+margin: 0px;
+padding: 0px;
+display: flex;
 }
 
 .create .button {
-    color: #01A7F0;
-    background-color: #555555;
-    font-weight: 600;
-    font-size: 23px;
-    border-radius: 0px;
-    width: 142px;
-    margin-left: 244px;
-    padding: 0px;
+color: #01A7F0;
+background-color: #555555;
+font-weight: 600;
+font-size: 23px;
+border-radius: 0px;
+width: 142px;
+margin-left: 244px;
+padding: 0px;
 
 }
 
 .timetable {
-    width: 80%;
-    margin: 0;
-    padding: 0px;
-    background-color: #D7D7D7;
-    display: flex;
-    margin-top: 10px;
-    border: solid 0.5px #007EB4;
+width: 80%;
+margin: 0;
+padding: 0px;
+background-color: #D7D7D7;
+display: flex;
+margin-top: 10px;
+border: solid 0.5px #007EB4;
 }
 
 .dayOfWeek {
-    width: 50%;
-    margin: 0;
-    padding: 0px;
-    background-color: #D7D7D7;
-    border: solid 0.5px #007EB4;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+width: 50%;
+margin: 0;
+padding: 0px;
+background-color: #D7D7D7;
+border: solid 0.5px #007EB4;
+overflow: hidden;
+display: flex;
+flex-wrap: wrap;
+flex-direction: column;
 }
 
 .dayHeader {
-    margin: 0;
-    padding: 5px;
-    background-color: #7F7F7F;
-    border-bottom: solid 0.5px #007EB4;
-    text-align: center;
-    font-size: 0.8em;
-    font-weight: 600;
+margin: 0;
+padding: 5px;
+background-color: #7F7F7F;
+border-bottom: solid 0.5px #007EB4;
+text-align: center;
+font-size: 0.8em;
+font-weight: 600;
 }
 
 .dayHeader a {
-    text-align: center;
-    color: #FFFFFF;
-    background-color: #7F7F7F;
+text-align: center;
+color: #FFFFFF;
+background-color: #7F7F7F;
 }
 
 .add {
-    background-color: #D7D7D7;
-    margin-bottom: 11px;
+background-color: #D7D7D7;
+margin-bottom: 11px;
 }
 
 .plus {
-    border-radius: 50%;
-    padding: 10px;
-    margin: 0px 48px;
-    border: solid 3px #007EB4;
-    font-weight: 600;
-    font-size: 23px;
-    text-align: center;
-    color: #007EB4;
+border-radius: 50%;
+padding: 10px;
+margin: 0px 48px;
+border: solid 3px #007EB4;
+font-weight: 600;
+font-size: 23px;
+text-align: center;
+color: #007EB4;
 }
 
 /*Lessons section styles*/
@@ -478,9 +386,10 @@ body {
     font-size: 16px;
     cursor: pointer;
     margin-left: 80px;
-    color:  #007EB4;;
+    color: #007EB4;;
 }
-.btn a{
+
+.btn a {
     text-decoration: none;
 }
 
