@@ -6,11 +6,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
     <script src="/static/js/popupControl.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#date" ).datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-122:-3",
+                maxDate: "+0D +0M -3Y"
+            });
+        } );
+    </script>
+    <style>
+        .ui-datepicker .ui-datepicker-header {
+            position: relative;
+            padding: 7px 0;
+            background: #01A7F0;
+            border: 0;
+            margin: -1px;
+            border-radius: 0;
+        }
+        .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+            border: 1px solid #01A7F0;
+            background: #01A7F0;
+            color: #111111;
+        }
+    </style>
     <title>Student Page</title>
 </head>
 
@@ -87,14 +113,13 @@
                     <label class="popup-label-title">Birth Date <span style="color:#A30014">* </span>
                         <span class="check-validation-date"></span>
                     </label>
-                    <input class="form_input"
-                           th:type="date"
+                    <input class="form_input" placeholder="Date pick &#9638;" data-date-format="dd-mm-yyyy" readonly
+                           th:type="text"
                            th:name="date"
                            th:value="*{date}"
                            th:field="*{date}"
                            th:id="date"
-                           th:min="1900-01-01"
-                           th:max="2019-01-01"/>
+                           />
                     <div class="error" th:if="${#fields.hasErrors('date')}"
                          th:errors="*{date}"></div>
 

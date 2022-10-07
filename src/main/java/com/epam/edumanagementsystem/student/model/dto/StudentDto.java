@@ -39,7 +39,7 @@ public class StudentDto {
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String address;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "Please, fill the required fields")
     private LocalDate date;
 
