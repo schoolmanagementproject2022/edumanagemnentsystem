@@ -72,7 +72,7 @@
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
                                     <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
-                                        <label class="close-btn" title="close">×</label></a></div>
+                                        <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
                                     <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
-                                        <label class="close-btn" title="close">×</label></a></div>
+                                        <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
                             </div>
