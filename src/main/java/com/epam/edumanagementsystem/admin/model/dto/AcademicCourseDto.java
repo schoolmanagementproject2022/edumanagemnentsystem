@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
@@ -11,6 +12,7 @@ public class AcademicCourseDto {
     private String name;
     private Subject subject;
     private Set<Teacher> teacher;
+    private Set<AcademicClass> academicClassSet;
 
     public AcademicCourseDto() {
     }
@@ -53,17 +55,25 @@ public class AcademicCourseDto {
         this.teacher = teacher;
     }
 
+    public Set<AcademicClass> getAcademicClassSet() {
+        return academicClassSet;
+    }
+
+    public void setAcademicClassSet(Set<AcademicClass> academicClassSet) {
+        this.academicClassSet = academicClassSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourseDto that = (AcademicCourseDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher) && Objects.equals(academicClassSet, that.academicClassSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, teacher);
+        return Objects.hash(id, name, subject, teacher, academicClassSet);
     }
 
     @Override

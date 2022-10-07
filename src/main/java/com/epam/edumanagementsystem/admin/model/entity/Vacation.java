@@ -21,7 +21,6 @@ public class Vacation {
 
     @Column(name = "end_date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-
     @NotNull(message = "Please, fill the required fields")
     private LocalDate endDate;
 
