@@ -263,13 +263,14 @@ body {
     height: 1.2em;
     color: #555555;
     font-weight: 600;
-    margin-right: -34px;
+    margin-right: -10px;
+
 }
 
 .input_left {
     margin: 0;
     padding: 0px;
-    margin-right: 80px;
+    margin-right: 100px;
 }
 
 .create {
@@ -371,17 +372,18 @@ body {
     display: flex;
     border-radius: 10px;
     border: solid 0.5px #007EB4;
-    margin-left: 4px;
+    margin-left: 6px;
 }
 
 .single_item .btn {
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
+    margin-top: 3px;
 }
 
 .single_item .close-btn {
-    font-size: 16px;
+    font-size: 10px;
     cursor: pointer;
     margin-left: 80px;
     color: #007EB4;;
@@ -400,7 +402,9 @@ body {
     text-align: center;
     color: #007EB4;
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: 0.5em;
+    margin-bottom: 20px;
+    margin-top: -14px;
 }
 
 
