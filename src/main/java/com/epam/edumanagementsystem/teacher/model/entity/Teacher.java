@@ -115,6 +115,7 @@ public class Teacher {
     public Set<Subject> getSubjectSet() {
         return subjectSet;
     }
+
     public String getNameSurname() {
         return name + " " + surname;
     }

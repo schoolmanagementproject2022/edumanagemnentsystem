@@ -52,12 +52,13 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
         List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
         return AcademicCourseMapper.toListOfAcademicCourseDto(academicCourses);
     }
-    public Set<Teacher> findAllTeacher(){
-        Set<Teacher> teachersByAcademicCourse=new HashSet<>();
+
+    public Set<Teacher> findAllTeacher() {
+        Set<Teacher> teachersByAcademicCourse = new HashSet<>();
         List<AcademicCourse> academicCourses = academicCourseRepository.findAll();
-        for (AcademicCourse academicCourse:academicCourses){
-           Set <Teacher> result=academicCourse.getTeacher();
-           teachersByAcademicCourse.addAll(result);
+        for (AcademicCourse academicCourse : academicCourses) {
+            Set<Teacher> result = academicCourse.getTeacher();
+            teachersByAcademicCourse.addAll(result);
         }
         return teachersByAcademicCourse;
     }

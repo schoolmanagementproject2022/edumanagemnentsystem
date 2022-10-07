@@ -57,17 +57,19 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         }
 
         if (academicClass.getTeacher() != null) {
-          Set<Teacher> teacher = academicClass.getTeacher();
-          for (Teacher teachers:teacher)
+            Set<Teacher> teacher = academicClass.getTeacher();
+            for (Teacher teachers : teacher)
                 byName.getTeacher().add(teachers);
-            }
+        }
 
         create(byName);
     }
-        @Override
+
+    @Override
     public Set<AcademicCourse> findAllAcademicCourses(String name) {
         return findByName(name).getAcademicCourseSet();
     }
+
     @Override
     public Set<Teacher> findAllTeachers(String name) {
         return findByName(name).getTeacher();
