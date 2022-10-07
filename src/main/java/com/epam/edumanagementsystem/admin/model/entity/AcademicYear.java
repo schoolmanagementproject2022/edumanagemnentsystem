@@ -14,11 +14,11 @@ public class AcademicYear {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "start_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "Please, fill the required fields")
     private LocalDate startDate;
     @Column(name = "end_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "Please, fill the required fields")
     private LocalDate endDate;
 

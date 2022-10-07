@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CoursesForTimetableService {
 
-    List<CoursesForTimetable> getCoursesForDay(String dayOfWeek);
+    List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId);
 
     void create(CoursesForTimetableDto coursesForTimetableDto);
 
