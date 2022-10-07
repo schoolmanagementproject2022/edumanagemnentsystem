@@ -33,7 +33,7 @@ public class StudentDto {
     private String email;
 
     @NotBlank
-    private String role= "PARENT";
+    private String role= "STUDENT";
 
     @NotBlank(message = "Please, fill the required fields")
     @Size(max = 50, message = "Symbols can't be more than 50")
