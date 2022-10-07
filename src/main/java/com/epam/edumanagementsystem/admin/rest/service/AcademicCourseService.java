@@ -11,6 +11,8 @@ public interface AcademicCourseService {
 
     AcademicCourse findAcademicCourseByAcademicCourseName(String name);
 
+    List<AcademicCourse> findAllCourse();
+
     void create(AcademicCourse academicCourse);
 
     AcademicCourseDto getById(Long id);
@@ -18,6 +20,8 @@ public interface AcademicCourseService {
     List<AcademicCourseDto> findAll();
 
     void update(AcademicCourse academicCourse);
+
+    Set<Teacher> findAllTeacher();
 
     Set<Teacher> findAllTeachersByAcademicCourseName(String name);
 }
