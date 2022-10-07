@@ -20,18 +20,20 @@
 </div>
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="main">
+    <div class="url-path">
+        <!-- todo -->
+        <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
+        <!--        change-->
+        <p class="a-url">/</p>
+        <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+        <!--        change-->
+        <p class="a-url">/</p>
+        <a class="a-url" th:href="${activeTab}" th:text="${'Timetable'}"></a>
+    </div>
 
     <div class="middle">
-        <div class="url-path">
-            <!-- todo -->
-            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
-            <!--        change-->
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
-            <!--        change-->
-            <p class="a-url">/</p>
-            <a class="a-url" th:href="${activeTab}" th:text="${'Timetable'}"></a>
-        </div>
+
         <div th:if="${timetable == null}">
             <p class="msg">There is no active Timetable.</p>
 
@@ -44,17 +46,17 @@
                 <div class="dates_and_create">
                     <div class="dates">
                         <div class="date_half">
-                            <label>Start date</label>
+                            <label class="start_date_title">Start date</label>
                             <div class="input_left">
                                 <input class="date_input" type="text" name="startDate" placeholder="Pick date"
-                                       style="width: 100px;">
+                                       style="width: 120px;">
                             </div>
                         </div>
                         <div class="date_half">
-                            <label>End date</label>
+                            <label class="end_date_title_">End date</label>
                             <div class="input_left">
                                 <input class="date_input" type="text" name="startDate" placeholder="Pick date"
-                                       style="width: 100px;">
+                                       style="width: 120px;">
                             </div>
                         </div>
                     </div>
@@ -69,7 +71,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -82,7 +84,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -95,7 +97,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -108,7 +110,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -121,7 +123,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -134,7 +136,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -147,7 +149,7 @@
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
                                 <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
-                                    <div class="btn">
+                                    <div class="btn"><a th:href="@{'/timetable/delete/' + ${lesson.id}}">
                                         <label class="close-btn" title="close"></label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
@@ -158,16 +160,22 @@
                 </div>
             </form>
 
-            <div class="sidebar2">
-                <a href="#clasroom" class="item">Classroom</a>
-                <a href="#students" class="item">Students</a>
-                <a href="#courses" class="item">Courses</a>
-                <a href="#teachers" class="item">Teachers</a>
-                <a th:classappend="${activeTab eq 'timetable' ? 'activeTab' : 'notActiveTab'}" href="/timetable"
-                   class="item">Timetable</a>
-            </div>
+
 
         </div>
+
+        <div class="sidebar-right">
+            <a href="#clasroom" class="item">Classroom</a>
+            <a href="#students" class="item">Students</a>
+            <a href="#courses" class="item">Courses</a>
+            <a href="#teachers" class="item">Teachers</a>
+            <a th:classappend="${activeTab eq 'timetable' ? 'activeTab' : 'notActiveTab'}" href="/timetable"
+               class="item">Timetable</a>
+        </div>
+    </div>
+
+
+
 
     </div>
 

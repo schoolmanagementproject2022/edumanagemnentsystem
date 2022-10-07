@@ -243,16 +243,16 @@ body {
 }
 .single_lesson_wrapper{
     margin: 0;
-    padding: 0px 10px;
+    padding: 0px 4px;
     background-color: #D7D7D7;
     position: absolute;
     top: 0px;
     flex-direction: column;
 }
 .single_item{
-    width: 100%;
+    width: 95%;
     margin: 0;
-    padding: 31px 10px;
+    padding: 30px 23px;
     background-color: #AAAAAA;
     margin-top: 4px;
     margin-bottom: 5px;
@@ -267,7 +267,7 @@ body {
     padding: 0px;
     background-color:#AAAAAA;
     margin-top: -30px;
-    margin-left: 85%;
+    margin-left: 107%;
 }
 .single_item .close-btn {
     right: 30px;
@@ -275,15 +275,18 @@ body {
     cursor: pointer;
     margin: 0;
     padding: 0;
+    color:#7F7F7F;;
 }
 
 .single_item a {
     text-decoration: none;
+
 }
 
 .close-btn:hover {
     color: red;
 }
+
 .title{
     text-align: center;
     color: #007EB4;
