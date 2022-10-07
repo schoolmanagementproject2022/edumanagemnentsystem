@@ -266,6 +266,12 @@ body {
     margin-right: -10px;
 
 }
+.start_date_title{
+    font-size: 0.7em;
+}
+.end_date_title{
+    font-size: 0.7em;
+}
 
 .input_left {
     margin: 0;
@@ -350,6 +356,7 @@ color: #007EB4;
     padding: 183px 0px;
     background-color: #D7D7D7;
     position: relative;
+    width: 90%;
 }
 
 .single_lesson_wrapper {
@@ -371,7 +378,7 @@ color: #007EB4;
     display: flex;
     border-radius: 10px;
     border: solid 0.5px #007EB4;
-    margin-left: 6px;
+    margin-left: 5px;
 }
 
 .single_item .btn {
@@ -401,7 +408,7 @@ color: #007EB4;
     text-align: center;
     color: #007EB4;
     font-weight: bold;
-    font-size: 0.5em;
+    font-size: 0.43em;
     margin-bottom: 20px;
     margin-top: -14px;
 }
