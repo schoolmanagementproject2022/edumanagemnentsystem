@@ -34,6 +34,8 @@ public class AcademicCourse {
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher = new HashSet<>();
+    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.EAGER)
+    private Set<AcademicClass> academicClass;
 
     public AcademicCourse() {
     }
@@ -82,12 +84,12 @@ public class AcademicCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher) && Objects.equals(academicClass, that.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, teacher);
+        return Objects.hash(id, name, subject, teacher, academicClass);
     }
 
     @Override

@@ -19,5 +19,7 @@ public interface AcademicCourseService {
 
     void update(AcademicCourse academicCourse);
 
+    Set<Teacher> findAllTeacher();
+
     Set<Teacher> findAllTeachersByAcademicCourseName(String name);
 }
