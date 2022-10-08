@@ -64,7 +64,7 @@
                             <option th:if="*{academicCourseSet  == null}" th:value="null"
                                     th:text="'Select course'"></option>
                             <option th:each="select : ${coursesForSelect}"
-                                    th:value="${select.name}" th:text="${select.getName()}"></option>
+                                    th:value="${select.id}" th:text="${select.getName()}"></option>
                         </select>
 
                     </div>
@@ -95,6 +95,7 @@
 
 <script type="text/javascript">
 
+
       let elem = document.getElementById("course")
       let elem1 = document.getElementById("teacher")
       elem.addEventListener("change", (item)=>{
@@ -118,7 +119,7 @@
         elem.forEach(item=>{
             let newElem = document.createElement("option")
             newElem.textContent = item.name
-            newElem.setAttribute("value", item.name);
+            newElem.setAttribute("value", item.id);
             elem1.appendChild(newElem)
         })
       })

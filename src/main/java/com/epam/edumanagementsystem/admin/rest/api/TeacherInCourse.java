@@ -22,7 +22,7 @@ public class TeacherInCourse {
     }
     @GetMapping()
     public @ResponseBody
-    Set<Teacher> findAllAgencies(@RequestParam(value = "teachers", required = true)String name) {
-        return academicCourseService.findAcademicCourseByAcademicCourseName(name).getTeacher();
+    Set<Teacher> findAllAgencies(@RequestParam(value = "teachers", required = true)Long id) {
+        return academicCourseService.findByID(id).getTeacher();
     }
 }
