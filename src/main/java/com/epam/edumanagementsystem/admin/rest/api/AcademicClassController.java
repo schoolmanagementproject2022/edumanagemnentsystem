@@ -141,5 +141,4 @@ public class AcademicClassController {
         return "redirect:/classes/" + name + "/courses";
     }
 
-
 }
