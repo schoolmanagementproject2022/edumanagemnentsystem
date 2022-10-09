@@ -87,12 +87,12 @@ body {
 
 /*Main part style*/
 .main {
+    width: 100%;
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
     font-size: 1.3em;
     overflow: hidden;
-
 }
 
 /*Main top containing only link style*/
@@ -153,14 +153,13 @@ body {
 }
 
 .date_half{
-    margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
     font-size: 0.8em;
     height: 1.2em;
     color: #555555;
     font-weight: 600;
-    margin-right: -34px;
+    margin-right: -10px;
 }
 .input_left {
     margin: 0;
@@ -173,17 +172,6 @@ body {
     margin: 0px;
     padding: 0px;
     display: flex;
-}
-
-.button{
-    color: #01A7F0;
-    background-color: #555555;
-    padding: 5px;
-    font-weight: 600;
-    font-size: 23px;
-    border-radius: 0px;
-    width: 215px;
-    margin-left: 275px;
 }
 
 .timetable{
@@ -406,14 +394,19 @@ form {
 
 
 .popup-label-title {
-    font-size: 0.8em;
+    font-size: 1.1em;
     height: 1.2em;
     margin-top: 20px;
 }
 
 .error {
-    font-size: 0.7em;
+    font-size: 0.9em;
     color: red;
+}
+.date_error {
+    font-size: 0.8em;
+    color: red;
+    margin-left: 32%;
 }
 
 .form_input {
