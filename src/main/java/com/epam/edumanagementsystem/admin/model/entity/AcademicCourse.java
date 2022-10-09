@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -21,18 +22,19 @@ public class AcademicCourse {
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String name;
-
     @ManyToOne
     @JoinColumn(name = "subject_id")
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
-
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
+    private Set<AcademicClass> academicClass;
 
     public Set<AcademicClass> getAcademicClass() {
         return academicClass;
@@ -42,8 +44,6 @@ public class AcademicCourse {
         this.academicClass = academicClass;
     }
 
-    @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
-    private Set<AcademicClass> academicClass;
 
     public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher, Set<AcademicClass> academicClass) {
         this.id = id;
@@ -100,16 +100,6 @@ public class AcademicCourse {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, teacher);
-    }
-
-    @Override
-    public String toString() {
-        return "AcademicCourse{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", subject=" + subject +
-                ", teacher=" + teacher +
-                '}';
+        return Objects.hash(id, name, subject, teacher);
     }
 }

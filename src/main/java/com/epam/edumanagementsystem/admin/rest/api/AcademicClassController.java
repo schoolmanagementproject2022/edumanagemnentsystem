@@ -130,7 +130,7 @@ public class AcademicClassController {
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
 
-        if (academicClass.getAcademicCourseSet().size() == 0 || academicClass.getTeacher().size() == 0) {
+        if (academicClass.getAcademicCourseSet().size() == 0) {
             model.addAttribute("blank", "There is no selection");
             return "academicCourseForAcademicClass";
         }

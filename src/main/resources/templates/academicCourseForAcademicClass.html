@@ -99,7 +99,7 @@
       let elem = document.getElementById("course")
       let elem1 = document.getElementById("teacher")
       elem.addEventListener("change", (item)=>{
-          fetch(`http://localhost:8888/teacherByCourseId?teachers=${item.target.value}`).then(data=>{
+          fetch(`http://localhost:8082/teacherByCourseId?teachers=${item.target.value}`).then(data=>{
             return data.json()
       }).then(elem=>{
          elem1.innerHTML ="";
