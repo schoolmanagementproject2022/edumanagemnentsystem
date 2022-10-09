@@ -635,6 +635,7 @@ form {
     border: 1px solid #01A7F0;
 }
 .sidebar2 {
+    margin-right: 25px;
     margin-top: 50px;
     width: 15%;
     background-color: #555555;
