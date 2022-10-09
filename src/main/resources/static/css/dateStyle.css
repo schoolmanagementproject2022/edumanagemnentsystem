@@ -1,0 +1,23 @@
+.ui-datepicker .ui-datepicker-header {
+    position: relative;
+    padding: 7px 0;
+    background: #01A7F0;
+    border: 0;
+    margin: -1px;
+    border-radius: 0;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #01A7F0;
+    background: #01A7F0;
+    color: #111111;
+    padding-right: 15px;
+}
+
+input#startDate.form_input#startDate {
+    width: 75%;
+}
+
+input#endDate.form_input#endDate {
+    width: 75%;
+}

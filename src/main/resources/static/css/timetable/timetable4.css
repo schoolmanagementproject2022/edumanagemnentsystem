@@ -92,12 +92,13 @@ body {
 }
 
 .sidebar-right {
-    width: 17%;
-    margin: 0;
-    padding:0px;
+    margin-top: 3%;
+    width: 16%;
     background-color: #555555;
+    margin-left: 62%;
     cursor: pointer;
-    height: 35%;
+    text-align: left;
+    position: fixed;
 }
 
 .sidebar-right a:hover {
@@ -109,16 +110,41 @@ body {
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
-    width: 177px;
+    width: 102px;
     text-align: center;
     background-color: #555555;
     position: absolute;
-    top: 37%;
+    top: 12%;
+    left: 67%;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    transform: translate(-50%, -50%);
+    color: #01A7F0;
+}
+
+.show-btn:hover {
+    border-color: #01A7F0;
+}
+
+.create-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 188px;
+    text-align: center;
+    background-color: #555555;
+    position: absolute;
+    top: 35%;
     left: 50%;
     border-radius: 6px;
     border-color: #aaaaaa;
     transform: translate(-50%, -50%);
     color: #01A7F0;
+    text-decoration: none;
+}
+
+.create-btn:hover {
+    border-color: #01A7F0;
 }
 
 .item {
@@ -143,29 +169,6 @@ body {
     overflow: scroll;
 }
 
-
-/*for url*/
-.url-path {
-    margin-right: 100%;
-    display: inline-flex;
-}
-
-.a-url {
-    margin-right: -34px;
-    margin-top: 23px;
-    margin-left: -5%;
-    padding-left: 57px;
-    text-decoration: none;
-    color: #2b80a5;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-}
-
-.a-url:hover {
-    font-size: 110%;
-}
-
 .msg {
     font-size: 25px;
     position: absolute;
@@ -185,23 +188,21 @@ body {
 }
 
 .middle {
-    margin: 0;
-    padding: 0px;
+    margin-left: 3%;
     background-color: #AAAAAA;
     font-size: 1.3em;
     overflow: hidden;
     display: flex;
-    justify-content: space-around;
 }
 
 .activeTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
+background-color: #333333;
+color: #01A7F0 !important;
 }
 
 .allTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
+background-color: #333333;
+color: #01A7F0 !important;
 }
 
 /*Main top containing only link style*/
@@ -228,7 +229,7 @@ body {
 
 /*Main down containing dates,create timetable and lessons style*/
 .main-down {
-    margin: 0;
+    margin-right: 30%;
     padding: 0px;
     background-color: #AAAAAA;
     display: flex;
@@ -237,8 +238,9 @@ body {
 }
 
 .form-timetable {
-    margin: 0px;
+    margin-left: 35px;
     padding: 0px;
+    width: 133%;
 }
 
 .dates_and_create {
@@ -531,7 +533,7 @@ form {
 
 
 .popup-label-title {
-    font-size: 0.8em;
+    font-size: 0.7em;
     height: 1.2em;
     margin-top: 20px;
 }
