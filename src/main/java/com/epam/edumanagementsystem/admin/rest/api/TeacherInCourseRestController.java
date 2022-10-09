@@ -16,7 +16,7 @@ public class TeacherInCourseRestController {
     }
 
     @GetMapping()
-    public @ResponseBody Set<Teacher> findAllAgencies(@RequestParam(value = "teachers", required = true) Long id) {
+    public @ResponseBody Set<Teacher> findAllTeacherInCourseById(@RequestParam(value = "teachers", required = true) Long id) {
         return academicCourseService.findByID(id).getTeacher();
     }
 }
