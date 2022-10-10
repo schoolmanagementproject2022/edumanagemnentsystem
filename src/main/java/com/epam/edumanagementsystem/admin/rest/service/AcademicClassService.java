@@ -20,10 +20,8 @@ public interface AcademicClassService {
 
     void update(AcademicClass academicClass);
 
-    Set<AcademicCourse> findAllAcademicCourses(String name);
+    List<AcademicCourse> findAllAcademicCourses(String name);
 
     Set<Teacher> findAllTeachers(String name);
 
 }
-
-

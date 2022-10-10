@@ -34,6 +34,11 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
+    public AcademicCourse findByID(Long id) {
+        return academicCourseRepository.findAcademicCourseById(id);
+    }
+
+    @Override
     public void create(AcademicCourse academicCourse) {
         academicCourseRepository.save(academicCourse);
     }

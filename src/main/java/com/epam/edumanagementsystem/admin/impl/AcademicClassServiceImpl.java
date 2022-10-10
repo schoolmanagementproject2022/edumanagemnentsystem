@@ -10,6 +10,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -66,8 +67,13 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public Set<AcademicCourse> findAllAcademicCourses(String name) {
-        return findByName(name).getAcademicCourseSet();
+    public List<AcademicCourse> findAllAcademicCourses(String name) {
+        List <AcademicCourse> list=new ArrayList<>();
+        AcademicClass byName = findByName(name);
+        for (AcademicCourse academicCourse:byName.getAcademicCourseSet())
+            list.add(academicCourse);
+
+        return list;
     }
 
     @Override

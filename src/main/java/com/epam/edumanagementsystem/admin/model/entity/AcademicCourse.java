@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class AcademicCourse {
     @JoinColumn(name = "subject_id")
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
-
+@JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
@@ -41,7 +42,7 @@ public class AcademicCourse {
     public void setAcademicClass(Set<AcademicClass> academicClass) {
         this.academicClass = academicClass;
     }
-
+@JsonIgnore
     @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
     private Set<AcademicClass> academicClass;
 

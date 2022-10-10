@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -31,14 +32,17 @@ public class Teacher {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
             joinColumns = @JoinColumn(name = "academicCourse_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<AcademicCourse> academicCourseSet;
+    @JsonIgnore
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet;
+    @JsonIgnore
     @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
 
