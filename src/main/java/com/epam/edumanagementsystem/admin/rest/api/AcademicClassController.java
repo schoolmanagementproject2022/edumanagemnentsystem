@@ -62,10 +62,6 @@ public class AcademicClassController {
                 return "academicClassSection";
             }
         }
-        if (academicClass.getClassNumber().contains(" ")) {
-            String replace = academicClass.getClassNumber().replace(" ", "");
-            academicClass.setClassNumber(replace);
-        }
 
         for (AcademicClass aClass : academicClassList) {
             if (academicClass.getClassNumber().equals(aClass.getClassNumber())) {

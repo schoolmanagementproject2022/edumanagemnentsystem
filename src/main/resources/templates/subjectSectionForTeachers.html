@@ -15,11 +15,13 @@
 
 </head>
 <body>
+
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <div class="main-wrapper">
-        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="middle" id="middle">
         <div class="url-path">
             <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Subjects'}"></a>
             <p class="a-url">/</p>
@@ -33,44 +35,42 @@
                 <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
             </div>
         </div>
-        <div class="sidebar2">
-            <a th:classappend="${allUrl eq '/subjects/ + ${middleUrl} + /teachers' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">Teachers</a>
-        </div>
-        <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
     </div>
+    <div class="sidebar2">
+        <a th:classappend="${allUrl eq '/subjects/ + ${middleUrl} + /teachers' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${allUrl}}">Teachers</a>
+    </div>
+    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
 
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>Add Teacher</h1>
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingSubject}"
+        <script th:inline="javascript" th:if="${blank} != null">
+            PopUpShow();
+        </script>
 
-        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingSubject}">
-
-            <script th:inline="javascript" th:if="${blank} != null">
-                PopUpShow();
-            </script>
-
-            <div class="popup-wrapper">
-                <div class="half">
-                    <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
-                    <div class="selectTeacher">
-                        <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px" multiple>
-                            <option th:each="select : ${teachersToSelect}"
-                                    th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
-                        </select>
-                        <div th:if="${blank}!= null" class="error">
-                            <p th:text="${blank}"></p>
-                        </div>
+        <div class="popup-wrapper">
+            <div class="half">
+                <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
+                <div class="selectTeacher">
+                    <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px" multiple>
+                        <option th:each="select : ${teachersToSelect}"
+                                th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
+                    </select>
+                    <div th:if="${blank}!= null" class="error">
+                        <p th:text="${blank}"></p>
                     </div>
                 </div>
-
-                <div class="half2"></div>
-                <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
-                </div>
             </div>
+
+            <div class="half2"></div>
+            <div name="btn-div">
+                <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+            </div>
+        </div>
         </form>
     </div>
 </div>
