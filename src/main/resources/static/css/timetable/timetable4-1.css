@@ -236,6 +236,7 @@ body {
     position: absolute;
     top: 0px;
     flex-direction: column;
+    width: 99%;
 }
 .single_item{
     width: 95%;
@@ -280,6 +281,11 @@ body {
     color: #007EB4;
     font-weight: bold;
     font-size: 0.7em;
+}
+
+.activeTab {
+    background-color: #333333;
+    color: #01A7F0 !important;
 }
 
 
