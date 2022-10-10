@@ -95,7 +95,11 @@ public class AcademicClassController {
         model.addAttribute("existingClass", new AcademicClass());
         model.addAttribute("allCourses", allCourses);
         if (academicCoursesInClass.size() == 0) {
-            result.addAll(allCourses);
+            for (AcademicCourse course : allCourses) {
+                if (course.getTeacher().size() > 0) {
+                    result.add(course);
+                }
+            }
             model.addAttribute("coursesForSelect", result);
             return "academicCourseForAcademicClass";
         } else if (academicCoursesInClass.size() == allCourses.size()) {
@@ -125,9 +129,11 @@ public class AcademicClassController {
         model.addAttribute("existingClass", new AcademicClass());
         for (AcademicCourse course : allCourses) {
             if (!academicCoursesInClass.contains(course)) {
-                result.add(course);
+                if (course.getTeacher().size() > 0)
+                    result.add(course);
             }
         }
+
         model.addAttribute("coursesForSelect", result);
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
@@ -136,9 +142,14 @@ public class AcademicClassController {
             model.addAttribute("blank", "There is no selection");
             return "academicCourseForAcademicClass";
         }
+
         AcademicClass findedClass = academicClassService.findByName(name);
-        findedClass.getAcademicCourseSet().addAll(academicClass.getAcademicCourseSet());
-        findedClass.getTeacher().addAll(academicClass.getTeacher());
+        findedClass.getAcademicCourseSet().
+
+                addAll(academicClass.getAcademicCourseSet());
+        findedClass.getTeacher().
+
+                addAll(academicClass.getTeacher());
         academicClassService.update(findedClass);
         return "redirect:/classes/" + name + "/courses";
     }
