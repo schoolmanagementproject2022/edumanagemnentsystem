@@ -103,7 +103,9 @@ public class AcademicClassController {
         } else {
             for (AcademicCourse course : allCourses) {
                 if (!academicCoursesInClass.contains(course)) {
-                    result.add(course);
+                    if (course.getTeacher().size() > 0) {
+                        result.add(course);
+                    }
                 }
             }
         }
