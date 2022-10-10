@@ -6,8 +6,8 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/edumanagement
-    username: postgres
+    url: jdbc:postgresql://edu-db:5432/edumanagement
+    username: root
     password: root
 
   jpa:
