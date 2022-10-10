@@ -49,8 +49,9 @@
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>New course</h1>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingClass}">
-            <script th:inline="javascript" th:if="${blank} != null">
+            <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null" >
                 PopUpShow();
+
             </script>
 
             <div class="popup-wrapper">
@@ -59,14 +60,15 @@
                             style="color:#A30014">*</span></label>
                     <div class="selectTeacher">
                         <select class="form_input" id="course" name="academicCourseSet"
-                                th:field="*{academicCourseSet}" style="width: 250px"
-                                onchange="populate(this.id, 'teacher')">
+                                th:field="*{academicCourseSet}" style="width: 250px">
                             <option th:if="*{academicCourseSet  == null}" th:value="null"
-                                    th:text="'Select Course'"></option>
+                                    th:text="'Select course'"></option>
                             <option th:each="select : ${coursesForSelect}"
                                     th:value="${select.id}" th:text="${select.getName()}"></option>
                         </select>
-
+                        <div th:if="${blankClass}!= null" class="error">
+                            <p th:text="${blankClass}"></p>
+                        </div>
                     </div>
                     <label class="popup-label-title" for="teacher">Teachers<span
                             style="color:#A30014">*</span></label>
@@ -74,10 +76,11 @@
                         <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
                                 style="width: 250px">
                             <option th:if="*{teacher  == null}" th:value="null"
-                                    th:text="'Select Course'"></option>
-                           <option th:each="teacher : ${allTeacherByAcademicCourse}"
-                                  th:value="${teacher.id}" th:text="${teacher.getNameSurname()}"></option>-
+                                    th:text="'Select teacher'">
+                            </option>
+
                         </select>
+
                         <div th:if="${blank}!= null" class="error">
                             <p th:text="${blank}"></p>
                         </div>
@@ -94,21 +97,36 @@
 </div>
 
 <script type="text/javascript">
-    function populate(s1,s2){
-    var s1=document.getElement(s1);
-    var s2=document.getElement(s2);
-    s2.innerHTML="";
-    if(s1.value==select.id){
-    var optionArray=['select.getTeacher().getName()|select.getTeacher().getName()'];
-    }
-    for(var option in optionArray){
-    var pair=optionArray[option].split("|");
-  var newOption=document.createElement("option");
-  newOption.value=pair[0];
-  newOption.innerHTML=pair[1];
-  s2.option.add(newOption);
-    }
- }
+
+
+      let elem = document.getElementById("course")
+      let elem1 = document.getElementById("teacher")
+      elem.addEventListener("change", (item)=>{
+          fetch(`http://localhost:8082/teacherByCourseId?teachers=${item.target.value}`).then(data=>{
+            return data.json()
+      }).then(elem=>{
+         elem1.innerHTML ="";
+         let a = document.createElement("option")
+         a.textContent = "Select teacher"
+         a.setAttribute("disabled", true)
+         a.setAttribute("selected",true)
+         a.setAttribute("hidden",true)
+         elem1.appendChild(a)
+         if(elem.length === 0){
+         let a = document.createElement("option")
+         a.textContent = ""
+        a.setAttribute("disabled", true)
+
+         elem1.appendChild(a)
+         }
+        elem.forEach(item=>{
+            let newElem = document.createElement("option")
+            newElem.textContent = item.name+ " "+ item.surname
+            newElem.setAttribute("value", item.id);
+            elem1.appendChild(newElem)
+        })
+      })
+      })
 
 </script>
 </body>

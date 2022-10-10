@@ -12,6 +12,7 @@ public interface AcademicCourseService {
     AcademicCourse findAcademicCourseByAcademicCourseName(String name);
 
     List<AcademicCourse> findAllCourse();
+    AcademicCourse findByID(Long id);
 
     void create(AcademicCourse academicCourse);
 
