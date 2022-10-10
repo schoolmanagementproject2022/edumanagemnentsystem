@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CoursesForTimetableServiceImpl implements CoursesForTimetableService {
-
 
     private final CoursesForTimetableRepository coursesRepository;
 
@@ -25,6 +25,11 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     @Override
     public List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId) {
         return coursesRepository.findByDayOfWeek(dayOfWeek, academicClassId);
+    }
+
+    @Override
+    public boolean isPresentCoursesForClass(Long academicClassId) {
+        return coursesRepository.existsCoursesForTimetableByAcademicClass_Id(academicClassId);
     }
 
     @Transactional

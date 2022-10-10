@@ -60,6 +60,19 @@ public class TimetableController {
         return "timetable4-1";
     }
 
+    @GetMapping("/classes/{name}/timetable/course")
+    public String getPopup(@PathVariable("name") String name, Model model){
+        AcademicClass academicClass = academicClassService.findByName(name);
+
+        model.addAttribute("class", name);
+        model.addAttribute("timetable", new Timetable());
+        model.addAttribute("courseForTable", new CoursesForTimetableDto());
+        model.addAttribute("courses", academicCourseService.findAll());
+        model.addAttribute("academicClass", academicClassService.findByName(name));
+        putLessons(model, academicClass.getId());
+        return "timetable4-1";
+    }
+
     @PostMapping("/classes/{name}/timetable/creation")
     public String createTimetable(@ModelAttribute("timetable") @Valid Timetable timetable, BindingResult result,
                                   @PathVariable("name") String name,Model model) {
@@ -104,6 +117,13 @@ public class TimetableController {
             return "timetable4-1";
         } else if (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) {
             model.addAttribute("invalid", invalidMsg);
+            duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
+            putLessons(model, timetable.getAcademicClass().getId());
+            return "timetable4-1";
+        }
+
+        if(!coursesService.isPresentCoursesForClass(classByName.getId())){
+            model.addAttribute("noLessonInTimetable", "Please, select Courses");
             duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
             putLessons(model, timetable.getAcademicClass().getId());
             return "timetable4-1";
