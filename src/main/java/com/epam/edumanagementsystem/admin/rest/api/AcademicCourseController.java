@@ -51,7 +51,7 @@ public class AcademicCourseController {
 
         for (AcademicCourseDto aCourse : all) {
             if (aCourse.getName().equalsIgnoreCase(academicCourse.getName())) {
-                model.addAttribute("duplicated", "A Subject with the same name already exists");
+                model.addAttribute("duplicated", "An Academic Course with the same name already exists");
                 return "academicCourseSection";
             }
         }
