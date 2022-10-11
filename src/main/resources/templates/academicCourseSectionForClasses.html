@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/academicCourseForAcademicClass.css" rel="stylesheet">
+    <link href="/static/css/academicCourseSectionForTeachersStyle.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
@@ -17,44 +17,40 @@
     <div th:insert="fragments/fragments :: container"></div>
 </div>
 <div class="main-wrapper" id="main-wrapper">
-    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-    <div class="middle" id="middle">
-        <div class="url-path">
-            <a class="a-url" th:href="${'/' + firstUrl}" th:text="${'Academic Course'}"></a>
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/teachers'}"
-               th:text="${middleUrl}"></a>
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Classes'}"></a>
-        </div>
-        <div class="list">
-            <div class="list-items" th:each="class : ${existingClasses}">
-                <p class="item" th:text="${class.getClassNumber()}"> Class </p>
+    <div class="content-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+        <div class="content" id="middle">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/' + firstUrl}" th:text="${'Academic Course'}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/teachers'}"
+                   th:text="${middleUrl}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Classes'}"></a>
+            </div>
+            <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
+            <div class="list">
+                <div class="list-items" th:each="class : ${existingClasses}">
+                    <p class="item" th:text="${class.getClassNumber()}"> Class </p>
+                </div>
             </div>
         </div>
+        <div class="sidebar2 header" id="sidebar2">
+            <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'teachers'}}">Teachers</a>
+            <a class="item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${allUrl}}">Classes</a>
+        </div>
     </div>
-    <div class="sidebar2 header" id="sidebar2">
-        <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'teachers'}}">Teachers</a>
-        <a class="item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${allUrl}}">Classes</a>
-    </div>
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>Add Class</h1>
-
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${newClass}">
-
             <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null">
                 PopUpShow();
             </script>
-
             <div class="popup-wrapper">
                 <div class="half">
-
                     <label class="popup-label-title">Class <span style="color:#A30014"> *</span></label>
                     <select class="form_input"
                             th:name="academicClass"
@@ -62,13 +58,13 @@
                             th:field="*{classNumber}">
                         <option th:if="*{classNumber == null}" th:text="'Class'" class="short" data-limit="23"
                                 th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="class : ${academicClasses}" th:value="${class.classNumber}"
+                        <option class="short" data-limit="23" th:each="class : ${academicClasses}"
+                                th:value="${class.classNumber}"
                                 th:text="${class.classNumber}"></option>
                     </select>
                     <div th:if="${blankClass}!= null" class="error">
                         <p th:text="${blankClass}"></p>
                     </div>
-
                     <label class="popup-label-title">Teacher<span style="color:#A30014"> *</span></label>
                     <select class="form_input" th:name="teacher" th:id="teacher" th:field="*{teacher}">
                         <option th:if="*{teacher == null}" th:text="'Teacher'" class="short" data-limit="23"
@@ -93,7 +89,6 @@
     </div>
 </div>
 </body>
-
 <script>
     function shortString(selector) {
         const elements = document.querySelectorAll(selector);
