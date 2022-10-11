@@ -13,6 +13,8 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE day_of_week = (?1) AND academic_class_id = (?2)")
     List<CoursesForTimetable> findByDayOfWeek(String dayOfWeek, Long academicClassId);
 
+    List<CoursesForTimetable> findCoursesByAcademicClassId(Long academicClassId);
+
     boolean existsCoursesForTimetableByAcademicClass_Id(Long id);
 
     @Modifying(clearAutomatically = true)
@@ -21,13 +23,7 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     void create(String dayOfWeek, String academicCourseName, Long academicClassId);
 
     @Modifying(clearAutomatically = true)
-    @Query(nativeQuery = true, value = "UPDATE courses_table SET academic_class_id = '0' WHERE id =(?1);")
-    void renameById(Long id);
-
-    @Modifying(clearAutomatically = true)
     @Query(nativeQuery = true, value = "Delete FROM courses_table WHERE id =(?1);")
     void delete(Long id);
 
-    @Modifying(clearAutomatically = true)
-    void deleteById(Long id);
 }

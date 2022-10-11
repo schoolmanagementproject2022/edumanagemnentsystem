@@ -10,7 +10,10 @@ public interface TimetableRepository extends JpaRepository<Timetable, Long> {
 
     Timetable findByAcademicClass_ClassNumber(String name);
 
-    @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE academic_class_id = (?1)")
+    @Query(nativeQuery = true, value = "SELECT *  FROM timetable_table WHERE academic_class_id = (?1)")
     boolean isPresentTimetableByAcademicClassId(Long id);
 
+
+    @Query(nativeQuery = true, value = "SELECT *  FROM timetable_table WHERE academic_class_id = (?1)")
+    Timetable getTimetableByAcademicClassId(Long id);
 }
