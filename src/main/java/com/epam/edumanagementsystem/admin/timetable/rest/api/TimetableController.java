@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
@@ -48,14 +49,14 @@ public class TimetableController {
     }
 
     @GetMapping("/classes/{name}/timetable/creation")
-    public String get4_1(@PathVariable("name") String name, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(name);
+    public String get4_1(@PathVariable("name") String academicClassName, Model model) {
+        AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
-        model.addAttribute("class", name);
+        model.addAttribute("class", academicClassName);
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         model.addAttribute("courses", academicCourseService.findAll());
-        model.addAttribute("academicClass", academicClassService.findByName(name));
+        model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
         putLessons(model, academicClass.getId());
         return "timetable4-1";
     }

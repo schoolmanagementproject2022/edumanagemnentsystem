@@ -8,6 +8,9 @@ import java.util.List;
 public interface CoursesForTimetableService {
 
     List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId);
+
+    List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId);
+
     boolean isPresentCoursesForClass(Long academicClassId);
 
     void create(CoursesForTimetableDto coursesForTimetableDto);

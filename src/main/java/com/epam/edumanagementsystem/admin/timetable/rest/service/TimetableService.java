@@ -18,4 +18,6 @@ public interface TimetableService {
 
     boolean isPresentTimetableByAcademicClassId(Long id);
 
+    Timetable getTimetableByAcademicClassId(Long id);
+
 }
