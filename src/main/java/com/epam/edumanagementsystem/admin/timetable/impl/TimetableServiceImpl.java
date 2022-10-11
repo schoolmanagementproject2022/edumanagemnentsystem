@@ -45,9 +45,4 @@ public class TimetableServiceImpl implements TimetableService {
     public boolean isPresentTimetableByAcademicClassId(Long id) {
         return timetableRepository.isPresentTimetableByAcademicClassId(id);
     }
-
-    @Override
-    public Timetable getTimetableByAcademicClassId(Long id) {
-        return timetableRepository.getTimetableByAcademicClassId(id);
-    }
 }
