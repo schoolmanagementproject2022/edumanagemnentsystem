@@ -170,8 +170,13 @@ public class TimetableController {
             model.addAttribute("dayOfWeek", coursesForTimetableDto.getDayOfWeek());
             return "timetable4-1";
         }
+
         coursesService.create(coursesForTimetableDto);
-        return "redirect:/classes/" + name + "/timetable/course";
+        model.addAttribute("timetable", newTimetable);
+        model.addAttribute("courses", allCourses);
+        putLessons(model, getClassByName.getId());
+        model.addAttribute("academicClass", getClassByName);
+        return "timetable4-1";
     }
 
     @GetMapping("/classes/course/delete/{id}/{class}")
