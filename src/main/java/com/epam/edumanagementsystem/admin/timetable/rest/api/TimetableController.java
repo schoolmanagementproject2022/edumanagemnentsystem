@@ -167,6 +167,7 @@ public class TimetableController {
             model.addAttribute("courses", allCourses);
             model.addAttribute("academicClass", getClassByName);
             putLessons(model, getClassByName.getId());
+
             return "timetable4-1";
         }
 

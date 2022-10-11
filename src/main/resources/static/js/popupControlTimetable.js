@@ -76,7 +76,8 @@ function PopUpShowSunday() {
 }
 
 function PopUpHide() {
-    window.location.href = $("#tab").text();
+    $("#popup-container-sunday").hide();
+    $("#popup-container-suturday").hide();
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("pointer-events", "auto");
