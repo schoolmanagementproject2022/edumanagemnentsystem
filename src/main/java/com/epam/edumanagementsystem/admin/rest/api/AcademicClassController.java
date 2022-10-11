@@ -155,5 +155,34 @@ public class AcademicClassController {
         }
     }
 
+    @GetMapping("/{name}/classroom")
+    public String classroomTeacherForAcademicClass(@PathVariable("name") String name, Model model) {
+        AcademicClass academicClass = academicClassService.findByName(name);
+        model.addAttribute("teachers", academicClass.getTeacher());
+        model.addAttribute("existingClassroomTeacher", new AcademicClass());
+        if (academicClass.getClassroomTeacher() == null) {
+            return "classroomTeacherSection";
+        } else {
+            model.addAttribute("classroomTeacher", academicClass.getClassroomTeacher());
+            return "classroomTeacherSection";
+        }
+    }
+    @PostMapping("{name}/classroom")
+    public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClass academicClass,
+                                                     @PathVariable("name") String name, Model model) {
+        AcademicClass academicClassFindByName = academicClassService.findByName(name);
+        model.addAttribute("teachers", academicClassFindByName.getTeacher());
+        Set<Teacher> allTeachersByAcademicClass = academicClassService.findAllTeachers(name);
+        model.addAttribute("allTeacherByAcademicClass", allTeachersByAcademicClass);
+        model.addAttribute("existingClass", new AcademicClass());
+        if (academicClass.getClassroomTeacher()== null ) {
+            model.addAttribute("blank", "Please, select the required fields");
+            return "classroomTeacherSection";
+        }
+        academicClassFindByName.setClassroomTeacher(academicClass.getClassroomTeacher());
+        academicClassService.update(academicClassFindByName);
+        return "redirect:/classes/" + name + "/classroom";
+    }
+
 
 }

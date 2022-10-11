@@ -37,6 +37,19 @@
 
 </th:block>
 
+<th:block th:fragment="sidebar2">
+    <div>
+        <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
+        <a href="#students" class="item">Students</a>
+        <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Courses</a>
+        <a href="#teachers" class="item">Teachers</a>
+        <a href="#timetable" class="item">Timetable</a></div>
+    </div>
+</th:block>
+
+
 <th:block th:fragment="header">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
