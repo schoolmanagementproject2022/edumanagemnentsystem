@@ -90,12 +90,3 @@ function PopUpHide() {
     $("#show-btn").css("pointer-events", "auto");
     $("#show-btn").css("-webkit-filter", "blur(0px)");
 }
-
-function msg(){
-     window.location.href = $("#msg")
-   // $("#popup-container").show();
-}
-
-function jnj(){
-    $("#lesson").removeData()
-}
