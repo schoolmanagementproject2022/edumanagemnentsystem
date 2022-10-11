@@ -8,13 +8,13 @@ import java.util.List;
 public interface CoursesForTimetableService {
 
     List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId);
+
+    List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId);
+
     boolean isPresentCoursesForClass(Long academicClassId);
 
     void create(CoursesForTimetableDto coursesForTimetableDto);
 
-    void renameById(Long id);
-
     void delete(Long id);
 
-    void deleteById(Long id);
 }
