@@ -67,7 +67,35 @@
                 <!--        when click on button must go to the 4.1html-->
             </div>
 
-            <div  th:if="${timetable != null}">
+            <div th:if="${timetable != null}">
+                <!--                success popup-->
+                <div>
+
+                    <div th:if="${timetable != null}" class="create-pop">
+
+                        <div class="popup-container" id="popup-container">
+                            <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+
+                            <!--            <form id="form" class="form" th:method="POST" th:action="@{/timetable/creation}">-->
+
+                            <script th:inline="javascript" th:if="${timetable}">
+                                PopUpShow();
+                            </script>
+                            <div class="popup-wrapper">
+                                <div class="half">
+                                    <p class="successText">Timetable created successfully.</p>
+                                    <div class="error"></div>
+                                </div>
+                                <div name="btn-div">
+                                    <button type="button" class="button-save" id="submit"><b>Ok</b></button>
+                                </div>
+                            </div>
+                            <!--            </form>-->
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="form-timetable">
                     <form th:method="POST" action="#" th:object="${timetable}">
                         <div class="dates_and_create">
@@ -76,7 +104,7 @@
                                     <label class="popup-label-title">Start Date
                                         <span class="check-validation-date"></span>
                                     </label>
-                                    <input class="form_input"  placeholder="Date pick &#9638;"
+                                    <input class="form_input" placeholder="Date pick &#9638;"
                                            data-date-format="dd-mm-yyyy"
                                            readonly
                                            th:type="text"
@@ -224,32 +252,7 @@
             </div>
         </div>
 
-
     </div>
-
-    <div class="create-pop">
-
-        <div class="popup-container" id="popup-container">
-            <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-
-            <!--            <form id="form" class="form" th:method="POST" th:action="@{/timetable/creation}">-->
-
-            <script th:inline="javascript" th:if="${timetable}">
-                PopUpShow();
-            </script>
-            <div class="popup-wrapper">
-                <div class="half">
-                    <p class="successText">Timetable created successfully.</p>
-                    <div class="error"></div>
-                </div>
-                <div name="btn-div">
-                    <button type="button" class="button-save" id="submit"><b>Ok</b></button>
-                </div>
-            </div>
-            <!--            </form>-->
-        </div>
-    </div>
-
 </div>
 </body>
 </html>
