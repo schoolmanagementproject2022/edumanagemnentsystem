@@ -30,6 +30,7 @@ public class AcademicClassMapper {
         academicClassDto.setAcademicCourse(academicClass.getAcademicCourseSet());
         academicClassDto.setTeacherSet(academicClass.getTeacher());
         academicClassDto.setClassNumber(academicClass.getClassNumber());
+        academicClassDto.setClassroomTeacher(academicClass.getClassroomTeacher());
         return academicClassDto;
     }
 

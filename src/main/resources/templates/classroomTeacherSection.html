@@ -45,7 +45,7 @@
     <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
     <h1>Add Classroom Teacher</h1>
     <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingClassroomTeacher}">
-      <script th:inline="javascript" th:if="${blank} != null">
+      <script th:inline="javascript" th:if="${blank} or ${duplicate} != null">
         PopUpShow();
       </script>
       <div class="popup-wrapper">
@@ -60,6 +60,9 @@
             </select>
             <div th:if="${blank}!= null" class="error">
               <p th:text="${blank}"></p>
+            </div>
+            <div th:if="${duplicate}!= null" class="error">
+              <p th:text="${duplicate}"></p>
             </div>
           </div>
         </div>

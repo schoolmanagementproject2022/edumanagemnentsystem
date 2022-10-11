@@ -175,10 +175,18 @@ public class AcademicClassController {
         Set<Teacher> allTeachersByAcademicClass = academicClassService.findAllTeachers(name);
         model.addAttribute("allTeacherByAcademicClass", allTeachersByAcademicClass);
         model.addAttribute("existingClass", new AcademicClass());
-        if (academicClass.getClassroomTeacher()== null ) {
+        if (academicClass.getClassroomTeacher()== null) {
             model.addAttribute("blank", "Please, select the required fields");
             return "classroomTeacherSection";
         }
+
+        for (AcademicClassDto academicClassDto : academicClassService.findAll()) {
+            if (academicClass.getClassroomTeacher().equals(academicClassDto.getClassroomTeacher())){
+                model.addAttribute("duplicate", "This Teacher is already classroom teacher");
+                return "classroomTeacherSection";
+            }
+        }
+
         academicClassFindByName.setClassroomTeacher(academicClass.getClassroomTeacher());
         academicClassService.update(academicClassFindByName);
         return "redirect:/classes/" + name + "/classroom";
