@@ -53,7 +53,6 @@ public class TimetableController {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
         if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) == null) {
-
             if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
                 List<CoursesForTimetable> allCourses = coursesService.getCoursesByAcademicClassId(academicClass.getId());
                 for (CoursesForTimetable course : allCourses) {
@@ -180,10 +179,6 @@ public class TimetableController {
         return "timetable4-1";
     }
 
-
-
-
-
     @GetMapping("/classes/course/delete/{id}/{class}")
     public String delete(@PathVariable("id") Long id, @PathVariable("class") String className) {
         if (id != null) {
@@ -191,7 +186,6 @@ public class TimetableController {
         }
         return "redirect:/classes/" + className + "/timetable/preCreation";
     }
-
 
     @GetMapping("/classes/{name}/timetable/preCreation")
     public String show4_1(@PathVariable("name") String academicClassName, Model model) {
@@ -267,15 +261,6 @@ public class TimetableController {
         putLessons(model, timetable.getAcademicClass().getId());
         return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
     }
-
-
-
-
-
-
-
-
-
 
     @GetMapping("/classes/{name}/timetable/edit")
     public String openTimetableIfExists(@PathVariable("name") String academicClassName, Model model) {

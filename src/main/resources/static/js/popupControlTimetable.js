@@ -76,8 +76,13 @@ function PopUpShowSunday() {
 }
 
 function PopUpHide() {
+    $("#popup-container-monday").hide();
+    $("#popup-container-tuesday").hide();
+    $("#popup-container-wednesday").hide();
+    $("#popup-container-thursday").hide();
+    $("#popup-container-friday").hide();
+    $("#popup-container-saturday").hide();
     $("#popup-container-sunday").hide();
-    $("#popup-container-suturday").hide();
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("pointer-events", "auto");
