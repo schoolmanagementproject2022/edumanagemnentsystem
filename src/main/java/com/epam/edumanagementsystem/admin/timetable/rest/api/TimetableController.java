@@ -89,7 +89,7 @@ public class TimetableController {
         model.addAttribute("courses", academicCourseService.findAll());
         model.addAttribute("academicClass", academicClassService.findByName(name));
         putLessons(model, academicClass.getId());
-        return "timetable4-1";
+        return "redirect:/classes/" + name + "/timetable/creation";
     }
 
     @PostMapping("/classes/{name}/timetable/creation")
