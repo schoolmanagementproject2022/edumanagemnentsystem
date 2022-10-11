@@ -67,7 +67,7 @@
 
         <div class="main-down">
             <div class="form-timetable">
-                <form th:method="POST" th:action="@{${allUrl}}" th:object="${timetable}">
+                <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/creation'}" th:object="${timetable}">
                     <div class="dates_and_create">
                         <div class="dates">
                             <div class="date_half">
@@ -286,12 +286,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Monday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Monday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
@@ -323,12 +322,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Tuesday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Tuesday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
@@ -352,7 +350,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
@@ -360,12 +358,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Wednesday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Wednesday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
@@ -389,7 +386,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
@@ -397,12 +394,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Thursday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Thursday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
@@ -420,13 +416,13 @@
 </div>
 
 
-<div class="create-pop">
+<div class="create-pop"  th:if="${courseForTable.dayOfWeek eq 'Friday'}">
 
     <div class="popup-container" id="popup-container-friday">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
@@ -434,12 +430,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Friday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Friday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
@@ -463,7 +458,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
@@ -471,12 +466,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Saturday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Saturday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
@@ -508,12 +502,11 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <input id="demo" type="hidden" name="dayOfWeek" th:value="Sunday"/>
+                    <input type="hidden" name="dayOfWeek" th:value="Sunday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse"
-                            th:field="*{academicCourse}">
-                        <option th:if="*{academicCourse == null}" class="short" th:text="'Select Course'"
+                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                        <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
