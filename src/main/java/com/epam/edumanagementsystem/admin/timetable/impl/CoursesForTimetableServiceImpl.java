@@ -42,8 +42,21 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Transactional
     @Override
+    public void renameById(Long id) {
+        coursesRepository.renameById(id);
+    }
+
+    @Transactional
+    @Override
     public void delete(Long id) {
         coursesRepository.delete(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+        renameById(id);
+        delete(id);
     }
 
     @Override
