@@ -292,7 +292,7 @@
         <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Monday'}">
                 PopUpShowMonday();
             </script>
             <div class="popup-wrapper">
@@ -306,7 +306,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -328,7 +328,7 @@
         <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">
                 PopUpShowTuesday();
             </script>
             <div class="popup-wrapper">
@@ -342,7 +342,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -364,7 +364,7 @@
         <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Wednesday'}">
                 PopUpShowWednesday();
             </script>
             <div class="popup-wrapper">
@@ -378,7 +378,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -400,7 +400,7 @@
         <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Thursday'}">
                 PopUpShowThursday();
             </script>
             <div class="popup-wrapper">
@@ -414,7 +414,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -436,7 +436,7 @@
         <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Friday'}">
                 PopUpShowFriday();
             </script>
             <div class="popup-wrapper">
@@ -450,7 +450,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -472,7 +472,7 @@
         <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Saturday'}">
                 PopUpShowSaturday();
             </script>
             <div class="popup-wrapper">
@@ -486,7 +486,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -508,7 +508,7 @@
         <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
               th:object="${courseForTable}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Sunday'}">
                 PopUpShowSunday();
             </script>
             <div class="popup-wrapper">
@@ -522,7 +522,7 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicCourse')}"
+                    <div class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
