@@ -58,7 +58,6 @@ public class TimetableController {
         if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) == null &&
                 coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
             List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
-//            List<CoursesForTimetable> coursesWithActiveStatus = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
             for (CoursesForTimetable course : coursesWithNotActiveStatus) {
                 coursesService.delete(course.getId());
             }
@@ -70,10 +69,9 @@ public class TimetableController {
             putLessons(model, academicClass.getId());
             return "timetable4-1";
         }
-
-
         if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) == null &&
-                coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()) == null) {
+                coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
+                coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
             if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
                 List<CoursesForTimetable> allCourses = coursesService.getCoursesByAcademicClassId(academicClass.getId());
                 for (CoursesForTimetable course : allCourses) {
@@ -96,7 +94,6 @@ public class TimetableController {
         putLessons(model, academicClass.getId());
         return "timetable4-1";
     }
-
 
     @GetMapping("/classes/{name}/timetable/course")
     public String getPopup(@PathVariable("name") String name, Model model) {
@@ -181,6 +178,7 @@ public class TimetableController {
         List<AcademicCourseDto> allCourses = academicCourseService.findAll();
         Timetable newTimetable = new Timetable();
 
+        coursesForTimetableDto.setStatus("Active");
         if (result.hasErrors()) {
             model.addAttribute("timetable", newTimetable);
             model.addAttribute("courses", allCourses);
@@ -193,6 +191,7 @@ public class TimetableController {
 
         model.addAttribute("timetable", newTimetable);
         model.addAttribute("courses", allCourses);
+        coursesForTimetableDto.setStatus("Active");
         coursesService.create(coursesForTimetableDto);
         putLessons(model, getClassByName.getId());
         model.addAttribute("academicClass", getClassByName);
@@ -204,7 +203,7 @@ public class TimetableController {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
         if (lessonId != null) {
-            if (timetableService.isPresentTimetableByAcademicClassId(academicClass.getId())) {
+            if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) != null) {
                 coursesService.deleteById(lessonId);
                 return "redirect:/classes/" + academicClassName + "/timetable/creation";
             } else {
@@ -214,82 +213,6 @@ public class TimetableController {
         }
         return "redirect:/classes/" + academicClassName + "/timetable/preCreation";
     }
-
-    @GetMapping("/classes/{name}/timetable/preCreation")
-    public String show4_1(@PathVariable("name") String academicClassName, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
-
-        model.addAttribute("class", academicClassName);
-        model.addAttribute("timetable", new Timetable());
-        model.addAttribute("courseForTable", new CoursesForTimetableDto());
-        model.addAttribute("courses", academicCourseService.findAll());
-        model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
-        putLessons(model, academicClass.getId());
-        return "timetable4-1";
-    }
-
-    @PostMapping("/classes/{name}/timetable/preCreation")
-    public String preCreateTimetable(@ModelAttribute("timetable") @Valid Timetable timetable, BindingResult result,
-                                     @PathVariable("name") String name, Model model) {
-        LocalDate now = LocalDate.now();
-        LocalDate startDate = timetable.getStartDate();
-        LocalDate endDate = timetable.getEndDate();
-        String invalidMsg = "Please, select right dates";
-        List<AcademicCourseDto> allCourses = academicCourseService.findAll();
-        CoursesForTimetableDto newCoursesForTimetable = new CoursesForTimetableDto();
-        AcademicClass classByName = academicClassService.findByName(name);
-
-        if (result.hasErrors()) {
-            if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
-                if (startDate.isBefore(now)) {
-                    model.addAttribute("invalid", invalidMsg);
-                    duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-                    putLessons(model, timetable.getAcademicClass().getId());
-                }
-                duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-                putLessons(model, classByName.getId());
-                return "timetable4-1";
-            } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
-                if (endDate.isBefore(now)) {
-                    model.addAttribute("invalid", invalidMsg);
-                    duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-                    putLessons(model, timetable.getAcademicClass().getId());
-                }
-                duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-                putLessons(model, classByName.getId());
-                return "timetable4-1";
-            } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
-                duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-                putLessons(model, timetable.getAcademicClass().getId());
-                return "timetable4-1";
-            }
-        }
-        Period diffOfDate = Period.between(endDate, startDate);
-        if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
-            model.addAttribute("invalid", invalidMsg);
-            duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-            putLessons(model, timetable.getAcademicClass().getId());
-            return "timetable4-1";
-        } else if (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) {
-            model.addAttribute("invalid", invalidMsg);
-            duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-            putLessons(model, timetable.getAcademicClass().getId());
-            return "timetable4-1";
-        }
-
-        if (!coursesService.isPresentCoursesForClass(classByName.getId())) {
-            model.addAttribute("noLessonInTimetable", "Please, select Courses");
-            duplicatedModelAttributes(model, allCourses, newCoursesForTimetable, classByName);
-            putLessons(model, timetable.getAcademicClass().getId());
-            return "timetable4-1";
-        }
-
-        timetable.setAcademicClass(classByName);
-        timetableService.create(timetable);
-        putLessons(model, timetable.getAcademicClass().getId());
-        return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
-    }
-
 
     @GetMapping("/classes/{name}/timetable/edit")
     public String openTimetableIfExists(@PathVariable("name") String academicClassName, Model model) {

@@ -29,7 +29,7 @@ public class CoursesForTimetable {
     @NotBlank
     private String dayOfWeek;
 
-    @NotBlank
+
     private String status;
 
 
@@ -42,7 +42,8 @@ public class CoursesForTimetable {
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;
-        this.status = "Active";
+        this.status = status;
+
     }
 
     public Long getId() {

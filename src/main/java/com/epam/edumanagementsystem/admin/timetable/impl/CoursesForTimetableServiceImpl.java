@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CoursesForTimetableServiceImpl implements CoursesForTimetableService {
@@ -51,7 +50,8 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     public void create(CoursesForTimetableDto coursesForTimetableDto) {
         coursesRepository.create(coursesForTimetableDto.getDayOfWeek(),
                 coursesForTimetableDto.getAcademicCourse().getName(),
-                coursesForTimetableDto.getAcademicClass().getId());
+                coursesForTimetableDto.getAcademicClass().getId(),
+                coursesForTimetableDto.getStatus());
     }
 
     @Transactional
