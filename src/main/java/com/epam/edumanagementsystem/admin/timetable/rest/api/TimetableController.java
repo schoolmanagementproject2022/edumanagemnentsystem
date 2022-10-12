@@ -191,9 +191,9 @@ public class TimetableController {
             return "timetable4-1";
         }
 
-        coursesService.create(coursesForTimetableDto);
         model.addAttribute("timetable", newTimetable);
         model.addAttribute("courses", allCourses);
+        coursesService.create(coursesForTimetableDto);
         putLessons(model, getClassByName.getId());
         model.addAttribute("academicClass", getClassByName);
         return "timetable4-1";
