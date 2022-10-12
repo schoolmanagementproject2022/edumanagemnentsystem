@@ -4,7 +4,6 @@ function PopUpShowMonday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -15,7 +14,6 @@ function PopUpShowTuesday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -26,7 +24,6 @@ function PopUpShowWednesday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -37,7 +34,6 @@ function PopUpShowThursday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -48,7 +44,6 @@ function PopUpShowFriday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -59,7 +54,6 @@ function PopUpShowSaturday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -70,7 +64,6 @@ function PopUpShowSunday() {
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
     $("#main-wrapper").css("pointer-events", "none");
-    $("#header").css("pointer-events", "none");
     $("#show-btn").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
@@ -89,4 +82,11 @@ function PopUpHide() {
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
     $("#show-btn").css("-webkit-filter", "blur(0px)");
+}
+
+function SuccessPopupShow() {
+    $("#popup-container").show();
+}
+function SuccessPopupHide() {
+    $("#popup-container").hide();
 }

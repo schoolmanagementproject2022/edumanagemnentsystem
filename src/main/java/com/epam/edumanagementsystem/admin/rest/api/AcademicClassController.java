@@ -87,22 +87,22 @@ public class AcademicClassController {
     @GetMapping("/{name}/courses")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
         List<AcademicCourse> result = new ArrayList<>();
-        Set<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
+        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
-        model.addAttribute("academicCourseSet", academicCoursesInClass);
+        model.addAttribute("academicCourseSet", allAcademicCourses);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingClass", new AcademicClass());
         model.addAttribute("allCourses", allCourses);
-        if (academicCoursesInClass.size() == 0) {
+        if (allAcademicCourses.size() == 0) {
             result.addAll(allCourses);
             model.addAttribute("coursesForSelect", result);
             return "academicCourseForAcademicClass";
-        } else if (academicCoursesInClass.size() == allCourses.size()) {
+        } else if (allAcademicCourses.size() == allCourses.size()) {
             return "academicCourseForAcademicClass";
         } else {
             for (AcademicCourse course : allCourses) {
-                if (!academicCoursesInClass.contains(course)) {
+                if (!allAcademicCourses.contains(course)) {
                     result.add(course);
                 }
             }
@@ -116,7 +116,7 @@ public class AcademicClassController {
                                                  @PathVariable("name") String name, Model model) {
         List<AcademicCourse> result = new ArrayList<>();
 
-        Set<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
+        List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
