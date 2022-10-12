@@ -37,11 +37,15 @@ public class AcademicClass {
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<AcademicCourse> academicCourseSet;
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet) {
+    @OneToOne
+    private Teacher classroomTeacher;
+
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet,Teacher classroomTeacher) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
+        this.classroomTeacher = classroomTeacher;
     }
 
     public Set<AcademicCourse> getAcademicCourseSet() {
@@ -80,16 +84,24 @@ public class AcademicClass {
         return classNumber;
     }
 
+    public Teacher getClassroomTeacher() {
+        return classroomTeacher;
+    }
+
+    public void setClassroomTeacher(Teacher classroomTeacher) {
+        this.classroomTeacher = classroomTeacher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(classroomTeacher, that.classroomTeacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher);
+        return Objects.hash(id, classNumber, teacher,classroomTeacher);
     }
 }

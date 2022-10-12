@@ -46,24 +46,28 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public void update(AcademicClass academicClass) {
-        AcademicClass byName = findByName(academicClass.getClassNumber());
+        AcademicClass updateAcademicClass = findByName(academicClass.getClassNumber());
         if (academicClass.getClassNumber() != null) {
-            byName.setClassNumber(academicClass.getClassNumber());
+            updateAcademicClass.setClassNumber(academicClass.getClassNumber());
         }
         if (academicClass.getAcademicCourseSet() != null) {
             Set<AcademicCourse> academicCourse = academicClass.getAcademicCourseSet();
             for (AcademicCourse academicCourse1 : academicCourse) {
-                byName.getAcademicCourseSet().add(academicCourse1);
+                updateAcademicClass.getAcademicCourseSet().add(academicCourse1);
             }
         }
 
         if (academicClass.getTeacher() != null) {
             Set<Teacher> teacher = academicClass.getTeacher();
             for (Teacher teachers : teacher)
-                byName.getTeacher().add(teachers);
+                updateAcademicClass.getTeacher().add(teachers);
         }
 
-        create(byName);
+        if (academicClass.getClassroomTeacher() !=null){
+            updateAcademicClass.setClassroomTeacher(academicClass.getClassroomTeacher());
+        }
+
+        create(updateAcademicClass);
     }
 
     @Override

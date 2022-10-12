@@ -14,14 +14,17 @@ public class AcademicClassDto {
 
     private Set<Teacher> teacherSet;
 
+    private Teacher classroomTeacher;
+
     public AcademicClassDto() {
     }
 
-    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet) {
+    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet, Teacher classroomTeacher) {
         this.id = id;
         this.classNumber = classNumber;
         this.academicCourse = academicCourse;
         this.teacherSet = teacherSet;
+        this.classroomTeacher = classroomTeacher;
     }
 
     public Long getId() {
@@ -56,17 +59,25 @@ public class AcademicClassDto {
         this.teacherSet = teacherSet;
     }
 
+    public Teacher getClassroomTeacher() {
+        return classroomTeacher;
+    }
+
+    public void setClassroomTeacher(Teacher classroomTeacher) {
+        this.classroomTeacher = classroomTeacher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClassDto that = (AcademicClassDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet) && Objects.equals(classroomTeacher, that.classroomTeacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, academicCourse, teacherSet);
+        return Objects.hash(id, classNumber, academicCourse, teacherSet, classroomTeacher);
     }
 
     @Override
