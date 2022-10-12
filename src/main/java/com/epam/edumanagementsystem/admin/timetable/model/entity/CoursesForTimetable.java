@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.admin.timetable.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,24 +17,32 @@ public class CoursesForTimetable {
     private Long id;
 
     @Column(name = "academic_course_name")
+    @NotBlank
     private String academicCourse;
+
 
     @ManyToMany
     @JoinTable(name = "courses_table", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "academic_class_id"))
     private List<AcademicClass> academicClass;
 
+    @NotBlank
     private String dayOfWeek;
+
+    @NotBlank
+    private String status;
 
 
     public CoursesForTimetable() {
     }
 
-    public CoursesForTimetable(Long id, String academicCourse, List<AcademicClass> academicClass, String dayOfWeek) {
+    public CoursesForTimetable(Long id, String academicCourse, List<AcademicClass> academicClass,
+                               String dayOfWeek, String status) {
         this.id = id;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;
+        this.status = "Active";
     }
 
     public Long getId() {
@@ -68,17 +77,27 @@ public class CoursesForTimetable {
         this.dayOfWeek = dayOfWeek;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CoursesForTimetable that = (CoursesForTimetable) o;
-        return id.equals(that.id) && academicCourse.equals(that.academicCourse) && academicClass.equals(that.academicClass) && dayOfWeek.equals(that.dayOfWeek);
+        return id.equals(that.id) && academicCourse.equals(that.academicCourse) &&
+                academicClass.equals(that.academicClass) && dayOfWeek.equals(that.dayOfWeek) &&
+                status.equals(that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, academicCourse, academicClass, dayOfWeek);
+        return Objects.hash(id, academicCourse, academicClass, dayOfWeek, status);
     }
 
     @Override
@@ -88,6 +107,7 @@ public class CoursesForTimetable {
                 ", academicCourse='" + academicCourse + '\'' +
                 ", academicClass=" + academicClass +
                 ", dayOfWeek='" + dayOfWeek + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
