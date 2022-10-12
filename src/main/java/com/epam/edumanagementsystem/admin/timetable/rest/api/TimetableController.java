@@ -1,10 +1,8 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.api;
 
-import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
-import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
@@ -27,15 +25,12 @@ import java.util.Set;
 @Controller
 public class TimetableController {
 
-    private final AcademicCourseService academicCourseService;
     private final CoursesForTimetableService coursesService;
     private final AcademicClassService academicClassService;
     private final TimetableService timetableService;
 
-    public TimetableController(AcademicCourseService academicCourseService,
-                               CoursesForTimetableService coursesService,
+    public TimetableController(CoursesForTimetableService coursesService,
                                AcademicClassService academicClassService, TimetableService timetableService) {
-        this.academicCourseService = academicCourseService;
         this.coursesService = coursesService;
         this.academicClassService = academicClassService;
         this.timetableService = timetableService;
@@ -86,7 +81,7 @@ public class TimetableController {
         model.addAttribute("class", academicClassName);
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
-        model.addAttribute("courses",academicClassService.findAllAcademicCourses(academicClassName));
+        model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
         model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
         putLessons(model, academicClass.getId());
         return "redirect:/classes/" + academicClassName + "/timetable/creation";
@@ -99,7 +94,7 @@ public class TimetableController {
         LocalDate startDate = timetable.getStartDate();
         LocalDate endDate = timetable.getEndDate();
         String invalidMsg = "Please, select right dates";
-        Set<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         CoursesForTimetableDto newCoursesForTimetable = new CoursesForTimetableDto();
         AcademicClass classByName = academicClassService.findByName(academicClassName);
 
@@ -159,7 +154,7 @@ public class TimetableController {
                                 BindingResult result, @PathVariable("name") String academicClassName,
                                 Model model) {
         AcademicClass getClassByName = academicClassService.findByName(academicClassName);
-        Set<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         Timetable newTimetable = new Timetable();
 
         if (result.hasErrors()) {
@@ -208,7 +203,7 @@ public class TimetableController {
         LocalDate startDate = timetable.getStartDate();
         LocalDate endDate = timetable.getEndDate();
         String invalidMsg = "Please, select right dates";
-        Set<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         CoursesForTimetableDto newCoursesForTimetable = new CoursesForTimetableDto();
         AcademicClass classByName = academicClassService.findByName(academicClassName);
 
@@ -274,7 +269,7 @@ public class TimetableController {
         return "redirect:/classes/{name}/timetable/edit";
     }
 
-    private void duplicatedModelAttributes(Model model, Set<AcademicCourse> allAcademicCourses, CoursesForTimetableDto newCoursesForTimetable, AcademicClass classByName) {
+    private void duplicatedModelAttributes(Model model, List<AcademicCourse> allAcademicCourses, CoursesForTimetableDto newCoursesForTimetable, AcademicClass classByName) {
         model.addAttribute("courseForTable", newCoursesForTimetable);
         model.addAttribute("academicClass", classByName);
         model.addAttribute("courses", allAcademicCourses);
