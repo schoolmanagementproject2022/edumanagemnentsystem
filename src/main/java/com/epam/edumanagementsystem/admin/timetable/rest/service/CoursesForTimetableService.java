@@ -11,9 +11,15 @@ public interface CoursesForTimetableService {
 
     List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId);
 
+    List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId);
+
+    List<CoursesForTimetable> getCoursesWithActiveStatusByAcademicCourseId(Long academicClassId);
+
     boolean isPresentCoursesForClass(Long academicClassId);
 
     void create(CoursesForTimetableDto coursesForTimetableDto);
+
+    void updateCourseStatusById(Long id);
 
     void renameById(Long id);
 

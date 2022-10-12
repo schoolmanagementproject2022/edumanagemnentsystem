@@ -21,10 +21,24 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         this.coursesRepository = coursesRepository;
     }
 
-    @Transactional
     @Override
     public List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId) {
-        return coursesRepository.findByDayOfWeek(dayOfWeek, academicClassId);
+        return coursesRepository.findCoursesByDayOfWeekAndAcademicClassId(dayOfWeek, academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId) {
+        return coursesRepository.findCoursesByAcademicClassId(academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesWithActiveStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithActiveStatusByAcademicCourseId(academicClassId);
     }
 
     @Override
@@ -38,6 +52,12 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         coursesRepository.create(coursesForTimetableDto.getDayOfWeek(),
                 coursesForTimetableDto.getAcademicCourse().getName(),
                 coursesForTimetableDto.getAcademicClass().getId());
+    }
+
+    @Transactional
+    @Override
+    public void updateCourseStatusById(Long id) {
+        coursesRepository.updateCourseStatusById(id);
     }
 
     @Transactional
@@ -59,8 +79,5 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         delete(id);
     }
 
-    @Override
-    public List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId) {
-        return coursesRepository.findCoursesByAcademicClassId(academicClassId);
-    }
+
 }
