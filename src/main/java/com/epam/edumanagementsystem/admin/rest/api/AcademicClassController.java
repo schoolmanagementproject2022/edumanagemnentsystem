@@ -172,8 +172,6 @@ public class AcademicClassController {
                                                      @PathVariable("name") String name, Model model) {
         AcademicClass academicClassFindByName = academicClassService.findByName(name);
         model.addAttribute("teachers", academicClassFindByName.getTeacher());
-        Set<Teacher> allTeachersByAcademicClass = academicClassService.findAllTeachers(name);
-        model.addAttribute("allTeacherByAcademicClass", allTeachersByAcademicClass);
         model.addAttribute("existingClass", new AcademicClass());
         if (academicClass.getClassroomTeacher()== null) {
             model.addAttribute("blank", "Please, select the required fields");
