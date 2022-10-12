@@ -56,7 +56,7 @@ public class TimetableController {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
         if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) == null &&
-                coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()) != null) {
+                coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
             List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
 //            List<CoursesForTimetable> coursesWithActiveStatus = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
             for (CoursesForTimetable course : coursesWithNotActiveStatus) {
