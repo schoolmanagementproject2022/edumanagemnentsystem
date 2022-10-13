@@ -299,6 +299,9 @@ body {
     margin-left: 246px;
     padding: 0px;
 }
+.create a{
+    text-decoration: none;
+}
 
 .timetable {
     width: 100%;
