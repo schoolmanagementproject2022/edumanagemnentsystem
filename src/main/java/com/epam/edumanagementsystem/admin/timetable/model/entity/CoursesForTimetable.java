@@ -29,7 +29,6 @@ public class CoursesForTimetable {
     @NotBlank
     private String dayOfWeek;
 
-
     private String status;
 
 
