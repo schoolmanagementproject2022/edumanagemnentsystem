@@ -23,14 +23,18 @@ public class CoursesForTimetableDto {
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String dayOfWeek;
 
+
+    private String status;
+
     public CoursesForTimetableDto() {
     }
 
-    public CoursesForTimetableDto(AcademicCourse academicCourse, AcademicClass academicClass,
-                                  String dayOfWeek) {
+    public CoursesForTimetableDto( AcademicCourse academicCourse, AcademicClass academicClass,
+                                   String dayOfWeek, String status) {
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;
+        this.status = status;
     }
 
     public Long getId() {
@@ -65,17 +69,25 @@ public class CoursesForTimetableDto {
         this.dayOfWeek = dayOfWeek;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CoursesForTimetableDto that = (CoursesForTimetableDto) o;
-        return Objects.equals(academicCourse, that.academicCourse) && Objects.equals(academicClass, that.academicClass) && Objects.equals(dayOfWeek, that.dayOfWeek);
+        return academicCourse.equals(that.academicCourse) && academicClass.equals(that.academicClass) && dayOfWeek.equals(that.dayOfWeek) && status.equals(that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(academicCourse, academicClass, dayOfWeek);
+        return Objects.hash(academicCourse, academicClass, dayOfWeek, status);
     }
 
     @Override
@@ -84,6 +96,7 @@ public class CoursesForTimetableDto {
                 "academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +
                 ", dayOfWeek='" + dayOfWeek + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
