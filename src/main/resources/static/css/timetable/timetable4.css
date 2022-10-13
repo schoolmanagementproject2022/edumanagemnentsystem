@@ -196,13 +196,13 @@ body {
 }
 
 .activeTab {
-background-color: #333333;
-color: #01A7F0 !important;
+    background-color: #333333;
+    color: #01A7F0 !important;
 }
 
 .allTab {
-background-color: #333333;
-color: #01A7F0 !important;
+    background-color: #333333;
+    color: #01A7F0 !important;
 }
 
 /*Main top containing only link style*/
@@ -268,10 +268,12 @@ color: #01A7F0 !important;
     margin-right: -10px;
 
 }
-.start_date_title{
+
+.start_date_title {
     font-size: 0.7em;
 }
-.end_date_title{
+
+.end_date_title {
     font-size: 0.7em;
 }
 
@@ -299,57 +301,57 @@ color: #01A7F0 !important;
 }
 
 .timetable {
-width: 100%;
-margin: 0;
-padding: 0px;
-background-color: #D7D7D7;
-display: flex;
-border: solid 0.5px #007EB4;
+    width: 100%;
+    margin: 0;
+    padding: 0px;
+    background-color: #D7D7D7;
+    display: flex;
+    border: solid 0.5px #007EB4;
 }
 
 .dayOfWeek {
-width: 50%;
-margin: 0;
-padding: 0px;
-background-color: #D7D7D7;
-border: solid 0.5px #007EB4;
-overflow: hidden;
-display: flex;
-flex-wrap: wrap;
-flex-direction: column;
+    width: 50%;
+    margin: 0;
+    padding: 0px;
+    background-color: #D7D7D7;
+    border: solid 0.5px #007EB4;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .dayHeader {
-margin: 0;
-padding: 0px;
-background-color: #7F7F7F;
-border-bottom: solid 0.5px #007EB4;
-text-align: center;
+    margin: 0;
+    padding: 0px;
+    background-color: #7F7F7F;
+    border-bottom: solid 0.5px #007EB4;
+    text-align: center;
 
 }
 
 .dayHeader a {
-text-align: center;
-color: #FFFFFF;
-background-color: #7F7F7F;
-font-size: 0.6em;
-font-weight: 600;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #7F7F7F;
+    font-size: 0.6em;
+    font-weight: 600;
 }
 
 .add {
-background-color: #D7D7D7;
-margin-bottom: 11px;
+    background-color: #D7D7D7;
+    margin-bottom: 11px;
 }
 
 .plus {
-border-radius: 50%;
-padding: 10px;
-margin: 0px 48px;
-border: solid 3px #007EB4;
-font-weight: 600;
-font-size: 23px;
-text-align: center;
-color: #007EB4;
+    border-radius: 50%;
+    padding: 10px;
+    margin: 0px 48px;
+    border: solid 3px #007EB4;
+    font-weight: 600;
+    font-size: 23px;
+    text-align: center;
+    color: #007EB4;
 }
 
 /*Lessons section styles*/
@@ -441,15 +443,17 @@ color: #007EB4;
 }
 
 .popup-container {
-    display: none;
-    width: 437px;
-    height: 319px;
+    opacity: 0.9;
+    width: 26%;
+    height: 34%;
     padding: 20px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
-
+.popup-wrapper{
+    opacity: unset !important;
+}
 .popup-container {
     position: absolute;
     top: 45%;
@@ -492,12 +496,12 @@ form {
 }
 
 .successText {
-    left: 10%;
-    font-size: 25px;
+    left: 7%;
+    font-size: 22px;
     color: green;
     display: inline-flex;
     position: absolute;
-    top: 40%;
+    top: 30%;
 }
 
 .half {
@@ -521,9 +525,9 @@ form {
 
 .button-save {
     position: absolute;
-    color: #A30014;
+    color: #000000;
     float: right;
-    margin-top: 40%;
+    margin-top: 23%;
     margin-left: -10%;
     width: 83px;
     display: block;
