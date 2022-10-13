@@ -21,9 +21,6 @@ public interface CoursesForTimetableService {
 
     void updateCourseStatusById(Long id);
 
-    void renameById(Long id);
+    void deleteCourseById(Long id);
 
-    void delete(Long id);
-
-    void deleteById(Long id);
 }

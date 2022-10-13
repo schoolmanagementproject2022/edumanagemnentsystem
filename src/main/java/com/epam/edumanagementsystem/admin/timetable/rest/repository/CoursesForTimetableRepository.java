@@ -22,27 +22,17 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
 
     boolean existsCoursesForTimetableByAcademicClass_Id(Long id);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO courses_table(day_of_week, academic_course_name, academic_class_id, status) " +
             "values(?1,?2,?3,?4)")
     void create(String dayOfWeek, String academicCourseName, Long academicClassId, String status);
 
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Query(nativeQuery = true, value = "UPDATE courses_table SET status = 'Not Active' WHERE id =(?1);")
     void updateCourseStatusById(Long id);
 
-
-    @Modifying(clearAutomatically = true)
-    @Query(nativeQuery = true, value = "UPDATE courses_table SET academic_class_id = '0' WHERE id =(?1);")
-    void renameById(Long id);
-
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Query(nativeQuery = true, value = "Delete FROM courses_table WHERE id =(?1);")
-    void delete(Long id);
-
-    @Modifying(clearAutomatically = true)
-    void deleteById(Long id);
-
-
+    void deleteCourseById(Long id);
 
 }

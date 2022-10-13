@@ -20,4 +20,6 @@ public interface TimetableService {
 
     Timetable getTimetableByAcademicClassId(Long id);
 
+    void deleteTimetableByAcademicClassId(Long academicClassId);
+
 }

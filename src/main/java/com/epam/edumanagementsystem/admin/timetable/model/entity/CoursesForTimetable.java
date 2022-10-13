@@ -2,6 +2,8 @@ package com.epam.edumanagementsystem.admin.timetable.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class CoursesForTimetable {
 
 
     @ManyToMany
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinTable(name = "courses_table", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "academic_class_id"))
     private List<AcademicClass> academicClass;
