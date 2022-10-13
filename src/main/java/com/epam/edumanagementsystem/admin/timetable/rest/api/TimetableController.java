@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.api;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
+import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
@@ -19,7 +20,6 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class TimetableController {
@@ -57,7 +57,7 @@ public class TimetableController {
             model.addAttribute("class", academicClassName);
             model.addAttribute("timetable", new Timetable());
             model.addAttribute("courseForTable", new CoursesForTimetableDto());
-            model.addAttribute("courses", academicCourseService.findAll());
+            model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
             model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
             putLessons(model, academicClass.getId());
             return "timetable4-1";
@@ -172,6 +172,7 @@ public class TimetableController {
         List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         Timetable newTimetable = new Timetable();
 
+        coursesForTimetableDto.setStatus("Active");
         if (result.hasErrors()) {
             model.addAttribute("timetable", newTimetable);
             model.addAttribute("courses", allAcademicCourses);
