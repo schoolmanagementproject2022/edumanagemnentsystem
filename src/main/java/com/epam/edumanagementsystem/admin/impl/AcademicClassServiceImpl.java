@@ -72,13 +72,6 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public List<AcademicCourse> findAllAcademicCourses(String name) {
-        List <AcademicCourse> list=new ArrayList<>();
-        AcademicClass byName = findByName(name);
-        for (AcademicCourse academicCourse:byName.getAcademicCourseSet())
-            list.add(academicCourse);
-
-        return list;
-    public List<AcademicCourse> findAllAcademicCourses(String name) {
         List<AcademicCourse> listOfCourses= new ArrayList<>();
         Set<AcademicCourse> academicCourseSet = findByName(name).getAcademicCourseSet();
         for (AcademicCourse course : academicCourseSet) {
