@@ -55,14 +55,9 @@ body {
     text-decoration: none;
     transition: color 0.5s;
 }
-
-.nav-link-wrapper a:hover {
-    color: #01A7F0;
-}
-
-
     /*Main part styles*/
 .main-wrapper {
+
     width: 100%;
     display: flex;
     padding: 0px;
@@ -90,12 +85,6 @@ body {
     font-size: 1.3em;
 
 }
-
-.sidebar a:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
-
     /*Main bar style*/
 .main {
     width: 88%;
@@ -120,16 +109,6 @@ body {
     text-decoration: none;
     border-radius: 8px;
     padding: 7px;
-}
-
-.create a {
-    text-decoration: none;
-    color: #FFFFFF;
-}
-
-.create a:hover {
-    background-color: #333333;
-    color: #01A7F0;
 }
 
 .btn {
@@ -168,6 +147,12 @@ body {
 .list-items{
     width: 100% ;
 }
+.list-p-item{
+    width: 100% ;
+    background-color: #555555;
+}
+
+
 .list-items p {
     display: block;
     color: #FFFFFF;
@@ -181,12 +166,10 @@ body {
     background-color: #333333;
     color: #01A7F0;
 }
-
 .list-items a:hover {
     background-color: #333333;
     color: #01A7F0;
 }
-
 .lebel {
     display: block;
     color: #FFFFFF;
@@ -195,30 +178,6 @@ body {
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
 }
-
-    /*Pop up part style*/
-.show-btn {
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    text-align: center;
-    background-color: #555555;
-    /*position: absolute;*/
-    /*top: 11%;*/
-    /*left: 91%;*/
-    margin-top: 20px;
-    border-radius: 6px;
-    border-color: #aaaaaa;
-    /*transform: translate(-50%, -50%);*/
-    color: #01A7F0;
-    align-self: flex-end;
-}
-
-
-.show-btn:hover {
-    border-color: #01A7F0;
-}
-
 input[type="checkbox"] {
     display: none;
 }
@@ -230,21 +189,17 @@ input[type="checkbox"] {
 }
 
 .popup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%);
     display: none;
     width: 492px;
     height: 499px;
     padding: 20px;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.popup-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: #F2F2F2;
-    transform: translate(-50%, -50%)
 }
 
 .popup-container .close-btn {
@@ -329,14 +284,6 @@ form {
     font-size: 0.7em;
     color: red;
 }
-.form_input {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    display: block;
-    width: 100%;
-    border-radius: 1px;
-    border-width: 1.5px;
-}
 .form_input_subjectName {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -345,10 +292,6 @@ form {
     border-radius: 4px;
     border-width: 1.5px;
     padding: 5px;
-}
-.activeTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
 }
 .form_input:focus {
     outline: none !important;
@@ -362,6 +305,9 @@ form {
 }
 .selectTeacher {
     margin-top: 40px;
+}
+.selectclassroom {
+    margin-top: 10px;
 }
 .popup-label-title-subject {
     font-size: 17px;
@@ -392,7 +338,7 @@ form {
     color: #01A7F0;
 }
 
-/*Main part styles*/
+    /*Main part styles*/
 .main-wrapper {
     width: 100%;
     display: flex;
@@ -402,7 +348,7 @@ form {
     position: fixed;
 }
 
-/*Sidebar styles*/
+    /*Sidebar styles*/
 .sidebar {
     width: 21%;
     padding: 0px;
@@ -434,7 +380,7 @@ form {
     font-size: 1.3em;
 }
 
-/*Button part styles*/
+    /*Button part styles*/
 .create {
     display: block;
     transition: all 0.5s ease;
@@ -475,56 +421,7 @@ form {
 
 #date {
     width: 80%;
-/important;
     cursor: pointer;
-}
-
-.list-items p:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
-
-
-.lebel {
-    display: block;
-    color: #FFFFFF;
-    padding: 13px;
-    text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
-}
-
-/*Pop up part style*/
-.show-btn:hover {
-    border-color: #01A7F0;
-}
-
-input[type="checkbox"] {
-    display: none;
-}
-
-#show:checked ~ .popup-container {
-    display: block;
-    width: 468px;
-    height: 413px;
-}
-
-.popup-container {
-    display: none;
-    width: 492px;
-    height: 499px;
-    padding: 20px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-.popup-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: #F2F2F2;
-    transform: translate(-50%, -50%)
 }
 
 .popup-container .close-btn {
@@ -551,14 +448,6 @@ form {
     margin-left: 0px;
     margin-right: 4px;
 }
-
-.popup-wrapper {
-    width: 100%;
-    display: flex;
-    padding: 10px;
-    margin-top: 30px;
-}
-
 .half {
     width: 50%;
     padding: 0px;
@@ -622,22 +511,12 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
-
-.activeTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
-}
-
 .allTab {
     background-color: #333333;
     color: #01A7F0 !important;
 }
-
-.form_input:focus {
-    outline: none !important;
-    border: 1px solid #01A7F0;
-}
 .sidebar2 {
+    margin-right: 25px;
     margin-top: 50px;
     width: 15%;
     background-color: #555555;
@@ -660,13 +539,37 @@ form {
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
-    width: 177px;
+    width: 104px;
     text-align: center;
     background-color: #555555;
     border-radius: 6px;
     border-color: #aaaaaa;
     align-self: flex-end;
     color: #01A7F0;
+}
+
+.vis-btn {
+    margin: -80px auto;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 264px;
+    text-align: center;
+    background-color: #555555;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    align-self: flex-end;
+    color: #01A7F0;
+}
+.classroom-show-top{
+    margin: 80px auto;
+    width: 392px;
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 19px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .item {
@@ -679,6 +582,18 @@ form {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
+list {
+    width: 100%;
+    padding: 0px;
+    background-color: #555555;
+    height: 65vh;
+    margin-top: 10px;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
 
 .list {
     width: 100%;
@@ -686,12 +601,12 @@ form {
     height: 65vh;
     overflow-y: scroll;
 }
-.selectTeacher {
+.seleurl-pathctTeacher {
     margin-top: 6px;
 }
 
-/*for url*/
-.url-path {
+    /*for url*/
+. {
     width: 100%;
     display:flex;
 }
@@ -735,14 +650,7 @@ form {
     width: 64%;
 }
 
-
 .activeTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
-}
-
-
-.allTab {
     background-color: #333333;
     color: #01A7F0 !important;
 }

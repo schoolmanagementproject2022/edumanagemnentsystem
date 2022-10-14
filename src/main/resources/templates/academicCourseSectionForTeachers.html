@@ -36,7 +36,9 @@
         </div>
         <div class="sidebar2 header" id="sidebar2">
             <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}" th:href="@{${allUrl}}">Teachers</a>
-            <a class="item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}" th:href="@{${allUrl}}">Classes</a>
+            <a class="item"
+               th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'classes'}}">Classes</a>
         </div>
     </div>
 </div>
@@ -78,5 +80,4 @@
     });
 </script>
 </body>
-
 </html>

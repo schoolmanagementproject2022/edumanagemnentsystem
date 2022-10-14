@@ -47,6 +47,100 @@
             });
         });
     </script>
+
+    <script>
+
+        const obj = {
+            refreshValue: "toReload",
+            get getValue() {
+                return this.refreshValue;
+            },
+
+            set setValue(name) {
+                this.refreshValue = name;
+            },
+        };
+
+        function monday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+        function tuesday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
+        function wednesday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
+        function thursday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
+        function friday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
+        function saturday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
+        function sunday_popUp() {
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
+        if (obj.refreshValue === "notToReload") {
+            console.log("Checking in notToReload")
+        } else if (obj.refreshValue === "toReload") {
+            console.log("Checking in toReload")
+            window.onbeforeunload = function () {
+                return "Are you sure?"
+            }
+        }
+
+    </script>
+
     <title>Timetable</title>
 </head>
 
@@ -311,7 +405,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="monday_popUp()" id="submit_monday"><b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -347,7 +441,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -383,7 +477,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="wednesday_popUp()" id="submit_wednesday"><b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -419,7 +513,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="thursday_popUp()" id="submit_thursday"><b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -455,7 +549,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="friday_popUp()" id="submit_friday"><b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -491,7 +585,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="saturday_popUp()" id="submit_saturday"><b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -527,7 +621,7 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="sunday_popUp()" id="submit_sunday"><b>Save</b></button>
                 </div>
             </div>
         </form>

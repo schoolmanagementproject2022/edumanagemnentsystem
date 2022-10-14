@@ -146,7 +146,7 @@ body {
 }
 
 .a-url {
-    margin-right: -34px;
+    margin-right: -25px;
     margin-top: 23px;
     margin-left: -5%;
     padding-left: 57px;
@@ -479,29 +479,6 @@ body {
     color: #007EB4;
     font-weight: bold;
     font-size: 0.7em;
-}
-
-
-/*for url*/
-.url-path {
-    margin-right: 100%;
-    display: inline-flex;
-}
-
-.a-url {
-    margin-right: -34px;
-    margin-top: 23px;
-    margin-left: -5%;
-    padding-left: 57px;
-    text-decoration: none;
-    color: #2b80a5;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-}
-
-.a-url:hover {
-    font-size: 110%;
 }
 
 option {
