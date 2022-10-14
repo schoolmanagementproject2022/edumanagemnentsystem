@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
 import java.util.Objects;
@@ -14,14 +15,16 @@ public class AcademicClassDto {
 
     private Set<Teacher> teacherSet;
 
+    private Set<Student> students;
+
     public AcademicClassDto() {
     }
-
-    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet) {
+    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet, Set<Student> students) {
         this.id = id;
         this.classNumber = classNumber;
         this.academicCourse = academicCourse;
         this.teacherSet = teacherSet;
+        this.students = students;
     }
 
     public Long getId() {
@@ -56,17 +59,25 @@ public class AcademicClassDto {
         this.teacherSet = teacherSet;
     }
 
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClassDto that = (AcademicClassDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet) && Objects.equals(students, that.students);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, academicCourse, teacherSet);
+        return Objects.hash(id, classNumber, academicCourse, teacherSet, students);
     }
 
     @Override
@@ -76,6 +87,7 @@ public class AcademicClassDto {
                 ", classNumber='" + classNumber + '\'' +
                 ", academicCourse=" + academicCourse +
                 ", teacherSet=" + teacherSet +
+                ", students=" + students +
                 '}';
     }
 }
