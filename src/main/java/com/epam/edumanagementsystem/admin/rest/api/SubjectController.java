@@ -57,9 +57,6 @@ public class SubjectController {
             }
         }
 
-        String replacedName = subject.getName().replace(" ","");
-        subject.setName(replacedName);
-
         for (Subject subject1 : all) {
             if (subject1.getName().equalsIgnoreCase(subject.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
