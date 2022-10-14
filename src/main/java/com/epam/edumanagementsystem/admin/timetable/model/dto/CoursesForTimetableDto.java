@@ -14,7 +14,7 @@ public class CoursesForTimetableDto {
     private Long id;
 
     @NotNull(message = "Please, fill the required fields")
-    private AcademicCourse academicCourse;
+    private String academicCourse;
 
     @NotNull(message = "Please, fill the required fields")
     private AcademicClass academicClass;
@@ -29,7 +29,7 @@ public class CoursesForTimetableDto {
     public CoursesForTimetableDto() {
     }
 
-    public CoursesForTimetableDto( AcademicCourse academicCourse, AcademicClass academicClass,
+    public CoursesForTimetableDto( String academicCourse, AcademicClass academicClass,
                                    String dayOfWeek, String status) {
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
@@ -45,11 +45,11 @@ public class CoursesForTimetableDto {
         this.id = id;
     }
 
-    public AcademicCourse getAcademicCourse() {
+    public String getAcademicCourse() {
         return academicCourse;
     }
 
-    public void setAcademicCourse(AcademicCourse academicCourse) {
+    public void setAcademicCourse(String academicCourse) {
         this.academicCourse = academicCourse;
     }
 

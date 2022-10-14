@@ -15,12 +15,24 @@ public class CoursesForTimetableMapper {
         CoursesForTimetable coursesForTimetable = new CoursesForTimetable();
 
         coursesForTimetable.setId(coursesForTimetableDto.getId());
-        coursesForTimetable.setAcademicCourse(coursesForTimetableDto.getAcademicCourse().getName());
+        coursesForTimetable.setAcademicCourse(coursesForTimetableDto.getAcademicCourse());
         coursesForTimetable.setAcademicClass(List.of(coursesForTimetableDto.getAcademicClass()));
         coursesForTimetable.setDayOfWeek(coursesForTimetableDto.getDayOfWeek());
         coursesForTimetable.setStatus(coursesForTimetableDto.getStatus());
 
         return coursesForTimetable;
+    }
+
+    public static CoursesForTimetableDto toCoursesForTimetableDto(CoursesForTimetable coursesForTimetable) {
+        CoursesForTimetableDto coursesForTimetableDto = new CoursesForTimetableDto();
+
+        coursesForTimetableDto.setId(coursesForTimetable.getId());
+        coursesForTimetableDto.setAcademicCourse(coursesForTimetable.getAcademicCourse());
+        coursesForTimetableDto.setAcademicClass(coursesForTimetable.getAcademicClass().get(0));
+        coursesForTimetableDto.setDayOfWeek(coursesForTimetable.getDayOfWeek());
+        coursesForTimetableDto.setStatus(coursesForTimetable.getStatus());
+
+        return coursesForTimetableDto;
     }
 
     public static List<CoursesForTimetable> toListOfCoursesForTimetable(List<CoursesForTimetableDto> listOfCoursesForTimetableDtos) {

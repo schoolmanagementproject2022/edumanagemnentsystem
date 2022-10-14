@@ -24,13 +24,13 @@ public class CoursesForTimetable {
 
 
     @ManyToMany
-//    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinTable(name = "courses_table", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "academic_class_id"))
     private List<AcademicClass> academicClass;
 
     @NotBlank
     private String dayOfWeek;
+
 
     private String status;
 

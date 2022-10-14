@@ -26,16 +26,20 @@ public class Timetable {
     @NotNull(message = "Please, select the date")
     private LocalDate endDate;
 
+    private String status;
+
     @OneToOne
     private AcademicClass academicClass;
 
     public Timetable() {
     }
 
-    public Timetable(Long id, LocalDate startDate, LocalDate endDate, AcademicClass academicClass) {
+    public Timetable(Long id,  LocalDate startDate, LocalDate endDate,
+                     String status, AcademicClass academicClass) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status = status;
         this.academicClass = academicClass;
     }
 
@@ -63,6 +67,14 @@ public class Timetable {
         this.endDate = endDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public AcademicClass getAcademicClass() {
         return academicClass;
     }
@@ -76,12 +88,12 @@ public class Timetable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Timetable timetable = (Timetable) o;
-        return id.equals(timetable.id) && startDate.equals(timetable.startDate) && endDate.equals(timetable.endDate) && academicClass.equals(timetable.academicClass);
+        return id.equals(timetable.id) && startDate.equals(timetable.startDate) && endDate.equals(timetable.endDate) && status.equals(timetable.status) && academicClass.equals(timetable.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, academicClass);
+        return Objects.hash(id, startDate, endDate, status, academicClass);
     }
 
     @Override
@@ -90,6 +102,7 @@ public class Timetable {
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", status='" + status + '\'' +
                 ", academicClass=" + academicClass +
                 '}';
     }
