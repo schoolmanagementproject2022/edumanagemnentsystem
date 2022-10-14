@@ -113,7 +113,8 @@
                         </div>
                         <div class="create">
                             <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                            <button type="submit" class="show-btn"><b>Create</b></button>
+                            <input hidden type="text" id="1" value="1">
+                            <button type="submit" class="show-btn" onclick="save()"><b>Create</b></button>
                         </div>
                     </div>
                     <div th:if="${invalid}!= null" class="date_error">

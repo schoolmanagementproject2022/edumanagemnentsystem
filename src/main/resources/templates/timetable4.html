@@ -42,6 +42,9 @@
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
+    <script th:inline="javascript">
+        SuccessPopupShow();
+    </script>
 </div>
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
@@ -210,10 +213,6 @@
                 </div>
             </div>
 
-            <script th:inline="javascript" th:if="${timetable != null}">
-                SuccessPopupShow();
-            </script>
-
             <div class="sidebar-right">
                 <a href="#clasroom" class="item">Classroom</a>
                 <a href="#students" class="item">Students</a>
@@ -224,16 +223,16 @@
                    th:href="@{${allUrl}}" class="item">Timetable</a>
             </div>
         </div>
-            <div class="popup-container" id="popup-container">
-                <div class="popup-wrapper" id="popup-wrapper">
-                    <div class="half">
-                        <p class="successText">Timetable created successfully.</p>
-                    </div>
-                    <div name="btn-div">
-                        <button type="button" class="button-save" id="submit" onclick="SuccessPopupHide()"><b>OK</b></button>
-                    </div>
-                </div>
-            </div>
+    </div>
+</div>
+<div class="popup-container" id="popup-container">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p class="successText">Timetable created successfully.</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save" id="submit" onclick="SuccessPopupHide()"><b>OK</b></button>
+        </div>
     </div>
 </div>
 </body>
