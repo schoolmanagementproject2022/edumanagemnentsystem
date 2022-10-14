@@ -207,7 +207,7 @@
                         </div>
                         <div class="create">
                             <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                            <button type="submit" class="show-btn"><b>Create</b></button>
+                            <button style="left:84%" type="submit" class="show-btn"><b>Create</b></button>
                         </div>
                     </div>
                     <div th:if="${invalid}!= null" class="date_error">
@@ -235,8 +235,9 @@
                             </div>
                         </div>
                         <div class="add">
-                            <button type="button" onclick="PopUpShowMonday()" class="plus" value="Monday"><b>+</b>
-                            </button>
+<!--                            <button type="button" onclick="PopUpShowMonday()">-->
+                                <img onclick="PopUpShowMonday()" class="plus" src="/static/Icon8.png">
+<!--                            </button>-->
                         </div>
                     </div>
 
