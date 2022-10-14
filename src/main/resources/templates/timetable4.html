@@ -64,38 +64,9 @@
 
                 <a class="create-btn" th:href="@{'/classes/' + ${middleUrl} + '/timetable' + '/creation'}"
                    id="create-btn"><b>Create Timetable</b></a>
-                <!--        when click on button must go to the 4.1html-->
             </div>
 
             <div th:if="${timetable != null}">
-                <!--                success popup-->
-                <div>
-
-                    <div th:if="${timetable != null}" class="create-pop">
-
-                        <div class="popup-container" id="popup-container">
-                            <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-
-                            <!--            <form id="form" class="form" th:method="POST" th:action="@{/timetable/creation}">-->
-
-                            <script th:inline="javascript" th:if="${timetable}">
-                                PopUpShow();
-                            </script>
-                            <div class="popup-wrapper">
-                                <div class="half">
-                                    <p class="successText">Timetable created successfully.</p>
-                                    <div class="error"></div>
-                                </div>
-                                <div name="btn-div">
-                                    <button type="button" class="button-save" id="submit"><b>Ok</b></button>
-                                </div>
-                            </div>
-                            <!--            </form>-->
-                        </div>
-                    </div>
-
-                </div>
-
                 <div class="form-timetable">
                     <form th:method="POST" action="#" th:object="${timetable}">
                         <div class="dates_and_create">
@@ -237,9 +208,11 @@
 
                     </div>
                 </div>
-
-
             </div>
+
+            <script th:inline="javascript" th:if="${timetable != null}">
+                SuccessPopupShow();
+            </script>
 
             <div class="sidebar-right">
                 <a href="#clasroom" class="item">Classroom</a>
@@ -251,7 +224,16 @@
                    th:href="@{${allUrl}}" class="item">Timetable</a>
             </div>
         </div>
-
+            <div class="popup-container" id="popup-container">
+                <div class="popup-wrapper" id="popup-wrapper">
+                    <div class="half">
+                        <p class="successText">Timetable created successfully.</p>
+                    </div>
+                    <div name="btn-div">
+                        <button type="button" class="button-save" id="submit" onclick="SuccessPopupHide()"><b>OK</b></button>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 </body>
