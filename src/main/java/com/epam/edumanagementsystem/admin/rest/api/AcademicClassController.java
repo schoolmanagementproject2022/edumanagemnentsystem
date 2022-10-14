@@ -8,7 +8,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -183,6 +182,16 @@ public class AcademicClassController {
         academicClassFindByName.setClassroomTeacher(academicClass.getClassroomTeacher());
         academicClassService.update(academicClassFindByName);
         return "redirect:/classes/" + name + "/classroom";
+    }
+
+    @GetMapping("/{name}/teachers")
+    public String teachersForAcademicClass(Model model, @PathVariable("name") String name) {
+        AcademicClass academicClass = academicClassService.findByName(name);
+        model.addAttribute("teachers", academicClass.getTeacher());
+        Set<Teacher> allTeachersByAcademicClass = academicClassService.findAllTeacher();
+        model.addAttribute("allTeacherByAcademicClass", allTeachersByAcademicClass);
+
+        return "teachersForAcademicClass";
     }
 
 }

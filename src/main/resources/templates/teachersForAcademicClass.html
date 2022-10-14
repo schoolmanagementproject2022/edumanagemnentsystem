@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/academicCourseForAcademicClass.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <title>Teachers</title>
+</head>
+
+<body>
+<div class="header" id="header">
+    <div th:insert="fragments/fragments :: container"></div>
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+    <div class="middle" id="middle">
+        <div class="url-path">
+            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
+            <p class="a-url">/</p>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+            <p class="a-url">/</p>
+            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Teachers'}"></a>
+        </div>
+
+        <div class="list">
+            <div class="list-items" th:each="teacher : ${teachers}">
+                <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar2">
+        <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
+        <a href="#students" class="item">Students</a>
+        <a href="#students" class="item">Students</a>
+        <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Courses</a>
+        <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/teachers'}}">Teachers</a>
+        <a href="#timetable" class="item">Timetable</a></div>
+</div>
+
+</body>
+</html>
