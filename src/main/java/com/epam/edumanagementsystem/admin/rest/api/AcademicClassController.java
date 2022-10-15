@@ -156,11 +156,7 @@ public class AcademicClassController {
 
         for (AcademicClassDto allClass : allClasses) {
             if (allClass.getClassroomTeacher() != null) {
-                for (Teacher teacher : allTeachersInClassName) {
-                    if (teacher == allClass.getClassroomTeacher()) {
-                        allTeachersInClassName.remove(teacher);
-                    }
-                }
+                allTeachersInClassName.removeIf(teacher -> teacher == allClass.getClassroomTeacher());
             }
         }
 
