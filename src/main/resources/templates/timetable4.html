@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,16 +35,15 @@
             });
         });
     </script>
+
     <title>Timetable</title>
 
 </head>
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <script th:inline="javascript">
-        SuccessPopupShow();
-    </script>
 </div>
+
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
     <div class="main">
@@ -57,11 +55,10 @@
             <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
             <!--        change-->
             <p class="a-url">/</p>
-            <a class="a-url" th:href="${activeTab}" th:text="${'Timetable'}"></a>
+            <a class="a-url" th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" th:text="${'Timetable'}"></a>
         </div>
 
         <div class="middle">
-
             <div th:if="${timetable == null}">
                 <p class="msg">There is no active Timetable.</p>
 
@@ -220,12 +217,14 @@
                    th:href="@{'/classes/' + ${middleUrl} + '/courses'}">Courses</a>
                 <a href="#teachers" class="item">Teachers</a>
                 <a th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
-                   th:href="@{${allUrl}}" class="item">Timetable</a>
+                   th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>
             </div>
         </div>
     </div>
 </div>
-<div class="popup-container" id="popup-container">
+<a id="timetableUrl" th:text="'/classes/' + ${middleUrl} + '/timetable'" hidden ></a>
+<div class="popup-container" id="popup-container"
+     th:if="${creationStatus.booleanValue() == true} and ${timetable != null}">
     <div class="popup-wrapper" id="popup-wrapper">
         <div class="half">
             <p class="successText">Timetable created successfully.</p>

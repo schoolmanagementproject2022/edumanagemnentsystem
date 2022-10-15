@@ -101,22 +101,6 @@ function PopUpHide() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
 }
 
-
-function save(){
-    //val dzerqov stex tal te html mej?
-    var inputValue=$('#1').val();
-    sessionStorage.setItem('save', inputValue);
-    location.href='/classes/3a/timetable';
-    SuccessPopupShow();
-}
-
-function SuccessPopupShow() {
-    var value = sessionStorage.getItem('save').valueOf();
-    if (value === "1") {
-        return $("#popup-container").show();
-    }
-}
-
 function SuccessPopupHide() {
-    $("#popup-container").hide();
+    location.href = $("#timetableUrl").text();
 }
