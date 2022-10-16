@@ -21,7 +21,7 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
         <div class="content" id="middle">
             <div class="url-path">
-                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Course'}"></a>
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Classes'}"></a>
 
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
 
@@ -56,7 +56,7 @@
             <div class="popup-wrapper">
                 <div class="half">
                     <label class="popup-label-title" for="student">Students<span style="color:#A30014">*</span></label>
-                    <div class="selectTeacherOrStudent">
+                    <div>
                         <select id="student" name="student" style="width: 250px" multiple>
                             <option th:each="select : ${students}"
                                     th:value="${select.id}" th:text="${select.getName() + ' ' + select.getSurname()}"></option>

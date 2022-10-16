@@ -54,7 +54,7 @@
             <div class="popup-wrapper">
                 <div class="half">
                     <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
-                    <div class="selectTeacherOrStudent">
+                    <div>
                         <select id="teacher" name="teacher" style="width: 250px" multiple>
                             <option th:each="select : ${teachers}"
                                     th:value="${select.id}" th:text="${select.getNameSurname()}"></option>

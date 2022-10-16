@@ -164,13 +164,12 @@ public class AcademicClassController {
 
     @GetMapping("/{name}/students")
     public String showAcademicClassStudents(@PathVariable("name") String name, Model model) {
-        List<Student> result = new ArrayList<>();
         Long id = academicClassService.findByName(name).getId();
-        List<Student> byAcademicClassId = studentService.findByAcademicClassId(id);
-        model.addAttribute("studentsInAcademicClass", byAcademicClassId);
-        List<StudentDto> all = studentService.findAll();
+        List<Student> allStudentsByAcademicClassId = studentService.findByAcademicClassId(id);
+        model.addAttribute("studentsInAcademicClass", allStudentsByAcademicClassId);
+        List<StudentDto> allStudents = studentService.findAll();
         List<StudentDto> studentsForAcademicCourse = new ArrayList<>();
-        for (StudentDto student : all) {
+        for (StudentDto student : allStudents) {
             if (null == student.getAcademicClass()) {
                 studentsForAcademicCourse.add(student);
             }
@@ -191,30 +190,7 @@ public class AcademicClassController {
                 studentService.update(student);
             }
         }
-
-        Set<Student> result = new HashSet<>();
-//        Set<Teacher> allTeacherSet = academicCourseService.findAcademicCourseByAcademicCourseName(name)
-//                .getSubject().getTeacherSet();
-//        Set<Teacher> allTeachersInAcademicCourse = academicCourseService.findAllTeachersByAcademicCourseName(name);
-//        model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
-//
-//        if (academicCourse.getTeacher().size() == 0) {
-//            model.addAttribute("blank", "There is no new selection.");
-//            if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
-//                return "academicCourseSectionForTeachers";
-//            } else {
-//                for (Teacher teacher : allTeacherSet) {
-//                    if (!allTeachersInAcademicCourse.contains(teacher)) {
-//                        result.add(teacher);
-//                    }
-//                }
-//            }
-//            model.addAttribute("teachers", result);
-//            return "academicCourseSectionForTeachers";
-//        }
-//        academicCourseService.update(academicCourse);
         return "redirect:/classes/" + name + "/students";
     }
-
 
 }
