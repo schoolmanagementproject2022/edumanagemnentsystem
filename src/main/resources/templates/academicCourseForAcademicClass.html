@@ -5,46 +5,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/academicCourseForAcademicClass.css" rel="stylesheet">
+    <link href="/static/css/academicCourseSectionForTeachersStyle.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Academic course</title>
+    <title>Academic Class For Courses</title>
 </head>
 
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
 </div>
-<div class="main-wrapper" id="main-wrapper">
-    <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-    <div class="middle" id="middle">
-        <div class="url-path">
-            <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
-            <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Courses'}"></a>
-        </div>
 
-        <div class="list">
-            <div class="list-items" th:each="course : ${academicCourseSet}">
-                <p class="item" th:text="${course.getName()}"> Course </p>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="content-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+
+        <div class="content" id="middle">
+
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Courses'}"></a>
+            </div>
+            <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
+            <div class="list">
+                <div class="list-items" th:each="course : ${academicCourseSet}">
+                    <p class="item" th:text="${course.getName()}"> Course </p>
+                </div>
             </div>
         </div>
+        <div class="sidebar2 header" id="sidebar2">
+            <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
+            <a href="#students" class="item">Students</a>
+            <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${allUrl}}">Courses</a>
+            <a href="#teachers" class="item">Teachers</a>
+            <a href="#timetable" class="item">Timetable</a></div>
+        </div>
     </div>
-    <div class="sidebar2">
-        <a href="#clasroom" class="item">Classroom</a>
-        <a th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${'/' + firstUrl + '/' + middleUrl  + '/students'}}"  class="item">Students</a>
-        <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
-        <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${allUrl}}">Courses</a>
-        <a href="#teachers" class="item">Teachers</a>
-        <a href="#timetable" class="item">Timetable</a></div>
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
 </div>
 
 <div class="create">
@@ -52,15 +53,14 @@
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>New course</h1>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingClass}">
-            <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null" >
+            <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
                     <label class="popup-label-title" for="course">Academic course<span
-                            style="color:#A30014">*</span></label>
-                    <div class="selectTeacher">
+                            style="color:#A30014"> *</span></label>
                         <select class="form_input" id="course" name="academicCourseSet"
                                 th:field="*{academicCourseSet}" style="width: 250px">
                             <option th:if="*{academicCourseSet  == null}" th:value="null"
@@ -70,11 +70,9 @@
                         </select>
                         <div th:if="${blankClass}!= null" class="error">
                             <p th:text="${blankClass}"></p>
-                        </div>
                     </div>
                     <label class="popup-label-title" for="teacher">Teachers<span
-                            style="color:#A30014">*</span></label>
-                    <div class="selectTeacher">
+                            style="color:#A30014"> *</span></label>
                         <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
                                 style="width: 250px">
                             <option th:if="*{teacher  == null}" th:value="null"
@@ -86,7 +84,6 @@
                         <div th:if="${blank}!= null" class="error">
                             <p th:text="${blank}"></p>
                         </div>
-                    </div>
                 </div>
 
                 <div class="half2"></div>
@@ -101,34 +98,34 @@
 <script type="text/javascript">
 
 
-      let elem = document.getElementById("course")
-      let elem1 = document.getElementById("teacher")
-      elem.addEventListener("change", (item)=>{
-          fetch(`http://localhost:8082/teacherByCourseId?teachers=${item.target.value}`).then(data=>{
+    let elem = document.getElementById("course")
+    let elem1 = document.getElementById("teacher")
+    elem.addEventListener("change", (item) => {
+        fetch(`http://localhost:8082/teacherByCourseId?teachers=${item.target.value}`).then(data => {
             return data.json()
-      }).then(elem=>{
-         elem1.innerHTML ="";
-         let a = document.createElement("option")
-         a.textContent = "Select teacher"
-         a.setAttribute("disabled", true)
-         a.setAttribute("selected",true)
-         a.setAttribute("hidden",true)
-         elem1.appendChild(a)
-         if(elem.length === 0){
-         let a = document.createElement("option")
-         a.textContent = ""
-        a.setAttribute("disabled", true)
+        }).then(elem => {
+            elem1.innerHTML = "";
+            let a = document.createElement("option")
+            a.textContent = "Select teacher"
+            a.setAttribute("disabled", true)
+            a.setAttribute("selected", true)
+            a.setAttribute("hidden", true)
+            elem1.appendChild(a)
+            if (elem.length === 0) {
+                let a = document.createElement("option")
+                a.textContent = ""
+                a.setAttribute("disabled", true)
 
-         elem1.appendChild(a)
-         }
-        elem.forEach(item=>{
-            let newElem = document.createElement("option")
-            newElem.textContent = item.name+ " "+ item.surname
-            newElem.setAttribute("value", item.id);
-            elem1.appendChild(newElem)
+                elem1.appendChild(a)
+            }
+            elem.forEach(item => {
+                let newElem = document.createElement("option")
+                newElem.textContent = item.name + " " + item.surname
+                newElem.setAttribute("value", item.id);
+                elem1.appendChild(newElem)
+            })
         })
-      })
-      })
+    })
 
 </script>
 </body>
