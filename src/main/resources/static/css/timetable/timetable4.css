@@ -11,6 +11,7 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+/*header style*/
 .container {
     width: 100%;
     margin: 0 auto;
@@ -65,11 +66,37 @@ body {
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
-    font-size: 1.3em;
     overflow: hidden;
 }
 
-/*Sidebar styles*/
+.msg {
+    font-size: 25px;
+    position: absolute;
+    top: 27%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.middle {
+    margin-left: 2%;
+    background-color: #AAAAAA;
+    font-size: 1.3em;
+    overflow: hidden;
+    display: flex;
+}
+
+.activeTab {
+    background-color: #333333;
+    color: #01A7F0 !important;
+}
+
+.allTab {
+    background-color: #333333;
+    color: #01A7F0 !important;
+}
+
+/*Sidebars styles*/
 .sidebar {
     width: 21%;
     margin: 0;
@@ -92,7 +119,7 @@ body {
 }
 
 .sidebar-right {
-    margin-top: 3%;
+    margin-top: 2%;
     width: 16%;
     background-color: #555555;
     margin-left: 62%;
@@ -106,47 +133,6 @@ body {
     color: #01A7F0;
 }
 
-.show-btn {
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    width: 102px;
-    text-align: center;
-    background-color: #555555;
-    position: absolute;
-    top: 12%;
-    left: 67%;
-    border-radius: 6px;
-    border-color: #aaaaaa;
-    transform: translate(-50%, -50%);
-    color: #01A7F0;
-}
-
-.show-btn:hover {
-    border-color: #01A7F0;
-}
-
-.create-btn {
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    width: 188px;
-    text-align: center;
-    background-color: #555555;
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    border-radius: 6px;
-    border-color: #aaaaaa;
-    transform: translate(-50%, -50%);
-    color: #01A7F0;
-    text-decoration: none;
-}
-
-.create-btn:hover {
-    border-color: #01A7F0;
-}
-
 .item {
     display: block;
     color: #FFFFFF;
@@ -158,85 +144,51 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
-.list {
-    width: 91%;
-    padding: 0px;
+/*edit button style*/
+.show-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 102px;
+    text-align: center;
     background-color: #555555;
-    margin: 50px;
-    height: 65vh;
-    margin-top: 90px;
-    margin-left: 35px;
-    overflow: scroll;
+    align-self: flex-end;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    color: #01A7F0;
 }
 
-.msg {
-    font-size: 25px;
+.show-btn:hover {
+    border-color: #01A7F0;
+}
+
+/*create timetable button style*/
+.create-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 14%;
+    text-align: center;
+    background-color: #555555;
     position: absolute;
-    top: 29%;
+    top: 34%;
     left: 50%;
+    border-radius: 6px;
     transform: translate(-50%, -50%);
-    color: white;
-}
-
-.successMsg {
-    font-size: 25px;
-    position: absolute;
-    top: 29%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: green;
-}
-
-.middle {
-    margin-left: 3%;
-    background-color: #AAAAAA;
-    font-size: 1.3em;
-    overflow: hidden;
-    display: flex;
-}
-
-.activeTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
-}
-
-.allTab {
-    background-color: #333333;
-    color: #01A7F0 !important;
-}
-
-/*Main top containing only link style*/
-.main-top {
-    background-color: #AAAAAA;
-    margin: 0;
-    padding: 0px;
-}
-
-.link {
-    margin: 0;
-    padding: 16px;
-    background-color: #AAAAAA;
-    display: flex;
-}
-
-.link a {
+    color: #01A7F0;
     text-decoration: none;
-    color: #007EB4;
-    text-align: left;
-    font-size: 0.9em;
-    font-weight: 600;
+    align-self: flex-end;
 }
 
-/*Main down containing dates,create timetable and lessons style*/
-.main-down {
-    margin-right: 30%;
-    padding: 0px;
-    background-color: #AAAAAA;
-    display: flex;
-    overflow: hidden;
-
+.create-btn:hover {
+    border-color: #01a7f0;
 }
 
+.createTimetable{
+   align-self: flex-end;
+}
+
+/*timetable style*/
 .form-timetable {
     margin-left: 35px;
     padding: 0px;
@@ -245,10 +197,10 @@ body {
 
 .dates_and_create {
     background-color: #AAAAAA;
-    margin: 0;
     padding: 0px;
     display: flex;
-    margin-bottom: 55px;
+    margin-bottom: 2%;
+    margin-top: 2%;
 }
 
 .dates {
@@ -258,7 +210,6 @@ body {
 }
 
 .date_half {
-    margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
     font-size: 0.8em;
@@ -269,23 +220,8 @@ body {
 
 }
 
-.start_date_title {
-    font-size: 0.7em;
-}
-
-.end_date_title {
-    font-size: 0.7em;
-}
-
-.input_left {
-    margin: 0;
-    padding: 0px;
-    margin-right: 100px;
-}
-
 .create {
-    margin: 0px;
-    padding: 0px;
+    margin-left: 30%;
     display: flex;
 }
 
@@ -301,16 +237,12 @@ body {
 }
 
 .timetable {
-    width: 100%;
-    margin: 0;
-    padding: 0px;
-    background-color: #D7D7D7;
     display: flex;
-    border: solid 0.5px #007EB4;
+    max-width: 100%;
 }
 
 .dayOfWeek {
-    width: 50%;
+    width: 10%;
     margin: 0;
     padding: 0px;
     background-color: #D7D7D7;
@@ -336,22 +268,6 @@ body {
     background-color: #7F7F7F;
     font-size: 0.6em;
     font-weight: 600;
-}
-
-.add {
-    background-color: #D7D7D7;
-    margin-bottom: 11px;
-}
-
-.plus {
-    border-radius: 50%;
-    padding: 10px;
-    margin: 0px 48px;
-    border: solid 3px #007EB4;
-    font-weight: 600;
-    font-size: 23px;
-    text-align: center;
-    color: #007EB4;
 }
 
 /*Lessons section styles*/
@@ -410,6 +326,15 @@ body {
     color: red;
 }
 
+.btn {
+    padding: 5px;
+    border-radius: 5px;
+    float: right;
+    margin-right: 59px;
+    background-color: #555555;
+    color: #FFFFFF
+}
+
 .title {
     text-align: center;
     color: #007EB4;
@@ -419,15 +344,16 @@ body {
     margin-top: -14px;
 }
 
-
-/*for url*/
+/*url style*/
 .url-path {
     margin-right: 100%;
+    margin-left: -2%;
+    margin-top: -1%;
     display: inline-flex;
 }
 
 .a-url {
-    margin-right: -34px;
+    margin-right: -31px;
     margin-top: 23px;
     margin-left: -5%;
     padding-left: 57px;
@@ -442,6 +368,7 @@ body {
     font-size: 110%;
 }
 
+/*success popup style*/
 .popup-container {
     display: block;
     opacity: 0.9;
@@ -452,9 +379,7 @@ body {
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
-.popup-wrapper{
-    opacity: unset !important;
-}
+
 .popup-container {
     position: absolute;
     top: 45%;
@@ -472,23 +397,6 @@ body {
     cursor: pointer;
 }
 
-.close-btn:hover {
-    color: red;
-}
-
-h1 {
-    text-align: left;
-    color: #007EB4;
-    margin-top: 0px;
-
-}
-
-form {
-    margin: 0px;
-    margin-left: 0px;
-    margin-right: 4px;
-}
-
 .popup-wrapper {
     width: 100%;
     display: flex;
@@ -496,7 +404,7 @@ form {
     margin-top: 30px;
 }
 
-.successText {
+.successMsg {
     left: 7%;
     font-size: 22px;
     color: green;
@@ -516,12 +424,6 @@ form {
     width: 50%;
     margin-left: 20%;
     height: 253px;
-
-}
-
-.halfSection {
-    margin-top: 27%;
-    display: inline-block;
 }
 
 .button-save {
@@ -538,9 +440,8 @@ form {
     cursor: pointer;
 }
 
-
 .popup-label-title {
-    font-size: 0.7em;
+    font-size: 0.8em;
     height: 1.2em;
     margin-top: 20px;
 }
@@ -551,45 +452,10 @@ form {
 }
 
 .form_input {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 6px;
+    margin-bottom: 3px;
     display: block;
     width: 100%;
     border-radius: 1px;
     border-width: 1.5px;
-}
-
-/*Button part styles*/
-.create-pop {
-    display: block;
-    transition: all 0.5s ease;
-    height: 7%;
-}
-
-
-.button {
-    background-color: #555555;
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 8px;
-    padding: 7px;
-}
-
-.create-pop a {
-    text-decoration: none;
-    color: #FFFFFF;
-}
-
-.create-pop a:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
-
-.btn {
-    padding: 5px;
-    border-radius: 5px;
-    float: right;
-    margin-right: 59px;
-    background-color: #555555;
-    color: #FFFFFF
 }
