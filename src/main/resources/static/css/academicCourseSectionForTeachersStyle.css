@@ -147,6 +147,12 @@ body {
 .list-items{
     width: 100% ;
 }
+.list-p-item{
+    width: 100% ;
+    background-color: #555555;
+}
+
+
 .list-items p {
     display: block;
     color: #FFFFFF;
@@ -296,6 +302,9 @@ form {
 }
 .endAcademicYear {
     margin-left: 0;
+}
+.selectclassroom {
+    margin-top: 10px;
 }
 .popup-label-title-subject {
     font-size: 17px;
@@ -534,6 +543,30 @@ form {
     border-color: #aaaaaa;
     align-self: flex-end;
     color: #01A7F0;
+}
+
+.vis-btn {
+    margin: -80px auto;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 264px;
+    text-align: center;
+    background-color: #555555;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    align-self: flex-end;
+    color: #01A7F0;
+}
+.classroom-show-top{
+    margin: 80px auto;
+    width: 392px;
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 19px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .item {

@@ -37,7 +37,9 @@
     <div class="sidebar2">
         <a href="#clasroom" class="item">Classroom</a>
         <a th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'students'}}"  class="item">Students</a>
+           th:href="@{${'/' + firstUrl + '/' + middleUrl  + '/students'}}"  class="item">Students</a>
+        <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
         <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${allUrl}}">Courses</a>
         <a href="#teachers" class="item">Teachers</a>
@@ -52,7 +54,6 @@
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingClass}">
             <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null" >
                 PopUpShow();
-
             </script>
 
             <div class="popup-wrapper">

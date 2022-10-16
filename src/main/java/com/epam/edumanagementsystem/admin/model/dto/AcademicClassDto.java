@@ -15,15 +15,19 @@ public class AcademicClassDto {
 
     private Set<Teacher> teacherSet;
 
+    private Teacher classroomTeacher;
+
     private Set<Student> students;
 
     public AcademicClassDto() {
     }
-    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet, Set<Student> students) {
+
+    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet, Teacher classroomTeacher, Set<Student> students) {
         this.id = id;
         this.classNumber = classNumber;
         this.academicCourse = academicCourse;
         this.teacherSet = teacherSet;
+        this.classroomTeacher = classroomTeacher;
         this.students = students;
     }
 
@@ -59,6 +63,14 @@ public class AcademicClassDto {
         this.teacherSet = teacherSet;
     }
 
+    public Teacher getClassroomTeacher() {
+        return classroomTeacher;
+    }
+
+    public void setClassroomTeacher(Teacher classroomTeacher) {
+        this.classroomTeacher = classroomTeacher;
+    }
+
     public Set<Student> getStudents() {
         return students;
     }
@@ -72,12 +84,12 @@ public class AcademicClassDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClassDto that = (AcademicClassDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet) && Objects.equals(students, that.students);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(students, that.students);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, academicCourse, teacherSet, students);
+        return Objects.hash(id, classNumber, academicCourse, teacherSet, classroomTeacher, students);
     }
 
     @Override
@@ -87,6 +99,7 @@ public class AcademicClassDto {
                 ", classNumber='" + classNumber + '\'' +
                 ", academicCourse=" + academicCourse +
                 ", teacherSet=" + teacherSet +
+                ", classroomTeacher=" + classroomTeacher +
                 ", students=" + students +
                 '}';
     }

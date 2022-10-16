@@ -38,17 +38,21 @@ public class AcademicClass {
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<AcademicCourse> academicCourseSet;
 
+    @OneToOne
+    private Teacher classroomTeacher;
+
     @OneToMany
     private Set<Student> student;
 
     public AcademicClass() {
     }
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Set<Student> student) {
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, Set<Student> student) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
+        this.classroomTeacher = classroomTeacher;
         this.student = student;
     }
 
@@ -84,6 +88,14 @@ public class AcademicClass {
         this.academicCourseSet = academicCourseSet;
     }
 
+    public Teacher getClassroomTeacher() {
+        return classroomTeacher;
+    }
+
+    public void setClassroomTeacher(Teacher classroomTeacher) {
+        this.classroomTeacher = classroomTeacher;
+    }
+
     public Set<Student> getStudent() {
         return student;
     }
@@ -97,12 +109,12 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(student, that.student);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(student, that.student);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher, academicCourseSet, student);
+        return Objects.hash(id, classNumber, teacher, academicCourseSet, classroomTeacher, student);
     }
 
     @Override
@@ -112,6 +124,7 @@ public class AcademicClass {
                 ", classNumber='" + classNumber + '\'' +
                 ", teacher=" + teacher +
                 ", academicCourseSet=" + academicCourseSet +
+                ", classroomTeacher=" + classroomTeacher +
                 ", student=" + student +
                 '}';
     }
