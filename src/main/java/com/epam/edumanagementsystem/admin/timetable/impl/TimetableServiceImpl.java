@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableServic
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -52,9 +53,19 @@ public class TimetableServiceImpl implements TimetableService {
         return timetableRepository.getTimetableByAcademicClassId(id);
     }
 
+    @Override
+    public Timetable getTimetableWithActiveStatusByAcademicClassId(Long academicClassId) {
+        return timetableRepository.findTimetableWithActiveStatusByAcademicClassId(academicClassId);
+    }
+
+    @Override
+    public Timetable getTimetableWithEditStatusByAcademicClassId(Long academicClassId) {
+        return timetableRepository.findTimetableWithEditStatusByAcademicClassId(academicClassId);
+    }
+
     @Transactional
     @Override
-    public void deleteTimetableByAcademicClassId(Long academicClassId) {
-        timetableRepository.deleteTimetableByAcademicClass_Id(academicClassId);
+    public void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId) {
+        timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, timeTableStatus, academicClassId);
     }
 }

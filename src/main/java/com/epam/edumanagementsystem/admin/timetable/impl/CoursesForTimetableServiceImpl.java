@@ -26,6 +26,11 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
+    public List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
+        return coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek,status,academicClassId);
+    }
+
+    @Override
     public List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId) {
         return coursesRepository.findCoursesByAcademicClassId(academicClassId);
     }
@@ -41,23 +46,34 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
+    public List<CoursesForTimetable> getCoursesWithEditStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithEditStatusByAcademicCourseId(academicClassId);
+    }
+
+    @Override
     public boolean isPresentCoursesForClass(Long academicClassId) {
         return coursesRepository.existsCoursesForTimetableByAcademicClass_Id(academicClassId);
     }
 
     @Transactional
     @Override
-    public void create(CoursesForTimetableDto coursesForTimetableDto) {
-        coursesRepository.create(coursesForTimetableDto.getDayOfWeek(),
-                coursesForTimetableDto.getAcademicCourse(),
-                coursesForTimetableDto.getAcademicClass().getId(),
-                coursesForTimetableDto.getStatus());
+    public void create(CoursesForTimetable coursesForTimetable) {
+        coursesRepository.create(coursesForTimetable.getDayOfWeek(),
+                coursesForTimetable.getAcademicCourse(),
+                coursesForTimetable.getAcademicClass().get(0).getId(),
+                coursesForTimetable.getStatus());
     }
 
     @Transactional
     @Override
     public void updateCourseStatusById(Long id) {
         coursesRepository.updateCourseStatusById(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateCourseStatusToActiveById(Long id) {
+        coursesRepository.updateCourseStatusToActiveById(id);
     }
 
     @Transactional

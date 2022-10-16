@@ -12,6 +12,9 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE day_of_week = (?1) AND academic_class_id = (?2)")
     List<CoursesForTimetable> findCoursesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId);
 
+    @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE day_of_week = (?1) AND status = (?2) AND academic_class_id = (?3)")
+    List<CoursesForTimetable> findCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek,String status, Long academicClassId);
+
     List<CoursesForTimetable> findCoursesByAcademicClassId(Long academicClassId);
 
     @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE status = 'Not Active' AND academic_class_id = (?1)")
@@ -19,6 +22,9 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
 
     @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE status = 'Active' AND academic_class_id = (?1)")
     List<CoursesForTimetable> findCoursesWithActiveStatusByAcademicCourseId(Long academicClassId);
+
+    @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE status = 'Edit' AND academic_class_id = (?1)")
+    List<CoursesForTimetable> findCoursesWithEditStatusByAcademicCourseId(Long academicClassId);
 
     boolean existsCoursesForTimetableByAcademicClass_Id(Long id);
 
@@ -30,6 +36,10 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE courses_table SET status = 'Not Active' WHERE id =(?1);")
     void updateCourseStatusById(Long id);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE courses_table SET status = 'Active' WHERE id =(?1);")
+    void updateCourseStatusToActiveById(Long id);
 
     @Modifying
     @Query(nativeQuery = true, value = "Delete FROM courses_table WHERE id =(?1);")
