@@ -228,6 +228,7 @@ body {
     padding: 183px 0px;
     background-color:#D7D7D7;
     position: relative;
+    display: flex;
 }
 .single_lesson_wrapper{
     margin: 0;
@@ -291,6 +292,8 @@ body {
 
 /*for url*/
 .url-path {
+    margin-top: -1%;
+    margin-left: -2%;
     margin-right: 100%;
     display: inline-flex;
 }
