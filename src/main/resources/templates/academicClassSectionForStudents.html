@@ -52,7 +52,7 @@
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1>Add Student</h1>
+        <h1>Add Students</h1>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingAcademicClass}">
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();

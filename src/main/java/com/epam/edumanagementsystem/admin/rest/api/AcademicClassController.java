@@ -220,6 +220,9 @@ public class AcademicClassController {
         AcademicClass academicClassByName = academicClassService.findByName(name);
         if (academicClass.getStudent() == null) {
             model.addAttribute("blank", "There is no new selection.");
+            Long id = academicClassService.findByName(name).getId();
+            List<Student> allStudentsByAcademicClassId = studentService.findByAcademicClassId(id);
+            model.addAttribute("studentsInAcademicClass", allStudentsByAcademicClassId);
             return "academicClassSectionForStudents";
         }
         if (null != students){
@@ -228,6 +231,7 @@ public class AcademicClassController {
                 studentService.update(student);
             }
         }
+
         return "redirect:/classes/" + name + "/students";
     }
 
