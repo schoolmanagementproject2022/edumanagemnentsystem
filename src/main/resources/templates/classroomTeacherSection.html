@@ -29,7 +29,7 @@
       </div>
       <button th:if="${classroomTeacher !=null}" class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
 
-      <p th:if="${classroomTeacher == null}" class="classroom-show-top">The class doesn't have a classroom teacher</p>
+      <p th:if="${classroomTeacher == null}" class="classroom-show-top">There is no Classroom Teacher chosen.</p>
       <button th:if="${classroomTeacher == null}" class="vis-btn" id="vis-btn" onclick="PopUpShow()"><b>Add Classroom Teacher</b></button>
         <div class="list-p-item">
           <p th:if="${classroomTeacher !=null}" class="item" th:text="${classroomTeacher.getNameSurname()}"> Teacher </p>
@@ -46,7 +46,7 @@
     <h1 th:if="${classroomTeacher == null}">Add Classroom Teacher</h1>
     <h1 th:if="${classroomTeacher != null}">Edit Classroom Teacher</h1>
     <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingClassroomTeacher}">
-      <script th:inline="javascript" th:if="${blank} or ${duplicate} != null">
+      <script th:inline="javascript" th:if="${blank} != null">
         PopUpShow();
       </script>
       <div class="popup-wrapper">
@@ -61,9 +61,6 @@
             </select>
             <div th:if="${blank}!= null" class="error">
               <p th:text="${blank}"></p>
-            </div>
-            <div th:if="${duplicate}!= null" class="error">
-              <p th:text="${duplicate}"></p>
             </div>
           </div>
         </div>

@@ -150,13 +150,22 @@ public class AcademicClassController {
 
     @GetMapping("/{name}/classroom")
     public String classroomTeacherForAcademicClass(@PathVariable("name") String name, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(name);
-        model.addAttribute("teachers", academicClass.getTeacher());
+        AcademicClass academicClassByName = academicClassService.findByName(name);
+        Set<Teacher> allTeachersInClassName = academicClassByName.getTeacher();
+        List<AcademicClassDto> allClasses = academicClassService.findAll();
+
+        for (AcademicClassDto allClass : allClasses) {
+            if (allClass.getClassroomTeacher() != null) {
+                allTeachersInClassName.removeIf(teacher -> teacher == allClass.getClassroomTeacher());
+            }
+        }
+
         model.addAttribute("existingClassroomTeacher", new AcademicClass());
-        if (academicClass.getClassroomTeacher() == null) {
+        model.addAttribute("teachers", allTeachersInClassName);
+        if (academicClassByName.getClassroomTeacher() == null) {
             return "classroomTeacherSection";
         } else {
-            model.addAttribute("classroomTeacher", academicClass.getClassroomTeacher());
+            model.addAttribute("classroomTeacher", academicClassByName.getClassroomTeacher());
             return "classroomTeacherSection";
         }
     }
