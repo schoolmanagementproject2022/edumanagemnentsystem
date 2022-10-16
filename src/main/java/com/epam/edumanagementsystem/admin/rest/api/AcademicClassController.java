@@ -30,17 +30,13 @@ public class AcademicClassController {
 
     private final AcademicClassService academicClassService;
     private final AcademicCourseService academicCourseService;
-
     private final StudentService studentService;
 
-    private final TeacherService teacherService;
-
     @Autowired
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TeacherService teacherService) {
+    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.studentService = studentService;
-        this.teacherService = teacherService;
     }
 
     @GetMapping
