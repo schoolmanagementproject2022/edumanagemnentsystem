@@ -26,4 +26,6 @@ public interface TimetableService {
     Timetable getTimetableWithEditStatusByAcademicClassId(Long academicClassId);
 
     void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId);
+
+    void updateTimetableStatusByAcademicClassId(String timeTableStatus, Long academicClassId);
 }

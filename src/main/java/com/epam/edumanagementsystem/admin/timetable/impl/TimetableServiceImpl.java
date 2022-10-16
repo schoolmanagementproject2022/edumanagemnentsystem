@@ -68,4 +68,10 @@ public class TimetableServiceImpl implements TimetableService {
     public void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId) {
         timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, timeTableStatus, academicClassId);
     }
+
+    @Transactional
+    @Override
+    public void updateTimetableStatusByAcademicClassId(String timeTableStatus, Long academicClassId) {
+        timetableRepository.updateTimetableStatusByAcademicClassId(timeTableStatus, academicClassId);
+    }
 }

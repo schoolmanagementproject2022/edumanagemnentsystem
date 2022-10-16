@@ -76,6 +76,7 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         coursesRepository.updateCourseStatusToActiveById(id);
     }
 
+
     @Transactional
     @Override
     public void deleteCourseById(Long id) {
