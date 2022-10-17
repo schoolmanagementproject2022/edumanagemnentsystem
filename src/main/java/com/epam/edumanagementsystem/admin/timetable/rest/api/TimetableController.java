@@ -269,12 +269,11 @@ public class TimetableController {
         if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                 timetable.getStatus().equalsIgnoreCase("Active")) {
             coursesForTimetableDto.setStatus("Edit");
-
             if (result.hasErrors()) {
                 model.addAttribute("timetable", newTimetable);
                 model.addAttribute("courses", allAcademicCourses);
                 model.addAttribute("academicClass", academicClass);
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 model.addAttribute("dayOfWeek", coursesForTimetableDto.getDayOfWeek());
                 return "timetableEdit";
             }
@@ -282,7 +281,7 @@ public class TimetableController {
             coursesService.create(CoursesForTimetableMapper.toCoursesForTimetable(coursesForTimetableDto));
             model.addAttribute("timetable", newTimetable);
             model.addAttribute("courses", allAcademicCourses);
-            putEditLessons(model, academicClass.getId());
+            putEditedLessons(model, academicClass.getId());
             model.addAttribute("academicClass", academicClass);
             return "timetableEdit";
         }
@@ -290,12 +289,11 @@ public class TimetableController {
         if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
                 timetable.getStatus().equalsIgnoreCase("Active")) {
             coursesForTimetableDto.setStatus("Edit");
-
             if (result.hasErrors()) {
                 model.addAttribute("timetable", newTimetable);
                 model.addAttribute("courses", allAcademicCourses);
                 model.addAttribute("academicClass", academicClass);
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 model.addAttribute("dayOfWeek", coursesForTimetableDto.getDayOfWeek());
                 return "timetableEdit";
             }
@@ -303,28 +301,27 @@ public class TimetableController {
             coursesService.create(CoursesForTimetableMapper.toCoursesForTimetable(coursesForTimetableDto));
             model.addAttribute("timetable", newTimetable);
             model.addAttribute("courses", allAcademicCourses);
-            putEditLessons(model, academicClass.getId());
+            putEditedLessons(model, academicClass.getId());
             model.addAttribute("academicClass", academicClass);
             return "timetableEdit";
         }
         if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
                 timetable.getStatus().equalsIgnoreCase("Edit")) {
             coursesForTimetableDto.setStatus("Edit");
-
             if (result.hasErrors()) {
                 model.addAttribute("timetable", newTimetable);
                 model.addAttribute("courses", allAcademicCourses);
                 model.addAttribute("academicClass", academicClass);
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 model.addAttribute("dayOfWeek", coursesForTimetableDto.getDayOfWeek());
-                timetableService.updateTimetableStatusByAcademicClassId("Active",academicClass.getId());
+                timetableService.updateTimetableStatusByAcademicClassId("Active", academicClass.getId());
                 return "timetableEdit";
             }
             coursesForTimetableDto.setStatus("Edit");
             coursesService.create(CoursesForTimetableMapper.toCoursesForTimetable(coursesForTimetableDto));
             model.addAttribute("timetable", newTimetable);
             model.addAttribute("courses", allAcademicCourses);
-            putEditLessons(model, academicClass.getId());
+            putEditedLessons(model, academicClass.getId());
             model.addAttribute("academicClass", academicClass);
             return "timetableEdit";
         }
@@ -334,16 +331,15 @@ public class TimetableController {
         timetableService.updateTimetableStatusByAcademicClassId("Active", academicClass.getId());
         model.addAttribute("timetable", newTimetable);
         model.addAttribute("courses", allAcademicCourses);
-        putEditLessons(model, academicClass.getId());
+        putEditedLessons(model, academicClass.getId());
         model.addAttribute("academicClass", academicClass);
         return "timetableEdit";
-        }
-
-
+    }
 
 
     @GetMapping("/classes/{name}/timetable/edit")
     public String showTimetableEdit(@PathVariable("name") String academicClassName, Model model) {
+
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         Timetable currentTimetable = timetableService.getTimetableByAcademicClassId(academicClass.getId());
 
@@ -353,62 +349,60 @@ public class TimetableController {
                     coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() == 0) {
                 List<CoursesForTimetable> activeLessons = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
                 for (CoursesForTimetable activeLesson : activeLessons) {
-                    CoursesForTimetable editLesson = new CoursesForTimetable();
-                    editLesson.setDayOfWeek(activeLesson.getDayOfWeek());
-                    editLesson.setAcademicCourse(activeLesson.getAcademicCourse());
-                    editLesson.setStatus("Edit");
-                    editLesson.setAcademicClass(activeLesson.getAcademicClass());
-                    coursesService.create(editLesson);
+                    CoursesForTimetable editedLesson = new CoursesForTimetable();
+                    editedLesson.setDayOfWeek(activeLesson.getDayOfWeek());
+                    editedLesson.setAcademicCourse(activeLesson.getAcademicCourse());
+                    editedLesson.setStatus("Edit");
+                    editedLesson.setAcademicClass(activeLesson.getAcademicClass());
+                    coursesService.create(editedLesson);
                 }
                 model.addAttribute("class", academicClassName);
                 model.addAttribute("timetable", new Timetable());
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
             if (coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
-                List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
-                for (CoursesForTimetable course : coursesWithNotActiveStatus) {
-                    coursesService.deleteCourseById(course.getId());
+                List<CoursesForTimetable> activeLessons = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
+                for (CoursesForTimetable notActiveLesson : activeLessons) {
+                    coursesService.deleteCourseById(notActiveLesson.getId());
                 }
                 model.addAttribute("class", academicClassName);
                 model.addAttribute("timetable", new Timetable());
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
             if (coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
                     coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
-                List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
-                for (CoursesForTimetable course : coursesWithNotActiveStatus) {
-                    coursesService.deleteCourseById(course.getId());
+                List<CoursesForTimetable> notActiveLessons = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
+                for (CoursesForTimetable notActiveLesson : notActiveLessons) {
+                    coursesService.deleteCourseById(notActiveLesson.getId());
                 }
-
                 model.addAttribute("class", academicClassName);
                 model.addAttribute("timetable", new Timetable());
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
             if (coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() == 0) {
-
                 model.addAttribute("class", academicClassName);
                 model.addAttribute("timetable", new Timetable());
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
         }
@@ -417,18 +411,16 @@ public class TimetableController {
             if (coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() == 0) {
-
-                List<CoursesForTimetable> coursesWithActiveStatus = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
-                List<CoursesForTimetable> lessonsWithEditStatus = coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId());
-                for (CoursesForTimetable activeLesson : coursesWithActiveStatus) {
+                List<CoursesForTimetable> activeLessons = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
+                List<CoursesForTimetable> editedLessons = coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId());
+                for (CoursesForTimetable activeLesson : activeLessons) {
                     coursesService.deleteCourseById(activeLesson.getId());
                 }
-                for (CoursesForTimetable editLessons : lessonsWithEditStatus) {
-                    editLessons.setStatus("Active");
-                    coursesService.create(editLessons);
+                for (CoursesForTimetable editedLesson : editedLessons) {
+                    editedLesson.setStatus("Active");
+                    coursesService.create(editedLesson);
                 }
             }
-
         model.addAttribute("class", academicClassName);
         model.addAttribute("timetable", new Timetable());
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
@@ -436,7 +428,6 @@ public class TimetableController {
         model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
         putLessons(model, academicClass.getId());
         return "timetableEdit";
-
     }
 
 
@@ -457,23 +448,23 @@ public class TimetableController {
                 if (startDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                     duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-                    putEditLessons(model, timetable.getAcademicClass().getId());
+                    putEditedLessons(model, timetable.getAcademicClass().getId());
                 }
                 duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
                 if (endDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                     duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-                    putEditLessons(model, timetable.getAcademicClass().getId());
+                    putEditedLessons(model, timetable.getAcademicClass().getId());
                 }
                 duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-                putEditLessons(model, academicClass.getId());
+                putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-                putEditLessons(model, timetable.getAcademicClass().getId());
+                putEditedLessons(model, timetable.getAcademicClass().getId());
                 return "timetableEdit";
             }
         }
@@ -481,12 +472,12 @@ public class TimetableController {
         if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
             model.addAttribute("invalid", invalidMsg);
             duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-            putEditLessons(model, timetable.getAcademicClass().getId());
+            putEditedLessons(model, timetable.getAcademicClass().getId());
             return "timetableEdit";
         } else if (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) {
             model.addAttribute("invalid", invalidMsg);
             duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-            putEditLessons(model, timetable.getAcademicClass().getId());
+            putEditedLessons(model, timetable.getAcademicClass().getId());
             return "timetableEdit";
         }
 
@@ -498,14 +489,12 @@ public class TimetableController {
             model.addAttribute("noLessonInTimetable", "Please, select Courses");
             timetableService.updateTimetableStatusByAcademicClassId("Edit", academicClass.getId());
             duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
-            putEditLessons(model, timetable.getAcademicClass().getId());
+            putEditedLessons(model, timetable.getAcademicClass().getId());
             return "timetableEdit";
         }
-
         timetable.setAcademicClass(academicClass);
         timetableService.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, "Edit", academicClass.getId());
-
-        putEditLessons(model, timetable.getAcademicClass().getId());
+        putEditedLessons(model, timetable.getAcademicClass().getId());
         return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
     }
 
@@ -526,7 +515,7 @@ public class TimetableController {
         return model;
     }
 
-    private Model putEditLessons(Model model, Long academicClassId) {
+    private Model putEditedLessons(Model model, Long academicClassId) {
         model.addAttribute("lessonsOfMonday", coursesService.getCoursesByDayOfWeekAndStatusAndAcademicClassId("Monday", "Edit", academicClassId));
         model.addAttribute("lessonsOfTuesday", coursesService.getCoursesByDayOfWeekAndStatusAndAcademicClassId("Tuesday", "Edit", academicClassId));
         model.addAttribute("lessonsOfWednesday", coursesService.getCoursesByDayOfWeekAndStatusAndAcademicClassId("Wednesday", "Edit", academicClassId));
