@@ -29,13 +29,11 @@ public class AcademicClassController {
     private final AcademicClassService academicClassService;
     private final AcademicCourseService academicCourseService;
 
-    private final TeacherService teacherService;
 
     @Autowired
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, TeacherService teacherService) {
+    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
-        this.teacherService = teacherService;
     }
 
     @GetMapping
@@ -62,13 +60,9 @@ public class AcademicClassController {
                 return "academicClassSection";
             }
         }
-        if (academicClass.getClassNumber().contains(" ")) {
-            String replace = academicClass.getClassNumber().replace(" ", "");
-            academicClass.setClassNumber(replace);
-        }
 
-        for (AcademicClass aClass : academicClassList) {
-            if (academicClass.getClassNumber().equals(aClass.getClassNumber())) {
+        for (AcademicClass existingListOfAcademicClass : academicClassList) {
+            if (academicClass.getClassNumber().equals(existingListOfAcademicClass.getClassNumber())) {
                 model.addAttribute("duplicated", "Class already exists");
                 return "academicClassSection";
             }
@@ -83,27 +77,32 @@ public class AcademicClassController {
         }
     }
 
-
     @GetMapping("/{name}/courses")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
         List<AcademicCourse> result = new ArrayList<>();
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(name);
+        List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
-        model.addAttribute("academicCourseSet", allAcademicCourses);
+        model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingClass", new AcademicClass());
         model.addAttribute("allCourses", allCourses);
-        if (allAcademicCourses.size() == 0) {
-            result.addAll(allCourses);
+        if (academicCoursesInClass.size() == 0) {
+            for (AcademicCourse course : allCourses) {
+                if (course.getTeacher().size() > 0) {
+                    result.add(course);
+                }
+            }
             model.addAttribute("coursesForSelect", result);
             return "academicCourseForAcademicClass";
-        } else if (allAcademicCourses.size() == allCourses.size()) {
+        } else if (academicCoursesInClass.size() == allCourses.size()) {
             return "academicCourseForAcademicClass";
         } else {
             for (AcademicCourse course : allCourses) {
-                if (!allAcademicCourses.contains(course)) {
-                    result.add(course);
+                if (!academicCoursesInClass.contains(course)) {
+                    if (course.getTeacher().size() > 0) {
+                        result.add(course);
+                    }
                 }
             }
         }
@@ -115,7 +114,6 @@ public class AcademicClassController {
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClass academicClass,
                                                  @PathVariable("name") String name, Model model) {
         List<AcademicCourse> result = new ArrayList<>();
-
         List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
@@ -123,23 +121,68 @@ public class AcademicClassController {
         model.addAttribute("existingClass", new AcademicClass());
         for (AcademicCourse course : allCourses) {
             if (!academicCoursesInClass.contains(course)) {
-                result.add(course);
+                if (course.getTeacher().size() > 0)
+                    result.add(course);
             }
         }
+
         model.addAttribute("coursesForSelect", result);
         model.addAttribute("academicCourseSet", academicCoursesInClass);
-        model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
 
-        if (academicClass.getAcademicCourseSet().size() == 0 || academicClass.getTeacher().size() == 0) {
-            model.addAttribute("blank", "There is no selection");
+        if (academicClass.getAcademicCourseSet().size() == 0 && academicClass.getTeacher() == null) {
+            model.addAttribute("blank", "Please, select the required fields");
+            model.addAttribute("blankClass", "Please, select the required fields");
             return "academicCourseForAcademicClass";
+
+        } else if (academicClass.getAcademicCourseSet().size() == 0) {
+            model.addAttribute("blankClass", "Please, select the required fields");
+            return "academicCourseForAcademicClass";
+        } else if (academicClass.getTeacher() == null) {
+            model.addAttribute("blank", "Please, select the required fields");
+            return "academicCourseForAcademicClass";
+        } else {
+            AcademicClass findedClass = academicClassService.findByName(name);
+            findedClass.getAcademicCourseSet().addAll(academicClass.getAcademicCourseSet());
+            findedClass.getTeacher().addAll(academicClass.getTeacher());
+            academicClassService.update(findedClass);
+            return "redirect:/classes/" + name + "/courses";
         }
-        AcademicClass findedClass = academicClassService.findByName(name);
-        findedClass.getAcademicCourseSet().addAll(academicClass.getAcademicCourseSet());
-        findedClass.getTeacher().addAll(academicClass.getTeacher());
-        academicClassService.update(findedClass);
-        return "redirect:/classes/" + name + "/courses";
     }
 
+    @GetMapping("/{name}/classroom")
+    public String classroomTeacherForAcademicClass(@PathVariable("name") String name, Model model) {
+        AcademicClass academicClass = academicClassService.findByName(name);
+        model.addAttribute("teachers", academicClass.getTeacher());
+        model.addAttribute("existingClassroomTeacher", new AcademicClass());
+        if (academicClass.getClassroomTeacher() == null) {
+            return "classroomTeacherSection";
+        } else {
+            model.addAttribute("classroomTeacher", academicClass.getClassroomTeacher());
+            return "classroomTeacherSection";
+        }
+    }
+    @PostMapping("{name}/classroom")
+    public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClass academicClass,
+                                                     @PathVariable("name") String name,
+                                                     Model model) {
+        AcademicClass academicClassFindByName = academicClassService.findByName(name);
+        model.addAttribute("teachers", academicClassFindByName.getTeacher());
+        model.addAttribute("existingClass", new AcademicClass());
+        if (academicClass.getClassroomTeacher() == null) {
+            model.addAttribute("blank", "Please, select the required fields");
+            return "classroomTeacherSection";
+        }
+        for (AcademicClassDto academicClassDto : academicClassService.findAll()) {
+            if (academicClass.getClassroomTeacher()
+                    .equals(academicClassDto.getClassroomTeacher())){
+                model.addAttribute("duplicate", "This Teacher is already classroom teacher");
+                return "classroomTeacherSection";
+            }
+        }
+
+        academicClassFindByName.setClassroomTeacher(academicClass.getClassroomTeacher());
+        academicClassService.update(academicClassFindByName);
+        return "redirect:/classes/" + name + "/classroom";
+    }
 
 }

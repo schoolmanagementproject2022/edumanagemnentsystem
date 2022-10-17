@@ -1,4 +1,6 @@
 function PopUpShowMonday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-monday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -9,6 +11,8 @@ function PopUpShowMonday() {
 }
 
 function PopUpShowTuesday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-tuesday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -19,6 +23,8 @@ function PopUpShowTuesday() {
 }
 
 function PopUpShowWednesday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-wednesday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -29,6 +35,8 @@ function PopUpShowWednesday() {
 }
 
 function PopUpShowThursday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-thursday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -39,6 +47,8 @@ function PopUpShowThursday() {
 }
 
 function PopUpShowFriday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-friday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -48,17 +58,10 @@ function PopUpShowFriday() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
 
-function PopUpShowSaturday() {
-    $("#popup-container-saturday").show();
-    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
-    $("#header").css("-webkit-filter", "blur(10px)");
-    $("#header").css("pointer-events", "none");
-    $("#main-wrapper").css("pointer-events", "none");
-    $("#show-btn").css("pointer-events", "none");
-    $("#show-btn").css("-webkit-filter", "blur(10px)");
-}
 
 function PopUpShowSunday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-sunday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -68,7 +71,21 @@ function PopUpShowSunday() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
 
+function PopUpShowSaturday() {
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
+    $("#popup-container-saturday").show();
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+}
+
 function PopUpHide() {
+    obj.refreshValue = "toReload";
+    console.log("Changed to toReload");
     $("#popup-container-monday").hide();
     $("#popup-container-tuesday").hide();
     $("#popup-container-wednesday").hide();
@@ -84,9 +101,6 @@ function PopUpHide() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
 }
 
-function SuccessPopupShow() {
-    $("#popup-container").show();
-}
 function SuccessPopupHide() {
-    $("#popup-container").hide();
+    location.href = $("#timetableUrl").text();
 }

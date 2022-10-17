@@ -133,8 +133,7 @@ body {
     margin-left: 47px;
     margin-top: -12px;
     margin-bottom: 14px;
-    width: 90%;
-
+    width: 91.5%;
 }
 
 .dates_and_create{
@@ -212,11 +211,8 @@ body {
     margin-bottom: 11px;
 }
 .plus{
-    border-radius: 50%;
-    padding: 10px;
-    margin: 0px 53px;;
-    border: solid 3px#007EB4;
-    font-weight: 600;
+    width: 30%;
+    margin: 0px 37px 0px 50px;
     font-size: 23px;
     text-align: center;
     color:#007EB4;
@@ -228,6 +224,7 @@ body {
     padding: 183px 0px;
     background-color:#D7D7D7;
     position: relative;
+    display: flex;
 }
 .single_lesson_wrapper{
     margin: 0;
@@ -239,7 +236,7 @@ body {
     width: 99%;
 }
 .single_item{
-    width: 95%;
+    width: 101%;
     margin: 0;
     padding: 30px 23px;
     background-color: #AAAAAA;
@@ -291,15 +288,17 @@ body {
 
 /*for url*/
 .url-path {
+    margin-top: -1%;
+    margin-left: 4%;
     margin-right: 100%;
     display: inline-flex;
 }
 
 .a-url {
-    margin-right: -34px;
+    margin-right: 21px;
     margin-top: 23px;
     margin-left: -5%;
-    padding-left: 57px;
+    padding-left: 8px;
     text-decoration: none;
     color: #2b80a5;
     cursor: pointer;

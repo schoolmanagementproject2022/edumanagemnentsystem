@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>teachers in academic course</title>
+    <title th:text="'Teachers in ' + ${middleUrl}">Teachers in academic course</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -36,7 +36,9 @@
         </div>
         <div class="sidebar2 header" id="sidebar2">
             <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}" th:href="@{${allUrl}}">Teachers</a>
-            <a class="item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}" th:href="@{${allUrl}}">Classes</a>
+            <a class="item"
+               th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'classes'}}">Classes</a>
         </div>
     </div>
 </div>
@@ -78,5 +80,4 @@
     });
 </script>
 </body>
-
 </html>

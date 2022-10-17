@@ -25,5 +25,3 @@ public interface AcademicClassService {
     Set<Teacher> findAllTeachers(String name);
 
 }
-
-
