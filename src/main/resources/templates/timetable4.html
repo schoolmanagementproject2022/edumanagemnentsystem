@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,29 +35,28 @@
             });
         });
     </script>
-    <title>Timetable</title>
+
+    <title th:text="'The timetable of '+ ${middleUrl}">Timetable</title>
 
 </head>
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
 </div>
+
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+
     <div class="main">
         <div class="url-path">
-            <!-- todo -->
             <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
-            <!--        change-->
             <p class="a-url">/</p>
             <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
-            <!--        change-->
             <p class="a-url">/</p>
-            <a class="a-url" th:href="${activeTab}" th:text="${'Timetable'}"></a>
+            <a class="a-url" th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" th:text="${'Timetable'}"></a>
         </div>
 
         <div class="middle">
-
             <div th:if="${timetable == null}">
                 <p class="msg">There is no active Timetable.</p>
 
@@ -66,8 +64,7 @@
                    id="create-btn"><b>Create Timetable</b></a>
             </div>
 
-            <div th:if="${timetable != null}">
-                <div class="form-timetable">
+                <div class="form-timetable" th:if="${timetable != null}">
                     <form th:method="POST" action="#" th:object="${timetable}">
                         <div class="dates_and_create">
                             <div class="dates">
@@ -85,7 +82,7 @@
                                            th:id="startDate"/>
                                     <div class="error" th:if="${#fields.hasErrors('startDate')}"
                                          th:errors="*{startDate}"></div>
-                                    <div th:if="${invalid}!= null" class="error">
+                                    <div class="error" th:if="${invalid}!= null">
                                         <p th:text="${invalid}"></p>
                                     </div>
                                 </div>
@@ -103,7 +100,7 @@
                                            th:id="endDate"/>
                                     <div class="error" th:if="${#fields.hasErrors('endDate')}"
                                          th:errors="*{endDate}"></div>
-                                    <div th:if="${invalid}!= null" class="error">
+                                    <div class="error" th:if="${invalid}!= null">
                                         <p th:text="${invalid}"></p>
                                     </div>
                                 </div>
@@ -208,32 +205,24 @@
 
                     </div>
                 </div>
-            </div>
 
-            <script th:inline="javascript" th:if="${timetable != null}">
-                SuccessPopupShow();
-            </script>
 
-            <div class="sidebar-right">
-                <a href="#clasroom" class="item">Classroom</a>
-                <a href="#students" class="item">Students</a>
-                <a class="item" th:classappend="${activeTab eq 'courses' ? 'activeTab' : 'notActiveTab'}"
-                   th:href="@{'/classes/' + ${middleUrl} + '/courses'}">Courses</a>
-                <a href="#teachers" class="item">Teachers</a>
-                <a th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
-                   th:href="@{${allUrl}}" class="item">Timetable</a>
-            </div>
+            <div class="sidebar-right" th:insert="fragments/fragments :: sidebar2"></div>
         </div>
-            <div class="popup-container" id="popup-container">
-                <div class="popup-wrapper" id="popup-wrapper">
-                    <div class="half">
-                        <p class="successText">Timetable created successfully.</p>
-                    </div>
-                    <div name="btn-div">
-                        <button type="button" class="button-save" id="submit" onclick="SuccessPopupHide()"><b>OK</b></button>
-                    </div>
-                </div>
-            </div>
+    </div>
+</div>
+
+<a id="timetableUrl" th:text="'/classes/' + ${middleUrl} + '/timetable'" type="hidden"></a>
+<div class="popup-container" id="popup-container"
+     th:if="${creationStatus.booleanValue() == true} and ${timetable != null}">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p class="successMsg">Timetable created successfully</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save" id="submit" onclick="SuccessPopupHide()">
+                <b>OK</b></button>
+        </div>
     </div>
 </div>
 </body>

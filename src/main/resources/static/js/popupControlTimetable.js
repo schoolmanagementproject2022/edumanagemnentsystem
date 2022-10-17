@@ -101,9 +101,6 @@ function PopUpHide() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
 }
 
-function SuccessPopupShow() {
-    $("#popup-container").show();
-}
 function SuccessPopupHide() {
-    $("#popup-container").hide();
+    location.href = $("#timetableUrl").text();
 }

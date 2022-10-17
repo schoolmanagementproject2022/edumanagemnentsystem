@@ -35,6 +35,7 @@
 
 </th:block>
 
+<!-- sidebar 2 in academic class-->
 <th:block th:fragment="sidebar2">
     <div>
         <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
@@ -43,7 +44,9 @@
         <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Courses</a>
         <a href="#teachers" class="item">Teachers</a>
-        <a href="#timetable" class="item">Timetable</a></div>
+        <a th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>
+    </div>
     </div>
 </th:block>
 

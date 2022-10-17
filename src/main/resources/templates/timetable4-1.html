@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +25,6 @@
         }
     </script>
 
-
     <script>
         $(function () {
             $("#startDate").datepicker({
@@ -49,7 +47,6 @@
     </script>
 
     <script>
-
         const obj = {
             refreshValue: "toReload",
             get getValue() {
@@ -70,6 +67,7 @@
                 }
             }
         }
+
         function tuesday_popUp() {
             if (obj.refreshValue === "notToReload") {
                 window.onbeforeunload = null;
@@ -138,7 +136,6 @@
                 return "Are you sure?"
             }
         }
-
     </script>
 
     <title>Timetable</title>
@@ -159,9 +156,8 @@
             <!--        change-->
             <p class="a-url">/</p>
             <a class="a-url" th:href="${allUrl}" th:text="${middleUrl}"></a>
-            <!--        change-->
             <p class="a-url">/</p>
-            <a class="a-url" th:href="${activeTab}" th:text="${'Timetable'}"></a>
+            <a class="a-url" th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" th:text="${'Timetable'}"></a>
             <p class="a-url">/</p>
             <a class="a-url" th:href="${allUrl}" th:text="${'Creation'}"></a>
         </div>
@@ -207,7 +203,7 @@
                         </div>
                         <div class="create">
                             <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                            <button style="left:84%" type="submit" class="show-btn"><b>Create</b></button>
+                            <button style="left:84%" type="submit" class="show-btn" id="create"><b>Create</b></button>
                         </div>
                     </div>
                     <div th:if="${invalid}!= null" class="date_error">
@@ -405,7 +401,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="monday_popUp()" id="submit_monday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="monday_popUp()" id="submit_monday"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
@@ -441,7 +438,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
@@ -477,7 +475,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="wednesday_popUp()" id="submit_wednesday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="wednesday_popUp()" id="submit_wednesday">
+                        <b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -513,7 +512,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="thursday_popUp()" id="submit_thursday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="thursday_popUp()" id="submit_thursday">
+                        <b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -549,7 +549,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="friday_popUp()" id="submit_friday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="friday_popUp()" id="submit_friday"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
@@ -585,7 +586,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="saturday_popUp()" id="submit_saturday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="saturday_popUp()" id="submit_saturday">
+                        <b>Save</b></button>
                 </div>
             </div>
         </form>
@@ -621,7 +623,8 @@
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="sunday_popUp()" id="submit_sunday"><b>Save</b></button>
+                    <button type="submit" class="button-save" onclick="sunday_popUp()" id="submit_sunday"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
