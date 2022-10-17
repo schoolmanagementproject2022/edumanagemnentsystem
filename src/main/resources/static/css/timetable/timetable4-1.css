@@ -133,8 +133,7 @@ body {
     margin-left: 47px;
     margin-top: -12px;
     margin-bottom: 14px;
-    width: 90%;
-
+    width: 91.5%;
 }
 
 .dates_and_create{
@@ -212,11 +211,8 @@ body {
     margin-bottom: 11px;
 }
 .plus{
-    border-radius: 50%;
-    padding: 10px;
-    margin: 0px 53px;;
-    border: solid 3px#007EB4;
-    font-weight: 600;
+    width: 30%;
+    margin: 0px 37px 0px 50px;
     font-size: 23px;
     text-align: center;
     color:#007EB4;
@@ -240,7 +236,7 @@ body {
     width: 99%;
 }
 .single_item{
-    width: 95%;
+    width: 101%;
     margin: 0;
     padding: 30px 23px;
     background-color: #AAAAAA;
