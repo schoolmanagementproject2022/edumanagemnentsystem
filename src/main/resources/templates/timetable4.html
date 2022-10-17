@@ -51,7 +51,7 @@
         <div class="url-path">
             <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
             <p class="a-url">/</p>
-            <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+            <a class="a-url" th:href="${'/' + firstUrl + '/' + middleUrl + '/courses'}" th:text="${middleUrl}"></a>
             <p class="a-url">/</p>
             <a class="a-url" th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" th:text="${'Timetable'}"></a>
         </div>

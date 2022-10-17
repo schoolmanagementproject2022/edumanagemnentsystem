@@ -289,16 +289,16 @@ body {
 /*for url*/
 .url-path {
     margin-top: -1%;
-    margin-left: -2%;
+    margin-left: 4%;
     margin-right: 100%;
     display: inline-flex;
 }
 
 .a-url {
-    margin-right: -34px;
+    margin-right: 21px;
     margin-top: 23px;
     margin-left: -5%;
-    padding-left: 57px;
+    padding-left: 8px;
     text-decoration: none;
     color: #2b80a5;
     cursor: pointer;

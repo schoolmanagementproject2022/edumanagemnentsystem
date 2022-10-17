@@ -346,17 +346,17 @@ body {
 
 /*url style*/
 .url-path {
-    margin-right: 100%;
-    margin-left: -2%;
     margin-top: -1%;
+    margin-left: 3%;
+    margin-right: 100%;
     display: inline-flex;
 }
 
 .a-url {
-    margin-right: -31px;
+    margin-right: 21px;
     margin-top: 23px;
-    margin-left: -5%;
-    padding-left: 57px;
+    margin-left: -7%;
+    padding-left: 8px;
     text-decoration: none;
     color: #2b80a5;
     cursor: pointer;
