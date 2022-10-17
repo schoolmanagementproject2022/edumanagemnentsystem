@@ -202,12 +202,13 @@ public class TimetableController {
 
         if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
             coursesForTimetableDto.setStatus("Edit");
+
             if (result.hasErrors()) {
-                coursesService.create(CoursesForTimetableMapper.toCoursesForTimetable(coursesForTimetableDto));
                 model.addAttribute("timetable", newTimetable);
                 model.addAttribute("courses", allAcademicCourses);
-                putEditLessons(model, academicClass.getId());
                 model.addAttribute("academicClass", academicClass);
+                putEditLessons(model, academicClass.getId());
+                model.addAttribute("dayOfWeek", coursesForTimetableDto.getDayOfWeek());
                 return "timetableEdit";
             }
             coursesService.create(CoursesForTimetableMapper.toCoursesForTimetable(coursesForTimetableDto));
@@ -216,7 +217,9 @@ public class TimetableController {
             putEditLessons(model, academicClass.getId());
             model.addAttribute("academicClass", academicClass);
             return "timetableEdit";
-        } else if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
+
+        }
+        if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
                 timetableService.getTimetableWithEditStatusByAcademicClassId(academicClass.getId()) != null) {
             coursesForTimetableDto.setStatus("Edit");
             if (result.hasErrors()) {
@@ -234,6 +237,9 @@ public class TimetableController {
             putEditLessons(model, academicClass.getId());
             model.addAttribute("academicClass", academicClass);
             return "timetableEdit";
+
+
+
         } else {
             coursesForTimetableDto.setStatus("Active");
             if (result.hasErrors()) {
