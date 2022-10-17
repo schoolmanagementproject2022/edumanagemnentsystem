@@ -7,6 +7,9 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.entity.Student;
+import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,12 +30,13 @@ public class AcademicClassController {
 
     private final AcademicClassService academicClassService;
     private final AcademicCourseService academicCourseService;
-
+    private final StudentService studentService;
 
     @Autowired
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService) {
+    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
+        this.studentService = studentService;
     }
 
     @GetMapping
@@ -191,6 +195,44 @@ public class AcademicClassController {
         academicClassFindByName.setClassroomTeacher(academicClass.getClassroomTeacher());
         academicClassService.update(academicClassFindByName);
         return "redirect:/classes/" + name + "/classroom";
+    }
+    @GetMapping("/{name}/students")
+    public String showAcademicClassStudents(@PathVariable("name") String name, Model model) {
+        Long id = academicClassService.findByName(name).getId();
+        List<Student> allStudentsByAcademicClassId = studentService.findByAcademicClassId(id);
+        model.addAttribute("studentsInAcademicClass", allStudentsByAcademicClassId);
+        List<StudentDto> allStudents = studentService.findAll();
+        List<StudentDto> studentsForAcademicCourse = new ArrayList<>();
+        for (StudentDto student : allStudents) {
+            if (null == student.getAcademicClass()) {
+                studentsForAcademicCourse.add(student);
+            }
+        }
+        model.addAttribute("students", studentsForAcademicCourse);
+        return "academicClassSectionForStudents";
+    }
+
+    @PostMapping("{name}/students")
+    public String addNewTeacher(@ModelAttribute("existingAcademicClass") AcademicClass academicClass,
+                                @PathVariable("name") String name, Model model) {
+
+        Set<Student> students = academicClass.getStudent();
+        AcademicClass academicClassByName = academicClassService.findByName(name);
+        if (academicClass.getStudent() == null) {
+            model.addAttribute("blank", "There is no new selection.");
+            Long id = academicClassService.findByName(name).getId();
+            List<Student> allStudentsByAcademicClassId = studentService.findByAcademicClassId(id);
+            model.addAttribute("studentsInAcademicClass", allStudentsByAcademicClassId);
+            return "academicClassSectionForStudents";
+        }
+        if (null != students){
+            for (Student student : students) {
+                student.setAcademicClass(academicClassByName);
+                studentService.update(student);
+            }
+        }
+
+        return "redirect:/classes/" + name + "/students";
     }
 
     @GetMapping("/{name}/teachers")

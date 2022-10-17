@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
@@ -40,24 +41,35 @@ public class AcademicClass {
     @OneToOne
     private Teacher classroomTeacher;
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet,Teacher classroomTeacher) {
+    @OneToMany
+    private Set<Student> student;
+
+    public AcademicClass() {
+    }
+
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, Set<Student> student) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
         this.classroomTeacher = classroomTeacher;
+        this.student = student;
     }
 
-    public Set<AcademicCourse> getAcademicCourseSet() {
-        return academicCourseSet;
+    public Long getId() {
+        return id;
     }
 
-    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
-        this.academicCourseSet = academicCourseSet;
+    public void setId(Long id) {
+        this.id = id;
     }
 
+    public String getClassNumber() {
+        return classNumber;
+    }
 
-    public AcademicClass() {
+    public void setClassNumber(String classNumber) {
+        this.classNumber = classNumber;
     }
 
     public Set<Teacher> getTeacher() {
@@ -68,20 +80,12 @@ public class AcademicClass {
         this.teacher = teacher;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Set<AcademicCourse> getAcademicCourseSet() {
+        return academicCourseSet;
     }
 
-    public void setClassNumber(String classNumber) {
-        this.classNumber = classNumber;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getClassNumber() {
-        return classNumber;
+    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
+        this.academicCourseSet = academicCourseSet;
     }
 
     public Teacher getClassroomTeacher() {
@@ -92,16 +96,36 @@ public class AcademicClass {
         this.classroomTeacher = classroomTeacher;
     }
 
+    public Set<Student> getStudent() {
+        return student;
+    }
+
+    public void setStudent(Set<Student> student) {
+        this.student = student;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(classroomTeacher, that.classroomTeacher);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(student, that.student);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher,classroomTeacher);
+        return Objects.hash(id, classNumber, teacher, academicCourseSet, classroomTeacher, student);
+    }
+
+    @Override
+    public String toString() {
+        return "AcademicClass{" +
+                "id=" + id +
+                ", classNumber='" + classNumber + '\'' +
+                ", teacher=" + teacher +
+                ", academicCourseSet=" + academicCourseSet +
+                ", classroomTeacher=" + classroomTeacher +
+                ", student=" + student +
+                '}';
     }
 }
