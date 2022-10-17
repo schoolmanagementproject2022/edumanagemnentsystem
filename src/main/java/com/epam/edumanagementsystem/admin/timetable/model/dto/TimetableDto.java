@@ -3,6 +3,8 @@ package com.epam.edumanagementsystem.admin.timetable.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -18,15 +20,18 @@ public class TimetableDto {
     @NotNull(message = "Please, select the date")
     private LocalDate endDate;
 
+    private String status;
+
     private AcademicClass academicClass;
 
     public TimetableDto() {
     }
 
-    public TimetableDto(Long id, LocalDate startDate, LocalDate endDate, AcademicClass academicClass) {
+    public TimetableDto(Long id,  LocalDate startDate,  LocalDate endDate, String status, AcademicClass academicClass) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status = status;
         this.academicClass = academicClass;
     }
 
@@ -54,6 +59,14 @@ public class TimetableDto {
         this.endDate = endDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public AcademicClass getAcademicClass() {
         return academicClass;
     }
@@ -67,12 +80,12 @@ public class TimetableDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TimetableDto that = (TimetableDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(startDate, that.startDate) && Objects.equals(endDate, that.endDate) && Objects.equals(academicClass, that.academicClass);
+        return id.equals(that.id) && startDate.equals(that.startDate) && endDate.equals(that.endDate) && status.equals(that.status) && academicClass.equals(that.academicClass);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, academicClass);
+        return Objects.hash(id, startDate, endDate, status, academicClass);
     }
 
     @Override
@@ -81,6 +94,7 @@ public class TimetableDto {
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", status='" + status + '\'' +
                 ", academicClass=" + academicClass +
                 '}';
     }

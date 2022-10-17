@@ -26,6 +26,11 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
+    public List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
+        return coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek,status,academicClassId);
+    }
+
+    @Override
     public List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId) {
         return coursesRepository.findCoursesByAcademicClassId(academicClassId);
     }
@@ -41,17 +46,22 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
+    public List<CoursesForTimetable> getCoursesWithEditStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithEditStatusByAcademicCourseId(academicClassId);
+    }
+
+    @Override
     public boolean isPresentCoursesForClass(Long academicClassId) {
         return coursesRepository.existsCoursesForTimetableByAcademicClass_Id(academicClassId);
     }
 
     @Transactional
     @Override
-    public void create(CoursesForTimetableDto coursesForTimetableDto) {
-        coursesRepository.create(coursesForTimetableDto.getDayOfWeek(),
-                coursesForTimetableDto.getAcademicCourse().getName(),
-                coursesForTimetableDto.getAcademicClass().getId(),
-                coursesForTimetableDto.getStatus());
+    public void create(CoursesForTimetable coursesForTimetable) {
+        coursesRepository.create(coursesForTimetable.getDayOfWeek(),
+                coursesForTimetable.getAcademicCourse(),
+                coursesForTimetable.getAcademicClass().get(0).getId(),
+                coursesForTimetable.getStatus());
     }
 
     @Transactional
@@ -62,22 +72,15 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Transactional
     @Override
-    public void renameById(Long id) {
-        coursesRepository.renameById(id);
+    public void updateCourseStatusToActiveById(Long id) {
+        coursesRepository.updateCourseStatusToActiveById(id);
     }
+
 
     @Transactional
     @Override
-    public void delete(Long id) {
-        coursesRepository.delete(id);
+    public void deleteCourseById(Long id) {
+        coursesRepository.deleteCourseById(id);
     }
-
-    @Transactional
-    @Override
-    public void deleteById(Long id) {
-        renameById(id);
-        delete(id);
-    }
-
 
 }

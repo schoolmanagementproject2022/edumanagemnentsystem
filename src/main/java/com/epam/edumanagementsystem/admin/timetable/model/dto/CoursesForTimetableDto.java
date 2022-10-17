@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.admin.timetable.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -29,8 +30,8 @@ public class CoursesForTimetableDto {
     public CoursesForTimetableDto() {
     }
 
-    public CoursesForTimetableDto( AcademicCourse academicCourse, AcademicClass academicClass,
-                                   String dayOfWeek, String status) {
+    public CoursesForTimetableDto(Long id,  AcademicCourse academicCourse, AcademicClass academicClass,String dayOfWeek, String status) {
+        this.id = id;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;
@@ -82,18 +83,19 @@ public class CoursesForTimetableDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CoursesForTimetableDto that = (CoursesForTimetableDto) o;
-        return academicCourse.equals(that.academicCourse) && academicClass.equals(that.academicClass) && dayOfWeek.equals(that.dayOfWeek) && status.equals(that.status);
+        return id.equals(that.id) && academicCourse.equals(that.academicCourse) && academicClass.equals(that.academicClass) && dayOfWeek.equals(that.dayOfWeek) && status.equals(that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(academicCourse, academicClass, dayOfWeek, status);
+        return Objects.hash(id, academicCourse, academicClass, dayOfWeek, status);
     }
 
     @Override
     public String toString() {
         return "CoursesForTimetableDto{" +
-                "academicCourse=" + academicCourse +
+                "id=" + id +
+                ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +
                 ", dayOfWeek='" + dayOfWeek + '\'' +
                 ", status='" + status + '\'' +
