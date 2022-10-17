@@ -112,6 +112,7 @@ public class TimetableController {
 
         if (!coursesService.isPresentCoursesForClass(classByName.getId())) {
             model.addAttribute("noLessonInTimetable", "Please, select Courses");
+            model.addAttribute("startdate", timetable.getStartDate());
             duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, classByName);
             putLessons(model, timetable.getAcademicClass().getId());
             return "timetable4-1";

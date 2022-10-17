@@ -13,7 +13,6 @@ body {
 
 
 /*Top part styles*/
-
 .container {
     width: 100%;
     margin: 0 auto;
@@ -128,11 +127,9 @@ body {
 }
 
 .form-timetable{
-    margin: 0px;
     padding: 0px;
     margin-left: 47px;
     margin-top: -12px;
-    margin-bottom: 14px;
     width: 91.5%;
 }
 
@@ -174,8 +171,6 @@ body {
 }
 
 .timetable{
-    margin: 0;
-    padding: 0px;
     background-color:#D7D7D7;
     display: flex;
     margin-top: 6%;
@@ -183,13 +178,10 @@ body {
 }
 
 .dayOfWeek {
-    margin: 0;
-    padding: 0px;
     background-color:#D7D7D7;
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
 }
 .dayHeader{
@@ -209,6 +201,8 @@ body {
 .add{
     background-color:#D7D7D7;
     margin-bottom: 11px;
+    display: flex;
+    padding-top: 100%;
 }
 .plus{
     width: 30%;
@@ -220,23 +214,17 @@ body {
 }
 /*Lessons section styles*/
 .lessons{
-    margin: 0;
-    padding: 183px 0px;
     background-color:#D7D7D7;
     position: relative;
     display: flex;
+    flex-direction: column;
+    height: 50%;
 }
 .single_lesson_wrapper{
-    margin: 0;
-    padding: 0px 4px;
     background-color: #D7D7D7;
-    position: absolute;
-    top: 0px;
     flex-direction: column;
-    width: 99%;
 }
 .single_item{
-    width: 101%;
     margin: 0;
     padding: 30px 23px;
     background-color: #AAAAAA;

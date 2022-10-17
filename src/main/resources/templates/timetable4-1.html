@@ -222,14 +222,14 @@
                                         <p hidden th:text="${lesson.id}" id="lesson"></p>
                                         <a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}">
                                             <label class="close-btn" title="close">×</label>
-                                        </a></div>
+                                        </a>
+                                    </div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="add">
-                                <img onclick="PopUpShowMonday()" class="plus" src="/static/img/Icon8.png">
+                            <img onclick="PopUpShowMonday()" class="plus" src="/static/img/Icon8.png">
                         </div>
                     </div>
 
@@ -237,14 +237,12 @@
                         <div class="dayHeader"><a>Tuesday</a></div>
                         <div class="lessons">
                             <div class="single_lesson_wrapper">
-
                                 <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
                                     <div class="btn"><a
                                             th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="add">
@@ -257,16 +255,13 @@
                         <div class="lessons">
 
                             <div class="single_lesson_wrapper">
-
                                 <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
                                     <div class="btn"><a
                                             th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
-
                         </div>
                         <div class="add">
                             <img onclick="PopUpShowWednesday()" class="plus" src="/static/img/Icon8.png">
@@ -278,16 +273,13 @@
                         <div class="lessons">
 
                             <div class="single_lesson_wrapper">
-
                                 <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
                                     <div class="btn"><a
                                             th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
-
                         </div>
                         <div class="add">
                             <img onclick="PopUpShowThursday()" class="plus" src="/static/img/Icon8.png">
@@ -299,16 +291,13 @@
                         <div class="lessons">
 
                             <div class="single_lesson_wrapper">
-
                                 <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
                                     <div class="btn"><a
                                             th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
-
                         </div>
                         <div class="add">
                             <img onclick="PopUpShowFriday()" class="plus" src="/static/img/Icon8.png">
@@ -320,16 +309,13 @@
                         <div class="lessons">
 
                             <div class="single_lesson_wrapper">
-
                                 <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
                                     <div class="btn"><a
                                             th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
-
                         </div>
                         <div class="add">
                             <img onclick="PopUpShowSaturday()" class="plus" src="/static/img/Icon8.png">
@@ -341,16 +327,13 @@
                         <div class="lessons">
 
                             <div class="single_lesson_wrapper">
-
                                 <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
                                     <div class="btn"><a
                                             th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
                                             class="close-btn" title="close">×</label></a></div>
                                     <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                                 </div>
-
                             </div>
-
                         </div>
                         <div class="add">
                             <img onclick="PopUpShowSunday()" class="plus" src="/static/img/Icon8.png">
