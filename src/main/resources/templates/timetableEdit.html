@@ -287,7 +287,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Monday'}">
@@ -323,7 +323,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">
@@ -359,7 +359,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Wednesday'}">
@@ -395,7 +395,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Thursday'}">
@@ -431,7 +431,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Friday'}">
@@ -467,7 +467,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Saturday'}">
@@ -503,7 +503,7 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/course'}"
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Sunday'}">
