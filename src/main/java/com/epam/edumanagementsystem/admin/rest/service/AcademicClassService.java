@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.student.model.entity.Student;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface AcademicClassService {
 
     Set<Teacher> findAllTeachers(String name);
 
+    Set<Teacher> findAllTeacher();
 }
