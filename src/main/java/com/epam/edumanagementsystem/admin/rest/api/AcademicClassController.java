@@ -193,4 +193,14 @@ public class AcademicClassController {
         return "redirect:/classes/" + name + "/classroom";
     }
 
+    @GetMapping("/{name}/teachers")
+    public String teachersForAcademicClass(Model model, @PathVariable("name") String name) {
+        AcademicClass academicClass = academicClassService.findByName(name);
+        model.addAttribute("teachers", academicClass.getTeacher());
+        Set<Teacher> allTeachersByAcademicClass = academicClassService.findAllTeacher();
+        model.addAttribute("allTeacherByAcademicClass", allTeachersByAcademicClass);
+
+        return "teachersForAcademicClass";
+    }
+
 }
