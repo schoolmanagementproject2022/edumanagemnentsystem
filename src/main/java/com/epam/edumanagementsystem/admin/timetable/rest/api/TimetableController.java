@@ -61,6 +61,7 @@ public class TimetableController {
                     coursesService.deleteCourseById(editedCourse.getId());
                 }
                 model.addAttribute("timetable", timetableService.getByName(name));
+                model.addAttribute("creationStatus", creationStatus);
                 putLessons(model, academicClass.getId());
                 return "timetable4";
 
@@ -139,7 +140,7 @@ public class TimetableController {
 
         if (!coursesService.isPresentCoursesForClass(academicClass.getId())) {
             model.addAttribute("noLessonInTimetable", "Please, select Courses");
-            duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, classByName);
+            duplicatedModelAttributes(model, allAcademicCourses, newCoursesForTimetable, academicClass);
             putLessons(model, timetable.getAcademicClass().getId());
             return "timetable4-1";
         }
@@ -277,6 +278,7 @@ public class TimetableController {
         Timetable newTimetable = new Timetable();
         Timetable timetable = timetableService.getTimetableByAcademicClassId(academicClass.getId());
         putLessons(model, academicClass.getId());
+
         if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                 timetable.getStatus().equalsIgnoreCase("Active")) {
             coursesForTimetableDto.setStatus("Edit");
