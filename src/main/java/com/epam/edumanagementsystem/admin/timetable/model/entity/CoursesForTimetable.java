@@ -2,6 +2,8 @@ package com.epam.edumanagementsystem.admin.timetable.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -28,6 +30,7 @@ public class CoursesForTimetable {
 
     @NotBlank
     private String dayOfWeek;
+
 
     private String status;
 

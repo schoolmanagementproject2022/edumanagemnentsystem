@@ -106,7 +106,7 @@
                                 </div>
                             </div>
                             <div class="create">
-                                <input class="show-btn" type="button" value="Edit">
+                                <a th:href="@{'/classes/' + ${timetable.academicClass.classNumber}+ '/timetable/edit' }" class="show-btn" type="button">Edit</a>
                             </div>
                         </div>
                     </form>
