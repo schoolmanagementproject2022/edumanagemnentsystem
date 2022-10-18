@@ -189,7 +189,7 @@ body {
 }
 
 .error_messages {
-    margin-right: 50px;
+    width: 50%;
 }
 
 .create {
