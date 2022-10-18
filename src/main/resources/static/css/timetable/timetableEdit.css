@@ -258,9 +258,10 @@ body {
 /*Lessons section styles*/
 .lessons {
     margin: 0;
-    padding: 180px 0px;
+    padding: 183px 0px;
     background-color: #D7D7D7;
     position: relative;
+    flex: 1;
 }
 
 .single_lesson_wrapper {
@@ -291,12 +292,18 @@ body {
     background-color: #AAAAAA;
     margin-top: -17px;
     margin-left: 100px;
+
 }
 
 .single_item .close-btn {
     font-size: 17px;
     cursor: pointer;
     color: #007EB4;
+
+}
+.single_item a {
+    text-decoration: none;
+
 }
 
 .close-btn:hover {
