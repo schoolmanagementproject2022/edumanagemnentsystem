@@ -195,16 +195,15 @@ body {
 .create {
     margin: 0px;
     padding: 0px;
-    margin-top: 6px;
+    margin-top: 9px;
 }
 
 .create .button {
     color: #01A7F0;
     font-size: 19px;
     border-radius: 0px;
-    width: 115px;
-    padding: 4px;
-
+    width: 123px;
+    padding: 2px;
 }
 
 .week {
@@ -265,8 +264,9 @@ body {
 }
 
 .single_lesson_wrapper {
+    width: 100%;
     margin: 0;
-    padding: 0px 2px;
+    padding: 0px;
     background-color: #D7D7D7;
     position: absolute;
     top: 0px;
@@ -274,7 +274,7 @@ body {
 }
 
 .single_item {
-    margin: 0px 2px;
+    margin: 0px 4px;
     padding: 23px 0px;
     background-color: #AAAAAA;
     margin-top: 5px;
@@ -286,22 +286,17 @@ body {
 }
 
 .single_item .btn {
-    margin: 0;
+    margin: 0px;
     padding: 0px;
     background-color: #AAAAAA;
-    margin-top: -21px;
+    margin-top: -17px;
+    margin-left: 100px;
 }
 
 .single_item .close-btn {
-    font-size: 16px;
+    font-size: 17px;
     cursor: pointer;
-    margin-left: 80px;
-    color: #007EB4;;
-}
-
-.single_item a {
-    text-decoration: none;
-
+    color: #007EB4;
 }
 
 .close-btn:hover {
@@ -309,10 +304,12 @@ body {
 }
 
 .title {
+    width: 100%;
     text-align: center;
     color: #007EB4;
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: 0.8em;
+    margin-bottom: 3px;
 }
 
 .activeTab {
