@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/timetable/timetable4-1.css" rel="stylesheet">
+    <link href="/static/css/timetable/timetableEdit.css" rel="stylesheet">
     <link href="/static/css/dateStyle.css" rel="stylesheet">
 
     <script src="/static/js/popupControlTimetable.js"></script>
@@ -47,97 +47,97 @@
         });
     </script>
 
-<!--    <script>-->
-<!--        const obj = {-->
-<!--            refreshValue: "toReload",-->
-<!--            get getValue() {-->
-<!--                return this.refreshValue;-->
-<!--            },-->
+    <!--    <script>-->
+    <!--        const obj = {-->
+    <!--            refreshValue: "toReload",-->
+    <!--            get getValue() {-->
+    <!--                return this.refreshValue;-->
+    <!--            },-->
 
-<!--            set setValue(name) {-->
-<!--                this.refreshValue = name;-->
-<!--            },-->
-<!--        };-->
+    <!--            set setValue(name) {-->
+    <!--                this.refreshValue = name;-->
+    <!--            },-->
+    <!--        };-->
 
-<!--        function monday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function monday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        function tuesday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function tuesday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        function wednesday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function wednesday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        function thursday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function thursday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        function friday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function friday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        function saturday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function saturday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        function sunday_popUp() {-->
-<!--            if (obj.refreshValue === "notToReload") {-->
-<!--                window.onbeforeunload = null;-->
-<!--            } else if (obj.refreshValue === "toReload") {-->
-<!--                window.onbeforeunload = function () {-->
-<!--                    return "Are you sure?"-->
-<!--                }-->
-<!--            }-->
-<!--        }-->
+    <!--        function sunday_popUp() {-->
+    <!--            if (obj.refreshValue === "notToReload") {-->
+    <!--                window.onbeforeunload = null;-->
+    <!--            } else if (obj.refreshValue === "toReload") {-->
+    <!--                window.onbeforeunload = function () {-->
+    <!--                    return "Are you sure?"-->
+    <!--                }-->
+    <!--            }-->
+    <!--        }-->
 
-<!--        if (obj.refreshValue === "notToReload") {-->
-<!--            console.log("Checking in notToReload")-->
-<!--        } else if (obj.refreshValue === "toReload") {-->
-<!--            console.log("Checking in toReload")-->
-<!--            window.onbeforeunload = function () {-->
-<!--                return "Are you sure?"-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
+    <!--        if (obj.refreshValue === "notToReload") {-->
+    <!--            console.log("Checking in notToReload")-->
+    <!--        } else if (obj.refreshValue === "toReload") {-->
+    <!--            console.log("Checking in toReload")-->
+    <!--            window.onbeforeunload = function () {-->
+    <!--                return "Are you sure?"-->
+    <!--            }-->
+    <!--        }-->
+    <!--    </script>-->
 
 
     <title>Timetable</title>
@@ -151,7 +151,7 @@
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
-    <div class="middle">
+    <div class="main">
         <div class="url-path">
             <!-- todo -->
             <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
@@ -164,212 +164,194 @@
             <p class="a-url">/</p>
             <a class="a-url" th:href="${allUrl}" th:text="${'Creation'}"></a>
         </div>
+        <div class="timetable">
 
-        <div class="main-down">
-            <div class="form-timetable">
-                <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
-                      th:object="${timetable}">
-                    <div class="dates_and_create">
-                        <div class="dates">
-                            <div class="date_half">
-                                <label class="popup-label-title">Start Date
-                                    <span class="check-validation-date"></span>
-                                </label>
+            <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
+                  th:object="${timetable}">
+                <div class="dates_and_create">
+                    <div class="dates">
+                        <div class="start_date">
+                            <label class="popup-label-title">Start Date<span class="check-validation-date"></span></label>
+                            <div class="input_form">
+                            <input class="form_input" placeholder="Date pick &#9638;"
+                                   data-date-format="dd-mm-yyyy"
+                                   readonly
+                                   th:type="text"
+                                   th:name="startDate"
+                                   th:value="*{startDate}"
+                                   th:field="*{startDate}"
+                                   th:id="startDate"/></div>
+                            <div class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                        </div>
+                        <div class="end_date">
+                            <label class="popup-label-title">End Date<span class="check-validation-date"></span></label>
+                            <div class="input_form">
                                 <input class="form_input" placeholder="Date pick &#9638;"
                                        data-date-format="dd-mm-yyyy"
                                        readonly
                                        th:type="text"
-                                       th:name="startDate"
-                                       th:value="*{startDate}"
-                                       th:field="*{startDate}"
-                                       th:id="startDate"/>
-                                <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                                     th:errors="*{startDate}"></div>
+                                       th:name="endDate"
+                                       th:value="*{endDate}"
+                                       th:field="*{endDate}"
+                                       th:id="endDate"/>
                             </div>
-                            <div class="date_half">
-                                <label class="popup-label-title">End Date
-                                    <span class="check-validation-date"></span>
-                                </label>
-                                <div class="input_left">
-                                    <input class="form_input" placeholder="Date pick &#9638;"
-                                           data-date-format="dd-mm-yyyy"
-                                           readonly
-                                           th:type="text"
-                                           th:name="endDate"
-                                           th:value="*{endDate}"
-                                           th:field="*{endDate}"
-                                           th:id="endDate"/>
-                                </div>
-                                <div class="error" th:if="${#fields.hasErrors('endDate')}"
-                                     th:errors="*{endDate}"></div>
-                            </div>
-                        </div>
-                        <div class="create">
-                            <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                            <button type="submit" class="show-btn"><b>Edit</b></button>
+                            <div class="error" th:if="${#fields.hasErrors('endDate')}"
+                                 th:errors="*{endDate}"></div>
                         </div>
                     </div>
-                    <div th:if="${invalid}!= null" class="date_error">
-                        <p th:text="${invalid}"></p>
-                    </div>
-                    <div th:if="${noLessonInTimetable}!= null" class="date_error">
-                        <p th:text="${noLessonInTimetable}"></p>
-                    </div>
-                </form>
-                <div class="timetable">
-                    <div class="dayOfWeek">
-                        <div class="dayHeader" id="monday" th:value="monday"><a>Monday</a></div>
-                        <div class="lessons">
-                            <div class="single_lesson_wrapper">
-
-                                <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                    <div class="btn">
-                                        <p hidden th:text="${lesson.id}" id="lesson"></p>
-                                        <a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}">
-                                            <label class="close-btn" title="close">×</label>
-                                        </a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
-
-                            </div>
+                    <div class="error_messages">
+                        <div th:if="${invalid}!= null" class="date_error">
+                            <p th:text="${invalid}"></p>
                         </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowMonday()" class="plus" value="Monday"><b>+</b>
-                            </button>
+                        <div th:if="${noLessonInTimetable}!= null" class="date_error">
+                            <p th:text="${noLessonInTimetable}"></p>
                         </div>
                     </div>
-
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Tuesday</a></div>
-                        <div class="lessons">
-                            <div class="single_lesson_wrapper">
-
-                                <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
-                                    <div class="btn"><a
-                                            th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowTuesday()" class="plus" value="Tuesday"><b>+</b>
-                            </button>
-                        </div>
+                    <div class="create">
+                        <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
+                        <button type="submit" class="button"><b>Edit</b></button>
                     </div>
 
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Wednesday</a></div>
-                        <div class="lessons">
 
-                            <div class="single_lesson_wrapper">
+                </div>
+            </form>
 
-                                <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
-                                    <div class="btn"><a
-                                            th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
+            <div class="week">
+                <div class="dayOfWeek">
+                    <div class="dayHeader" id="monday" th:value="monday"><a>Monday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
 
+                            <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
+                                <div class="btn">
+                                    <p hidden th:text="${lesson.id}" id="lesson"></p>
+                                    <a th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}">
+                                        <label class="close-btn" title="close">×</label>
+                                    </a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                             </div>
 
                         </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowWednesday()" class="plus" value="Wednesday"><b>+</b>
-                            </button>
+                    </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowMonday()" class="plus" value="Monday"><b>+</b>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Tuesday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
+                            <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
+                                <div class="btn"><a
+                                        th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                        class="close-btn" title="close">×</label></a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                            </div>
                         </div>
                     </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowTuesday()" class="plus" value="Tuesday"><b>+</b>
+                        </button>
+                    </div>
+                </div>
 
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Thursday</a></div>
-                        <div class="lessons">
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Wednesday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
+                            <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
+                                <div class="btn"><a
+                                        th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                        class="close-btn" title="close">×</label></a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowWednesday()" class="plus" value="Wednesday"><b>+</b>
+                        </button>
+                    </div>
+                </div>
 
-                            <div class="single_lesson_wrapper">
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Thursday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
+                            <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
+                                <div class="btn"><a
+                                        th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                        class="close-btn" title="close">×</label></a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowThursday()" class="plus" value="Thursday"><b>+</b>
+                        </button>
+                    </div>
+                </div>
 
-                                <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
-                                    <div class="btn"><a
-                                            th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Friday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
+                            <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
+                                <div class="btn"><a
+                                        th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                        class="close-btn" title="close">×</label></a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowFriday()" class="plus" value="Friday"><b>+</b>
+                        </button>
+                    </div>
+                </div>
 
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Saturday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
+                            <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
+                                <div class="btn"><a
+                                        th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                        class="close-btn" title="close">×</label></a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowSaturday()" class="plus" value="Saturday"><b>+</b>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Sunday</a></div>
+                    <div class="lessons">
+
+                        <div class="single_lesson_wrapper">
+
+                            <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
+                                <div class="btn"><a
+                                        th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
+                                        class="close-btn" title="close">×</label></a></div>
+                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
                             </div>
 
                         </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowThursday()" class="plus" value="Thursday"><b>+</b>
-                            </button>
-                        </div>
+
                     </div>
-
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Friday</a></div>
-                        <div class="lessons">
-
-                            <div class="single_lesson_wrapper">
-
-                                <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
-                                    <div class="btn"><a
-                                            th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowFriday()" class="plus" value="Friday"><b>+</b>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Saturday</a></div>
-                        <div class="lessons">
-
-                            <div class="single_lesson_wrapper">
-
-                                <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
-                                    <div class="btn"><a
-                                            th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowSaturday()" class="plus" value="Saturday"><b>+</b>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Sunday</a></div>
-                        <div class="lessons">
-
-                            <div class="single_lesson_wrapper">
-
-                                <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
-                                    <div class="btn"><a
-                                            th:href="@{'/classes/course/delete/' + ${lesson.id} + '/' + ${academicClass.classNumber}}"><label
-                                            class="close-btn" title="close">×</label></a></div>
-                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="add">
-                            <button type="button" onclick="PopUpShowSunday()" class="plus" th:value="Sunday"><b>+</b>
-                            </button>
-                        </div>
+                    <div class="add">
+                        <button type="button" onclick="PopUpShowSunday()" class="plus" th:value="Sunday"><b>+</b>
+                        </button>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -381,7 +363,8 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
+        <form id="form" class="form" th:method="POST"
+              th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Monday'}">
@@ -410,14 +393,14 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-tuesday">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
+        <form id="form" class="form" th:method="POST"
+              th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">
@@ -445,7 +428,6 @@
         </form>
     </div>
 </div>
-
 
 <div class="create-pop">
 
@@ -482,7 +464,6 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-thursday">
@@ -517,7 +498,6 @@
         </form>
     </div>
 </div>
-
 
 <div class="create-pop">
 
@@ -554,7 +534,6 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-saturday">
@@ -590,14 +569,14 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-sunday">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
+        <form id="form" class="form" th:method="POST"
+              th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Sunday'}">

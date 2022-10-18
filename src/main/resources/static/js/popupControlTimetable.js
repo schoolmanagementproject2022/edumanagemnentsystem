@@ -1,6 +1,6 @@
 function PopUpShowMonday() {
-    obj.refreshValue = "notToReload";
-    console.log("Changed to notToReload");
+    // obj.refreshValue = "notToReload";
+    // console.log("Changed to notToReload");
     $("#popup-container-monday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
