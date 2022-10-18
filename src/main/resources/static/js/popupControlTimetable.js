@@ -11,8 +11,8 @@ function PopUpShowMonday() {
 }
 
 function PopUpShowTuesday() {
-    // obj.refreshValue = "notToReload";
-    // console.log("Changed to notToReload");
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-tuesday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -23,8 +23,8 @@ function PopUpShowTuesday() {
 }
 
 function PopUpShowWednesday() {
-    // obj.refreshValue = "notToReload";
-    // console.log("Changed to notToReload");
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-wednesday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -35,8 +35,8 @@ function PopUpShowWednesday() {
 }
 
 function PopUpShowThursday() {
-    // obj.refreshValue = "notToReload";
-    // console.log("Changed to notToReload");
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-thursday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -47,8 +47,8 @@ function PopUpShowThursday() {
 }
 
 function PopUpShowFriday() {
-    // obj.refreshValue = "notToReload";
-    // console.log("Changed to notToReload");
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-friday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -60,8 +60,8 @@ function PopUpShowFriday() {
 
 
 function PopUpShowSunday() {
-    // obj.refreshValue = "notToReload";
-    // console.log("Changed to notToReload");
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-sunday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -72,8 +72,8 @@ function PopUpShowSunday() {
 }
 
 function PopUpShowSaturday() {
-    // obj.refreshValue = "notToReload";
-    // console.log("Changed to notToReload");
+    obj.refreshValue = "notToReload";
+    console.log("Changed to notToReload");
     $("#popup-container-saturday").show();
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -84,8 +84,8 @@ function PopUpShowSaturday() {
 }
 
 function PopUpHide() {
-    // obj.refreshValue = "toReload";
-    // console.log("Changed to toReload");
+    obj.refreshValue = "toReload";
+    console.log("Changed to toReload");
     $("#popup-container-monday").hide();
     $("#popup-container-tuesday").hide();
     $("#popup-container-wednesday").hide();

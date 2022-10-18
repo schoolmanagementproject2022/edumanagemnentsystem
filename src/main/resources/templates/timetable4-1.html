@@ -128,6 +128,19 @@
             }
         }
 
+        function createButtonClick() {
+            obj.refreshValue = "notToReload";
+            console.log("Changed to notToReload");
+
+            if (obj.refreshValue === "notToReload") {
+                window.onbeforeunload = null;
+            } else if (obj.refreshValue === "toReload") {
+                window.onbeforeunload = function () {
+                    return "Are you sure?"
+                }
+            }
+        }
+
         if (obj.refreshValue === "notToReload") {
             console.log("Checking in notToReload")
         } else if (obj.refreshValue === "toReload") {
@@ -201,7 +214,7 @@
                         </div>
                         <div class="create">
                             <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                            <button style="left:84%" type="submit" class="show-btn" id="create"><b>Create</b></button>
+                            <button value="notToReload" onclick="createButtonClick()" type="submit" class="show-btn" id="create"><b>Create</b></button>
                         </div>
                     </div>
                     <div th:if="${invalid}!= null" class="date_error">

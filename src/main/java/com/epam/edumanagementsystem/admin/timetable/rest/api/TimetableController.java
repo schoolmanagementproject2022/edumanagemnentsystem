@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -245,6 +246,15 @@ public class TimetableController {
         return "redirect:/classes/" + academicClassName + "/timetable/creation";
     }
 
+    @GetMapping("{name}/timetable/edit/{lessonId}")
+    public String showDeletePopUp(@PathVariable("name") String academicClassName,
+                                  @PathVariable("lessonId") Long lessonId,
+                                  RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addAttribute("lessonId", lessonId);
+        return "redirect:/classes/" + academicClassName + "/timetable/edit";
+    }
+
     @GetMapping("{name}/timetable/show")
     public String openTimetableIfExists(@PathVariable("name") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
@@ -351,7 +361,8 @@ public class TimetableController {
 
 
     @GetMapping("{name}/timetable/edit")
-    public String showTimetableEdit(@PathVariable("name") String academicClassName, Model model) {
+    public String showTimetableEdit(@PathVariable("name") String academicClassName, @RequestParam(value = "lessonId", required = false) Long lessonId,
+                                    Model model) {
 
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         Timetable currentTimetable = timetableService.getTimetableByAcademicClassId(academicClass.getId());
@@ -374,6 +385,7 @@ public class TimetableController {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+                model.addAttribute("lessonId", lessonId);
                 putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
@@ -389,6 +401,7 @@ public class TimetableController {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+                model.addAttribute("lessonId", lessonId);
                 putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
@@ -404,6 +417,7 @@ public class TimetableController {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+                model.addAttribute("lessonId", lessonId);
                 putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
@@ -415,6 +429,7 @@ public class TimetableController {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+                model.addAttribute("lessonId", lessonId);
                 putEditedLessons(model, academicClass.getId());
                 return "timetableEdit";
             }
@@ -439,6 +454,7 @@ public class TimetableController {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
         model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+        model.addAttribute("lessonId", lessonId);
         return "timetableEdit";
     }
 
