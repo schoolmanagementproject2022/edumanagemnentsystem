@@ -245,52 +245,46 @@ body {
 }
 
 .dayOfWeek {
-    width: 10%;
-    margin: 0;
-    padding: 0px;
+    /*width: 10%;*/
+    /*margin: 0;*/
+    /*padding: 0px;*/
     background-color: #D7D7D7;
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
     flex-direction: column;
 }
 
 .dayHeader {
     margin: 0;
-    padding: 0px;
+    padding: 5px;
     background-color: #7F7F7F;
     border-bottom: solid 0.5px #007EB4;
     text-align: center;
-
+    font-size: 0.8em;
+    font-weight: 600;
 }
 
 .dayHeader a {
     text-align: center;
     color: #FFFFFF;
     background-color: #7F7F7F;
-    font-size: 0.6em;
-    font-weight: 600;
 }
 
 /*Lessons section styles*/
 .lessons {
-    justify-content: center;
     display: flex;
-    margin: 0;
-    padding: 183px 0px;
     background-color: #D7D7D7;
-    position: relative;
-    width: 90%;
+    flex-direction: column;
+    height: 100%;
 }
 
 .single_lesson_wrapper {
-    margin: 0;
-    padding: 0px;
     background-color: #D7D7D7;
-    position: absolute;
-    top: 0px;
     flex-direction: column;
+    display: flex;
+    height: 100%;
 }
 
 .single_item {
