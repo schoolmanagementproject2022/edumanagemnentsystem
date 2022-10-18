@@ -220,7 +220,6 @@ body {
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     width: 100%;
 }
@@ -261,7 +260,6 @@ body {
     padding: 183px 0px;
     background-color: #D7D7D7;
     position: relative;
-    flex: 1;
 }
 
 .single_lesson_wrapper {
