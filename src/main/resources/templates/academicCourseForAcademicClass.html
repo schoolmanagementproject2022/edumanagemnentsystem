@@ -25,7 +25,7 @@
         <div class="content" id="middle">
 
             <div class="url-path">
-                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic classes'}"></a>
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Classes'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Courses'}"></a>
             </div>
@@ -37,15 +37,8 @@
             </div>
         </div>
         <div class="sidebar2 header" id="sidebar2">
-            <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
-            <a th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'students'}}" class="item">Students</a>
-            <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">Courses</a>
-            <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/teachers'}}">Teachers</a>
-            <a href="#timetable" class="item">Timetable</a></div>
+            <div th:insert="fragments/fragments :: sidebar2"></div>
+        </div>
         </div>
     </div>
 </div>
