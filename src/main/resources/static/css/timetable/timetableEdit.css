@@ -136,7 +136,7 @@ body {
 .dates_and_create {
     /* background-color: #AAAAAA; */
     margin: 0;
-    padding: 30px 0px;
+    padding: 20px 0px;
     display: flex;
     /* margin-top: 35px; */
     justify-content: space-between;
@@ -148,7 +148,8 @@ body {
     display: flex;
     width: 40%;
 }
-.start_date{
+
+.start_date {
     width: 50%;
     margin: 0;
     padding: 0px;
@@ -161,7 +162,7 @@ body {
     justify-content: space-between;
 }
 
-.end_date{
+.end_date {
     width: 50%;
     margin: 0;
     padding: 0px;
@@ -173,9 +174,6 @@ body {
     /* margin-right: -34px; */
     justify-content: space-between;
 }
-
-
-
 
 .date_half {
     /* width: 50%; */
@@ -190,10 +188,8 @@ body {
     justify-content: space-between;
 }
 
-
-
-.error-messages {
-    width: 40%;
+.error_messages {
+    margin-right: 50px;
 }
 
 .create {
@@ -215,10 +211,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0px;
-    background-color: #D7D7D7;
     display: flex;
-    margin-top: 10px;
-    border: solid 0.5px #007EB4;
 }
 
 .dayOfWeek {
@@ -230,6 +223,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    width: 100%;
 }
 
 .dayHeader {
@@ -265,7 +259,7 @@ body {
 /*Lessons section styles*/
 .lessons {
     margin: 0;
-    padding: 183px 0px;
+    padding: 180px 0px;
     background-color: #D7D7D7;
     position: relative;
 }
@@ -280,7 +274,7 @@ body {
 }
 
 .single_item {
-    margin: 0;
+    margin: 0px 2px;
     padding: 23px 0px;
     background-color: #AAAAAA;
     margin-top: 5px;
@@ -289,7 +283,6 @@ body {
     display: flex;
     border-radius: 10px;
     border: solid 0.5px #007EB4;
-    margin-left: 4px;
 }
 
 .single_item .btn {
