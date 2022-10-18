@@ -15,26 +15,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script>
-        $(function () {
-            $("#startDate").datepicker({
-                dateFormat: "dd-mm-yy",
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-0:+10",
-                minDate: 0,
-                maxDate: "+0D +0M +1Y"
-            });
-            $("#endDate").datepicker({
-                dateFormat: "dd-mm-yy",
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-0:+10",
-                minDate: 0,
-                maxDate: "+0D +0M +1Y"
-            });
-        });
-    </script>
 
     <title th:text="'The timetable of '+ ${middleUrl}">Timetable</title>
 
