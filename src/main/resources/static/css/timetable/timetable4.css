@@ -79,11 +79,11 @@ body {
 }
 
 .middle {
-    margin-left: 2%;
     background-color: #AAAAAA;
     font-size: 1.3em;
     overflow: hidden;
     display: flex;
+    justify-content: space-around;
 }
 
 .activeTab {
@@ -119,13 +119,14 @@ body {
 }
 
 .sidebar-right {
-    margin-top: 2%;
+
     width: 16%;
     background-color: #555555;
-    margin-left: 62%;
+
     cursor: pointer;
     text-align: left;
-    position: fixed;
+
+
 }
 
 .sidebar-right a:hover {
@@ -184,15 +185,15 @@ body {
     border-color: #01a7f0;
 }
 
-.createTimetable{
-   align-self: flex-end;
+.createTimetable {
+    align-self: flex-end;
 }
 
 /*timetable style*/
 .form-timetable {
-    margin-left: 35px;
+
     padding: 0px;
-    width: 133%;
+
 }
 
 .dates_and_create {
@@ -235,7 +236,8 @@ body {
     margin-left: 246px;
     padding: 0px;
 }
-.create a{
+
+.create a {
     text-decoration: none;
 }
 
