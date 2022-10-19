@@ -107,9 +107,11 @@ body {
 }
 
 .timetable {
-    margin: 0px 125px 0px 70px;
+    margin-left: 4%;
+    margin-bottom: 6%;
     padding: 0px;
     background-color: #AAAAAA;
+    margin-right: 9%;
 }
 
 .dates_and_create {
@@ -249,7 +251,9 @@ body {
     border: solid 0.5px#007EB4;
 }
 
-.single_item .btn{
+.single_item .btn {
+    height: 0;
+    width: 0;
     margin: 0;
     padding: 0px;
     background-color:#AAAAAA;

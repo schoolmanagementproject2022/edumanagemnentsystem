@@ -15,9 +15,9 @@
 }
 
 input#startDate.form_input#startDate {
-    width: 75%;
+    width: 60%;
 }
 
 input#endDate.form_input#endDate {
-    width: 75%;
+    width: 60%;
 }

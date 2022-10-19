@@ -355,13 +355,6 @@ public class TimetableController {
         List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
-        if (!coursesService.isPresentCoursesForClass(academicClass.getId())) {
-            model.addAttribute("noLessonInTimetable", "Please, select Courses");
-            allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
-            putLessons(model, timetable.getAcademicClass().getId());
-            return "timetable4-1";
-        }
-
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 if (startDate.isBefore(now)) {
@@ -396,6 +389,13 @@ public class TimetableController {
             return "timetable4-1";
         } else if (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) {
             model.addAttribute("invalid", invalidMsg);
+            allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
+            putLessons(model, timetable.getAcademicClass().getId());
+            return "timetable4-1";
+        }
+
+        if (!coursesService.isPresentCoursesForClass(academicClass.getId())) {
+            model.addAttribute("noLessonInTimetable", "Please, select Courses");
             allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
             putLessons(model, timetable.getAcademicClass().getId());
             return "timetable4-1";

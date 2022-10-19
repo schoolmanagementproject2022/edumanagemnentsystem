@@ -119,7 +119,7 @@ body {
 
 .sidebar-right {
     margin-top: 3%;
-    height: 52%;
+    height: 216px;
     width: 24%;
     background-color: #555555;
     cursor: pointer;
@@ -165,7 +165,7 @@ body {
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
-    width: 20%;
+    width: 14%;
     text-align: center;
     background-color: #555555;
     position: absolute;
@@ -175,7 +175,6 @@ body {
     transform: translate(-50%, -50%);
     color: #01A7F0;
     text-decoration: none;
-/*!* align-self: flex-end;*/
 }
 
 .create-btn:hover {
@@ -188,6 +187,7 @@ align-self: flex-end;
 
 /*timetable style*/
 .timetable {
+    width: 100%;
     margin: 0px 90px 0px 60px;
     padding: 0px;
     background-color: #AAAAAA;
@@ -288,7 +288,7 @@ align-self: flex-end;
 
 /*Lessons section styles*/
 .lessons {
-    width: 100%;
+    width: 96%;
     display: flex;
     background-color: #D7D7D7;
     flex-direction: column;
