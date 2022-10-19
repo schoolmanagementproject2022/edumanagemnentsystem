@@ -207,76 +207,73 @@
 <div class="main-wrapper" id="main-wrapper">
     <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
-    <div class="middle">
+    <div class="main">
         <div class="url-path">
-            <!-- todo -->
             <a class="a-url" th:href="${'/' + firstUrl}" th:text="${'Academic classes'}"></a>
-            <!--        change-->
             <p class="a-url">/</p>
             <a class="a-url" th:href="${allUrl}" th:text="${middleUrl}"></a>
-            <!--        change-->
             <p class="a-url">/</p>
             <a class="a-url" th:href="${activeTab}" th:text="${'Timetable'}"></a>
             <p class="a-url">/</p>
-            <a class="a-url" th:href="${allUrl}" th:text="${'Creation'}"></a>
+            <a class="a-url" th:href="${allUrl}" th:text="${'Edit'}"></a>
         </div>
+        <div class="timetable">
 
-        <div class="main-down">
-            <div class="form-timetable">
-                <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
-                      th:object="${timetable}">
-                    <div class="dates_and_create">
-                        <div class="dates">
-                            <div class="date_half">
-                                <label class="popup-label-title">Start Date
-                                    <span class="check-validation-date"></span>
-                                </label>
+            <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
+                  th:object="${timetable}">
+                <div class="dates_and_create">
+                    <div class="dates">
+                        <div class="start_date">
+                            <label class="popup-label-title">Start Date<span class="check-validation-date"></span></label>
+                            <div class="input_form">
+                            <input class="form_input" placeholder="Date pick &#9638;"
+                                   data-date-format="dd-mm-yyyy"
+                                   readonly
+                                   th:type="text"
+                                   th:name="startDate"
+                                   th:value="*{startDate}"
+                                   th:field="*{startDate}"
+                                   th:id="startDate"/></div>
+                            <div class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                        </div>
+                        <div class="end_date">
+                            <label class="popup-label-title">End Date<span class="check-validation-date"></span></label>
+                            <div class="input_form">
                                 <input class="form_input" placeholder="Date pick &#9638;"
                                        data-date-format="dd-mm-yyyy"
                                        readonly
                                        th:type="text"
-                                       th:name="startDate"
-                                       th:value="*{startDate}"
-                                       th:field="*{startDate}"
-                                       th:id="startDate"/>
-                                <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                                     th:errors="*{startDate}"></div>
+                                       th:name="endDate"
+                                       th:value="*{endDate}"
+                                       th:field="*{endDate}"
+                                       th:id="endDate"/>
                             </div>
-                            <div class="date_half">
-                                <label class="popup-label-title">End Date
-                                    <span class="check-validation-date"></span>
-                                </label>
-                                <div class="input_left">
-                                    <input class="form_input" placeholder="Date pick &#9638;"
-                                           data-date-format="dd-mm-yyyy"
-                                           readonly
-                                           th:type="text"
-                                           th:name="endDate"
-                                           th:value="*{endDate}"
-                                           th:field="*{endDate}"
-                                           th:id="endDate"/>
-                                </div>
-                                <div class="error" th:if="${#fields.hasErrors('endDate')}"
-                                     th:errors="*{endDate}"></div>
-                            </div>
-                        </div>
-                        <div class="create">
-                            <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                            <button type="submit" onclick="editButtonClick()" class="show-btn"><b>Edit</b></button>
+                            <div class="error" th:if="${#fields.hasErrors('endDate')}"
+                                 th:errors="*{endDate}"></div>
                         </div>
                     </div>
-                    <div th:if="${invalid}!= null" class="date_error">
-                        <p th:text="${invalid}"></p>
+                    <div class="error_messages">
+                        <div th:if="${invalid}!= null" class="date_error">
+                            <p th:text="${invalid}"></p>
+                        </div>
+                        <div th:if="${noLessonInTimetable}!= null" class="date_error">
+                            <p th:text="${noLessonInTimetable}"></p>
+                        </div>
                     </div>
-                    <div th:if="${noLessonInTimetable}!= null" class="date_error">
-                        <p th:text="${noLessonInTimetable}"></p>
+                    <div class="create">
+                        <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
+                        <button type="submit" onclick="editButtonClick()" class="button"><b>Edit</b></button>
                     </div>
-                </form>
-                <div class="timetable">
-                    <div class="dayOfWeek">
-                        <div class="dayHeader" id="monday" th:value="monday"><a>Monday</a></div>
-                        <div class="lessons">
-                            <div class="single_lesson_wrapper">
+
+
+                </div>
+            </form>
+
+            <div class="week">
+                <div class="dayOfWeek">
+                    <div class="dayHeader" id="monday" th:value="monday"><a>Monday</a></div>
+                    <div class="lessons">
+                        <div class="single_lesson_wrapper">
 
                                 <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
                                     <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
@@ -407,11 +404,11 @@
                         </div>
                     </div>
 
-                    <div class="dayOfWeek">
-                        <div class="dayHeader"><a>Sunday</a></div>
-                        <div class="lessons">
+                <div class="dayOfWeek">
+                    <div class="dayHeader"><a>Sunday</a></div>
+                    <div class="lessons">
 
-                            <div class="single_lesson_wrapper">
+                        <div class="single_lesson_wrapper">
 
                                 <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
                                     <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
@@ -430,8 +427,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
+
     </div>
 </div>
 
@@ -468,7 +465,8 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
+        <form id="form" class="form" th:method="POST"
+              th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Monday'}">
@@ -497,14 +495,14 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-tuesday">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
+        <form id="form" class="form" th:method="POST"
+              th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">
@@ -532,7 +530,6 @@
         </form>
     </div>
 </div>
-
 
 <div class="create-pop">
 
@@ -569,7 +566,6 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-thursday">
@@ -604,7 +600,6 @@
         </form>
     </div>
 </div>
-
 
 <div class="create-pop">
 
@@ -641,7 +636,6 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-saturday">
@@ -677,14 +671,14 @@
     </div>
 </div>
 
-
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-sunday">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>Add Lesson</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
+        <form id="form" class="form" th:method="POST"
+              th:action="@{'/classes/' + ${middleUrl} + '/timetable/editCourse'}"
               th:object="${courseForTable}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Sunday'}">

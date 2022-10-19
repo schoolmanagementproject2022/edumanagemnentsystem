@@ -13,7 +13,6 @@ body {
 
 
 /*Top part styles*/
-
 .container {
     width: 100%;
     margin: 0 auto;
@@ -59,16 +58,16 @@ body {
     display: flex;
     padding: 0px;
     background-color: #AAAAAA;
-    height: 96vh;
+    height: 100%;
     position: fixed;
 }
 
 /*Sidebar styles*/
 .sidebar {
     width: 21%;
+    margin: 0;
     padding: 0px;
     background-color: #555555;
-    margin: 0;
 }
 
 .sidebar a {
@@ -78,8 +77,8 @@ body {
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
-
 }
+
 .sidebar a:hover {
     background-color: #333333;
     color: #01A7F0;
@@ -91,108 +90,128 @@ body {
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
-    font-size: 1.3em;
+    /* font-size: 1.3em; */
     overflow: hidden;
 }
 
+/*Middle part styles*/
+.timetable {
+    margin: 0px 125px 0px 70px;
+    padding: 0px;
+    background-color: #AAAAAA;
+}
+
 /*Main top containing only link style*/
-.main-top{
-    background-color:  #AAAAAA;
+.main-top {
+    background-color: #AAAAAA;
     margin: 0;
     padding: 0px;
 }
 
-.link{
+.link {
     margin: 0;
     padding: 16px;
     background-color: #AAAAAA;
     display: flex;
 }
 
-.link a{
+.link a {
     text-decoration: none;
-    color:#007EB4;
+    color: #007EB4;
     text-align: left;
     font-size: 0.9em;
     font-weight: 600;
 }
 
 /*Main down containing dates,create timetable and lessons style*/
-.main-down{
+.main-down {
     margin: 0;
     padding: 0px;
     background-color: #AAAAAA;
-    display: flex;
     overflow: hidden;
-
 }
 
-.form-timetable{
+.dates_and_create {
+    margin: 0;
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dates {
     margin: 0px;
     padding: 0px;
-    margin-left: 47px;
-    margin-top: -12px;
-    margin-bottom: 14px;
-    width: 91.5%;
+    display: flex;
+    width: 40%;
 }
 
-.dates_and_create{
-    background-color: #AAAAAA;
+.start_date {
+    width: 50%;
     margin: 0;
     padding: 0px;
-    display: flex;
-    margin-top: 23px;
-}
-
-.dates{
-    width: 50%;
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-}
-
-.date_half{
-    padding: 0px;
-    background-color: #AAAAAA;
     font-size: 0.8em;
-    height: 1.2em;
     color: #555555;
     font-weight: 600;
-    margin-right: -10px;
-}
-.input_left {
-    margin: 0;
-    padding: 0px;
-    margin-right: 80px;
+    justify-content: space-between;
 }
 
-.create{
+.end_date {
     width: 50%;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.date_half {
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.error_messages {
+    width: 50%;
+}
+
+.create {
     margin: 0px;
     padding: 0px;
-    display: flex;
+    margin-top: 9px;
 }
 
-.timetable{
+.create .button {
+    cursor: pointer;
+    color: #01A7F0;
+    font-size: 19px;
+    border-radius: 6px;
+    width: 123px;
+    padding: 2px;
+}
+
+.week {
+    width: 100%;
     margin: 0;
     padding: 0px;
-    background-color:#D7D7D7;
     display: flex;
-    margin-top: 6%;
-    border: solid 0.5px #007EB4;
 }
 
 .dayOfWeek {
     margin: 0;
     padding: 0px;
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
+    width: 100%;
 }
-.dayHeader{
+
+.dayHeader {
     margin: 0;
     padding: 5px;
     background-color: #7F7F7F;
@@ -201,69 +220,71 @@ body {
     font-size: 0.8em;
     font-weight: 600;
 }
-.dayHeader a{
+
+.dayHeader a {
     text-align: center;
     color: #FFFFFF;
     background-color: #7F7F7F;
 }
-.add{
-    background-color:#D7D7D7;
+
+.add {
+    background-color: #D7D7D7;
     margin-bottom: 11px;
 }
-.plus{
+
+.plus {
     width: 30%;
     margin: 0px 37px 0px 50px;
     font-size: 23px;
     text-align: center;
-    color:#007EB4;
+    color: #007EB4;
     cursor: pointer;
 }
+
 /*Lessons section styles*/
-.lessons{
+.lessons {
     margin: 0;
     padding: 183px 0px;
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     position: relative;
-    display: flex;
 }
-.single_lesson_wrapper{
+
+.single_lesson_wrapper {
+    width: 100%;
     margin: 0;
-    padding: 0px 4px;
+    padding: 0px;
     background-color: #D7D7D7;
     position: absolute;
     top: 0px;
     flex-direction: column;
-    width: 99%;
 }
-.single_item{
-    width: 101%;
-    margin: 0;
-    padding: 30px 23px;
+
+.single_item {
+    margin: 0px 4px;
+    padding: 23px 0px;
     background-color: #AAAAAA;
-    margin-top: 4px;
-    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 4px;
     flex-direction: column;
     display: flex;
     border-radius: 10px;
-    border: solid 0.5px#007EB4;
+    border: solid 0.5px #007EB4;
 }
 
-.single_item .btn{
-    margin: 0;
+.single_item .btn {
     padding: 0px;
-    background-color:#AAAAAA;
-    margin-top: -30px;
-    margin-left: 107%;
-}
-.single_item .close-btn {
-    margin-left: 130%;
-    right: 30px;
-    font-size: 19px;
-    cursor: pointer;
-    padding: 0;
-    color:#7F7F7F;;
+    background-color: #AAAAAA;
+    margin-top: -20px;
+    margin-left: 100px;
+    margin-right: 3%;
 }
 
+.single_item .close-btn {
+    font-size: 17px;
+    cursor: pointer;
+    color: #007EB4;
+
+}
 .single_item a {
     text-decoration: none;
 
@@ -273,11 +294,13 @@ body {
     color: red;
 }
 
-.title{
+.title {
+    width: 100%;
     text-align: center;
     color: #007EB4;
     font-weight: bold;
-    font-size: 0.7em;
+    font-size: 0.8em;
+    margin-bottom: 3px;
 }
 
 .activeTab {
@@ -375,7 +398,6 @@ body {
     cursor: pointer;
 }
 
-
 .close-btn:hover {
     color: red;
 }
@@ -385,12 +407,6 @@ h1 {
     color: #007EB4;
     margin-top: 0px;
 
-}
-
-form {
-    margin: 0px;
-    margin-left: 0px;
-    margin-right: 4px;
 }
 
 .popup-wrapper {
@@ -464,35 +480,34 @@ form {
 
 .popup-label-title {
     font-size: 1.1em;
-    height: 1.2em;
-    margin-top: 20px;
 }
 
 .error {
     font-size: 0.9em;
     color: red;
 }
+
 .date_error {
+    margin-top: 4.5%;
     font-size: 0.8em;
     color: red;
-    margin-left: 32%;
+    margin-left: 8%;
+    font-weight: 600;
 }
 
 .form_input {
     margin-top: 6px;
-    margin-bottom: 3px;
     display: block;
-    width: 100%;
-    border-radius: 1px;
-    border-width: 1.5px;
+    width: 75%;
+    border-width: 1px;
 }
+
 /*Button part styles*/
 .create-pop {
     display: block;
     transition: all 0.5s ease;
     height: 7%;
 }
-
 
 .button {
     background-color: #555555;
