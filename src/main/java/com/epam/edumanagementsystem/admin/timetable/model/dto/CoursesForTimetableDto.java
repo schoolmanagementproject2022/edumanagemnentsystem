@@ -2,7 +2,6 @@ package com.epam.edumanagementsystem.admin.timetable.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -10,7 +9,6 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class CoursesForTimetableDto {
-
 
     private Long id;
 
@@ -24,13 +22,12 @@ public class CoursesForTimetableDto {
     @Size(max = 50, message = "Symbols can't be more than 50")
     private String dayOfWeek;
 
-
     private String status;
 
     public CoursesForTimetableDto() {
     }
 
-    public CoursesForTimetableDto(Long id,  AcademicCourse academicCourse, AcademicClass academicClass,String dayOfWeek, String status) {
+    public CoursesForTimetableDto(Long id, AcademicCourse academicCourse, AcademicClass academicClass, String dayOfWeek, String status) {
         this.id = id;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;

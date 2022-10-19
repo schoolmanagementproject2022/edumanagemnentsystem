@@ -1,9 +1,6 @@
 package com.epam.edumanagementsystem.admin.timetable.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -22,7 +19,6 @@ public class CoursesForTimetable {
     @NotBlank
     private String academicCourse;
 
-
     @ManyToMany
     @JoinTable(name = "courses_table", joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "academic_class_id"))
@@ -31,9 +27,7 @@ public class CoursesForTimetable {
     @NotBlank
     private String dayOfWeek;
 
-
     private String status;
-
 
     public CoursesForTimetable() {
     }
@@ -45,7 +39,6 @@ public class CoursesForTimetable {
         this.academicClass = academicClass;
         this.dayOfWeek = dayOfWeek;
         this.status = status;
-
     }
 
     public Long getId() {

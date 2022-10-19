@@ -12,6 +12,7 @@ public class TimetableMapper {
 
     public static Timetable toTimetable(TimetableDto timetableDto) {
         Timetable timetable = new Timetable();
+
         timetable.setId(timetableDto.getId());
         timetable.setStartDate(timetableDto.getStartDate());
         timetable.setEndDate(timetableDto.getEndDate());
@@ -21,6 +22,7 @@ public class TimetableMapper {
 
     public static TimetableDto toDto(Timetable timetable) {
         TimetableDto timetableDto = new TimetableDto();
+
         timetableDto.setId(timetable.getId());
         timetableDto.setStartDate(timetable.getStartDate());
         timetableDto.setEndDate(timetable.getEndDate());
@@ -30,6 +32,7 @@ public class TimetableMapper {
 
     public static List<TimetableDto> toListOfTimetablesDto(List<Timetable> timetables) {
         List<TimetableDto> timetableDtoList = new ArrayList<>();
+
         for (Timetable timetable : timetables) {
             timetableDtoList.add(toDto(timetable));
         }
@@ -38,6 +41,7 @@ public class TimetableMapper {
 
     public static List<Timetable> toListOfTimetables(List<TimetableDto> timetableDtoList) {
         List<Timetable> timetables = new ArrayList<>();
+
         for (TimetableDto timetableDto : timetableDtoList) {
             timetables.add(toTimetable(timetableDto));
         }
