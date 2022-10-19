@@ -274,6 +274,7 @@ body {
 
 /*Lessons section styles*/
 .lessons {
+    width: 95%;
     display: flex;
     background-color: #D7D7D7;
     flex-direction: column;

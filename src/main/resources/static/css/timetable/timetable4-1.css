@@ -109,7 +109,7 @@ body {
 .form-timetable {
     margin: 0px 125px 0px 70px;
     padding: 0px;
-    width: 91.5%;
+    width: 80%;
 }
 
 .dates_and_create{
@@ -199,7 +199,9 @@ body {
     cursor: pointer;
 }
 /*Lessons section styles*/
-.lessons{
+.lessons {
+    margin-left: 2.5%;
+    width: 95%;
     background-color:#D7D7D7;
     position: relative;
     display: flex;
