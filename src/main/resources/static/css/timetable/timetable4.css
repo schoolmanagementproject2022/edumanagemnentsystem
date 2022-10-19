@@ -118,11 +118,13 @@ body {
 }
 
 .sidebar-right {
+    margin-top: 3%;
     height: 35%;
     width: 18%;
     background-color: #555555;
     cursor: pointer;
     text-align: left;
+    margin-left: 4%;
 }
 
 .sidebar-right a:hover {
