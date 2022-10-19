@@ -156,7 +156,7 @@ body {
     margin-top: 6%;
     border: solid 0.5px #007EB4;
     margin-bottom: 6%;
-    margin-left: 2%;
+    margin-left: 4%;
   }
 
 .dayOfWeek {
@@ -271,7 +271,6 @@ body {
 .url-path {
     margin-top: -1%;
     margin-left: 4%;
-    margin-right: 100%;
     display: inline-flex;
 }
 
@@ -318,6 +317,23 @@ body {
     top: 15px;
     font-size: 25px;
     cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+h1 {
+    text-align: left;
+    color: #007EB4;
+    margin-top: 0px;
+
+}
+
+form {
+    margin: 0px;
+    margin-left: 0px;
+    margin-right: 4px;
 }
 
 .popup-wrapper {
