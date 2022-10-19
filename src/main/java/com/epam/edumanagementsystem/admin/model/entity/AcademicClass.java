@@ -44,25 +44,23 @@ public class AcademicClass {
     @OneToOne
     private Teacher classroomTeacher;
 
-
     @ManyToMany
     private List<CoursesForTimetable> coursesForTimetableList = new ArrayList<>();
 
+    @OneToMany
+    private Set<Student> student;
 
     public AcademicClass() {
     }
 
-
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, List<CoursesForTimetable> coursesForTimetableList) {
-
+    public AcademicClass(Long id, @Size(max = 50, message = "Symbols can't be more than 50") String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
         this.classroomTeacher = classroomTeacher;
-
         this.coursesForTimetableList = coursesForTimetableList;
-
+        this.student = student;
     }
 
     public Long getId() {
@@ -91,20 +89,10 @@ public class AcademicClass {
 
     public Set<AcademicCourse> getAcademicCourseSet() {
         return academicCourseSet;
-
     }
 
     public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
         this.academicCourseSet = academicCourseSet;
-    }
-
-    public List<CoursesForTimetable> getCoursesForTimetableList() {
-        return coursesForTimetableList;
-    }
-
-    public void setCoursesForTimetableList(List<CoursesForTimetable> coursesForTimetableList) {
-        this.coursesForTimetableList = coursesForTimetableList;
-
     }
 
     public Teacher getClassroomTeacher() {
@@ -113,6 +101,14 @@ public class AcademicClass {
 
     public void setClassroomTeacher(Teacher classroomTeacher) {
         this.classroomTeacher = classroomTeacher;
+    }
+
+    public List<CoursesForTimetable> getCoursesForTimetableList() {
+        return coursesForTimetableList;
+    }
+
+    public void setCoursesForTimetableList(List<CoursesForTimetable> coursesForTimetableList) {
+        this.coursesForTimetableList = coursesForTimetableList;
     }
 
     public Set<Student> getStudent() {
@@ -128,12 +124,12 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(student, that.student);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher, academicCourseSet, classroomTeacher, student);
+        return Objects.hash(id, classNumber, classroomTeacher, student, teacher);
     }
 
     @Override
@@ -144,19 +140,8 @@ public class AcademicClass {
                 ", teacher=" + teacher +
                 ", academicCourseSet=" + academicCourseSet +
                 ", classroomTeacher=" + classroomTeacher +
-                ", student=" + student +
-                '}';
-    }
-
-
-    @Override
-    public String toString() {
-        return "AcademicClass{" +
-                "id=" + id +
-                ", classNumber='" + classNumber + '\'' +
-                ", teacher=" + teacher +
-                ", academicCourseSet=" + academicCourseSet +
                 ", coursesForTimetableList=" + coursesForTimetableList +
+                ", student=" + student +
                 '}';
     }
 }
