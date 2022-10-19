@@ -106,57 +106,79 @@ body {
 
 }
 
-.form-timetable {
+.timetable {
     margin: 0px 125px 0px 70px;
     padding: 0px;
-    width: 80%;
-}
-
-.dates_and_create{
     background-color: #AAAAAA;
-    margin: 0;
-    padding: 0px;
-    display: flex;
-    margin-top: 23px;
 }
 
-.dates{
-    width: 50%;
+.dates_and_create {
+    margin: 0;
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dates {
     margin: 0px;
     padding: 0px;
     display: flex;
+    width: 40%;
 }
 
-.date_half{
+.start_date {
+    width: 50%;
+    margin: 0;
     padding: 0px;
-    background-color: #AAAAAA;
     font-size: 0.8em;
-    height: 1.2em;
     color: #555555;
     font-weight: 600;
-    margin-right: -10px;
+    justify-content: space-between;
 }
 
-.input_left {
+.end_date {
+    width: 50%;
     margin: 0;
     padding: 0px;
-    margin-right: 80px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
 }
 
-.create{
+.date_half {
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.error_messages {
     width: 50%;
+}
+
+.create {
     margin: 0px;
     padding: 0px;
-    display: flex;
+    margin-top: 9px;
 }
 
-.timetable{
-    background-color:#D7D7D7;
+.create .button {
+    cursor: pointer;
+    color: #01A7F0;
+    font-size: 19px;
+    border-radius: 6px;
+    width: 123px;
+    padding: 2px;
+}
+
+.week{
+    width: 100%;
+    margin: 0;
+    padding: 0px;
     display: flex;
-    margin-top: 6%;
-    border: solid 0.5px #007EB4;
-    margin-bottom: 6%;
-    margin-left: 4%;
   }
 
 .dayOfWeek {
@@ -165,6 +187,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .dayHeader{
@@ -332,12 +355,6 @@ h1 {
 
 }
 
-form {
-    margin: 0px;
-    margin-left: 0px;
-    margin-right: 4px;
-}
-
 .popup-wrapper {
     width: 100%;
     display: flex;
@@ -375,8 +392,6 @@ form {
 
 .popup-label-title {
     font-size: 1.1em;
-    height: 1.2em;
-    margin-top: 20px;
 }
 
 .error {
@@ -385,21 +400,21 @@ form {
 }
 
 .date_error {
+    margin-top: 4.5%;
     font-size: 0.8em;
     color: red;
-    margin-left: 32%;
+    margin-left: 8%;
+    font-weight: 600;
 }
 
 .form_input {
     margin-top: 6px;
-    margin-bottom: 3px;
     display: block;
-    width: 100%;
-    border-radius: 1px;
-    border-width: 1.5px;
+    width: 75%;
+    border-width: 1px;
 }
-/*Button part styles*/
 
+/*Button part styles*/
 .create-pop {
     display: block;
     transition: all 0.5s ease;

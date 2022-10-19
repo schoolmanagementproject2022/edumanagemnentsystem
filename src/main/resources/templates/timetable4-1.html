@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/timetable/timetable4-1.css" rel="stylesheet">
+    <link href="../static/css/timetable/timetable4-1.css" rel="stylesheet">
     <link href="/static/css/dateStyle.css" rel="stylesheet">
 
     <script src="/static/js/popupControlTimetable.js"></script>
@@ -172,31 +172,29 @@
             <p class="a-url">/</p>
             <a class="a-url" th:href="${allUrl}" th:text="${'Creation'}"></a>
         </div>
-        <div class="form-timetable">
+        <div class="timetable">
+
             <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/creation'}"
                   th:object="${timetable}">
                 <div class="dates_and_create">
                     <div class="dates">
-                        <div class="date_half">
-                            <label class="popup-label-title">Start Date
-                                <span class="check-validation-date"></span>
-                            </label>
-                            <input class="form_input" placeholder="Date pick &#9638;"
-                                   data-date-format="dd-mm-yyyy"
-                                   readonly
-                                   th:type="text"
-                                   th:name="startDate"
-                                   th:value="*{startDate}"
-                                   th:field="*{startDate}"
-                                   th:id="startDate"/>
-                            <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                                 th:errors="*{startDate}"></div>
+                        <div class="start_date">
+                            <label class="popup-label-title">Start Date<span
+                                    class="check-validation-date"></span></label>
+                            <div class="input_form">
+                                <input class="form_input" placeholder="Date pick &#9638;"
+                                       data-date-format="dd-mm-yyyy"
+                                       readonly
+                                       th:type="text"
+                                       th:name="startDate"
+                                       th:value="*{startDate}"
+                                       th:field="*{startDate}"
+                                       th:id="startDate"/></div>
+                            <div class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
                         </div>
-                        <div class="date_half">
-                            <label class="popup-label-title">End Date
-                                <span class="check-validation-date"></span>
-                            </label>
-                            <div class="input_left">
+                        <div class="end_date">
+                            <label class="popup-label-title">End Date<span class="check-validation-date"></span></label>
+                            <div class="input_form">
                                 <input class="form_input" placeholder="Date pick &#9638;"
                                        data-date-format="dd-mm-yyyy"
                                        readonly
@@ -210,19 +208,23 @@
                                  th:errors="*{endDate}"></div>
                         </div>
                     </div>
+                    <div class="error_messages">
+                        <div th:if="${invalid}!= null" class="date_error">
+                            <p th:text="${invalid}"></p>
+                        </div>
+                        <div th:if="${noLessonInTimetable}!= null" class="date_error">
+                            <p th:text="${noLessonInTimetable}"></p>
+                        </div>
+                    </div>
                     <div class="create">
                         <input id="class" type="hidden" name="academicClass" th:value="${academicClass.getId()}"/>
-                        <button style="left:84%" value="notToReload" onclick="createButtonClick()" type="submit" class="show-btn" id="create"><b>Create</b></button>
+                        <button type="submit" onclick="editButtonClick()" class="button"><b>Create</b></button>
                     </div>
-                </div>
-                <div th:if="${invalid}!= null" class="date_error">
-                    <p th:text="${invalid}"></p>
-                </div>
-                <div th:if="${noLessonInTimetable}!= null" class="date_error">
-                    <p th:text="${noLessonInTimetable}"></p>
+
+
                 </div>
             </form>
-            <div class="timetable">
+            <div class="week">
                 <div class="dayOfWeek">
                     <div class="dayHeader" id="monday" th:value="monday"><a>Monday</a></div>
                     <div class="lessons">
