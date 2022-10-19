@@ -118,14 +118,11 @@ body {
 }
 
 .sidebar-right {
-
-    width: 16%;
+    height: 35%;
+    width: 18%;
     background-color: #555555;
-
     cursor: pointer;
     text-align: left;
-
-
 }
 
 .sidebar-right a:hover {
@@ -194,7 +191,6 @@ body {
     padding: 0px;
     background-color: #AAAAAA;
 }
-
 .dates_and_create {
     margin: 0;
     padding: 20px 0px;
@@ -206,7 +202,7 @@ body {
     margin: 0px;
     padding: 0px;
     display: flex;
-    width: 40%;
+    width: 57%;
 }
 
 .start_date {
@@ -238,24 +234,23 @@ body {
     justify-content: space-between;
 }
 
-.error_messages {
-    width: 50%;
-}
-
 .create {
     margin: 0px;
     padding: 0px;
-    margin-top: 9px;
+    margin-top: 19px;
+    font-weight: 600;
 }
 
-.create .button {
+.create .a {
     cursor: pointer;
     color: #01A7F0;
     font-size: 19px;
     border-radius: 6px;
     width: 123px;
     padding: 2px;
-    background-color: #555555;
+    text-decoration: none;
+    text-align: center;
+
 }
 .week {
     width: 100%;
@@ -330,25 +325,28 @@ body {
     font-size: 10px;
     cursor: pointer;
     margin-left: 80px;
-    color: #007EB4;;
+    color: #007EB4;
 }
 
-.btn a {
-    text-decoration: none;
-    font-size: 0.5em;
-}
+
 
 .close-btn:hover {
     color: red;
 }
 
-.btn {
-    padding: 5px;
+.button {
+    padding: 2px;
     border-radius: 5px;
     float: right;
-    margin-right: 59px;
     background-color: #555555;
-    color: #FFFFFF
+    color:  #007EB4;
+    text-decoration: none;
+    width: 200%;
+    text-align: center;
+}
+.button .a {
+    text-decoration: none;
+    font-size: 0.5em;
 }
 
 .title {
