@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.admin.timetable.impl;
 
-import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
@@ -20,41 +19,6 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         this.coursesRepository = coursesRepository;
     }
 
-    @Override
-    public List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId) {
-        return coursesRepository.findCoursesByDayOfWeekAndAcademicClassId(dayOfWeek, academicClassId);
-    }
-
-    @Override
-    public List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
-        return coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek,status,academicClassId);
-    }
-
-    @Override
-    public List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId) {
-        return coursesRepository.findCoursesByAcademicClassId(academicClassId);
-    }
-
-    @Override
-    public List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId) {
-        return coursesRepository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClassId);
-    }
-
-    @Override
-    public List<CoursesForTimetable> getCoursesWithActiveStatusByAcademicCourseId(Long academicClassId) {
-        return coursesRepository.findCoursesWithActiveStatusByAcademicCourseId(academicClassId);
-    }
-
-    @Override
-    public List<CoursesForTimetable> getCoursesWithEditStatusByAcademicCourseId(Long academicClassId) {
-        return coursesRepository.findCoursesWithEditStatusByAcademicCourseId(academicClassId);
-    }
-
-    @Override
-    public boolean isPresentCoursesForClass(Long academicClassId) {
-        return coursesRepository.existsCoursesForTimetableByAcademicClass_Id(academicClassId);
-    }
-
     @Transactional
     @Override
     public void create(CoursesForTimetable coursesForTimetable) {
@@ -66,21 +30,54 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Transactional
     @Override
-    public void updateCourseStatusById(Long id) {
-        coursesRepository.updateCourseStatusById(id);
+    public void deleteCourseById(Long courseId) {
+        coursesRepository.deleteCourseById(courseId);
     }
 
     @Transactional
     @Override
-    public void updateCourseStatusToActiveById(Long id) {
-        coursesRepository.updateCourseStatusToActiveById(id);
+    public void updateCourseStatusById(Long courseId) {
+        coursesRepository.updateCourseStatusById(courseId);
     }
 
+    @Override
+    public boolean isPresentCoursesForClass(Long academicClassId) {
+        return coursesRepository.existsCoursesForTimetableByAcademicClass_Id(academicClassId);
+    }
 
     @Transactional
     @Override
-    public void deleteCourseById(Long id) {
-        coursesRepository.deleteCourseById(id);
+    public void updateCourseStatusToActiveById(Long courseId) {
+        coursesRepository.updateCourseStatusToActiveById(courseId);
     }
 
+    @Override
+    public List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId) {
+        return coursesRepository.findCoursesByAcademicClassId(academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesForDayAndAcademicClassId(String dayOfWeek, Long academicClassId) {
+        return coursesRepository.findCoursesByDayOfWeekAndAcademicClassId(dayOfWeek, academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesWithEditStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithEditStatusByAcademicCourseId(academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesWithActiveStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithActiveStatusByAcademicCourseId(academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId) {
+        return coursesRepository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClassId);
+    }
+
+    @Override
+    public List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
+        return coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId);
+    }
 }

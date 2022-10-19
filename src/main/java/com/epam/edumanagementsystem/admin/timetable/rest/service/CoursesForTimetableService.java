@@ -6,25 +6,25 @@ import java.util.List;
 
 public interface CoursesForTimetableService {
 
-    List<CoursesForTimetable> getCoursesForDayAndClass(String dayOfWeek, Long academicClassId);
+    void create(CoursesForTimetable coursesForTimetable);
 
-    List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId);
+    void deleteCourseById(Long courseId);
 
-    List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId);
-
-    List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId);
-
-    List<CoursesForTimetable> getCoursesWithActiveStatusByAcademicCourseId(Long academicClassId);
-
-    List<CoursesForTimetable> getCoursesWithEditStatusByAcademicCourseId(Long academicClassId);
+    void updateCourseStatusById(Long courseId);
 
     boolean isPresentCoursesForClass(Long academicClassId);
 
-    void create(CoursesForTimetable coursesForTimetable);
+    void updateCourseStatusToActiveById(Long courseId);
 
-    void updateCourseStatusById(Long id);
-    void updateCourseStatusToActiveById(Long id);
+    List<CoursesForTimetable> getCoursesByAcademicClassId(Long academicClassId);
 
-    void deleteCourseById(Long id);
+    List<CoursesForTimetable> getCoursesForDayAndAcademicClassId(String dayOfWeek, Long academicClassId);
 
+    List<CoursesForTimetable> getCoursesWithEditStatusByAcademicCourseId(Long academicClassId);
+
+    List<CoursesForTimetable> getCoursesWithActiveStatusByAcademicCourseId(Long academicClassId);
+
+    List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId);
+
+    List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId);
 }
