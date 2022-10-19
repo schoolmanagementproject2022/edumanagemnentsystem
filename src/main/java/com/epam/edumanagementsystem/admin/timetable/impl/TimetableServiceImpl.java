@@ -24,16 +24,6 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public void create(Timetable timetable) {
-        timetableRepository.save(timetable);
-    }
-
-    @Override
-    public void delete(Long id) {
-        timetableRepository.deleteById(id);
-    }
-
-    @Override
     public Timetable getById(Long id) {
         return timetableRepository.findById(id).get();
     }
@@ -44,23 +34,13 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public boolean isPresentTimetableByAcademicClassId(Long id) {
-        return timetableRepository.isPresentTimetableByAcademicClassId(id);
+    public void create(Timetable timetable) {
+        timetableRepository.save(timetable);
     }
 
     @Override
     public Timetable getTimetableByAcademicClassId(Long id) {
         return timetableRepository.getTimetableByAcademicClassId(id);
-    }
-
-    @Override
-    public Timetable getTimetableWithActiveStatusByAcademicClassId(Long academicClassId) {
-        return timetableRepository.findTimetableWithActiveStatusByAcademicClassId(academicClassId);
-    }
-
-    @Override
-    public Timetable getTimetableWithEditStatusByAcademicClassId(Long academicClassId) {
-        return timetableRepository.findTimetableWithEditStatusByAcademicClassId(academicClassId);
     }
 
     @Transactional

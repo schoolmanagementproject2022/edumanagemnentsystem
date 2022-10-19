@@ -3,13 +3,12 @@ package com.epam.edumanagementsystem.admin.timetable.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class TimetableDto {
+
     private Long id;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -27,7 +26,7 @@ public class TimetableDto {
     public TimetableDto() {
     }
 
-    public TimetableDto(Long id,  LocalDate startDate,  LocalDate endDate, String status, AcademicClass academicClass) {
+    public TimetableDto(Long id, LocalDate startDate, LocalDate endDate, String status, AcademicClass academicClass) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;

@@ -1,6 +1,10 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
+
+import com.epam.edumanagementsystem.student.model.entity.Student;
+
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
@@ -40,19 +44,25 @@ public class AcademicClass {
     @OneToOne
     private Teacher classroomTeacher;
 
+
     @ManyToMany
     private List<CoursesForTimetable> coursesForTimetableList = new ArrayList<>();
+
 
     public AcademicClass() {
     }
 
+
     public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, List<CoursesForTimetable> coursesForTimetableList) {
+
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
         this.classroomTeacher = classroomTeacher;
+
         this.coursesForTimetableList = coursesForTimetableList;
+
     }
 
     public Long getId() {
@@ -81,6 +91,7 @@ public class AcademicClass {
 
     public Set<AcademicCourse> getAcademicCourseSet() {
         return academicCourseSet;
+
     }
 
     public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
@@ -93,6 +104,7 @@ public class AcademicClass {
 
     public void setCoursesForTimetableList(List<CoursesForTimetable> coursesForTimetableList) {
         this.coursesForTimetableList = coursesForTimetableList;
+
     }
 
     public Teacher getClassroomTeacher() {
@@ -103,18 +115,39 @@ public class AcademicClass {
         this.classroomTeacher = classroomTeacher;
     }
 
+    public Set<Student> getStudent() {
+        return student;
+    }
+
+    public void setStudent(Set<Student> student) {
+        this.student = student;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(classroomTeacher, that.classroomTeacher);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(student, that.student);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher,classroomTeacher);
+        return Objects.hash(id, classNumber, teacher, academicCourseSet, classroomTeacher, student);
     }
+
+    @Override
+    public String toString() {
+        return "AcademicClass{" +
+                "id=" + id +
+                ", classNumber='" + classNumber + '\'' +
+                ", teacher=" + teacher +
+                ", academicCourseSet=" + academicCourseSet +
+                ", classroomTeacher=" + classroomTeacher +
+                ", student=" + student +
+                '}';
+    }
+
 
     @Override
     public String toString() {
@@ -127,3 +160,4 @@ public class AcademicClass {
                 '}';
     }
 }
+

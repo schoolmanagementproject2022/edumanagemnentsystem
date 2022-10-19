@@ -6,14 +6,12 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AcademicClassServiceImpl implements AcademicClassService {
@@ -83,6 +81,18 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     @Override
     public Set<Teacher> findAllTeachers(String name) {
         return findByName(name).getTeacher();
+    }
+
+    @Override
+    public Set<Teacher> findAllTeacher() {
+        Set<Teacher> teachersByAcademicClass = new HashSet<>();
+        List<AcademicClass> academicClasses = academicClassRepository.findAll();
+        for (AcademicClass academicClass : academicClasses) {
+            Set<Teacher> result = academicClass.getTeacher();
+            teachersByAcademicClass.addAll(result);
+        }
+        return teachersByAcademicClass;
+
     }
 
     @Override

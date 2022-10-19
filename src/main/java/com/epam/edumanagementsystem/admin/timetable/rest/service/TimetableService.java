@@ -7,25 +7,17 @@ import java.util.List;
 
 public interface TimetableService {
 
-    List<Timetable> findAll();
-
     void create(Timetable timetable);
 
-    void delete(Long id);
+    Timetable getById(Long academicClassId);
 
-    Timetable getById(Long id);
+    Timetable getByName(String academicClassname);
 
-    Timetable getByName(String name);
+    List<Timetable> findAll();
 
-    boolean isPresentTimetableByAcademicClassId(Long id);
-
-    Timetable getTimetableByAcademicClassId(Long id);
-
-    Timetable getTimetableWithActiveStatusByAcademicClassId(Long academicClassId);
-
-    Timetable getTimetableWithEditStatusByAcademicClassId(Long academicClassId);
-
-    void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId);
+    Timetable getTimetableByAcademicClassId(Long academicClassId);
 
     void updateTimetableStatusByAcademicClassId(String timeTableStatus, Long academicClassId);
+
+    void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId);
 }

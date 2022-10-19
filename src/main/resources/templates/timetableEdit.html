@@ -217,6 +217,7 @@
             <p class="a-url">/</p>
             <a class="a-url" th:href="${allUrl}" th:text="${'Edit'}"></a>
         </div>
+
         <div class="timetable">
 
             <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
@@ -224,16 +225,17 @@
                 <div class="dates_and_create">
                     <div class="dates">
                         <div class="start_date">
-                            <label class="popup-label-title">Start Date<span class="check-validation-date"></span></label>
+                            <label class="popup-label-title">Start Date<span
+                                    class="check-validation-date"></span></label>
                             <div class="input_form">
-                            <input class="form_input" placeholder="Date pick &#9638;"
-                                   data-date-format="dd-mm-yyyy"
-                                   readonly
-                                   th:type="text"
-                                   th:name="startDate"
-                                   th:value="*{startDate}"
-                                   th:field="*{startDate}"
-                                   th:id="startDate"/></div>
+                                <input class="form_input" placeholder="Date pick &#9638;"
+                                       data-date-format="dd-mm-yyyy"
+                                       readonly
+                                       th:type="text"
+                                       th:name="startDate"
+                                       th:value="*{startDate}"
+                                       th:field="*{startDate}"
+                                       th:id="startDate"/></div>
                             <div class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
                         </div>
                         <div class="end_date">

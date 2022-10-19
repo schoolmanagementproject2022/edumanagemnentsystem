@@ -49,7 +49,9 @@ public class Student {
     private BloodGroup bloodGroup;
     @OneToOne(fetch = FetchType.LAZY)
     private Parent parent;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.ALL})
+    @JoinColumn(name = "academic_class_id")
     private AcademicClass academicClass;
 
     public Student(Long id,

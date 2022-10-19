@@ -102,11 +102,6 @@ public class TeacherDto {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, surname, email, role, password);
-    }
-
-    @Override
     public String toString() {
         return "TeacherDto{" +
                 "id=" + id +

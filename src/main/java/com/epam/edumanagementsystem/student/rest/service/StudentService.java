@@ -16,9 +16,13 @@ public interface StudentService {
 
     StudentDto update(StudentDto studentDto);
 
+    Student update(Student student);
+
     List<StudentDto> findAll();
 
     StudentDto getById(Long id);
 
     Student findByUserId(Long id);
+
+    List<Student> findByAcademicClassId(Long id);
 }

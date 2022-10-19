@@ -35,7 +35,6 @@
             <p class="a-url">/</p>
             <a class="a-url" th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" th:text="${'Timetable'}"></a>
         </div>
-
         <div class="middle">
             <div th:if="${timetable == null}">
                 <p class="msg">There is no active Timetable.</p>
@@ -43,15 +42,14 @@
                 <a class="create-btn" th:href="@{'/classes/' + ${middleUrl} + '/timetable' + '/creation'}"
                    id="create-btn"><b>Create Timetable</b></a>
             </div>
-
-                <div class="form-timetable" th:if="${timetable != null}">
-                    <form th:method="POST" action="#" th:object="${timetable}">
-                        <div class="dates_and_create">
-                            <div class="dates">
-                                <div class="date_half">
-                                    <label class="popup-label-title">Start Date
-                                        <span class="check-validation-date"></span>
-                                    </label>
+            <div class="timetable" th:if="${timetable != null}">
+                <form th:method="POST" action="#" th:object="${timetable}">
+                    <div class="dates_and_create">
+                        <div class="dates">
+                            <div class="start_date">
+                                <label class="popup-label-title">Start Date<span
+                                        class="check-validation-date"></span></label>
+                                <div class="input_form">
                                     <input class="form_input" placeholder="Date pick &#9638;"
                                            data-date-format="dd-mm-yyyy"
                                            readonly
@@ -59,17 +57,14 @@
                                            th:name="startDate"
                                            th:value="*{startDate}"
                                            th:field="*{startDate}"
-                                           th:id="startDate"/>
-                                    <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                                         th:errors="*{startDate}"></div>
-                                    <div class="error" th:if="${invalid}!= null">
-                                        <p th:text="${invalid}"></p>
-                                    </div>
-                                </div>
-                                <div class="date_half">
-                                    <label class="popup-label-title">End Date
-                                        <span class="check-validation-date"></span>
-                                    </label>
+                                           th:id="startDate"/></div>
+                                <div class="error" th:if="${#fields.hasErrors('startDate')}"
+                                     th:errors="*{startDate}"></div>
+                            </div>
+                            <div class="end_date">
+                                <label class="popup-label-title">End Date<span
+                                        class="check-validation-date"></span></label>
+                                <div class="input_form">
                                     <input class="form_input" placeholder="Date pick &#9638;"
                                            data-date-format="dd-mm-yyyy"
                                            readonly
@@ -78,118 +73,120 @@
                                            th:value="*{endDate}"
                                            th:field="*{endDate}"
                                            th:id="endDate"/>
-                                    <div class="error" th:if="${#fields.hasErrors('endDate')}"
-                                         th:errors="*{endDate}"></div>
-                                    <div class="error" th:if="${invalid}!= null">
-                                        <p th:text="${invalid}"></p>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="create">
-                                <a th:href="@{'/classes/' + ${timetable.academicClass.classNumber}+ '/timetable/edit' }" class="show-btn" type="button">Edit</a>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="timetable">
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Monday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
+                                <div class="error" th:if="${#fields.hasErrors('endDate')}"
+                                     th:errors="*{endDate}"></div>
                             </div>
                         </div>
 
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Tuesday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="create">
+                            <a th:href="@{'/classes/' + ${timetable.academicClass.classNumber}+ '/timetable/edit' }" class="button" type="button">Edit</a>
                         </div>
 
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Wednesday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Thursday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Friday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Saturday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dayOfWeek">
-                            <div class="dayHeader"><a>Sunday</a></div>
-                            <div class="lessons">
-                                <div class="single_lesson_wrapper">
-                                    <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
-                                        <div class="btn">
-                                            <label class="close-btn" title="close"></label></div>
-                                        <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     </div>
+                </form>
+
+                <div class="week">
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Monday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Tuesday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Wednesday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Thursday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Friday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Saturday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayOfWeek">
+                        <div class="dayHeader"><a>Sunday</a></div>
+                        <div class="lessons">
+                            <div class="single_lesson_wrapper">
+                                <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
+                                    <div class="btn">
+                                        <label class="close-btn" title="close"></label></div>
+                                    <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </div>
 
-
-            <div class="sidebar-right" th:insert="fragments/fragments :: sidebar2"></div>
         </div>
     </div>
+
+
+    <div class="sidebar-right" th:insert="fragments/fragments :: sidebar2"></div>
 </div>
 
 <a id="timetableUrl" th:text="'/classes/' + ${middleUrl} + '/timetable'" type="hidden"></a>

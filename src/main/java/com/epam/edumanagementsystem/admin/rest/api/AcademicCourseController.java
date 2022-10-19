@@ -51,7 +51,7 @@ public class AcademicCourseController {
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
                          BindingResult result,
                          Model model) {
-        
+
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
         List<Subject> allSubjects = subjectService.findAll();
@@ -127,7 +127,7 @@ public class AcademicCourseController {
             return "academicCourseSectionForClasses";
         } else {
             for (AcademicClassDto academicClass : allAcademicClasses) {
-                if (!academicClassesInCourse.contains(academicClass)){
+                if (!academicClassesInCourse.contains(academicClass)) {
                     academicClassSet.add(academicClass);
                 }
             }
@@ -147,26 +147,26 @@ public class AcademicCourseController {
         Set<Teacher> allTeachersInAcademicCourse = academicCourseService.findAllTeachersByAcademicCourseName(name);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
 
-        if (academicCourse.getTeacher().size() == 0) {
+        if (academicCourse.getTeacher() == null) {
             model.addAttribute("blank", "There is no new selection.");
-            if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
-                return "academicCourseSectionForTeachers";
-            } else {
-                for (Teacher teacher : allTeacherSet) {
-                    if (!allTeachersInAcademicCourse.contains(teacher)) {
-                        result.add(teacher);
-                    }
-                }
-            }
-            model.addAttribute("teachers", result);
             return "academicCourseSectionForTeachers";
         }
+        if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
+            return "academicCourseSectionForTeachers";
+        } else {
+            for (Teacher teacher : allTeacherSet) {
+                if (!allTeachersInAcademicCourse.contains(teacher)) {
+                    result.add(teacher);
+                }
+            }
+        }
+        model.addAttribute("teachers", result);
         academicCourseService.update(academicCourse);
         return "redirect:/courses/" + name + "/teachers";
     }
 
     @PostMapping("{name}/classes")
-    public String addClasses(@ModelAttribute("newClass")@Valid AcademicClass academicClass, BindingResult result,
+    public String addClasses(@ModelAttribute("newClass") @Valid AcademicClass academicClass, BindingResult result,
                              @PathVariable("name") String name, Model model) {
         Set<AcademicCourse> academicCourseSet = new HashSet<>();
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
@@ -185,17 +185,17 @@ public class AcademicCourseController {
             model.addAttribute("academicClasses", academicClassSet);
         } else {
             for (AcademicClassDto select : allAcademicClasses) {
-                if (!academicClassesInCourse.contains(select)){
+                if (!academicClassesInCourse.contains(select)) {
                     academicClassSet.add(select);
                 }
             }
         }
         model.addAttribute("academicClasses", academicClassSet);
-        if (result.hasErrors() || academicClass.getTeacher().size()==0){
-            if (result.hasFieldErrors("classNumber")){
+        if (result.hasErrors() || academicClass.getTeacher().size() == 0) {
+            if (result.hasFieldErrors("classNumber")) {
                 model.addAttribute("blankClass", "Please, select the required fields");
             }
-            if (academicClass.getTeacher().size()==0){
+            if (academicClass.getTeacher().size() == 0) {
                 model.addAttribute("blank", "Please, select the required fields");
             }
             return "academicCourseSectionForClasses";
