@@ -42,7 +42,6 @@
                 <a class="create-btn" th:href="@{'/classes/' + ${middleUrl} + '/timetable' + '/creation'}"
                    id="create-btn"><b>Create Timetable</b></a>
             </div>
-
             <div class="timetable" th:if="${timetable != null}">
                 <form th:method="POST" action="#" th:object="${timetable}">
                     <div class="dates_and_create">
@@ -182,12 +181,12 @@
 
                 </div>
             </div>
-            <div class="sidebar-right" th:insert="fragments/fragments :: sidebar2"></div>
+
         </div>
-
-
-
     </div>
+
+
+    <div class="sidebar-right" th:insert="fragments/fragments :: sidebar2"></div>
 </div>
 
 <a id="timetableUrl" th:text="'/classes/' + ${middleUrl} + '/timetable'" type="hidden"></a>

@@ -119,12 +119,11 @@ body {
 
 .sidebar-right {
     margin-top: 3%;
-    height: 35%;
-    width: 18%;
+    height: 52%;
+    width: 24%;
     background-color: #555555;
     cursor: pointer;
-    text-align: left;
-    margin-left: 4%;
+    margin-right: 3%;
 }
 
 .sidebar-right a:hover {
@@ -166,7 +165,7 @@ body {
     font-size: 20px;
     cursor: pointer;
     padding: 5px;
-    width: 14%;
+    width: 20%;
     text-align: center;
     background-color: #555555;
     position: absolute;
@@ -176,15 +175,15 @@ body {
     transform: translate(-50%, -50%);
     color: #01A7F0;
     text-decoration: none;
-    align-self: flex-end;
+/*!* align-self: flex-end;*/
 }
 
 .create-btn:hover {
-    border-color: #01a7f0;
+border-color: #01a7f0;
 }
 
 .createTimetable {
-    align-self: flex-end;
+align-self: flex-end;
 }
 
 /*timetable style*/
