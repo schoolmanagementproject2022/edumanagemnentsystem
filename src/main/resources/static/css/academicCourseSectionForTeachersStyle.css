@@ -303,9 +303,6 @@ form {
 .endAcademicYear {
     margin-left: 0;
 }
-.selectTeacher {
-    margin-top: 40px;
-}
 .selectclassroom {
     margin-top: 10px;
 }
@@ -546,6 +543,10 @@ form {
     border-color: #aaaaaa;
     align-self: flex-end;
     color: #01A7F0;
+}
+.div-pddng {
+    padding: 18.5px;
+    width: 104px;
 }
 
 .vis-btn {
