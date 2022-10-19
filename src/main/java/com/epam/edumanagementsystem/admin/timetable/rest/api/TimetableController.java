@@ -84,11 +84,14 @@ public class TimetableController {
     }
 
     @GetMapping("{name}/timetable/creation")
-    public String getTimetable4_1(@PathVariable("name") String academicClassName, Model model) {
+    public String getTimetable4_1(@PathVariable("name") String academicClassName,
+                                  @RequestParam(value = "lessonId", required = false) Long lessonId,
+                                  @RequestParam(value = "cancelStatus", required = false, defaultValue = "notCancel") String status,
+                                  Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-
         if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) == null &&
-                coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
+                coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
+                lessonId == null && !status.equals("CANCEL")) {
             List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
             for (CoursesForTimetable course : coursesWithNotActiveStatus) {
                 coursesService.deleteCourseById(course.getId());
@@ -98,12 +101,14 @@ public class TimetableController {
             model.addAttribute("courseForTable", new CoursesForTimetableDto());
             model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
             model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+            model.addAttribute("lessonId", lessonId);
             putLessons(model, academicClass.getId());
             return "timetable4-1";
         }
         if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) == null &&
                 coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId()).size() == 0 &&
-                coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
+                coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
+                lessonId == null && !status.equals("CANCEL")) {
             if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
                 List<CoursesForTimetable> allCourses = coursesService.getCoursesByAcademicClassId(academicClass.getId());
                 for (CoursesForTimetable course : allCourses) {
@@ -114,6 +119,7 @@ public class TimetableController {
                 model.addAttribute("courseForTable", new CoursesForTimetableDto());
                 model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
                 model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+                model.addAttribute("lessonId", lessonId);
                 putLessons(model, academicClass.getId());
                 return "timetable4-1";
             }
@@ -123,6 +129,7 @@ public class TimetableController {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         model.addAttribute("courses", academicClassService.findAllAcademicCourses(academicClassName));
         model.addAttribute("academicClass", academicClassService.findByName(academicClassName));
+        model.addAttribute("lessonId", lessonId);
         putLessons(model, academicClass.getId());
         return "timetable4-1";
     }
@@ -246,12 +253,21 @@ public class TimetableController {
     }
 
     @GetMapping("{name}/timetable/edit/{lessonId}")
-    public String showDeletePopUp(@PathVariable("name") String academicClassName,
+    public String showDeletePopUpEdit(@PathVariable("name") String academicClassName,
                                   @PathVariable("lessonId") Long lessonId,
                                   RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addAttribute("lessonId", lessonId);
         return "redirect:/classes/" + academicClassName + "/timetable/edit";
+    }
+
+    @GetMapping("{name}/timetable/create/{lessonId}")
+    public String showDeletePopUpCreate(@PathVariable("name") String academicClassName,
+                                  @PathVariable("lessonId") Long lessonId,
+                                  RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addAttribute("lessonId", lessonId);
+        return "redirect:/classes/" + academicClassName + "/timetable/creation";
     }
 
     @GetMapping("{name}/timetable/show")
@@ -265,7 +281,7 @@ public class TimetableController {
     }
 
 
-    @GetMapping("/classes/{name}/timetable/editCourse")
+    @GetMapping("/{name}/timetable/editCourse")
     public String getPopupEdit(@PathVariable("name") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 

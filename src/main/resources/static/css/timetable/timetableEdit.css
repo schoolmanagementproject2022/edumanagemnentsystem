@@ -336,7 +336,7 @@ body {
 
 /*popup*/
 
-.successMsg {
+.confirmMsg {
     display: inline;
     font-size: 125%;
     position: absolute;
