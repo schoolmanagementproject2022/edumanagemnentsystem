@@ -83,7 +83,6 @@ body {
     font-size: 1.3em;
     overflow: hidden;
     display: flex;
-    justify-content: space-around;
 }
 
 .activeTab {
@@ -190,72 +189,89 @@ body {
 }
 
 /*timetable style*/
-.form-timetable {
-
+.timetable {
+    margin: 0px 90px 0px 60px;
     padding: 0px;
-
+    background-color: #AAAAAA;
 }
 
 .dates_and_create {
-    background-color: #AAAAAA;
-    padding: 0px;
+    margin: 0;
+    padding: 20px 0px;
     display: flex;
-    margin-bottom: 2%;
-    margin-top: 2%;
+    justify-content: space-between;
 }
 
 .dates {
     margin: 0px;
     padding: 0px;
     display: flex;
+    width: 40%;
+}
+
+.start_date {
+    width: 50%;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.end_date {
+    width: 50%;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
 }
 
 .date_half {
+    margin: 0;
     padding: 0px;
-    background-color: #AAAAAA;
     font-size: 0.8em;
-    height: 1.2em;
     color: #555555;
     font-weight: 600;
-    margin-right: -10px;
+    justify-content: space-between;
+}
 
+.error_messages {
+    width: 50%;
 }
 
 .create {
-    margin-left: 30%;
-    display: flex;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 9px;
 }
 
 .create .button {
+    cursor: pointer;
     color: #01A7F0;
+    font-size: 19px;
+    border-radius: 6px;
+    width: 123px;
+    padding: 2px;
     background-color: #555555;
-    font-weight: 600;
-    font-size: 23px;
-    border-radius: 5px;
-    width: 120px;
-    margin-left: 246px;
+}
+.week {
+    width: 100%;
+    margin: 0;
     padding: 0px;
-}
-
-.create a {
-    text-decoration: none;
-}
-
-.timetable {
     display: flex;
-    max-width: 100%;
 }
 
 .dayOfWeek {
-    /*width: 10%;*/
-    /*margin: 0;*/
-    /*padding: 0px;*/
+
     background-color: #D7D7D7;
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
-    /*flex-wrap: wrap;*/
     flex-direction: column;
+    width: 100%;
 }
 
 .dayHeader {
@@ -276,7 +292,7 @@ body {
 
 /*Lessons section styles*/
 .lessons {
-    width: 95%;
+    width: 100%;
     display: flex;
     background-color: #D7D7D7;
     flex-direction: column;
