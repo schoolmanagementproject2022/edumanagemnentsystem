@@ -411,7 +411,7 @@ h1 {
     font-weight: 600;
 }
 
-.form_input {
+.date_form_input {
     margin-top: 6px;
     display: block;
     width: 75%;
@@ -461,6 +461,12 @@ h1 {
 
 .show-btn:hover {
     border-color: #01A7F0;
+}
+.form_input {
+    margin-top: 6px;
+    display: block;
+    width: 100%;
+    border-width: 1px;
 }
 
 .deletePopup-container {
