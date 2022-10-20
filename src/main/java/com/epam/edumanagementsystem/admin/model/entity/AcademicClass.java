@@ -1,14 +1,17 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
+
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
+
 import com.epam.edumanagementsystem.student.model.entity.Student;
+
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "academicClass")
@@ -41,18 +44,22 @@ public class AcademicClass {
     @OneToOne
     private Teacher classroomTeacher;
 
+    @ManyToMany
+    private List<CoursesForTimetable> coursesForTimetableList = new ArrayList<>();
+
     @OneToMany
     private Set<Student> student;
 
     public AcademicClass() {
     }
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, Set<Student> student) {
+    public AcademicClass(Long id, @Size(max = 50, message = "Symbols can't be more than 50") String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
         this.academicCourseSet = academicCourseSet;
         this.classroomTeacher = classroomTeacher;
+        this.coursesForTimetableList = coursesForTimetableList;
         this.student = student;
     }
 
@@ -96,6 +103,14 @@ public class AcademicClass {
         this.classroomTeacher = classroomTeacher;
     }
 
+    public List<CoursesForTimetable> getCoursesForTimetableList() {
+        return coursesForTimetableList;
+    }
+
+    public void setCoursesForTimetableList(List<CoursesForTimetable> coursesForTimetableList) {
+        this.coursesForTimetableList = coursesForTimetableList;
+    }
+
     public Set<Student> getStudent() {
         return student;
     }
@@ -109,12 +124,12 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teacher, that.teacher) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(student, that.student);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(teacher, that.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teacher, academicCourseSet, classroomTeacher, student);
+        return Objects.hash(id, classNumber, classroomTeacher, student, teacher);
     }
 
     @Override
@@ -125,7 +140,9 @@ public class AcademicClass {
                 ", teacher=" + teacher +
                 ", academicCourseSet=" + academicCourseSet +
                 ", classroomTeacher=" + classroomTeacher +
+                ", coursesForTimetableList=" + coursesForTimetableList +
                 ", student=" + student +
                 '}';
     }
 }
+

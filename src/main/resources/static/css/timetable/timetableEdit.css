@@ -1,0 +1,563 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+    color: #000000;
+    background: #ffffff;
+    font-family: "Montserrat", sans-serif;
+}
+
+
+/*Top part styles*/
+.container {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.topnav-wrapper {
+    background-color: #333333;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.7em;
+    height: 1.4em;
+}
+
+.topnav-left-side {
+    margin-left: 14px;
+    margin-top: 3px;
+}
+
+.topnav-right-side {
+    margin-right: 14px;
+    margin-top: 3px;
+}
+
+.nav-link-wrapper {
+    height: 22px;
+    transition: border-bottom 0.5s;
+}
+
+.nav-link-wrapper a {
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+
+.nav-link-wrapper a:hover {
+    color: #01A7F0;
+}
+
+/*Main part styles*/
+.main-wrapper {
+    width: 100%;
+    display: flex;
+    background-color: #AAAAAA;
+    height: 100%;
+    position: fixed;
+}
+
+/*Sidebar styles*/
+.sidebar {
+    width: 21%;
+    margin: 0;
+    padding: 0px;
+    background-color: #555555;
+}
+
+.sidebar a {
+    display: block;
+    color: #FFFFFF;
+    padding: 13px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 1.3em;
+}
+
+.sidebar a:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
+/*Main part style*/
+.main {
+    width: 100%;
+    margin: 0;
+    padding: 0px;
+    background-color: #AAAAAA;
+    overflow: scroll;
+}
+
+/*Middle part styles*/
+.timetable {
+    margin-left: 4%;
+    margin-bottom: 6%;
+    padding: 0px;
+    background-color: #AAAAAA;
+    margin-right: 9%;
+}
+
+/*Main top containing only link style*/
+.main-top {
+    background-color: #AAAAAA;
+    margin: 0;
+    padding: 0px;
+}
+
+.link {
+    margin: 0;
+    padding: 16px;
+    background-color: #AAAAAA;
+    display: flex;
+}
+
+.link a {
+    text-decoration: none;
+    color: #007EB4;
+    text-align: left;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+/*Main down containing dates,create timetable and lessons style*/
+.main-down {
+    margin: 0;
+    padding: 0px;
+    background-color: #AAAAAA;
+    overflow: hidden;
+}
+
+.dates_and_create {
+    margin: 0;
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dates {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    width: 40%;
+}
+
+.start_date {
+    width: 50%;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.end_date {
+    width: 50%;
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.date_half {
+    margin: 0;
+    padding: 0px;
+    font-size: 0.8em;
+    color: #555555;
+    font-weight: 600;
+    justify-content: space-between;
+}
+
+.error_messages {
+    width: 50%;
+}
+
+.create {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 9px;
+}
+
+.create .button {
+    cursor: pointer;
+    color: #01A7F0;
+    font-size: 19px;
+    border-radius: 6px;
+    width: 123px;
+    padding: 2px;
+}
+
+.week{
+    width: 100%;
+    margin: 0;
+    padding: 0px;
+    display: flex;
+}
+
+.dayOfWeek {
+    background-color:#D7D7D7;
+    border: solid 0.5px #007EB4;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.dayHeader{
+    margin: 0;
+    padding: 5px;
+    background-color: #7F7F7F;
+    border-bottom: solid 0.5px #007EB4;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.dayHeader a{
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #7F7F7F;
+}
+
+.add{
+    background-color:#D7D7D7;
+    margin-bottom: 11px;
+    display: flex;
+    padding-top: 40vh;
+}
+
+.plus{
+    width: 30%;
+    margin: 0px 37px 0px 50px;
+    font-size: 23px;
+    text-align: center;
+    color:#007EB4;
+    cursor: pointer;
+}
+/*Lessons section styles*/
+.lessons {
+    margin-left: 2.5%;
+    width: 95%;
+    background-color:#D7D7D7;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.single_lesson_wrapper{
+    background-color: #D7D7D7;
+    flex-direction: column;
+}
+
+.single_item{
+    margin: 0;
+    padding: 30px 23px;
+    background-color: #AAAAAA;
+    margin-top: 4px;
+    margin-bottom: 5px;
+    flex-direction: column;
+    display: flex;
+    border-radius: 10px;
+    border: solid 0.5px#007EB4;
+}
+
+.single_item .btn {
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0px;
+    background-color:#AAAAAA;
+    margin-top: -30px;
+    margin-left: 107%;
+}
+
+.btn {
+    padding: 5px;
+    border-radius: 5px;
+    float: right;
+    margin-right: 59px;
+    background-color: #555555;
+    color: #FFFFFF
+}
+
+.single_item .close-btn {
+    right: 30px;
+    font-size: 19px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color:#7F7F7F;;
+}
+
+.single_item a {
+    text-decoration: none;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    color: #007EB4;
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-bottom: 3px;
+}
+
+.activeTab {
+    background-color: #333333;
+    color: #01A7F0 !important;
+}
+
+
+/*for url*/
+.url-path {
+    margin-top: -1%;
+    margin-left: 4%;
+    margin-right: 100%;
+    display: inline-flex;
+}
+
+.a-url {
+    margin-right: 21px;
+    margin-top: 23px;
+    margin-left: -5%;
+    padding-left: 8px;
+    text-decoration: none;
+    color: #2b80a5;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.a-url:hover {
+    font-size: 110%;
+}
+
+
+/*popup*/
+
+.confirmMsg {
+    display: inline;
+    font-size: 125%;
+    position: absolute;
+    top: 27%;
+    left: 6%;
+}
+
+.popup-container {
+    display: none;
+    width: 492px;
+    height: 499px;
+    padding: 20px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.popup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%)
+}
+
+.popup-container .close-btn {
+    position: absolute;
+    right: 20px;
+    border-width: 0px;
+    top: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.deletePopup-container {
+    display: block;
+    width: 466px;
+    height: 308px;
+    padding: 0px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.deletePopup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%)
+}
+
+.deletePopup-container .close-btn {
+    position: absolute;
+    right: 20px;
+    border-width: 0px;
+    top: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+h1 {
+    text-align: left;
+    color: #007EB4;
+    margin-top: 0px;
+
+}
+
+.popup-wrapper {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+.half {
+    width: 50%;
+    padding: 0px;
+    margin-left: 0px;
+    height: 253px;
+}
+
+.half2 {
+    width: 50%;
+    margin-left: 20%;
+    height: 253px;
+
+}
+
+.halfSection {
+    margin-top: 27%;
+    display: inline-block;
+}
+
+.button-save {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 70%;
+    margin-left: -20%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.delete-popup-delete-button-save {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 40%;
+    margin-left: -25%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.delete-popup-cancel-button-save {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 40%;
+    margin-left: 9%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+
+.popup-label-title {
+    font-size: 1.1em;
+}
+
+.error {
+    font-size: 0.9em;
+    color: red;
+}
+
+.date_error {
+    margin-top: 4.5%;
+    font-size: 0.8em;
+    color: red;
+    margin-left: 8%;
+    font-weight: 600;
+}
+
+.form_input {
+    margin-top: 6px;
+    display: block;
+    width: 75%;
+    border-width: 1px;
+}
+
+/*Button part styles*/
+.create-pop {
+    display: block;
+    transition: all 0.5s ease;
+    height: 7%;
+}
+
+.button {
+    background-color: #555555;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 7px;
+}
+
+.create-pop a {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.create-pop a:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
+.btn {
+    padding: 5px;
+    border-radius: 5px;
+    float: right;
+    margin-right: 59px;
+    background-color: #555555;
+    color: #FFFFFF
+}
+
+.show-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 102px;
+    text-align: center;
+    background-color: #555555;
+    position: absolute;
+    top: 12%;
+    left: 84%;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    transform: translate(-50%, -50%);
+    color: #01A7F0;
+}
+
+.show-btn:hover {
+    border-color: #01A7F0;
+}

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,18 +11,14 @@
     <script src="/static/js/popupControl.js"></script>
     <title>Academic Class For Courses</title>
 </head>
-
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
 </div>
-
 <div class="main-wrapper" id="main-wrapper">
     <div class="content-wrapper">
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-
         <div class="content" id="middle">
-
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Classes'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
@@ -39,10 +34,9 @@
         <div class="sidebar2 header" id="sidebar2">
             <div th:insert="fragments/fragments :: sidebar2"></div>
         </div>
-        </div>
     </div>
 </div>
-
+</div>
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
@@ -51,36 +45,32 @@
             <script th:inline="javascript" th:if="${blank} or ${blankClass}!= null">
                 PopUpShow();
             </script>
-
             <div class="popup-wrapper">
                 <div class="half">
                     <label class="popup-label-title" for="course">Academic course<span
                             style="color:#A30014"> *</span></label>
-                        <select class="form_input" id="course" name="academicCourseSet"
-                                th:field="*{academicCourseSet}" style="width: 250px">
-                            <option th:if="*{academicCourseSet  == null}" th:value="null"
-                                    th:text="'Select course'"></option>
-                            <option th:each="select : ${coursesForSelect}"
-                                    th:value="${select.id}" th:text="${select.getName()}"></option>
-                        </select>
-                        <div th:if="${blankClass}!= null" class="error">
-                            <p th:text="${blankClass}"></p>
+                    <select class="form_input" id="course" name="academicCourseSet"
+                            th:field="*{academicCourseSet}" style="width: 250px">
+                        <option th:if="*{academicCourseSet  == null}" th:value="null"
+                                th:text="'Select course'"></option>
+                        <option th:each="select : ${coursesForSelect}"
+                                th:value="${select.id}" th:text="${select.getName()}"></option>
+                    </select>
+                    <div th:if="${blankClass}!= null" class="error">
+                        <p th:text="${blankClass}"></p>
                     </div>
                     <label class="popup-label-title" for="teacher">Teachers<span
                             style="color:#A30014"> *</span></label>
-                        <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
-                                style="width: 250px">
-                            <option th:if="*{teacher  == null}" th:value="null"
-                                    th:text="'Select teacher'">
-                            </option>
-
-                        </select>
-
-                        <div th:if="${blank}!= null" class="error">
-                            <p th:text="${blank}"></p>
-                        </div>
+                    <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
+                            style="width: 250px">
+                        <option th:if="*{teacher  == null}" th:value="null"
+                                th:text="'Select teacher'">
+                        </option>
+                    </select>
+                    <div th:if="${blank}!= null" class="error">
+                        <p th:text="${blank}"></p>
+                    </div>
                 </div>
-
                 <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
@@ -89,10 +79,7 @@
         </form>
     </div>
 </div>
-
 <script type="text/javascript">
-
-
     let elem = document.getElementById("course")
     let elem1 = document.getElementById("teacher")
     elem.addEventListener("change", (item) => {
@@ -110,7 +97,6 @@
                 let a = document.createElement("option")
                 a.textContent = ""
                 a.setAttribute("disabled", true)
-
                 elem1.appendChild(a)
             }
             elem.forEach(item => {
@@ -121,7 +107,6 @@
             })
         })
     })
-
 </script>
 </body>
 </html>

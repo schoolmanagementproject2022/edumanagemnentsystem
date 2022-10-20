@@ -25,10 +25,8 @@
         <a th:classappend="${firstUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}" href="/teachers">Teachers</a>
         <a th:classappend="${firstUrl eq 'students' ? 'activeTab' : 'notActiveTab'}" href="/students">Students</a>
         <a th:classappend="${firstUrl eq 'parents' ? 'activeTab' : 'notActiveTab'}" href="/parents">Parents</a>
-        <a th:classappend="${firstUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}" href="/classes">Academic
-            classes</a>
-        <a th:classappend="${firstUrl eq 'years' ? 'activeTab' : 'notActiveTab'}" href="/years">Academic
-            years</a>
+        <a th:classappend="${firstUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}" href="/classes">Academic classes</a>
+        <a th:classappend="${firstUrl eq 'years' ? 'activeTab' : 'notActiveTab'}" href="/years">Academic years</a>
         <a th:classappend="${firstUrl eq 'subjects' ? 'activeTab' : 'notActiveTab'}" href="/subjects">Subjects</a>
         <a th:classappend="${firstUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}" href="/courses">Academic courses</a>
         <a th:classappend="${firstUrl eq 'vacations' ? 'activeTab' : 'notActiveTab'}" href="/vacations">Vacations</a>
@@ -37,6 +35,7 @@
 
 </th:block>
 
+<!-- sidebar 2 in academic class-->
 <th:block th:fragment="sidebar2">
     <div>
         <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
@@ -47,8 +46,10 @@
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Courses</a>
         <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/teachers'}}">Teachers</a>
-        <a class="item" th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/timetable'}}">Timetable</a>
+        <a th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>
+    </div>
+
     </div>
 </th:block>
 

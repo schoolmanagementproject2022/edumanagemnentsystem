@@ -27,7 +27,7 @@ public class AcademicCourse {
     @JoinColumn(name = "subject_id")
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
-@JsonIgnore
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
@@ -35,28 +35,21 @@ public class AcademicCourse {
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<Teacher> teacher;
 
-    public Set<AcademicClass> getAcademicClass() {
-        return academicClass;
-    }
-
-    public void setAcademicClass(Set<AcademicClass> academicClass) {
-        this.academicClass = academicClass;
-    }
-@JsonIgnore
+    @JsonIgnore
     @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
     private Set<AcademicClass> academicClass;
 
-    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher, Set<AcademicClass> academicClass) {
+    public AcademicCourse() {
+    }
+
+    public AcademicCourse(Long id, String name, Subject subject, Set<Teacher> teacher,
+                          Set<AcademicClass> academicClass) {
         this.id = id;
         this.name = name;
         this.subject = subject;
         this.teacher = teacher;
         this.academicClass = academicClass;
     }
-
-    public AcademicCourse() {
-    }
-
 
     public Long getId() {
         return id;
@@ -90,13 +83,20 @@ public class AcademicCourse {
         this.teacher = teacher;
     }
 
+    public Set<AcademicClass> getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(Set<AcademicClass> academicClass) {
+        this.academicClass = academicClass;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AcademicCourse that = (AcademicCourse) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(teacher, that.teacher);
+        AcademicCourse course = (AcademicCourse) o;
+        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(teacher, course.teacher);
     }
 
     @Override
@@ -109,7 +109,6 @@ public class AcademicCourse {
         return "AcademicCourse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", subject=" + subject +
                 ", teacher=" + teacher +
                 '}';
     }
