@@ -464,7 +464,7 @@
                     <input type="hidden" name="dayOfWeek" th:value="Monday"/>
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="academicCourse" th:id="academicCourse">
+                    <select id="select" class="form_input" th:name="academicCourse" th:id="academicCourse">
                         <option class="short" th:text="'Select Course'"
                                 data-limit="23" th:value="null"></option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
@@ -651,7 +651,7 @@
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
                         <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
+                                data-limit="23" th:value="null">Select Course</option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>

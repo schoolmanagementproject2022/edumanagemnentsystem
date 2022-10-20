@@ -87,6 +87,7 @@ function PopUpHide() {
     obj.refreshValue = "toReload";
     console.log("Changed to toReload");
     clearErrorMessageOnPopUpClose();
+    $('select').prop('selectedIndex', 0);
     $("#popup-container-monday").hide();
     $("#popup-container-tuesday").hide();
     $("#popup-container-wednesday").hide();
@@ -110,7 +111,9 @@ function clearErrorMessageOnPopUpClose() {
     var error = document.getElementById('error');
     if (error !== null) {
         error.innerHTML = " ";
-    }else{
+    } else {
         error = document.getElementById('error');
     }
 }
+
+
