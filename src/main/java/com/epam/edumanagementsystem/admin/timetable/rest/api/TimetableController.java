@@ -387,7 +387,7 @@ public class TimetableController {
             allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
             putLessons(model, timetable.getAcademicClass().getId());
             return "timetable4-1";
-        } else if (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) {
+        } else if ((diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) || (startDate.equals(endDate))) {
             model.addAttribute("invalid", invalidMsg);
             allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
             putLessons(model, timetable.getAcademicClass().getId());
@@ -474,7 +474,7 @@ public class TimetableController {
             allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
             putEditedLessons(model, timetable.getAcademicClass().getId());
             return "timetableEdit";
-        } else if (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) {
+        } else if ((diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) || (startDate.equals(endDate))) {
             model.addAttribute("invalid", invalidMsg);
             allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
             putEditedLessons(model, timetable.getAcademicClass().getId());
