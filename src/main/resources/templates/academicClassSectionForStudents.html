@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>teachers in academic course</title>
+    <title>students in academic course</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -75,6 +75,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#student').select2({
+        closeOnSelect:false,
+
             placeholder: "Select students",
             allowClear: true
         });
