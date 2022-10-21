@@ -655,3 +655,4 @@ list {
     background-color: #333333;
     color: #01A7F0 !important;
 }
+.select2-results__option--selected { display: none;}
