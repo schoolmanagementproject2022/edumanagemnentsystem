@@ -86,6 +86,8 @@ function PopUpShowSaturday() {
 function PopUpHide() {
     obj.refreshValue = "toReload";
     console.log("Changed to toReload");
+    clearErrorMessageOnPopUpClose();
+    $('select').prop('selectedIndex', 0);
     $("#popup-container-monday").hide();
     $("#popup-container-tuesday").hide();
     $("#popup-container-wednesday").hide();
@@ -104,3 +106,14 @@ function PopUpHide() {
 function SuccessPopupHide() {
     location.href = $("#timetableUrl").text();
 }
+
+function clearErrorMessageOnPopUpClose() {
+    var error = document.getElementById('error');
+    if (error !== null) {
+        error.innerHTML = " ";
+    } else {
+        error = document.getElementById('error');
+    }
+}
+
+
