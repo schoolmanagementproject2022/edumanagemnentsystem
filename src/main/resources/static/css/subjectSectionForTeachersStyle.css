@@ -602,4 +602,4 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
-.select-results__option--selected { display: none;}
+.select2-results__option--selected { display: none;}
