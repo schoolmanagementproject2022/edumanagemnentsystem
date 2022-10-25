@@ -21,112 +21,112 @@ public class SecurityConfigTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedAdminsEndpoint() throws Exception {
+    public void testAdminsEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/admins"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN"})
-    public void testAuthenticatedAdminsEndpoint() throws Exception {
+    public void testAdminsEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/admins"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedTeachersEndpoint() throws Exception {
+    public void testTeachersEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/teachers"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedTeachersEndpoint() throws Exception {
+    public void testTeachersEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/teachers"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedParentsEndpoint() throws Exception {
+    public void testParentsEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/parents"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedParentsEndpoint() throws Exception {
+    public void testParentsEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/parents"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedClassesEndpoint() throws Exception {
+    public void testClassesEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/classes/"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedClassesEndpoint() throws Exception {
+    public void testClassesEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/classes/"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedYearsEndpoint() throws Exception {
+    public void testYearsEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/years"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedYearsEndpoint() throws Exception {
+    public void testYearsEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/years"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedVacationsEndpoint() throws Exception {
+    public void testVacationsEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/vacations"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedVacationsEndpoint() throws Exception {
+    public void testVacationsEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/vacations"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedSubjectsEndpoint() throws Exception {
+    public void testSubjectsEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/subjects"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedSubjectsEndpoint() throws Exception {
+    public void testSubjectsEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/subjects"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"SUPER_ADMIN", "TEACHER", "PARENT", "STUDENT"})
-    public void testUnauthenticatedCoursesEndpoint() throws Exception {
+    public void testCoursesEndpointWithWrongAuthority() throws Exception {
         mockMvc.perform(get("/courses/"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
-    public void testAuthenticatedCoursesEndpoint() throws Exception {
+    public void testCoursesEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/courses/"))
                 .andExpect(status().isOk());
     }
