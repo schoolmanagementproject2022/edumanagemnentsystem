@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).get();
     }
+
+    @Override
+    public Boolean checkDuplicationOfEmail(String email) {
+        return findAll().stream().anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email));
+    }
 }
