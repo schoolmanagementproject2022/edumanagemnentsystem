@@ -36,8 +36,7 @@ public class TeacherController {
 
     @GetMapping
     public String openTeacherSection(Model model) {
-        List<TeacherDto> all = teacherService.findAll();
-        model.addAttribute("teachers", all);
+        model.addAttribute("teachers", teacherService.findAll());
         model.addAttribute("teacher", new TeacherDto());
         return "teacherSection";
     }
@@ -45,8 +44,7 @@ public class TeacherController {
     @PostMapping
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result, Model model) {
-        List<TeacherDto> allTeachersDto = teacherService.findAll();
-        model.addAttribute("teachers", allTeachersDto);
+        model.addAttribute("teachers",  teacherService.findAll());
 
         for (User user : userService.findAll()) {
             if (teacherDto.getEmail().equalsIgnoreCase(user.getEmail())) {
