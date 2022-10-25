@@ -10,7 +10,6 @@ import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,12 +28,12 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-
     private final PasswordEncoder bcryptPasswordEncoder;
     private final StudentService studentService;
     private final UserService userService;
     private final ParentService parentService;
     private final AcademicClassService academicClassService;
+    private final String STUDENT_HTML = "studentSection";
 
     @Autowired
     public StudentController(PasswordEncoder bcryptPasswordEncoder, StudentService studentService,
@@ -56,53 +55,52 @@ public class StudentController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", findAllParents());
         model.addAttribute("classes", findAllClasses());
-        return "studentSection";
+        return STUDENT_HTML;
     }
 
     @PostMapping
     public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
                                        Model model) {
-
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", ParentMapper.toParentListWithoutSaveUser(findAllParents()));
         model.addAttribute("classes", findAllClasses());
-        for (User user : userService.findAll()) {
-            if (studentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
-                model.addAttribute("duplicated", "A user with the specified email already exists");
-                return "studentSection";
-            }
+        if (userService.checkDuplicationOfEmail(studentDto.getEmail())) {
+            model.addAttribute("duplicated", "A user with the specified email already exists");
+            return STUDENT_HTML;
         }
-
-
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(studentDto.getEmail())) {
+                if (!validateEmail(studentDto.getEmail())) {
                     model.addAttribute("invalid", "Email is invalid");
-                    return "studentSection";
+                    return STUDENT_HTML;
                 }
             }
-            return "studentSection";
-        } else if (!EmailValidation.validate(studentDto.getEmail())) {
+            return STUDENT_HTML;
+        } else if (!validateEmail(studentDto.getEmail())) {
             model.addAttribute("invalid", "Email is invalid");
-            return "studentSection";
+            return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
         studentService.create(studentDto);
         return "redirect:/students";
     }
 
-    public List<StudentDto> findAllStudents() {
+    private List<StudentDto> findAllStudents() {
         return studentService.findAll();
     }
 
-    public List<ParentDto> findAllParents() {
+    private List<ParentDto> findAllParents() {
         return ParentMapper.toParentDtoList(parentService.findAll());
     }
 
-    public List<AcademicClassDto> findAllClasses() {
+    private List<AcademicClassDto> findAllClasses() {
         return academicClassService.findAll();
+    }
+
+    private Boolean validateEmail(String email) {
+        return EmailValidation.validate(email);
     }
 }
