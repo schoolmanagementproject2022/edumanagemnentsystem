@@ -5,8 +5,11 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
+import com.epam.edumanagementsystem.util.EmailValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -21,8 +24,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void create(TeacherDto teacherDto) {
-        teacherRepository.save(TeacherMapper.toTeacher(teacherDto));
+    public Teacher create(TeacherDto teacherDto) {
+       return teacherRepository.save(TeacherMapper.toTeacher(teacherDto));
     }
 
     @Override

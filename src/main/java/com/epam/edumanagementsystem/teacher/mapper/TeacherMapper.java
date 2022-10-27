@@ -29,7 +29,8 @@ public class TeacherMapper {
         teacher.setPassword(teacherDto.getPassword());
         user.setEmail(teacherDto.getEmail());
         user.setRole(teacherDto.getRole());
-        teacher.setUser(userService.save(user));
+        User save = userService.save(user);
+        teacher.setUser(save);
         return teacher;
     }
 

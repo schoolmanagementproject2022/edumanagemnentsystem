@@ -48,7 +48,6 @@ public class Teacher {
 
     public Teacher() {
     }
-
     public Set<AcademicClass> getAcademicClass() {
         return academicClass;
     }
@@ -57,15 +56,12 @@ public class Teacher {
         this.academicClass = academicClass;
     }
 
-    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet, Set<AcademicClass> academicClassSet) {
+    public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.user = user;
         this.password = password;
-        this.academicCourseSet = academicCourseSet;
-        this.subjectSet = subjectSet;
-        this.academicClass = academicClassSet;
     }
 
     public Long getId() {
