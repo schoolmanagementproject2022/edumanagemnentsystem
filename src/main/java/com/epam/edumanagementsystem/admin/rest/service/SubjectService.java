@@ -10,11 +10,11 @@ public interface SubjectService {
 
     List<Subject> findAll();
 
-    void create(Subject subject);
+    Subject create(Subject subject);
 
     Set<Teacher> findAllTeachers(String name);
 
     Subject findSubjectBySubjectName(String name);
 
-    void update(Subject subject);
+    Subject update(Subject subject);
 }
