@@ -65,6 +65,8 @@ body {
     height: 100%;
     background-color: #555555;
     position: fixed;
+    width: 18%;
+    min-width: 194px;
 }
 
 .sidebar a {
@@ -83,7 +85,7 @@ body {
 }
 
 .middle {
-    margin-left: 14%;
+    margin-left: 18%;
 }
 
 /*Main part style*/
@@ -212,7 +214,6 @@ body {
     background-color:#D7D7D7;
     margin-bottom: 11px;
     display: flex;
-    padding-top: 40vh;
 }
 
 .plus{
@@ -231,7 +232,13 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 366px;
+    max-height: 366px;
+    overflow-y: auto;
+}
+
+.lessons::-webkit-scrollbar {
+    width: 0px;
 }
 
 .single_lesson_wrapper{
@@ -299,15 +306,16 @@ body {
 /*for url*/
 .url-path {
     margin-top: -1%;
-    margin-left: 4%;
+    margin-left: 8%;
     display: inline-flex;
 }
 
 .a-url {
-    margin-right: 21px;
+    max-width: 330px;
+    margin-right: 65px;
     margin-top: 23px;
-    margin-left: -5%;
-    padding-left: 8px;
+    margin-left: -7%;
+    padding-left: 15px;
     text-decoration: none;
     color: #2b80a5;
     cursor: pointer;

@@ -63,10 +63,11 @@ body {
 
 /*Sidebar styles*/
 .sidebar {
-    width: 21%;
-    margin: 0;
-    padding: 0px;
+    height: 100%;
     background-color: #555555;
+    position: fixed;
+    width: 18%;
+    min-width: 194px;
 }
 
 .sidebar a {
@@ -86,7 +87,7 @@ body {
 /*Main part style*/
 .main {
     width: 100%;
-    margin: 0;
+    margin-left: 18%;
     padding: 0px;
     background-color: #AAAAAA;
     overflow: scroll;
@@ -229,7 +230,6 @@ body {
     background-color:#D7D7D7;
     margin-bottom: 11px;
     display: flex;
-    padding-top: 40vh;
 }
 
 .plus{
@@ -248,7 +248,13 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: 366px;
+    max-height: 366px;
+    overflow-y: auto;
+}
+
+.lessons::-webkit-scrollbar {
+    width: 0px;
 }
 
 .single_lesson_wrapper{
@@ -324,6 +330,7 @@ body {
 }
 
 .a-url {
+    max-width: 330px;
     margin-right: 21px;
     margin-top: 23px;
     margin-left: -5%;
