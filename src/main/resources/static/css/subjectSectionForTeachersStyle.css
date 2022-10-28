@@ -603,3 +603,9 @@ form {
     border-width: 1.5px;
 }
 .select2-results__option--selected { display: none;}
+.select2-container .select2-selection {
+    height: 70px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
