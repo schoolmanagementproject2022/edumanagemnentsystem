@@ -23,6 +23,7 @@ public class TeacherController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
     private final UserService userService;
+    private final String TEACHER_HTML = "teacherSection";
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
@@ -36,7 +37,7 @@ public class TeacherController {
     public String openTeacherSection(Model model) {
         model.addAttribute("teachers", teacherService.findAll());
         model.addAttribute("teacher", new TeacherDto());
-        return "teacherSection";
+        return TEACHER_HTML;
     }
 
     @PostMapping
@@ -46,7 +47,7 @@ public class TeacherController {
 
         if (userService.checkDuplicationOfEmail(teacherDto.getEmail())) {
             model.addAttribute("duplicated", "A user with the specified email already exists");
-            return "teacherSection";
+            return TEACHER_HTML;
         }
 
         if (result.hasErrors()) {
@@ -55,10 +56,11 @@ public class TeacherController {
                     model.addAttribute("invalid", "Email is invalid");
                 }
             }
-            return "teacherSection";
+            return TEACHER_HTML;
+
         } else if (!EmailValidation.validate(teacherDto.getEmail())) {
             model.addAttribute("invalid", "Email is invalid");
-            return "teacherSection";
+            return TEACHER_HTML;
         }
         teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
         teacherService.create(teacherDto);

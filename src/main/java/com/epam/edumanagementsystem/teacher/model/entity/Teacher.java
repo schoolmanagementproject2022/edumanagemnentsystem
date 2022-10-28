@@ -32,6 +32,7 @@ public class Teacher {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
@@ -39,9 +40,11 @@ public class Teacher {
             joinColumns = @JoinColumn(name = "academicCourse_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<AcademicCourse> academicCourseSet;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;

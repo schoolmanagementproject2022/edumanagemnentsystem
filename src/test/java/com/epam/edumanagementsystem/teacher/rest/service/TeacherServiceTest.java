@@ -6,72 +6,71 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
 import com.epam.edumanagementsystem.util.entity.User;
-import org.junit.jupiter.api.BeforeEach;
+import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
+import com.epam.edumanagementsystem.util.service.UserService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.mock;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TeacherServiceTest {
     @Mock
     private TeacherRepository teacherRepository;
+    @Mock
+    private UserService userService;
+    @InjectMocks
     private TeacherServiceImpl teacherService;
 
-    @BeforeEach
-    void setUp() {
-        teacherService = new TeacherServiceImpl(teacherRepository);
-    }
-
+    @DisplayName("Check the usage of the findAll() method in the service")
     @Test
     void canFindAllTeachers() {
         // when
         teacherService.findAll();
         // then
         verify(teacherRepository).findAll();
-
     }
-
-    @Test
-    void canCreateTeacher() {
-
-        User user = new User(1L, "gm@gmail.com", "TEACHER");
-
-        Teacher teacher = new Teacher(1L,"Text","Textyan",user,"password");
-
-        Teacher createdTeacher = teacherService.create(TeacherMapper.toDto(teacher));
-
-        verify(teacherRepository).save(createdTeacher);
-
-//        //given
-////        TeacherDto teacher = new TeacherDto(1L, "Julia", "Gevorgyan",
-////                "julgev@gmail.com", "TEACHER", "1%k8H$5+9");
-//        User user = mock(User.class);
-//        Teacher teacher = mock(Teacher.class);
-//        teacher.setUser(user);
-//
-////                new User(1L, "julgev@gmail.com","TEACHER");
-////        Teacher teacher = new Teacher(1L, "Julia", "Gevorgyan", user, "1%k8H$5+9");
-////        TeacherDto teacherDto = TeacherMapper.toDto(teacher);
-//        //when
-//        teacherService.create(TeacherMapper.toDto(teacher));
-//        //then
-//        ArgumentCaptor<Teacher> teacherArgumentCaptor = ArgumentCaptor.forClass(Teacher.class);
-//        verify(teacherRepository).save(teacherArgumentCaptor.capture());
-//
-//        Teacher capturedTeacher = teacherArgumentCaptor.getValue();
-//
-//        assertThat(capturedTeacher).isEqualTo(teacher);
-
-
-    }
-
+    @DisplayName("Check the usage of the findByUserId() method in the service")
     @Test
     void findByUserId() {
+        // when
+        teacherService.findByUserId(anyLong());
+        // then
+        verify(teacherRepository).findByUserId(anyLong());
+    }
+
+    @DisplayName("Create teacher positive case - given all parametrs")
+    @Test
+    void canCreateTeacher() {
+        //given
+        User user = new User(null, "gm@gmail.com", "TEACHER");
+        when(userService.save(any())).thenReturn(user);
+        Teacher teacher = new Teacher(1L, "Text", "Textyan", user, "password");
+        when(teacherRepository.save(any())).thenReturn(teacher);
+        TeacherDto teacherDto = TeacherMapper.toDto(teacher);
+
+        //when
+        Teacher createdTeacher = teacherService.create(teacherDto);
+
+        //then
+        assertThat(createdTeacher).isNotNull();
+        verify(teacherRepository).save(teacher);
+        verify(userService).save(user);
+    }
+
+    @DisplayName("Negative case for create methode - giving null to user")
+    @Test
+    void canNotCreateTeacher() {
+      //then
+        assertThrows(ObjectIsNull.class, () -> teacherService.create(null));
     }
 }

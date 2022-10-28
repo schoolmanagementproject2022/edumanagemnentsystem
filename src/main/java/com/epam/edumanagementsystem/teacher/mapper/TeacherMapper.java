@@ -10,17 +10,24 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class TeacherMapper {
 
-    @Lazy
     private static UserService userService;
 
     public TeacherMapper(UserService userService) {
-        this.userService = userService;
+        TeacherMapper.userService = userService;
     }
 
     public static Teacher toTeacher(TeacherDto teacherDto) {
+        Teacher teacher = new Teacher();
+        teacher.setId(teacherDto.getId());
+        teacher.setName(teacherDto.getName());
+        teacher.setSurname(teacherDto.getSurname());
+        teacher.setPassword(teacherDto.getPassword());
+        return teacher;
+    }
+
+    public static Teacher toTeacher(TeacherDto teacherDto, UserService userService) {
         Teacher teacher = new Teacher();
         User user = new User();
         teacher.setId(teacherDto.getId());
