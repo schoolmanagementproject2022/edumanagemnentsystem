@@ -13,9 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class SuperAdminRepositoryTest {
 
+    private SuperAdmin superAdmin;
+
     @Autowired
     private SuperAdminRepository superAdminRepository;
-    private SuperAdmin superAdmin;
 
     @BeforeEach
     public void setup() {
