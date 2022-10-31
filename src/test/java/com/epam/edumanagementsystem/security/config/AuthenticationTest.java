@@ -16,22 +16,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AuthenticationTest {
 
+    private String wrongEmail = "wrong-user@gmail.com";
+    private String rightEmail = "super@gmail.com";
+    private String password = "Sa1234567+";
+
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testLoggingWithInvalidUser() throws Exception {
-        mockMvc.perform(formLogin()
-                .user("wrong-user@gmail.com").password( "123456"))
-                .andExpect(unauthenticated());
-    }
-
-    @Test
     public void testLoggingWithValidUser() throws Exception {
         mockMvc.perform(formLogin()
-                .user("super@gmail.com").password("Sa1234567+"))
+                .user(rightEmail).password(password))
                 .andExpect(redirectedUrl("admins"))
                 .andExpect(status().isFound())
                 .andExpect(authenticated());
+    }
+
+    @Test
+    public void testLoggingWithInvalidUser() throws Exception {
+        mockMvc.perform(formLogin()
+                .user(wrongEmail).password(password))
+                .andExpect(unauthenticated());
     }
 }

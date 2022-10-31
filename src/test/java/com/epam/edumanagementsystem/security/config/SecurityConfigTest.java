@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Transactional
 public class SecurityConfigTest {
 
     @Autowired
@@ -70,6 +69,7 @@ public class SecurityConfigTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
+    @Transactional
     public void testClassesEndpointWithRightAuthority() throws Exception {
         mockMvc.perform(get("/classes/"))
                 .andExpect(status().isOk());
