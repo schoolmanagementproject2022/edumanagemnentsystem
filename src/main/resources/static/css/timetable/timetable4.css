@@ -63,7 +63,7 @@ body {
 
 .main {
     width: 100%;
-    margin: 0;
+    margin-left: 18%;
     padding: 0px;
     background-color: #AAAAAA;
     overflow: hidden;
@@ -97,10 +97,13 @@ body {
 
 /*Sidebars styles*/
 .sidebar {
-    width: 21%;
+    width: 18%;
+    min-width: 150px;
+    height: 100%;
     margin: 0;
-    padding: 0px;
+    padding: 0;
     background-color: #555555;
+    position: fixed;
 }
 
 .sidebar a {
@@ -178,11 +181,11 @@ body {
 }
 
 .create-btn:hover {
-border-color: #01a7f0;
+    border-color: #01a7f0;
 }
 
 .createTimetable {
-align-self: flex-end;
+    align-self: flex-end;
 }
 
 /*timetable style*/
@@ -192,6 +195,7 @@ align-self: flex-end;
     padding: 0px;
     background-color: #AAAAAA;
 }
+
 .dates_and_create {
     margin: 0;
     padding: 20px 0px;
@@ -253,6 +257,7 @@ align-self: flex-end;
     text-align: center;
 
 }
+
 .week {
     width: 100%;
     margin: 0;
@@ -330,7 +335,6 @@ align-self: flex-end;
 }
 
 
-
 .close-btn:hover {
     color: red;
 }
@@ -340,11 +344,12 @@ align-self: flex-end;
     border-radius: 5px;
     float: right;
     background-color: #555555;
-    color:  #007EB4;
+    color: #007EB4;
     text-decoration: none;
     width: 200%;
     text-align: center;
 }
+
 .button .a {
     text-decoration: none;
     font-size: 0.5em;
@@ -362,16 +367,17 @@ align-self: flex-end;
 /*url style*/
 .url-path {
     margin-top: -1%;
-    margin-left: 3%;
+    margin-left: 8%;
     margin-right: 100%;
     display: inline-flex;
 }
 
 .a-url {
-    margin-right: 21px;
+    max-width: 430px;
+    margin-right: 60px;
     margin-top: 23px;
     margin-left: -7%;
-    padding-left: 8px;
+    padding-left: 10px;
     text-decoration: none;
     color: #2b80a5;
     cursor: pointer;
