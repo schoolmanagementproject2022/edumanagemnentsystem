@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimet
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     @Modifying
     @Query(nativeQuery = true, value = "INSERT INTO courses_table(day_of_week, academic_course_name, academic_class_id, status) " +
             "values(?1,?2,?3,?4)")
-    void create(String dayOfWeek, String academicCourseName, Long academicClassId, String status);
+    CoursesForTimetable create(String dayOfWeek, String academicCourseName, Long academicClassId, String status);
 
     @Query(nativeQuery = true, value = "SELECT *  FROM courses_table WHERE status = 'Active' AND academic_class_id = (?1)")
     List<CoursesForTimetable> findCoursesWithActiveStatusByAcademicCourseId(Long academicClassId);

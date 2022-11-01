@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CoursesForTimetableService {
 
-    void create(CoursesForTimetable coursesForTimetable);
+    CoursesForTimetable create(CoursesForTimetable coursesForTimetable);
 
     void deleteCourseById(Long courseId);
 
