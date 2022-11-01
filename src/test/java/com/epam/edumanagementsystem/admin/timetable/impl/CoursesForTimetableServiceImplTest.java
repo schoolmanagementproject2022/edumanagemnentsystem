@@ -19,7 +19,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CoursesForTimetableServiceImplTest {
@@ -70,6 +70,16 @@ class CoursesForTimetableServiceImplTest {
 
         Optional<CoursesForTimetable> optionalCoursesForTimetable = coursesRepository.findById(id);
         assertTrue(optionalCoursesForTimetable.isEmpty());
+    }
+
+    @Test
+    public void testUpdateCourseStatusByIdChangesStatusToNotActive() {
+        Long id = 1L;
+        doNothing().when(coursesRepository).updateCourseStatusById(id);
+
+        coursesForTimetableService.updateCourseStatusById(id);
+
+        verify(coursesRepository,times(1)).updateCourseStatusById(id);
     }
 
     @Test
@@ -141,14 +151,14 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesByDayOfWeekAndStatusAndAcademicClassId(){
+    public void testGetCoursesByDayOfWeekAndStatusAndAcademicClassId() {
         String dayOfWeek = "MONDAY";
         String status = "ACTIVE";
         Long academicClassId = 1L;
         when(coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId))
                 .thenReturn(List.of(course));
 
-        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek,status,academicClassId);
+        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId);
 
         assertNotNull(listOfCourses);
         assertEquals(1, listOfCourses.size());
