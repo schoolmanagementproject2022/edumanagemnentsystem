@@ -3,7 +3,6 @@ package com.epam.edumanagementsystem.admin.timetable.impl;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
-import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -53,17 +52,12 @@ class CoursesForTimetableServiceImplTest {
         String academicClassName = "English";
         Long academicClassId = 1L;
         String status = "ACTIVE";
-        doNothing().when(coursesRepository).create(dayOfWeek,academicClassName,academicClassId,status);
+        doNothing().when(coursesRepository).create(dayOfWeek, academicClassName, academicClassId, status);
 
         coursesForTimetableService.create(course);
 
-        verify(coursesRepository, times(1)).create(dayOfWeek,academicClassName,academicClassId,status);
+        verify(coursesRepository, times(1)).create(dayOfWeek, academicClassName, academicClassId, status);
 
-    }
-
-    @Test
-    public void testCreateThrowsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> coursesForTimetableService.create(null));
     }
 
     @Test
