@@ -49,12 +49,16 @@ class CoursesForTimetableServiceImplTest {
 
     @Test
     public void testCreateIsOK() {
-        when(coursesRepository.create(course.getDayOfWeek(), course.getAcademicCourse(),
-                course.getAcademicClass().get(0).getId(), course.getStatus())).thenReturn(course);
+        String dayOfWeek = "MONDAY";
+        String academicClassName = "English";
+        Long academicClassId = 1L;
+        String status = "ACTIVE";
+        doNothing().when(coursesRepository).create(dayOfWeek,academicClassName,academicClassId,status);
 
-        CoursesForTimetable actualCourse = coursesForTimetableService.create(course);
+        coursesForTimetableService.create(course);
 
-        assertEquals(course, actualCourse);
+        verify(coursesRepository, times(1)).create(dayOfWeek,academicClassName,academicClassId,status);
+
     }
 
     @Test
@@ -79,7 +83,7 @@ class CoursesForTimetableServiceImplTest {
 
         coursesForTimetableService.updateCourseStatusById(id);
 
-        verify(coursesRepository,times(1)).updateCourseStatusById(id);
+        verify(coursesRepository, times(1)).updateCourseStatusById(id);
     }
 
     @Test

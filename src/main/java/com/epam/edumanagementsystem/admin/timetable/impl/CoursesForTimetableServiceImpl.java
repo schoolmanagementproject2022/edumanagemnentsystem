@@ -21,11 +21,8 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Transactional
     @Override
-    public CoursesForTimetable create(CoursesForTimetable coursesForTimetable) {
-        if (coursesForTimetable == null) {
-            throw new NullPointerException("CourseForTimetable entity is null");
-        }
-        return coursesRepository.create(coursesForTimetable.getDayOfWeek(),
+    public void create(CoursesForTimetable coursesForTimetable) {
+       coursesRepository.create(coursesForTimetable.getDayOfWeek(),
                 coursesForTimetable.getAcademicCourse(),
                 coursesForTimetable.getAcademicClass().get(0).getId(),
                 coursesForTimetable.getStatus());
