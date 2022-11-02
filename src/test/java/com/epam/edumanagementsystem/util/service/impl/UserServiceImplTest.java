@@ -49,7 +49,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testSaveIsOk() {
+    public void testSaveIsOk() {
         when(userRepository.save(any(User.class))).thenReturn(user);
         User actualUser = userService.save(user);
         assertEquals(user, actualUser);
@@ -57,7 +57,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testSaveReturnsNull() {
+    public void testSaveReturnsNull() {
         when(userRepository.save(any(User.class))).thenReturn(null);
         User actualUser = userService.save(user);
         assertEquals(null, actualUser);
@@ -65,7 +65,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testFindByEmailReturnsRightUser() {
+    public void testFindByEmailReturnsRightUser() {
         String email = "right-user@gmail.com";
         User expectedUser = user;
         when(userRepository.findByEmail(email)).thenReturn(Optional.ofNullable(user));
@@ -74,7 +74,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testFindAllReturnsAllUsers() {
+    public void testFindAllReturnsAllUsers() {
         when(userRepository.findAll()).thenReturn(List.of(user));
         List<User> listOfUsers = userService.findAll();
         assertNotNull(listOfUsers);

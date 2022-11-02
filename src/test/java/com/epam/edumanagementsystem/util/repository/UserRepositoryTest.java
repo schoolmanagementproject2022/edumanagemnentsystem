@@ -23,14 +23,14 @@ class UserRepositoryTest {
     }
 
     @Test
-    void testFindByEmailIsPresentWithRightEmail() {
+    public void testFindByEmailIsPresentWithRightEmail() {
         String email = "uSEr@emaiL.ru";
         userRepository.save(user);
         assertTrue(userRepository.findByEmail(email).isPresent());
     }
 
     @Test
-    void testFindByEmailIsEmptyWithWrongEmail() {
+    public void testFindByEmailIsEmptyWithWrongEmail() {
         String email = "u-r@emaiL.ruo";
         userRepository.save(user);
         assertTrue(userRepository.findByEmail(email).isEmpty());
