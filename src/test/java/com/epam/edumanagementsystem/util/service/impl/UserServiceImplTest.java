@@ -13,14 +13,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-    private Optional<User> user;
+    private User user;
 
     @Mock
     private UserRepository userRepository;
@@ -30,14 +31,14 @@ class UserServiceImplTest {
 
     @BeforeEach
     public void setup() {
-        user = Optional.of(new User(1L, "right-user@gmail.com", "12345"));
+        user = new User(1L, "right-user@gmail.com", "12345");
     }
 
     @Test
     void testFindByIdIsOk() {
         Long id = 1L;
-        User expectedUser = user.get();
-        when(userRepository.findById(id)).thenReturn(Optional.of(user.get()));
+        User expectedUser = user;
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
         User actualUser = userService.findById(id);
 
         assertThat(actualUser).isNotNull();
@@ -49,36 +50,34 @@ class UserServiceImplTest {
 
     @Test
     void testSaveIsOk() {
-        when(userRepository.save(any(User.class))).thenReturn(user.get());
-        User actualUser = userService.save(user.get());
-        assertEquals(user.get(), actualUser);
-        verify(userRepository, times(1)).save(user.get());
+        when(userRepository.save(any(User.class))).thenReturn(user);
+        User actualUser = userService.save(user);
+        assertEquals(user, actualUser);
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
     void testSaveReturnsNull() {
         when(userRepository.save(any(User.class))).thenReturn(null);
-        User actualUser = userService.save(user.get());
+        User actualUser = userService.save(user);
         assertEquals(null, actualUser);
-        verify(userRepository, times(1)).save(user.get());
+        verify(userRepository, times(1)).save(user);
     }
 
     @Test
     void testFindByEmailReturnsRightUser() {
         String email = "right-user@gmail.com";
-        User expectedUser = user.get();
-        when(userRepository.findByEmail(email)).thenReturn(user);
+        User expectedUser = user;
+        when(userRepository.findByEmail(email)).thenReturn(Optional.ofNullable(user));
         User actualUser = userService.findByEmail(email);
         assertEquals(expectedUser, actualUser);
     }
 
     @Test
     void testFindAllReturnsAllUsers() {
-        when(userRepository.findAll()).thenReturn(List.of(user.get()));
+        when(userRepository.findAll()).thenReturn(List.of(user));
         List<User> listOfUsers = userService.findAll();
         assertNotNull(listOfUsers);
         assertEquals(1, listOfUsers.size());
     }
-
-
 }
