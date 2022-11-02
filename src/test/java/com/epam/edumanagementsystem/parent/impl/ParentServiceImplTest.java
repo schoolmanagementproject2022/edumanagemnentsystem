@@ -1,34 +1,50 @@
-package com.epam.edumanagementsystem.parent.rest.service;
+package com.epam.edumanagementsystem.parent.impl;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
+import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.service.UserService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
-class ParentServiceTest {
+class ParentServiceImplTest {
 
     @Mock
-    private ParentService parentService;
+    private ParentRepository parentRepository;
+
+    @Mock
+    private UserService userService;
+
+    @InjectMocks
+    private ParentServiceImpl parentService;
+
+    private Parent parent;
+    private User user;
+
+    @BeforeEach
+    private void setUp() {
+        user = new User(1L, "parent@mail.com", "PARENT");
+        parent = new Parent(1L, "Parent", "Parentyan", user, "password");
+    }
 
     @Test
     void findByIdIsPresent() {
-        User user = new User(1L, "parent@mail.com", "PARENT");
-        Parent parent = new Parent(1L, "Parent", "Parentyan", user, "password");
-
-        lenient().when(parentService.findById(1L)).thenReturn(Optional.of(parent));
+        when(parentRepository.findById(1L)).thenReturn(Optional.of(parent));
         Optional<Parent> returnedParent = parentService.findById(1L);
 
         Assertions.assertTrue(returnedParent.isPresent(), "Parent was not found");
@@ -37,12 +53,12 @@ class ParentServiceTest {
 
     @Test
     void findByIdWithNull() {
-        lenient().when(parentService.findById(null)).thenThrow(NullPointerException.class);
+        lenient().when(parentRepository.findById(null)).thenThrow(NullPointerException.class);
     }
 
     @Test
     void findByIdNotFound() {
-        lenient().when(parentService.findById(1L)).thenReturn(Optional.empty());
+        lenient().when(parentRepository.findById(1L)).thenReturn(Optional.empty());
     }
 
     @Test
@@ -53,35 +69,29 @@ class ParentServiceTest {
 
     @Test
     void savePositiveAndEmailCheck() {
-        User user = new User(1L, "parent@mail.com", "PARENT");
-        Parent parent = new Parent(1L, "Parent", "Parentyan", user, "password");
-        lenient().when(parentService.save(any())).thenReturn(Optional.of(parent));
+        when(userService.save(any())).thenReturn(user);
+        when(parentRepository.save(any())).thenReturn(Optional.of(parent));
 
-        Optional<Parent> savedParent = parentService.save(ParentMapper.toParentDto(parent));
+        ParentDto parentDto = ParentMapper.toParentDto(parent);
+        Parent savedParent = parentService.save(parentDto);
 
         Assertions.assertNotNull(savedParent, "The savedParent should not be null");
-        Assertions.assertEquals("parent@mail.com", savedParent.get().getUser().getEmail());
+        Assertions.assertEquals("parent@mail.com", savedParent.getUser().getEmail());
     }
 
     @Test
     void saveWithNull() {
-        lenient().when(parentService.save(null)).thenThrow(NullPointerException.class);
+        Assertions.assertThrows(NullPointerException.class, () -> parentService.save(null));
     }
 
     @Test
     void findAllNotNullAndSizePositiveCase() {
-        User firstUser = new User(1L, "parent1@mail.com", "PARENT");
-        Parent firstParent = new Parent(1L, "ParentOne", "ParentOneyan", firstUser, "password");
-
-        User secondUser = new User(1L, "parent2@mail.com", "PARENT");
-        Parent secondParent = new Parent(1L, "ParentTwo", "ParentTwoyan", secondUser, "password");
-
-        lenient().when(parentService.findAll()).thenReturn(List.of(firstParent,secondParent));
+        when(parentRepository.findAll()).thenReturn(List.of(parent));
 
         List<Parent> all = parentService.findAll();
 
         Assertions.assertNotNull(all);
-        Assertions.assertEquals(2, all.size());
+        Assertions.assertEquals(1, all.size());
     }
 
     @Test
@@ -92,10 +102,7 @@ class ParentServiceTest {
 
     @Test
     void findByUserIdPositiveCase() {
-        User user = new User(1L, "parent@mail.com", "PARENT");
-        Parent parent = new Parent(1L, "Parent", "Parentyan", user, "password");
-
-        lenient().when(parentService.findByUserId(1L)).thenReturn(parent);
+        when(parentRepository.findByUserId(1L)).thenReturn(parent);
         Parent returnedParent = parentService.findByUserId(1L);
 
         Assertions.assertNotNull(returnedParent, "Parent was null");
@@ -104,12 +111,12 @@ class ParentServiceTest {
 
     @Test
     void findByUserIdWithNull() {
-        lenient().when(parentService.findByUserId(null)).thenThrow(NullPointerException.class);
+        lenient().when(parentRepository.findByUserId(null)).thenThrow(NullPointerException.class);
     }
 
     @Test
     void findByUserIdNotFound() {
-        lenient().when(parentService.findByUserId(1L)).thenReturn(null);
+        lenient().when(parentRepository.findByUserId(1L)).thenReturn(null);
     }
 
 }

@@ -10,7 +10,7 @@ public interface ParentService {
 
     Optional<Parent> findById(Long id);
 
-    Optional<Parent> save(ParentDto parent);
+    Parent save(ParentDto parent);
 
     List<Parent> findAll();
 
