@@ -8,36 +8,75 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CoursesForTimetableRepositoryTest {
 
-    private CoursesForTimetable course;
-    private CoursesForTimetable editedCourse;
-    private CoursesForTimetable nonActiveCourse;
+    private CoursesForTimetable activeCourse;
 
-    @Autowired
+    @Mock
     private CoursesForTimetableRepository repository;
+    @Autowired
+    private TestEntityManager entityManager;
 
     @BeforeEach
-    void setup() {
-        Teacher teacher = new Teacher(1L, "John", "Doe", new User(), "password", new HashSet(), new HashSet(), new HashSet());
-        Subject subject = new Subject(1L, "English", Set.of(teacher));
-        AcademicClass academicClass = new AcademicClass(1L, "8A", new HashSet(), new HashSet(), teacher, new ArrayList(), new HashSet());
-        AcademicCourse academicCourse = new AcademicCourse(1L, "English", subject, Set.of(teacher), Set.of(academicClass));
+    public void setup() {
+        User user = new User();
+        user.setRole("TEACHER");
+        user.setEmail("test@mail.ru");
+        entityManager.persist(user);
 
-        course = new CoursesForTimetable(1L, academicCourse.getName(), List.of(academicClass), "MONDAY", "ACTIVE");
-        editedCourse = new CoursesForTimetable(2L, academicCourse.getName(), List.of(academicClass), "TUESDAY", "EDIT");
-        nonActiveCourse = new CoursesForTimetable(2L, academicCourse.getName(), List.of(academicClass), "TUESDAY", "NOT ACTIVE");
+        Teacher teacher = new Teacher();
+        teacher.setName("John");
+        teacher.setSurname("Doe");
+        teacher.setUser(user);
+        teacher.setPassword(user.getEmail());
+        teacher.setPassword("Teacher123+");
+        teacher.setAcademicCourseSet(new HashSet<>());
+        teacher.setSubjectSet(new HashSet<>());
+        teacher.setAcademicCourseSet(new HashSet<>());
+        entityManager.persist(teacher);
+
+        Subject subject = new Subject();
+        subject.setName("Test subject");
+        subject.setTeacherSet(Set.of(teacher));
+        entityManager.persist(subject);
+
+        AcademicClass academicClass = new AcademicClass();
+        academicClass.setClassNumber("Test class");
+        academicClass.setTeacher(new HashSet<>());
+        academicClass.setAcademicCourseSet(new HashSet<>());
+        academicClass.setClassroomTeacher(teacher);
+        academicClass.setCoursesForTimetableList(new ArrayList<>());
+        academicClass.setStudent(new HashSet<>());
+        entityManager.persist(academicClass);
+
+        AcademicCourse academicCourse = new AcademicCourse();
+        academicCourse.setName("Test course");
+        academicCourse.setSubject(subject);
+        academicCourse.setTeacher(Set.of(teacher));
+        academicCourse.setAcademicClass(Set.of(academicClass));
+        entityManager.persist(academicCourse);
+
+        activeCourse = new CoursesForTimetable();
+        activeCourse.setId(321654987L);
+        activeCourse.setAcademicCourse(academicCourse.getName());
+        activeCourse.setAcademicClass(List.of(academicClass));
+        activeCourse.setDayOfWeek("Monday");
+        activeCourse.setStatus("Active");
+
     }
 
     @Test
@@ -52,5 +91,14 @@ class CoursesForTimetableRepositoryTest {
         }
 
         assertThat(coursesForTimetable).isNull();
+    }
+
+    @Test
+    void testUpdateCourseStatusByIdSetsStatusToNotActive() {
+        Long id = activeCourse.getId();
+
+        repository.updateCourseStatusById(id);
+
+        verify(repository,times(1)).updateCourseStatusById(id);
     }
 }
