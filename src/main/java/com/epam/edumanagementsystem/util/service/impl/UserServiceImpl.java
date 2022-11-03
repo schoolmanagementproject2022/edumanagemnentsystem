@@ -1,12 +1,14 @@
 package com.epam.edumanagementsystem.util.service.impl;
 
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.exception.UserNotFoundException;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return userRepository.save(user);
         }
-        return null;
+        throw new UserNotFoundException();
     }
 
     @Override
