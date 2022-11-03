@@ -49,13 +49,19 @@ INSERT INTO user_table (email, role)
 VALUES('heghine9696@gmail.com','ADMIN');
 
 INSERT INTO user_table (email, role)
-VALUES('nairaBogdanyan@gmail.com','TEACHER');
+VALUES('gayaneHovhannisyan@gmail.com','TEACHER');
+
+INSERT INTO user_table (email, role)
+VALUES('gayushPoghosyan@gmail.com','TEACHER');
 
 INSERT INTO user_table (email, role)
 VALUES('student@gmail.com','STUDENT');
 
 INSERT INTO user_table (email, role)
 VALUES('parent@gmail.com','PARENT');
+
+INSERT INTO user_table (email, role)
+VALUES('nairaBogdanyan@gmail.com','PARENT');
 
 INSERT INTO admin (username, surname, password, user_id)
 VALUES ('Heghine', 'Khachatryan' ,'$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC',
@@ -65,8 +71,16 @@ INSERT INTO parent (name, surname, user_id, password)
 VALUES ('Parent', 'Parentyan' , (SELECT id FROM user_table WHERE email='parent@gmail.com'),
         '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC');
 
+INSERT INTO parent (name, surname, user_id, password)
+VALUES ('Naira', 'Bogdanyan' , (SELECT id FROM user_table WHERE email='nairaBogdanyan@gmail.com'),
+        '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC');
+
 INSERT INTO teacher (name, surname, user_id, password)
-VALUES ('Naira', 'Bogdanyan', (SELECT id FROM user_table WHERE email='nairaBogdanyan@gmail.com'),
+VALUES ('Gayane', 'Hovhannisyan', (SELECT id FROM user_table WHERE email='gayaneHovhannisyan@gmail.com'),
+        '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC');
+
+INSERT INTO teacher (name, surname, user_id, password)
+VALUES ('Gayush', 'Poghosyan', (SELECT id FROM user_table WHERE email='gayushPoghosyan@gmail.com'),
         '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC');
 
 INSERT INTO student (name, surname, user_id, address, date, gender, blood_group, password)
