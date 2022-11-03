@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
+import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
@@ -34,7 +35,7 @@ public class SubjectController {
     @GetMapping
     public String getAll(ModelMap modelMap) {
         List<TeacherDto> teachers = teacherService.findAll();
-        List<Subject> all = subjectService.findAll();
+        List<SubjectDto> all = subjectService.findAll();
         modelMap.addAttribute("subjects", all);
         modelMap.addAttribute("teachers", teachers);
         modelMap.addAttribute("subject", new Subject());
@@ -44,7 +45,7 @@ public class SubjectController {
     @PostMapping
     public String createSubject(@ModelAttribute("subject") @Valid Subject subject,
                                 BindingResult bindingResult, Model model) {
-        List<Subject> all = subjectService.findAll();
+        List<SubjectDto> all = subjectService.findAll();
         model.addAttribute("subjects", all);
         List<TeacherDto> allTeacher = teacherService.findAll();
         model.addAttribute("teachers", allTeacher);
@@ -57,7 +58,7 @@ public class SubjectController {
             }
         }
 
-        for (Subject subject1 : all) {
+        for (SubjectDto subject1 : all) {
             if (subject1.getName().equalsIgnoreCase(subject.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
                 return "subjectSection";

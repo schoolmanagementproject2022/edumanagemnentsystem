@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
+import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
@@ -40,7 +41,7 @@ public class AcademicCourseController {
     @GetMapping
     public String openAcademicCourseSection(ModelMap model) {
         List<AcademicCourseDto> academicCourseDtos = academicCourseService.findAll();
-        List<Subject> all = subjectService.findAll();
+        List<SubjectDto> all = subjectService.findAll();
         model.addAttribute("academicCourses", academicCourseDtos);
         model.addAttribute("subjects", all);
         model.addAttribute("academicCourse", new AcademicCourseDto());
@@ -54,7 +55,7 @@ public class AcademicCourseController {
 
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
-        List<Subject> allSubjects = subjectService.findAll();
+        List<SubjectDto> allSubjects = subjectService.findAll();
         model.addAttribute("subjects", allSubjects);
 
         Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
