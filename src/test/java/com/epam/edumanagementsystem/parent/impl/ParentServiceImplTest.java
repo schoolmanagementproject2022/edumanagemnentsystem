@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.parent.impl;
 
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
@@ -18,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ParentServiceImplTest {
@@ -38,7 +36,7 @@ class ParentServiceImplTest {
 
     @BeforeEach
     private void setUp() {
-        user = new User(1L, "parent@mail.com", "PARENT");
+        user = new User("parent@mail.com", "PARENT");
         parent = new Parent(1L, "Parent", "Parentyan", user, "password");
     }
 
@@ -53,7 +51,7 @@ class ParentServiceImplTest {
 
     @Test
     void findByIdWithNull() {
-        lenient().when(parentRepository.findById(null)).thenThrow(NullPointerException.class);
+        Assertions.assertThrows(NullPointerException.class, () -> parentService.findById(null));
     }
 
     @Test
@@ -70,10 +68,9 @@ class ParentServiceImplTest {
     @Test
     void savePositiveAndEmailCheck() {
         when(userService.save(any())).thenReturn(user);
-        when(parentRepository.save(any())).thenReturn(Optional.of(parent));
+        when(parentRepository.save(any())).thenReturn(parent);
 
-        ParentDto parentDto = ParentMapper.toParentDto(parent);
-        Parent savedParent = parentService.save(parentDto);
+        Parent savedParent = parentService.save(ParentMapper.toParentDto(parent));
 
         Assertions.assertNotNull(savedParent, "The savedParent should not be null");
         Assertions.assertEquals("parent@mail.com", savedParent.getUser().getEmail());
@@ -111,12 +108,28 @@ class ParentServiceImplTest {
 
     @Test
     void findByUserIdWithNull() {
-        lenient().when(parentRepository.findByUserId(null)).thenThrow(NullPointerException.class);
+        Assertions.assertThrows(NullPointerException.class, () -> parentService.findByUserId(null));
     }
 
     @Test
     void findByUserIdNotFound() {
         lenient().when(parentRepository.findByUserId(1L)).thenReturn(null);
+    }
+
+    @Test
+    void deleteByIdVerifyAndCheckIfDeleted() {
+        when(userService.save(any())).thenReturn(user);
+        when(parentRepository.save(any())).thenReturn(parent);
+        Parent savedParent = parentService.save(ParentMapper.toParentDto(parent));
+
+        parentService.deleteById(savedParent.getId());
+        verify(parentRepository, times(1)).deleteById(savedParent.getId());
+        Assertions.assertEquals(parentService.findById(savedParent.getId()), Optional.empty());
+    }
+
+    @Test
+    void deleteByIdWithNull() {
+        Assertions.assertThrows(NullPointerException.class, () -> parentService.deleteById(null));
     }
 
 }
