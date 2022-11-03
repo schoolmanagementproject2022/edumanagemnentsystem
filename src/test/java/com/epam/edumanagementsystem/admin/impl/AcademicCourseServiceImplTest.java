@@ -1,5 +1,7 @@
 package com.epam.edumanagementsystem.admin.impl;
 
+import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
@@ -13,21 +15,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AcademicCourseServiceImplTest {
 
-
     private AcademicCourse academicCourse;
-    private Subject subject;
     private Teacher teacher;
-    private AcademicClass academicClass;
-
+    private Subject subject;
 
     @Mock
     private AcademicCourseRepository academicCourseRepository;
@@ -43,10 +42,9 @@ class AcademicCourseServiceImplTest {
                 subject, teacherSet, academicClasses);
     }
 
-
     @Test
     @DisplayName("should find academic course by given academic name")
-    void findAcademicCourseByAcademicCourseName() {
+    void testFindAcademicCourseByAcademicCourseName() {
         String name = "firstAcademicCourse";
         when(academicCourseRepository.findAcademicCourseByName(name)).thenReturn(academicCourse);
         AcademicCourse academicCourseByAcademicCourseName =
@@ -55,34 +53,127 @@ class AcademicCourseServiceImplTest {
     }
 
     @Test
-    void findAllCourse() {
+    @DisplayName("should not find academic course by given wrong academic name")
+    void testFindAcademicCourseByAcademicCourseNameFail() {
+        String name = "wrongName";
+        assertThrows(RuntimeException.class, () -> academicCourseService
+                .findAcademicCourseByAcademicCourseName(name));
     }
 
     @Test
-    void findByID() {
+    @DisplayName("should throw NulPointerException")
+    void testFindAcademicCourseByNullFail() {
+        assertThrows(NullPointerException.class, () -> academicCourseService
+                .findAcademicCourseByAcademicCourseName(null));
     }
 
     @Test
-    void create() {
+    @DisplayName("should find all academic courses")
+    void testFindAllCourse() {
+        List<AcademicCourse> academicCourses = new ArrayList<>();
+        academicCourses.add(academicCourse);
+        when(academicCourseRepository.findAll()).thenReturn(academicCourses);
+        List<AcademicCourse> allCourse = academicCourseService.findAllCourse();
+        assertEquals(academicCourses, allCourse);
     }
 
     @Test
-    void getById() {
+    @DisplayName("should find academic course by given id")
+    void testFindById() {
+        long id = 1L;
+        when(academicCourseRepository.findAcademicCourseById(id)).thenReturn(academicCourse);
+        AcademicCourse academicCourseById = academicCourseService.findByID(id);
+        assertEquals(academicCourse, academicCourseById);
     }
 
     @Test
-    void findAll() {
+    @DisplayName("should not find academic course by given absent id")
+    void testFindByIdFail() {
+        long id = 8L;
+        assertThrows(RuntimeException.class, () -> academicCourseService.findByID(id));
     }
 
     @Test
-    void findAllTeacher() {
+    @DisplayName("should not find academic course by null id")
+    void testFindByNullIdFail() {
+        assertThrows(NullPointerException.class, () -> academicCourseService.findByID(null));
     }
 
     @Test
-    void update() {
+    @DisplayName("should create academic course success")
+    void testCreateSuccess() {
+        when(academicCourseRepository.save(academicCourse)).thenReturn(academicCourse);
+        AcademicCourse actualAcademicCourse = academicCourseService.create(academicCourse);
+        assertEquals(academicCourse, actualAcademicCourse);
     }
 
     @Test
-    void findAllTeachersByAcademicCourseName() {
+    @DisplayName("should throw NullPointerException")
+    void testCreateFail() {
+        assertThrows(NullPointerException.class, () -> academicCourseService.create(null));
+    }
+
+    @Test
+    @DisplayName("should find academic course by given Id")
+    void testGetById() {
+        long id = 1L;
+        when(academicCourseRepository.findById(id)).thenReturn(Optional.ofNullable(academicCourse));
+        AcademicCourseDto academicCourseDto = AcademicCourseMapper.toDto(academicCourse);
+        AcademicCourseDto academicCourseDtoById = academicCourseService.getById(id);
+        assertEquals(academicCourseDto, academicCourseDtoById);
+    }
+
+    @Test
+    @DisplayName("should throw RuntimeException when given wrong Id")
+    void testGetByIdFail() {
+        long id = 8L;
+        assertThrows(RuntimeException.class, () -> academicCourseService.getById(id));
+    }
+
+    @Test
+    @DisplayName("should throw NullPointerException when given wrong null Id")
+    void testGetByNullIdFail() {
+        assertThrows(NullPointerException.class, () -> academicCourseService.getById(null));
+    }
+
+    @Test
+    @DisplayName("should find all academic course Dto")
+    void testFindAllAcademicCourseDto() {
+        List<AcademicCourse> academicCourseList = new ArrayList<>();
+        academicCourseList.add(academicCourse);
+        when(academicCourseRepository.findAll()).thenReturn(academicCourseList);
+        List<AcademicCourseDto> allAcademicCourseDtoList = AcademicCourseMapper.toListOfAcademicCourseDto(academicCourseList);
+        List<AcademicCourseDto> allActualAcademicCourseDtos = academicCourseService.findAll();
+        assertEquals(allAcademicCourseDtoList, allActualAcademicCourseDtos);
+        assertEquals(1, allActualAcademicCourseDtos.size());
+    }
+
+    @Test
+    @DisplayName("should find all teachers in academic courses")
+    void testFindAllTeachersInAcademicCourses() {
+        Set<Teacher> teachersInAcademicCourse = new HashSet<>();
+        teachersInAcademicCourse.add(teacher);
+        academicCourse.setTeacher(teachersInAcademicCourse);
+        assertEquals(teachersInAcademicCourse, academicCourse.getTeacher());
+        assertEquals(1, teachersInAcademicCourse.size());
+    }
+
+    @Test
+    @DisplayName("should update academic course")
+    void testUpdateSuccess() {
+        Set<Teacher> teacherSet2 = new HashSet<>();
+        Set<AcademicClass> academicClasses2 = new HashSet<>();
+        Subject subject2 = new Subject();
+        AcademicCourse academicCourseForUpdate = new AcademicCourse(1L, "secondName", subject2, teacherSet2, academicClasses2);
+        when(academicCourseRepository.findAcademicCourseByName("secondName")).thenReturn(academicCourseForUpdate);
+        when(academicCourseRepository.save(academicCourseForUpdate)).thenReturn(academicCourseForUpdate);
+        AcademicCourse updatedAcademicCourse = academicCourseService.update(academicCourseForUpdate);
+        assertEquals("secondName", updatedAcademicCourse.getName());
+    }
+
+    @Test
+    @DisplayName("should update academic course")
+    void testUpdateFail() {
+        assertThrows(NullPointerException.class, () -> academicCourseService.update(null));
     }
 }

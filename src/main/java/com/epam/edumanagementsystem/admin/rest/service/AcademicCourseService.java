@@ -14,13 +14,13 @@ public interface AcademicCourseService {
     List<AcademicCourse> findAllCourse();
     AcademicCourse findByID(Long id);
 
-    void create(AcademicCourse academicCourse);
+    AcademicCourse create(AcademicCourse academicCourse);
 
     AcademicCourseDto getById(Long id);
 
     List<AcademicCourseDto> findAll();
 
-    void update(AcademicCourse academicCourse);
+    AcademicCourse update(AcademicCourse academicCourse);
 
     Set<Teacher> findAllTeacher();
 
