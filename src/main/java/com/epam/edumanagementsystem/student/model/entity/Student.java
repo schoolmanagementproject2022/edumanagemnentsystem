@@ -76,6 +76,30 @@ public class Student {
         this.academicClass = academicClass;
     }
 
+    public Student(Long id,
+                   String name,
+                   String surname,
+                   User user,
+                   String address,
+                   LocalDate date,
+                   Gender gender,
+                   String password,
+                   BloodGroup bloodGroup,
+                   Parent parent,
+                   AcademicClass academicClass) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.user = user;
+        this.address = address;
+        this.date = date;
+        this.gender = gender;
+        this.password = password;
+        this.bloodGroup = bloodGroup;
+        this.parent = parent;
+        this.academicClass = academicClass;
+    }
+
     public Student() {
     }
 

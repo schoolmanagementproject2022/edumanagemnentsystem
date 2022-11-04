@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.util.exception.UserNotFoundException;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDtoList(studentRepository.findAll());
     }
 
+    @Transactional
     @Override
     public Student create(StudentDto studentDto) {
         if (studentDto == null) {
@@ -35,6 +37,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(StudentMapper.toStudent(studentDto));
     }
 
+    @Transactional
     @Override
     public Student create(StudentDto studentDto, UserService userService) {
         if (studentDto == null) {
@@ -43,6 +46,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(StudentMapper.toStudent(studentDto, userService));
     }
 
+    @Transactional
     @Override
     public Student update(Student student) {
         if (student == null) {
