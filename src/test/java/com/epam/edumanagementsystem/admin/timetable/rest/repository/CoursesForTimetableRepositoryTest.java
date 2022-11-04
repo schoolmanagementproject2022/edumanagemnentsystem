@@ -3,12 +3,12 @@ package com.epam.edumanagementsystem.admin.timetable.rest.repository;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
+import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,17 +17,25 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CoursesForTimetableRepositoryTest {
 
-    private CoursesForTimetable activeCourse;
+    private Long activeCourseId;
+    private Long editedCourseId;
+    private Long notActiveCourseId;
+    private Long academicClass1Id;
+    private Long academicClass2Id;
+    private Long academicClass3Id;
+    private AcademicCourse academicCourse;
+    private AcademicClass academicClass;
+    private Long academicClassId;
 
-    @Mock
+    @Autowired
     private CoursesForTimetableRepository repository;
+
     @Autowired
     private TestEntityManager entityManager;
 
@@ -54,51 +62,175 @@ class CoursesForTimetableRepositoryTest {
         subject.setTeacherSet(Set.of(teacher));
         entityManager.persist(subject);
 
-        AcademicClass academicClass = new AcademicClass();
+        academicClass = new AcademicClass();
         academicClass.setClassNumber("Test class");
         academicClass.setTeacher(new HashSet<>());
         academicClass.setAcademicCourseSet(new HashSet<>());
         academicClass.setClassroomTeacher(teacher);
         academicClass.setCoursesForTimetableList(new ArrayList<>());
         academicClass.setStudent(new HashSet<>());
-        entityManager.persist(academicClass);
+        academicClassId = entityManager.persist(academicClass).getId();
 
-        AcademicCourse academicCourse = new AcademicCourse();
+        AcademicClass academicClass1 = new AcademicClass();
+        academicClass1.setClassNumber("Test class1");
+        academicClass1.setTeacher(new HashSet<>());
+        academicClass1.setAcademicCourseSet(new HashSet<>());
+        academicClass1.setClassroomTeacher(teacher);
+        academicClass1.setCoursesForTimetableList(new ArrayList<>());
+        academicClass1.setStudent(new HashSet<>());
+        academicClass1Id = entityManager.persist(academicClass1).getId();
+
+        AcademicClass academicClass2 = new AcademicClass();
+        academicClass2.setClassNumber("Test class2");
+        academicClass2.setTeacher(new HashSet<>());
+        academicClass2.setAcademicCourseSet(new HashSet<>());
+        academicClass2.setClassroomTeacher(teacher);
+        academicClass2.setCoursesForTimetableList(new ArrayList<>());
+        academicClass2.setStudent(new HashSet<>());
+        academicClass2Id = entityManager.persist(academicClass2).getId();
+
+        AcademicClass academicClass3 = new AcademicClass();
+        academicClass3.setClassNumber("Test class3");
+        academicClass3.setTeacher(new HashSet<>());
+        academicClass3.setAcademicCourseSet(new HashSet<>());
+        academicClass3.setClassroomTeacher(teacher);
+        academicClass3.setCoursesForTimetableList(new ArrayList<>());
+        academicClass3.setStudent(new HashSet<>());
+        academicClass3Id = entityManager.persist(academicClass3).getId();
+
+        academicCourse = new AcademicCourse();
         academicCourse.setName("Test course");
         academicCourse.setSubject(subject);
         academicCourse.setTeacher(Set.of(teacher));
-        academicCourse.setAcademicClass(Set.of(academicClass));
-        entityManager.persist(academicCourse);
+        academicCourse.setAcademicClass(Set.of(academicClass1));
+        entityManager.persist(academicCourse).getId();
 
-        activeCourse = new CoursesForTimetable();
-        activeCourse.setId(321654987L);
-        activeCourse.setAcademicCourse(academicCourse.getName());
-        activeCourse.setAcademicClass(List.of(academicClass));
-        activeCourse.setDayOfWeek("Monday");
-        activeCourse.setStatus("Active");
+        CoursesForTimetableDto activeCourseDto = new CoursesForTimetableDto();
+        activeCourseDto.setAcademicCourse(academicCourse);
+        activeCourseDto.setAcademicClass(academicClass1);
+        activeCourseDto.setDayOfWeek("Monday");
+        activeCourseDto.setStatus("Active");
 
+        CoursesForTimetableDto editCourseDto = new CoursesForTimetableDto();
+        editCourseDto.setAcademicCourse(academicCourse);
+        editCourseDto.setAcademicClass(academicClass2);
+        editCourseDto.setDayOfWeek("Monday");
+        editCourseDto.setStatus("Edit");
+
+        CoursesForTimetableDto notActiveCourseDto = new CoursesForTimetableDto();
+        notActiveCourseDto.setAcademicCourse(academicCourse);
+        notActiveCourseDto.setAcademicClass(academicClass3);
+        notActiveCourseDto.setDayOfWeek("Monday");
+        notActiveCourseDto.setStatus("Not Active");
+
+        repository.create(activeCourseDto.getDayOfWeek(), activeCourseDto.getAcademicCourse().getName(),
+                activeCourseDto.getAcademicClass().getId(), activeCourseDto.getStatus());
+        activeCourseId = repository.findCoursesByAcademicClassId(academicClass1Id).get(0).getId();
+
+        repository.create(editCourseDto.getDayOfWeek(), editCourseDto.getAcademicCourse().getName(),
+                editCourseDto.getAcademicClass().getId(), editCourseDto.getStatus());
+        editedCourseId = repository.findCoursesByAcademicClassId(academicClass2Id).get(0).getId();
+
+        repository.create(notActiveCourseDto.getDayOfWeek(), notActiveCourseDto.getAcademicCourse().getName(),
+                notActiveCourseDto.getAcademicClass().getId(), notActiveCourseDto.getStatus());
+
+        notActiveCourseId = repository.findCoursesByAcademicClassId(academicClass3Id).get(0).getId();
     }
 
     @Test
-    void testDeleteCourseByIdIsSuccess() {
-        Long id = 1L;
-        repository.deleteCourseById(id);
-        Optional<CoursesForTimetable> optionalCoursesForTimetable = repository.findById(id);
-        CoursesForTimetable coursesForTimetable = null;
+    void testDeleteCourseByIdReturnsEmptyOptionalCourse() {
+        repository.deleteCourseById(notActiveCourseId);
+        Optional<CoursesForTimetable> deletedCourse = repository.findById(notActiveCourseId);
+        assertThat(deletedCourse.isEmpty());
+    }
 
-        if (optionalCoursesForTimetable.isPresent()) {
-            coursesForTimetable = optionalCoursesForTimetable.get();
-        }
+    @Test
+    void testUpdateCourseStatusToActiveByIdIsOk() {
+        String statusAfterUpdate = "Active";
 
-        assertThat(coursesForTimetable).isNull();
+        repository.updateCourseStatusToActiveById(notActiveCourseId);
+
+        Optional<CoursesForTimetable> courseWithChangedStatus = repository.findById(notActiveCourseId);
+        assertThat(courseWithChangedStatus.isPresent());
+        assertThat(courseWithChangedStatus.get().getStatus().equalsIgnoreCase(statusAfterUpdate));
     }
 
     @Test
     void testUpdateCourseStatusByIdSetsStatusToNotActive() {
-        Long id = activeCourse.getId();
+        String statusAfterUpdate = "Not Active";
 
-        repository.updateCourseStatusById(id);
+        repository.updateCourseStatusById(activeCourseId);
 
-        verify(repository,times(1)).updateCourseStatusById(id);
+        Optional<CoursesForTimetable> courseWithChangedStatus = repository.findById(activeCourseId);
+        assertThat(courseWithChangedStatus.isPresent());
+        assertThat(courseWithChangedStatus.get().getStatus().equalsIgnoreCase(statusAfterUpdate));
+    }
+
+    @Test
+    void testFindCoursesByDayOfWeekAndAcademicClassIdReturnsCorrectList() {
+        String dayOfWeek = "Monday";
+        Long academicClassId = academicClass1Id;
+
+        List<CoursesForTimetable> listOfCourses = repository.findCoursesByDayOfWeekAndAcademicClassId(dayOfWeek, academicClassId);
+
+        assertThat(listOfCourses).isNotNull();
+        assertThat(listOfCourses.get(0).getDayOfWeek().equalsIgnoreCase(dayOfWeek) &&
+                listOfCourses.get(0).getAcademicClass().get(0).getId().equals(academicClassId));
+    }
+
+    @Test
+    void testFindCoursesWithEditStatusByAcademicCourseIdReturnsCorrectList() {
+        List<CoursesForTimetable> listOfEditedCourses = repository.findCoursesWithEditStatusByAcademicCourseId(academicClass2Id);
+        assertThat(listOfEditedCourses).isNotNull();
+        assertEquals(1, listOfEditedCourses.size());
+    }
+
+    @Test
+    void testCreateIsOk() {
+        String dayOfWeek = "Test day of week";
+        String status = "Test status";
+
+        CoursesForTimetableDto courseDto = new CoursesForTimetableDto();
+        courseDto.setAcademicCourse(academicCourse);
+        courseDto.setAcademicClass(academicClass);
+        courseDto.setDayOfWeek(dayOfWeek);
+        courseDto.setStatus(status);
+
+        repository.create(courseDto.getDayOfWeek(), courseDto.getAcademicCourse().getName(),
+                courseDto.getAcademicClass().getId(), courseDto.getStatus());
+
+        CoursesForTimetable savedCourse = repository.findCoursesByAcademicClassId(academicClassId).get(0);
+
+        assertThat(savedCourse).isNotNull();
+        assertThat(savedCourse.getDayOfWeek().equalsIgnoreCase(dayOfWeek) &&
+                savedCourse.getStatus().equalsIgnoreCase(status));
+    }
+
+    @Test
+    void testFindCoursesWithActiveStatusByAcademicCourseIdReturnsCorrectList() {
+        List<CoursesForTimetable> listOfActiveCourses = repository.findCoursesWithActiveStatusByAcademicCourseId(academicClass1Id);
+        assertThat(listOfActiveCourses).isNotNull();
+        assertEquals(1, listOfActiveCourses.size());
+    }
+
+    @Test
+    void testFindCoursesWithNotActiveStatusByAcademicCourseIdReturnsCorrectList() {
+        List<CoursesForTimetable> listOfNotActiveCourses = repository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClass3Id);
+        assertThat(listOfNotActiveCourses).isNotNull();
+        assertEquals(1, listOfNotActiveCourses.size());
+    }
+
+    @Test
+    void testFindCoursesByDayOfWeekAndStatusAndAcademicClassIdReturnsCorrectList() {
+        String dayOfWeek = "Monday";
+        String status = "Active";
+        Long academicClassId = academicClass1Id;
+
+        List<CoursesForTimetable> listOfCourses = repository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId);
+
+        assertThat(listOfCourses).isNotNull();
+        assertThat(listOfCourses.get(0).getDayOfWeek().equalsIgnoreCase(dayOfWeek) &&
+                listOfCourses.get(0).getStatus().equalsIgnoreCase(status) &&
+                listOfCourses.get(0).getAcademicClass().get(0).getId().equals(academicClassId));
     }
 }
