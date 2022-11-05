@@ -83,6 +83,18 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<artifactId>junit-jupiter</artifactId>
+			<groupId>org.testcontainers</groupId>
+			<scope>test</scope>
+			<version>1.16.0</version>
+		</dependency>
+		<dependency>
+			<artifactId>postgresql</artifactId>
+			<groupId>org.testcontainers</groupId>
+			<scope>test</scope>
+			<version>1.16.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
