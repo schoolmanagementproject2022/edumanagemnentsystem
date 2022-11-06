@@ -7,6 +7,7 @@ import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepositor
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -60,6 +61,7 @@ class AcademicClassServiceImplTest {
         academicClass.setClassroomTeacher(teacher);
     }
 
+    @DisplayName("Create academic class - positive case")
     @Test
     void testCreatePositive() {
         when(academicClassRepository.save(any(AcademicClass.class))).thenReturn(academicClass);
@@ -67,11 +69,14 @@ class AcademicClassServiceImplTest {
         assertEquals(academicClass, actualAcademicClass);
         verify(academicClassRepository, times(1)).save(actualAcademicClass);
     }
+
+    @DisplayName("Create academic class - null case")
     @Test
-    void testCreateNegative() {
+    void testCreateNull() {
         assertThrows(NullPointerException.class, () -> academicClassServiceImpl.create(null));
     }
 
+    @DisplayName("Get academic class by id - positive case")
     @Test
     void testGetByIdPositive() {
         when(academicClassRepository.findById(1L)).thenReturn(Optional.of(academicClass));
@@ -79,6 +84,7 @@ class AcademicClassServiceImplTest {
         assertEquals(1L, academicClassDto.getId());
     }
 
+    @DisplayName("Get academic class by id - null case")
     @Test
     void testGetByIdNull() {
         Long classId = null;
@@ -87,24 +93,27 @@ class AcademicClassServiceImplTest {
         assertEquals(classId, academicClassDto.getId());
     }
 
+    @DisplayName("Find academic class by name or classNumber - positive case")
     @Test
     void testFindByNamePositive() {
-        when(academicClassRepository.findByClassNumber("A1")).thenReturn(academicClass);
+        when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
         AcademicClass actualClass = academicClassServiceImpl.findByName(academicClass.getClassNumber());
         assertEquals(academicClass.getClassNumber(), actualClass.getClassNumber());
     }
 
+    @DisplayName("Find academic class by incorrect name - false name case")
     @Test
-    void testFindByNameNegative() {
-        when(academicClassRepository.findByClassNumber("A1")).thenReturn(academicClass);
+    void testFindByIncorrectName() {
+        when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
         AcademicClass aClass = new AcademicClass(1L, "A3", null, null, null, null, null);
         AcademicClass actualClass = academicClassServiceImpl.findByName(academicClass.getClassNumber());
         assertNotEquals(actualClass.getClassNumber(), aClass.getClassNumber());
     }
 
+    @DisplayName("Update academic class by name or classNumber - positive case")
     @Test
     void testUpdatePositive() {
-        Mockito.when(academicClassRepository.findByClassNumber("A1")).thenReturn(academicClass);
+        Mockito.when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
         Mockito.when(academicClassRepository.save(academicClass)).thenReturn(academicClass);
         AcademicClass academicClass1 = academicClassServiceImpl.update(academicClass);
         academicClassServiceImpl.update(academicClass1);
@@ -113,33 +122,39 @@ class AcademicClassServiceImplTest {
         assertEquals(academicClass.getClassNumber(), academicClass1.getClassNumber());
     }
 
+    @DisplayName("Find all academic courses by academic class name or classNumber - positive case")
     @Test
-    void testFindAllAcademicCourses() {
-        Mockito.when(academicClassRepository.findByClassNumber("A1")).thenReturn(academicClass);
+    void testFindAllAcademicCoursesPositive() {
+        Mockito.when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
         List<AcademicCourse> course = academicClassServiceImpl.findAllAcademicCourses(academicClass.getClassNumber());
         course.add(academicCourse);
         assertNotNull(academicClass);
         assertEquals(academicCourse.getName(), course.get(1).getName());
     }
 
+    @DisplayName("Find all teachers by academic class name or classNumber - positive case")
     @Test
-    void testFindAllTeachers() {
-        when(academicClassServiceImpl.findByName("A1")).thenReturn(academicClass);
+    void testFindAllTeachersPositive() {
+        when(academicClassServiceImpl.findByName(academicClass.getClassNumber())).thenReturn(academicClass);
         Set<Teacher> teachers = academicClassServiceImpl.findAllTeachers(academicClass.getClassNumber());
         teachers.add(teacher);
-        verify(academicClassRepository, times(1)).findByClassNumber("A1");
+        verify(academicClassRepository, times(1)).findByClassNumber(academicClass.getClassNumber());
         assertEquals(1, teachers.size());
     }
 
+    @DisplayName("Find all teachers by List<AcademicClass> findAll() - positive case")
     @Test
     void testFindAllTeacher() {
-        when(academicClassRepository.findAll()).thenReturn(List.of());
-        Set<Teacher> teachers = academicClassServiceImpl.findAllTeacher();
-        teachers.add(teacher);
+        Set<Teacher> teachersByAcademicClass = new HashSet<>();
+        Set<Teacher> result = academicClass.getTeacher();
+        teachersByAcademicClass.addAll(result);
+        when(academicClassRepository.findAll()).thenReturn(List.of(academicClass));
+        teachersByAcademicClass = academicClassServiceImpl.findAllTeacher();
         assertNotNull(academicClass);
-        assertEquals(academicClass.getTeacher().size(), teachers.size());
+        assertEquals(academicClass.getTeacher().size(), teachersByAcademicClass.size());
     }
 
+    @DisplayName("Find all academic class dto - positive case")
     @Test
     void testFindAllPositive() {
         when(academicClassRepository.findAll()).thenReturn(List.of(new AcademicClass()));
