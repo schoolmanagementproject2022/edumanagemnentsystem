@@ -52,14 +52,8 @@ class VacationServiceImplTest {
     void testFindAllPositive() {
         when(vacationRepository.findAll()).thenReturn(List.of(new Vacation()));
         List<VacationDto> vacationDtoList = vacationServiceImpl.findAll();
-        assertEquals(1, vacationDtoList.size());
-    }
-
-    @Test
-    void testFindAllNegative() {
-        when(vacationRepository.findAll()).thenReturn(List.of(new Vacation()));
-        List<VacationDto> vacationDtoList =vacationServiceImpl.findAll();
         assertNotNull(vacationDtoList);
+        assertEquals(1, vacationDtoList.size());
     }
 
     @Test
