@@ -37,17 +37,15 @@ public class TeacherServiceImpl implements TeacherService {
         User user = new User();
         user.setEmail(teacherDto.getEmail());
         user.setRole(teacherDto.getRole());
-        User save = userService.save(user);
+        User savedUser = userService.save(user);
 
-        Teacher teacherEntity = TeacherMapper.toTeacher(teacherDto);
-        teacherEntity.setUser(save);
+        Teacher teacherEntity = TeacherMapper.toTeacher(teacherDto, savedUser);
         return teacherRepository.save(teacherEntity);
     }
 
     @Override
     public List<TeacherDto> findAll() {
-        List<Teacher> allTeachers = teacherRepository.findAll();
-        return TeacherMapper.toListOfTeachersDto(allTeachers);
+        return TeacherMapper.toListOfTeachersDto(teacherRepository.findAll());
     }
 
     @Override

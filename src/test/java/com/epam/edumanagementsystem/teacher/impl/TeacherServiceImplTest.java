@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +39,7 @@ class TeacherServiceImplTest {
     @BeforeEach
     void setUp() {
         user = new User(null, "gm@gmail.com", "TEACHER");
-        teacher = new Teacher(1L, "Text", "Textyan", user, "password");
+        teacher = new Teacher(1L, "Text", "Textyan", user, "password",  new HashSet(), new HashSet(), new HashSet());
     }
 
     @Test
@@ -83,5 +84,4 @@ class TeacherServiceImplTest {
     void canNotCreateTeacher() {
         assertThrows(ObjectIsNull.class, () -> teacherService.create(null));
     }
-
 }

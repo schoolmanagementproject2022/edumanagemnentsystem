@@ -2,7 +2,7 @@ package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ public interface SubjectService {
 
     Subject create(Subject subject);
 
-    Set<Teacher> findAllTeachers(String name);
+    Set<TeacherDto> findAllTeachers(String name);
 
     SubjectDto findSubjectBySubjectName(String name);
 

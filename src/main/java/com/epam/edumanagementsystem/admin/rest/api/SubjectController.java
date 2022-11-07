@@ -3,9 +3,7 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
-import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -76,26 +73,26 @@ public class SubjectController {
     @GetMapping("/{name}/teachers")
     public String openSubjectForTeacherCreation(@PathVariable("name") String name, Model model) {
 
-        Set<Teacher> result = new HashSet<>();
-        Set<Teacher> allTeachersInSubject = subjectService.findAllTeachers(name);
-        List<Teacher> allTeachers = TeacherMapper.toListOfTeachers(teacherService.findAll());
+        Set<TeacherDto> teachersToSelect = new LinkedHashSet<>();
+        Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachers(name);
+        List<TeacherDto> allTeachers = teacherService.findAll();
         model.addAttribute("teachers", allTeachersInSubject);
         model.addAttribute("existingSubject", subjectService.findSubjectBySubjectName(name));
 
         if (allTeachersInSubject.size() == 0) {
-            result.addAll(allTeachers);
-            model.addAttribute("teachersToSelect", result);
+            teachersToSelect.addAll(allTeachers);
+            model.addAttribute("teachersToSelect", teachersToSelect);
             return "subjectSectionForTeachers";
         } else if (allTeachersInSubject.size() == allTeachers.size()) {
             return "subjectSectionForTeachers";
         } else {
-            for (Teacher teacher : allTeachers) {
+            for (TeacherDto teacher : allTeachers) {
                 if (!allTeachersInSubject.contains(teacher)) {
-                    result.add(teacher);
+                    teachersToSelect.add(teacher);
                 }
             }
         }
-        model.addAttribute("teachersToSelect", result);
+        model.addAttribute("teachersToSelect", teachersToSelect);
         return "subjectSectionForTeachers";
     }
 
@@ -103,27 +100,27 @@ public class SubjectController {
     public String addNewTeacher(@ModelAttribute("existingSubject") Subject subject,
                                 @PathVariable("name") String name, Model model) {
 
-        Set<Teacher> result = new HashSet<>();
-        Set<Teacher> allTeachersInSubject = subjectService.findAllTeachers(name);
+        Set<TeacherDto> teachersToSelect = new LinkedHashSet<>();
+        Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachers(name);
         model.addAttribute("teachers", allTeachersInSubject);
-        List<Teacher> allTeachers = TeacherMapper.toListOfTeachers(teacherService.findAll());
+        List<TeacherDto> allTeachers = teacherService.findAll();
 
         if (subject.getTeacherSet().size() == 0) {
             model.addAttribute("blank", "There is no new selection.");
             if (allTeachersInSubject.size() == 0) {
-                result.addAll(allTeachers);
-                model.addAttribute("teachersToSelect", result);
+                teachersToSelect.addAll(allTeachers);
+                model.addAttribute("teachersToSelect", teachersToSelect);
                 return "subjectSectionForTeachers";
             } else if (allTeachersInSubject.size() == allTeachers.size()) {
                 return "subjectSectionForTeachers";
             } else {
-                for (Teacher teacher : allTeachers) {
+                for (TeacherDto teacher : allTeachers) {
                     if (!allTeachersInSubject.contains(teacher)) {
-                        result.add(teacher);
+                        teachersToSelect.add(teacher);
                     }
                 }
             }
-            model.addAttribute("teachersToSelect", result);
+            model.addAttribute("teachersToSelect", teachersToSelect);
             return "subjectSectionForTeachers";
         }
         subjectService.update(subject);

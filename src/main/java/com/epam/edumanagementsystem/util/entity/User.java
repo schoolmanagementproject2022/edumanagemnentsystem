@@ -39,7 +39,7 @@ public class User {
     private Teacher teacher;
 
 
-    public User(Long id,  String email, String role) {
+    public User(Long id, String email, String role) {
         this.id = id;
         this.email = email;
         this.role = role;
@@ -50,7 +50,8 @@ public class User {
         this.role = role;
     }
 
-    public User() {}
+    public User() {
+    }
 
     public Long getId() {
         return id;
@@ -86,7 +87,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, role, student, parent, admin, teacher);
+        return Objects.hash(id, email, role);
     }
 
     @Override
