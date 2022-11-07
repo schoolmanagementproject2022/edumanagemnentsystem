@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public class AcademicYearServiceImpl implements AcademicYearService {
+
     private final AcademicYearRepository academicYearRepository;
 
     public AcademicYearServiceImpl(AcademicYearRepository academicYearRepository) {
@@ -18,8 +19,13 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     }
 
     @Override
-    public void create(AcademicYear academicYear) {
-        academicYearRepository.save(academicYear);
+    public AcademicYearDto create(AcademicYear academicYear) {
+        if (!academicYear.equals(null)) {
+            AcademicYear savedAcademicYear = academicYearRepository.save(academicYear);
+            return AcademicYearMapper.toDto(savedAcademicYear);
+        } else {
+            throw new NullPointerException("academic year is null");
+        }
     }
 
     @Override
@@ -30,6 +36,12 @@ public class AcademicYearServiceImpl implements AcademicYearService {
 
     @Override
     public AcademicYearDto getById(Long id) {
-        return AcademicYearMapper.toDto(academicYearRepository.findById(id).orElseThrow(RuntimeException::new));
+        if (id != null) {
+            return AcademicYearMapper.toDto(academicYearRepository
+                    .findById(id)
+                    .orElseThrow(() -> new RuntimeException("Did not find academic year by given id")));
+        } else {
+            throw new NullPointerException("did not give id");
+        }
     }
 }
