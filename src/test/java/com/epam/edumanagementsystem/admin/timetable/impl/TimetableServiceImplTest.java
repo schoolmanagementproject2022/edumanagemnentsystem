@@ -38,8 +38,7 @@ class TimetableServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        Teacher teacher = new Teacher(1L, "Teacher", "Teacheryan", new User(), "25g*h$+52",
-                new HashSet(), new HashSet(), new HashSet());
+        Teacher teacher = new Teacher(1L, "Teacher", "Teacheryan", new User(), "25g*h$+52");
         academicClass = new AcademicClass(1L, "5A", new HashSet(), new HashSet(),
                 teacher, new ArrayList(), new HashSet());
 
