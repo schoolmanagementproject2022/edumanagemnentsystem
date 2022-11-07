@@ -36,7 +36,7 @@ class CoursesForTimetableServiceImplTest {
 
     @BeforeEach
     void setup() {
-        Teacher teacher = new Teacher(1L, "John", "Doe", new User(), "password", new HashSet(), new HashSet(), new HashSet());
+        Teacher teacher = new Teacher(1L, "John", "Doe", new User(), "password");
         Subject subject = new Subject(1L, "English", Set.of(teacher));
         AcademicClass academicClass = new AcademicClass(1L, "8A", new HashSet(), new HashSet(), teacher, new ArrayList(), new HashSet());
         AcademicCourse academicCourse = new AcademicCourse(1L, "English", subject, Set.of(teacher), Set.of(academicClass));
