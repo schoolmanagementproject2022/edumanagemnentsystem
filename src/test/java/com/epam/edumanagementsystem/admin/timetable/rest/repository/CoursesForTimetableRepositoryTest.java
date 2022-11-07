@@ -50,11 +50,7 @@ class CoursesForTimetableRepositoryTest {
         teacher.setName("John");
         teacher.setSurname("Doe");
         teacher.setUser(user);
-        teacher.setPassword(user.getEmail());
         teacher.setPassword("Teacher123+");
-        teacher.setAcademicCourseSet(new HashSet<>());
-        teacher.setSubjectSet(new HashSet<>());
-        teacher.setAcademicCourseSet(new HashSet<>());
         entityManager.persist(teacher);
 
         Subject subject = new Subject();
