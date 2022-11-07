@@ -66,7 +66,7 @@ public class ParentController {
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
-        parentService.save(parentDto, userService);
+        parentService.save(parentDto);
         return "redirect:/parents";
     }
 }

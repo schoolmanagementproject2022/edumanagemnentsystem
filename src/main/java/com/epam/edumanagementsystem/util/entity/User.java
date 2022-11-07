@@ -45,6 +45,11 @@ public class User {
         this.role = role;
     }
 
+    public User(String email, String role) {
+        this.email = email;
+        this.role = role;
+    }
+
     public User() {}
 
     public Long getId() {

@@ -33,6 +33,14 @@ public class Parent {
         this.user = user;
     }
 
+    public Parent(Long id, String name, String surname, User user, String password) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.user = user;
+        this.password = password;
+    }
+
     public Parent() {
     }
 
