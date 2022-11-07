@@ -13,4 +13,6 @@ public interface UserService {
     List<User> findAll();
 
     User findByEmail(String email);
+
+    Boolean checkDuplicationOfEmail(String email);
 }

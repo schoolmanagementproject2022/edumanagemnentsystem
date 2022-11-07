@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -26,6 +27,7 @@ public class Timetable {
     @NotNull(message = "Please, select the date")
     private LocalDate endDate;
 
+    @NotNull
     private String status;
 
     @OneToOne
@@ -34,7 +36,7 @@ public class Timetable {
     public Timetable() {
     }
 
-    public Timetable(Long id,  LocalDate startDate, LocalDate endDate,
+    public Timetable(Long id, LocalDate startDate, LocalDate endDate,
                      String status, AcademicClass academicClass) {
         this.id = id;
         this.startDate = startDate;

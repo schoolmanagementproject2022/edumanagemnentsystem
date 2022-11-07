@@ -26,6 +26,19 @@ public class ParentDto {
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
+    public ParentDto() {}
+
+    public ParentDto(@Size(max = 50, message = "Symbols can't be more than 50") String name,
+                     @Size(max = 50, message = "Symbols can't be more than 50") String surname,
+                     @Size(max = 50, message = "Symbols can't be more than 50") String email,
+                     String role, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }
