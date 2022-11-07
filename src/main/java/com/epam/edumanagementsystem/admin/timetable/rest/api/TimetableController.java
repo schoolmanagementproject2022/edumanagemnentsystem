@@ -44,8 +44,8 @@ public class TimetableController {
         boolean creationStatus = false;
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
-        if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) != null) {
-            if (timetableService.getTimetableByAcademicClassId(academicClass.getId()).getStatus().equalsIgnoreCase("Edit") &&
+        if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
+            if (timetableService.findTimetableByAcademicClassId(academicClass.getId()).getStatus().equalsIgnoreCase("Edit") &&
                     coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
                     coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId()).size() != 0) {
                 List<CoursesForTimetable> activeCourses = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
@@ -56,22 +56,23 @@ public class TimetableController {
                 for (CoursesForTimetable editedCourse : editCourses) {
                     coursesService.updateCourseStatusToActiveById(editedCourse.getId());
                 }
-                Timetable timetable = timetableService.getTimetableByAcademicClassId(academicClass.getId());
+                Timetable timetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
                 timetable.setStatus("Active");
-                timetableService.updateTimetableDatesAndStatusByAcademicClassId(timetable.getStartDate(), timetable.getEndDate(), timetable.getStatus(), timetable.getAcademicClass().getId());
+                timetableService.updateTimetableDatesAndStatusByAcademicClassId(timetable.getStartDate(),
+                        timetable.getEndDate(), timetable.getStatus(), timetable.getAcademicClass().getId());
             }
-            if (timetableService.getTimetableByAcademicClassId(academicClass.getId()).getStatus().equalsIgnoreCase("Active")) {
+            if (timetableService.findTimetableByAcademicClassId(academicClass.getId()).getStatus().equalsIgnoreCase("Active")) {
                 List<CoursesForTimetable> editCourses = coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId());
                 for (CoursesForTimetable editedCourse : editCourses) {
                     coursesService.deleteCourseById(editedCourse.getId());
                 }
-                model.addAttribute("timetable", timetableService.getByName(academicClassName));
+                model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
                 model.addAttribute("creationStatus", creationStatus);
                 putLessons(model, academicClass.getId());
                 return "timetable4";
             }
         }
-        model.addAttribute("timetable", timetableService.getByName(academicClassName));
+        model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
         model.addAttribute("creationStatus", creationStatus);
         putLessons(model, academicClass.getId());
         return "timetable4";
@@ -81,7 +82,7 @@ public class TimetableController {
     public String openingSuccessPopup(@PathVariable("academicClassName") String academicClassName, Model model) {
         boolean creationStatus = true;
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        model.addAttribute("timetable", timetableService.getByName(academicClassName));
+        model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
         model.addAttribute("creationStatus", creationStatus);
         putLessons(model, academicClass.getId());
         return "timetable4";
@@ -94,7 +95,7 @@ public class TimetableController {
                                                Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
-        Timetable timetableByAcademicClassId = timetableService.getTimetableByAcademicClassId(academicClass.getId());
+        Timetable timetableByAcademicClassId = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
 
         if (timetableByAcademicClassId == null &&
@@ -147,7 +148,7 @@ public class TimetableController {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
         if (lessonId != null) {
-            if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) != null) {
+            if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
                 coursesService.updateCourseStatusById(lessonId);
                 return "redirect:/classes/" + academicClassName + "/timetable/edit";
             } else {
@@ -161,7 +162,7 @@ public class TimetableController {
     @GetMapping("{academicClassName}/timetable/edit/{lessonId}")
     public String showDeletePopUpEdit(@PathVariable("academicClassName") String academicClassName,
                                       @PathVariable("lessonId") Long lessonId,
-                                  RedirectAttributes redirectAttributes) {
+                                      RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addAttribute("lessonId", lessonId);
         return "redirect:/classes/" + academicClassName + "/timetable/edit";
@@ -179,7 +180,7 @@ public class TimetableController {
     @GetMapping("{academicClassName}/timetable/show")
     public String openTimetableIfExists(@PathVariable("academicClassName") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        if (timetableService.getTimetableByAcademicClassId(academicClass.getId()) != null) {
+        if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
             return "redirect:/classes/" + academicClassName + "/timetable";
         }
         putLessons(model, academicClass.getId());
@@ -202,7 +203,7 @@ public class TimetableController {
                                        @RequestParam(value = "lessonId", required = false) Long lessonId, Model model) {
 
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        Timetable currentTimetable = timetableService.getTimetableByAcademicClassId(academicClass.getId());
+        Timetable currentTimetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         List<CoursesForTimetable> activeStatus = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
         List<CoursesForTimetable> editStatus = coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId());
@@ -275,7 +276,7 @@ public class TimetableController {
                                     Model model) {
         Timetable newTimetable = new Timetable();
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        Timetable timetable = timetableService.getTimetableByAcademicClassId(academicClass.getId());
+        Timetable timetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
         putLessons(model, academicClass.getId());
 

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user", schema = "public")
+@Table(name = "user_table", schema = "public")
 public class User {
 
     @Id
@@ -41,6 +41,11 @@ public class User {
 
     public User(Long id,  String email, String role) {
         this.id = id;
+        this.email = email;
+        this.role = role;
+    }
+
+    public User(String email, String role) {
         this.email = email;
         this.role = role;
     }

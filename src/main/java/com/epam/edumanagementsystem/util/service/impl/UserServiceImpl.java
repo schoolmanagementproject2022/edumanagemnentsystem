@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.util.service.impl;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

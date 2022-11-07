@@ -181,11 +181,11 @@ body {
 }
 
 .create-btn:hover {
-border-color: #01a7f0;
+    border-color: #01a7f0;
 }
 
 .createTimetable {
-align-self: flex-end;
+    align-self: flex-end;
 }
 
 /*timetable style*/
@@ -195,6 +195,7 @@ align-self: flex-end;
     padding: 0px;
     background-color: #AAAAAA;
 }
+
 .dates_and_create {
     margin: 0;
     padding: 20px 0px;
@@ -256,6 +257,7 @@ align-self: flex-end;
     text-align: center;
 
 }
+
 .week {
     width: 100%;
     margin: 0;
@@ -333,7 +335,6 @@ align-self: flex-end;
 }
 
 
-
 .close-btn:hover {
     color: red;
 }
@@ -343,11 +344,12 @@ align-self: flex-end;
     border-radius: 5px;
     float: right;
     background-color: #555555;
-    color:  #007EB4;
+    color: #007EB4;
     text-decoration: none;
     width: 200%;
     text-align: center;
 }
+
 .button .a {
     text-decoration: none;
     font-size: 0.5em;
@@ -371,7 +373,7 @@ align-self: flex-end;
 }
 
 .a-url {
-    max-width: 325px;
+    max-width: 430px;
     margin-right: 60px;
     margin-top: 23px;
     margin-left: -7%;

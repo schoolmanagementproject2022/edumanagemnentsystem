@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminService {
-    void addAdmin(AdminDto adminDto, UserService userService);
+    Admin addAdmin(AdminDto adminDto);
 
     List<AdminDto> findAllAdmins();
-    Admin findByUserId(Long id);
+    AdminDto findByUserId(Long id);
 }

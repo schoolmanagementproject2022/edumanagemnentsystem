@@ -1,10 +1,12 @@
 package com.epam.edumanagementsystem.admin.impl;
 
+import com.epam.edumanagementsystem.admin.mapper.SubjectMapper;
+import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.SubjectRepository;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,37 +14,51 @@ import java.util.Set;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
+
     private final SubjectRepository subjectRepository;
 
     public SubjectServiceImpl(SubjectRepository subjectRepository) {
+
         this.subjectRepository = subjectRepository;
     }
 
     @Override
-    public List<Subject> findAll() {
-        return subjectRepository.findAll();
+    public List<SubjectDto> findAll() {
+        List<Subject> allSubjects = subjectRepository.findAll();
+        return SubjectMapper.toSubjectDtoList(allSubjects);
     }
 
     @Override
-    public void create(Subject subject) {
-        if (subject != null) {
-            subjectRepository.save(subject);
+    public Subject create(Subject subject) {
+      if (subject == null) {
+            throw new NullPointerException();
+
+        } else {
+          return   subjectRepository.save(subject);
+
         }
     }
 
     @Override
-    public Subject findSubjectBySubjectName(String name) {
-        return subjectRepository.findSubjectByName(name);
+    public SubjectDto findSubjectBySubjectName(String name) {
+        Subject subjectByName = subjectRepository.findSubjectByName(name);
+
+        if (!subjectByName.getName().equalsIgnoreCase(name)) {
+            throw new EntityNotFoundException();
+        }
+        return SubjectMapper.toDto(subjectByName);
+
     }
 
     @Override
     public Set<Teacher> findAllTeachers(String name) {
-        return findSubjectBySubjectName(name).getTeacherSet();
+        Set<Teacher> teachersForSubjectName = findSubjectBySubjectName(name).getTeacherSet();
+        return teachersForSubjectName;
     }
 
     @Override
-    public void update(Subject subject) {
-        Subject subjectBySubjectName = findSubjectBySubjectName(subject.getName());
+    public Subject update(Subject subject) {
+        SubjectDto subjectBySubjectName = findSubjectBySubjectName(subject.getName());
         if (subject.getName() != null) {
             subjectBySubjectName.setName(subject.getName());
         }
@@ -52,7 +68,8 @@ public class SubjectServiceImpl implements SubjectService {
                 subjectBySubjectName.getTeacherSet().add(teacher);
             }
         }
-        create(subjectBySubjectName);
+        Subject toSubject = SubjectMapper.toSubject(subjectBySubjectName);
+        return subjectRepository.save(toSubject);
     }
 }
 

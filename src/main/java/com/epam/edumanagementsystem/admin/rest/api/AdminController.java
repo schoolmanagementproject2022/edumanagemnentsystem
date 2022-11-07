@@ -67,7 +67,7 @@ public class AdminController {
             return "adminSection";
         }
         adminDto.setPassword(bcryptPasswordEncoder.encode(adminDto.getPassword()));
-        adminService.addAdmin(adminDto, userService);
+        adminService.addAdmin(adminDto);
         return "redirect:/admins";
     }
 }

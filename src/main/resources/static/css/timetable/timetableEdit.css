@@ -63,7 +63,7 @@ body {
 
 /*Sidebar styles*/
 .sidebar {
-    height: 100%;
+   height: 100%;
     background-color: #555555;
     position: fixed;
     width: 18%;
@@ -324,17 +324,16 @@ body {
 /*for url*/
 .url-path {
     margin-top: -1%;
-    margin-left: 4%;
-    margin-right: 100%;
+    margin-left: 5%;
     display: inline-flex;
 }
 
 .a-url {
-    max-width: 330px;
-    margin-right: 21px;
+    max-width: 430px;
+    margin-right: 63px;
     margin-top: 23px;
-    margin-left: -5%;
-    padding-left: 8px;
+    margin-left: -3%;
+    padding-left: 10px;
     text-decoration: none;
     color: #2b80a5;
     cursor: pointer;
