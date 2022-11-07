@@ -11,29 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Component
 public class ParentMapper {
 
     @Lazy
     private static UserService userService;
 
-
     public ParentMapper(UserService userService) {
-        this.userService = userService;
+        ParentMapper.userService = userService;
     }
 
     public static Parent toParent(ParentDto parentDto) {
         Parent parent = new Parent();
-        User user = new User();
         parent.setId(parentDto.getId());
         parent.setName(parentDto.getName());
         parent.setSurname(parentDto.getSurname());
-        user.setEmail(parentDto.getEmail());
-        user.setRole(parentDto.getRole());
-        User save = userService.save(user);
         parent.setPassword(parentDto.getPassword());
-        parent.setUser(save);
         return parent;
     }
 
@@ -49,6 +42,7 @@ public class ParentMapper {
         parent.setUser(userService.findByEmail(user.getEmail()));
         return parent;
     }
+
     public static ParentDto toParentDto(Parent parent) {
         ParentDto parentDto = new ParentDto();
         parentDto.setId(parent.getId());

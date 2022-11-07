@@ -1,5 +1,7 @@
 package com.epam.edumanagementsystem.admin.timetable.impl;
 
+import com.epam.edumanagementsystem.admin.timetable.mapper.TimetableMapper;
+import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.TimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
@@ -24,29 +26,26 @@ public class TimetableServiceImpl implements TimetableService {
     }
 
     @Override
-    public Timetable getById(Long id) {
-        return timetableRepository.findById(id).get();
+    public Timetable findTimetableByAcademicClassName(String academicClassName) {
+        return timetableRepository.findByAcademicClass_ClassNumber(academicClassName);
     }
 
     @Override
-    public Timetable getByName(String name) {
-        return timetableRepository.findByAcademicClass_ClassNumber(name);
+    public TimetableDto create(Timetable timetable) {
+        return TimetableMapper.toDto(timetableRepository.save(timetable));
     }
 
     @Override
-    public void create(Timetable timetable) {
-        timetableRepository.save(timetable);
-    }
-
-    @Override
-    public Timetable getTimetableByAcademicClassId(Long id) {
-        return timetableRepository.getTimetableByAcademicClassId(id);
+    public Timetable findTimetableByAcademicClassId(Long academicClassId) {
+        return timetableRepository.getTimetableByAcademicClassId(academicClassId);
     }
 
     @Transactional
     @Override
-    public void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId) {
-        timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, timeTableStatus, academicClassId);
+    public void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate,
+                                                               String timeTableStatus, Long academicClassId) {
+        timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate,
+                timeTableStatus, academicClassId);
     }
 
     @Transactional

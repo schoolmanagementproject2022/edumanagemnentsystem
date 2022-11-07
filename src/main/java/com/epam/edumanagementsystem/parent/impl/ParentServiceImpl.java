@@ -5,8 +5,10 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,22 +18,34 @@ public class ParentServiceImpl implements ParentService {
 
     private final ParentRepository parentRepository;
 
-    public ParentServiceImpl(ParentRepository parentRepository) {
+    private final UserService userService;
+
+    public ParentServiceImpl(ParentRepository parentRepository, UserService userService) {
         this.parentRepository = parentRepository;
+        this.userService = userService;
     }
 
     @Override
-    public Parent findById(Long id) {
-        Optional<Parent> byId = parentRepository.findById(id);
-        if (byId.isPresent()) {
-            return byId.get();
+    public Optional<Parent> findById(Long id) {
+        if (id == null) {
+            throw new NullPointerException("The given id must not be null!");
         }
-        return null;
+        return parentRepository.findById(id);
     }
 
     @Override
-    public void save(ParentDto parentDto, UserService userService) {
-        parentRepository.save(ParentMapper.toParent(parentDto));
+    public Parent save(ParentDto parentDto) {
+        if (parentDto == null) {
+            throw new NullPointerException("The given parent must not be null!");
+        }
+
+        User user = new User();
+        user.setEmail(parentDto.getEmail());
+        user.setRole(parentDto.getRole());
+        User savedUser = userService.save(user);
+        Parent parent = ParentMapper.toParent(parentDto);
+        parent.setUser(savedUser);
+        return parentRepository.save(parent);
     }
 
     @Override
@@ -41,6 +55,18 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public Parent findByUserId(Long id) {
+        if (id == null) {
+            throw new NullPointerException("The given id must not be null!");
+        }
         return parentRepository.findByUserId(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+        if (id == null) {
+            throw new NullPointerException("The given id must not be null!");
+        }
+        parentRepository.deleteById(id);
     }
 }
