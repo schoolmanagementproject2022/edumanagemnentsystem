@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @NotBlank(message = "Please, fill the required fields")
@@ -32,11 +33,12 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(Long id, String username, String surname, String password) {
+    public Admin(Long id, String username, String surname, User user, String password) {
         this.id = id;
         this.username = username;
         this.surname = surname;
         this.password = password;
+        this.user = user;
     }
 
     public String getNameSurname() {
@@ -93,7 +95,7 @@ public class Admin {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, surname, password, user);
+        return Objects.hash(id, username, surname, password);
     }
 
     @Override
