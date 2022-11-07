@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class TimetableRepositoryTest {
@@ -29,13 +30,14 @@ class TimetableRepositoryTest {
     @BeforeEach()
     void setUp() {
         timetableRepository.save(timetable = new Timetable(LocalDate.now(), LocalDate.now().plusMonths(3), "Active",
-                academicClassRepository.save(new AcademicClass("1A"))));
+                academicClassRepository.save(new AcademicClass("2A"))));
     }
 
     @Test
     void getTimetableByAcademicClassIdNotNullAndSameCases() {
         Timetable savedTimetable = timetableRepository.save(timetable);
-        Timetable timetableByAcademicClassId = timetableRepository.getTimetableByAcademicClassId(savedTimetable.getId());
+        Timetable timetableByAcademicClassId = timetableRepository.getTimetableByAcademicClassId(savedTimetable.getAcademicClass()
+                .getId());
 
         Assertions.assertNotNull(timetableByAcademicClassId);
         Assertions.assertSame(savedTimetable.getId(),timetableByAcademicClassId.getId());
@@ -56,7 +58,8 @@ class TimetableRepositoryTest {
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = LocalDate.now().plusMonths(5);
         String statusAfterUpdate = "Not Active";
-        timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, statusAfterUpdate, timetable.getAcademicClass().getId());
+        timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, statusAfterUpdate,
+                timetable.getAcademicClass().getId());
 
         Optional<Timetable> timetableById = timetableRepository.findById(timetable.getId());
         Assertions.assertNotNull(timetableById);
