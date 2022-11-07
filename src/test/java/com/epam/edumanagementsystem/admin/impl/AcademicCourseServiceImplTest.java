@@ -103,8 +103,9 @@ class AcademicCourseServiceImplTest {
     @DisplayName("should create academic course success")
     void testCreateSuccess() {
         when(academicCourseRepository.save(academicCourse)).thenReturn(academicCourse);
-        AcademicCourse actualAcademicCourse = academicCourseService.create(academicCourse);
-        assertEquals(academicCourse, actualAcademicCourse);
+        AcademicCourseDto academicCourseDto = AcademicCourseMapper.toDto(academicCourse);
+        AcademicCourseDto actualAcademicCourse = academicCourseService.create(academicCourse);
+        assertEquals(academicCourseDto, actualAcademicCourse);
     }
 
     @Test
@@ -167,7 +168,7 @@ class AcademicCourseServiceImplTest {
         AcademicCourse academicCourseForUpdate = new AcademicCourse(1L, "secondName", subject2, teacherSet2, academicClasses2);
         when(academicCourseRepository.findAcademicCourseByName("secondName")).thenReturn(academicCourseForUpdate);
         when(academicCourseRepository.save(academicCourseForUpdate)).thenReturn(academicCourseForUpdate);
-        AcademicCourse updatedAcademicCourse = academicCourseService.update(academicCourseForUpdate);
+        AcademicCourseDto updatedAcademicCourse = academicCourseService.update(academicCourseForUpdate);
         assertEquals("secondName", updatedAcademicCourse.getName());
     }
 

@@ -25,14 +25,14 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
 
     @Override
     public AcademicCourse findAcademicCourseByAcademicCourseName(String name) {
-        if (name != null){
+        if (name != null) {
             AcademicCourse academicCourseByName = academicCourseRepository.findAcademicCourseByName(name);
-            if (!academicCourseByName.equals(null)){
+            if (!academicCourseByName.equals(null)) {
                 return academicCourseByName;
-            }else {
+            } else {
                 throw new RuntimeException("academic course by given name does not exist");
             }
-        }else {
+        } else {
             throw new NullPointerException("the name is null");
         }
     }
@@ -44,37 +44,39 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
 
     @Override
     public AcademicCourse findByID(Long id) {
-        if (!id.equals(null)){
+        if (!id.equals(null)) {
             AcademicCourse academicCourseById = academicCourseRepository.findAcademicCourseById(id);
-            if (academicCourseById.equals(null)){
+            if (academicCourseById.equals(null)) {
                 throw new RuntimeException("academic course by given id does not exist");
-            }else {
+            } else {
                 return academicCourseById;
             }
-        }else {
-          throw new NullPointerException("given id is null");
+        } else {
+            throw new NullPointerException("given id is null");
         }
     }
 
     @Override
-    public AcademicCourse create(AcademicCourse academicCourse) {
-        if(academicCourse.equals(null)){
-            throw new  NullPointerException("academic course is null");
-        }else {
-            return academicCourseRepository.save(academicCourse);
+    public AcademicCourseDto create(AcademicCourse academicCourse) {
+        if (academicCourse.equals(null)) {
+            throw new NullPointerException("academic course is null");
+        } else {
+            AcademicCourse savedAcademicCourse = academicCourseRepository.save(academicCourse);
+            AcademicCourseDto academicCourseDto = AcademicCourseMapper.toDto(savedAcademicCourse);
+            return academicCourseDto;
         }
     }
 
     @Override
     public AcademicCourseDto getById(Long id) {
         Optional<AcademicCourse> classById = academicCourseRepository.findById(id);
-        if (!id.equals(null)){
+        if (!id.equals(null)) {
             if (classById.isPresent()) {
-                return   AcademicCourseMapper.toDto(classById.get());
-            }else {
-                throw new  RuntimeException("does not present academic course by given id");
+                return AcademicCourseMapper.toDto(classById.get());
+            } else {
+                throw new RuntimeException("does not present academic course by given id");
             }
-        }else {
+        } else {
             throw new NullPointerException("given id is null");
         }
     }
@@ -96,7 +98,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public AcademicCourse update(AcademicCourse academicCourse) {
+    public AcademicCourseDto update(AcademicCourse academicCourse) {
         AcademicCourse academicCourseByAcademicCourseName = findAcademicCourseByAcademicCourseName(academicCourse.getName());
         if (academicCourse.getName() != null) {
             academicCourseByAcademicCourseName.setName(academicCourse.getName());
@@ -107,7 +109,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
                 academicCourseByAcademicCourseName.getTeacher().add(teacher);
             }
         }
-       return create(academicCourseByAcademicCourseName);
+        return create(academicCourseByAcademicCourseName);
     }
 
     @Override
