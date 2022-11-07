@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AcademicYearService {
 
-    AcademicYear create(AcademicYear academicYear);
+    AcademicYearDto create(AcademicYear academicYear);
 
     List<AcademicYearDto> findAll();
 

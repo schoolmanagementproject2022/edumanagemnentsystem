@@ -19,9 +19,10 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     }
 
     @Override
-    public AcademicYear create(AcademicYear academicYear) {
+    public AcademicYearDto create(AcademicYear academicYear) {
         if (!academicYear.equals(null)) {
-            return academicYearRepository.save(academicYear);
+            AcademicYear savedAcademicYear = academicYearRepository.save(academicYear);
+            return AcademicYearMapper.toDto(savedAcademicYear);
         } else {
             throw new NullPointerException("academic year is null");
         }

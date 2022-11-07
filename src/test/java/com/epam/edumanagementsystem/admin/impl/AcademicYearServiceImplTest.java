@@ -42,9 +42,10 @@ class AcademicYearServiceImplTest {
     @Test
     @DisplayName("should create Academic year")
     void testCreateSuccess() {
+        AcademicYearDto academicYearDto = AcademicYearMapper.toDto(academicYear);
         when(academicYearRepository.save(any(AcademicYear.class))).thenReturn(academicYear);
-        AcademicYear save = academicYearService.create(academicYear);
-        assertEquals(academicYear, save);
+        AcademicYearDto savedAcademicYearDto = academicYearService.create(academicYear);
+        assertEquals(academicYearDto, savedAcademicYearDto);
     }
 
     @Test
