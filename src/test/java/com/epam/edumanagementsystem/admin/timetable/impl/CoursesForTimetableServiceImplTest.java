@@ -81,23 +81,6 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testIsPresentCoursesForClass() {
-        when(coursesRepository.existsCoursesForTimetableByAcademicClass_Id(course.getId())).thenReturn(true);
-        boolean result = coursesForTimetableService.isPresentCoursesForClass(course.getId());
-        assertTrue(result);
-    }
-
-    @Test
-    public void testUpdateCourseStatusByIdChangesStatusToActive() {
-        Long id = nonActiveCourse.getId();
-        doNothing().when(coursesRepository).updateCourseStatusToActiveById(id);
-
-        coursesForTimetableService.updateCourseStatusToActiveById(id);
-
-        verify(coursesRepository, times(1)).updateCourseStatusToActiveById(id);
-    }
-
-    @Test
     public void testGetCoursesByAcademicClassIdReturnsListOfCourses() {
         Long id = 1L;
 
@@ -181,5 +164,22 @@ class CoursesForTimetableServiceImplTest {
                 listOfCourses.get(0).getStatus().equalsIgnoreCase(status) &&
                 listOfCourses.get(0).getAcademicClass().get(0).getId().equals(academicClassId));
 
+    }
+
+    @Test
+    public void testIsPresentCoursesForClass() {
+        when(coursesRepository.existsCoursesForTimetableByAcademicClass_Id(course.getId())).thenReturn(true);
+        boolean result = coursesForTimetableService.isPresentCoursesForClass(course.getId());
+        assertTrue(result);
+    }
+
+    @Test
+    public void testUpdateCourseStatusByIdChangesStatusToActive() {
+        Long id = nonActiveCourse.getId();
+        doNothing().when(coursesRepository).updateCourseStatusToActiveById(id);
+
+        coursesForTimetableService.updateCourseStatusToActiveById(id);
+
+        verify(coursesRepository, times(1)).updateCourseStatusToActiveById(id);
     }
 }
