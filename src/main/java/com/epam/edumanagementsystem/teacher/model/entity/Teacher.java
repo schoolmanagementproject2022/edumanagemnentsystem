@@ -32,6 +32,7 @@ public class Teacher {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
@@ -39,16 +40,17 @@ public class Teacher {
             joinColumns = @JoinColumn(name = "academicCourse_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<AcademicCourse> academicCourseSet;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "teacherSet", fetch = FetchType.EAGER)
     private Set<Subject> subjectSet;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
 
     public Teacher() {
     }
-
     public Set<AcademicClass> getAcademicClass() {
         return academicClass;
     }
@@ -57,15 +59,12 @@ public class Teacher {
         this.academicClass = academicClass;
     }
 
-    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet, Set<AcademicClass> academicClassSet) {
+    public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.user = user;
         this.password = password;
-        this.academicCourseSet = academicCourseSet;
-        this.subjectSet = subjectSet;
-        this.academicClass = academicClassSet;
     }
 
     public Long getId() {

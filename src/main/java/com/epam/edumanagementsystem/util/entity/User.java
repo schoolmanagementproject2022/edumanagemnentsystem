@@ -81,13 +81,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) && email.equals(user.email) &&
-                role.equals(user.role);
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(role, user.role) && Objects.equals(student, user.student) && Objects.equals(parent, user.parent) && Objects.equals(admin, user.admin) && Objects.equals(teacher, user.teacher);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, role);
+        return Objects.hash(id, email, role, student, parent, admin, teacher);
     }
 
     @Override
