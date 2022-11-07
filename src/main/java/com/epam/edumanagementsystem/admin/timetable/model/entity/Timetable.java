@@ -45,6 +45,14 @@ public class Timetable {
         this.academicClass = academicClass;
     }
 
+    public Timetable(LocalDate startDate, LocalDate endDate,
+                     String status, AcademicClass academicClass) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.academicClass = academicClass;
+    }
+
     public Long getId() {
         return id;
     }
