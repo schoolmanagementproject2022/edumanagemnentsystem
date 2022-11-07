@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user", schema = "public")
+@Table(name = "user_table", schema = "public")
 public class User {
 
     @Id
