@@ -22,7 +22,7 @@ public class TeacherDto {
     private String email;
 
     @NotBlank
-    private String role= "TEACHER";
+    private String role = "TEACHER";
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
@@ -30,7 +30,7 @@ public class TeacherDto {
     public TeacherDto() {
     }
 
-    public TeacherDto(Long id, String name, String surname,  String email, String role, String password) {
+    public TeacherDto(Long id, String name, String surname, String email, String role, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -96,9 +96,12 @@ public class TeacherDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TeacherDto that = (TeacherDto) o;
-        return id.equals(that.id) && name.equals(that.name) &&
-                surname.equals(that.surname) && email.equals(that.email) &&
-                role.equals(that.role) && password.equals(that.password);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(role, that.role) && Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, role, password);
     }
 
     @Override

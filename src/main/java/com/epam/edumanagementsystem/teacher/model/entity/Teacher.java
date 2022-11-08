@@ -51,13 +51,6 @@ public class Teacher {
 
     public Teacher() {
     }
-    public Set<AcademicClass> getAcademicClass() {
-        return academicClass;
-    }
-
-    public void setAcademicClass(Set<AcademicClass> academicClass) {
-        this.academicClass = academicClass;
-    }
 
     public Teacher(Long id, String name, String surname, User user, String password) {
         this.id = id;
@@ -65,6 +58,25 @@ public class Teacher {
         this.surname = surname;
         this.user = user;
         this.password = password;
+    }
+
+    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet, Set<AcademicClass> academicClass) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.user = user;
+        this.password = password;
+        this.academicCourseSet = academicCourseSet;
+        this.subjectSet = subjectSet;
+        this.academicClass = academicClass;
+    }
+
+    public Set<AcademicClass> getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(Set<AcademicClass> academicClass) {
+        this.academicClass = academicClass;
     }
 
     public Long getId() {

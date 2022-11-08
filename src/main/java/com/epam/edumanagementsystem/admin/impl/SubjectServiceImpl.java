@@ -6,6 +6,8 @@ import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.SubjectRepository;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
+import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +32,11 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject create(Subject subject) {
-      if (subject == null) {
+        if (subject == null) {
             throw new NullPointerException();
 
         } else {
-          return   subjectRepository.save(subject);
+            return subjectRepository.save(subject);
 
         }
     }
@@ -51,9 +53,8 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Set<Teacher> findAllTeachers(String name) {
-        Set<Teacher> teachersForSubjectName = findSubjectBySubjectName(name).getTeacherSet();
-        return teachersForSubjectName;
+    public Set<TeacherDto> findAllTeachers(String name) {
+        return TeacherMapper.toSetOfTeachersDto(findSubjectBySubjectName(name).getTeacherSet());
     }
 
     @Override
