@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/parentProfile.css" rel="stylesheet">
+    <link href="../static/css/parentProfile.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -26,19 +26,31 @@
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
-            <div class="list">
-                <div class="list-items" th:each="parent : ${parents}">
-                    <p class="item" th:text="${parent.getNameSurname()}"> Parent </p>
+            <div class="profile">
+                <div class="profile-items" th:each="parent : ${parents}">
+                    <p class="p-item" th:text="${parent.getName()}"> Name </p>
+                </div>
+                <div class="profile-items" th:each="parent : ${parents}">
+                    <p class="p-item" th:text="${parent.getSurname()}"> Surname </p>
+                </div>
+                <div class="profile-items" th:each="parent : ${parents}">
+                    <p class="p-item" th:text="${parent.getEmail()}"> Email </p>
                 </div>
             </div>
         </div>
-        <div class="sidebar2 header" id="sidebar2">
-            <a class="item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">Profile</a>
-            <a class="item"
-               th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'linked students'}}">Linked students</a>
+        <div class="sidebar_right">
+            <div class="sidebar_right_photo" id="sidebar2">
+             <a>photo</a>
+            </div>
+            <div class="sidebar_right_links" id="sidebar2">
+                <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${allUrl}}">Profile</a>
+                <a class="sidebar_right_links_item"
+                   th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'linked students'}}">Linked students</a>
+            </div>
         </div>
+
     </div>
 </div>
 <div class="edit">

@@ -24,18 +24,21 @@ body {
     font-size: 1.7em;
     height: 1.4em;
 }
-.content-wrapper{
+
+.content-wrapper {
     display: flex;
     align-content: center;
     justify-content: space-between;
     width: 100%;
 }
-.content-wrapper .content{
+
+.content-wrapper .content {
     width: 75%;
     padding: 1px 25px;
     display: flex;
     flex-direction: column;
 }
+
 .topnav-left-side {
     margin-left: 14px;
     margin-top: 3px;
@@ -45,6 +48,7 @@ body {
     margin-right: 14px;
     margin-top: 3px;
 }
+
 .nav-link-wrapper {
     height: 22px;
     transition: border-bottom 0.5s;
@@ -55,14 +59,14 @@ body {
     text-decoration: none;
     transition: color 0.5s;
 }
+
 /*Main part styles*/
 .main-wrapper {
-
     width: 100%;
     display: flex;
     padding: 0px;
     background-color: #AAAAAA;
-    height: 96vh;
+    height: 100%;
     position: fixed;
 }
 
@@ -72,8 +76,7 @@ body {
     padding: 0px;
     background-color: #555555;
     margin-left: 0px;
-    height: 96vh
-
+    height: 100%;
 }
 
 .sidebar a {
@@ -83,7 +86,11 @@ body {
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
+}
 
+.sidebar a:hover {
+    background-color: #333333;
+    color: #01A7F0;
 }
 /*Main bar style*/
 .main {
@@ -125,13 +132,12 @@ body {
     color: #01A7F0;
 }
 
-.list {
+/*Profile part*/
+.profile {
     width: 100%;
     padding: 0px;
-    background-color: #555555;
     height: 65vh;
     margin-top: 10px;
-    overflow-y: scroll;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -142,34 +148,41 @@ body {
     width: 80%;
 !important;
     cursor: pointer;
-
-}
-.list-items{
-    width: 100% ;
-}
-.list-p-item{
-    width: 100% ;
-    background-color: #555555;
 }
 
+.profile-items {
+    width: 100%;
+}
 
-.list-items p {
+.profile-p-item {
+    width: 100%;
+
+}
+
+.p-item {
     display: block;
     color: #FFFFFF;
     padding: 10px;
     text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
+    font-size: 19px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
 }
 
-.list-items p:hover {
-    background-color: #333333;
-    color: #01A7F0;
+.profile-items p {
+    color: #555555;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1.3em;
+    font-weight: 600;
 }
-.list-items a:hover {
-    background-color: #333333;
-    color: #01A7F0;
+
+
+.profile-items a {
+    background-color: #555555;
+    font-weight: 600;
 }
+
 .lebel {
     display: block;
     color: #FFFFFF;
@@ -178,6 +191,7 @@ body {
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
 }
+
 input[type="checkbox"] {
     display: none;
 }
@@ -248,10 +262,12 @@ form {
     height: 253px;
 
 }
+
 .halfSection {
     margin-top: 27%;
     display: inline-block;
 }
+
 .button-save {
     position: absolute;
     color: #A30014;
@@ -265,6 +281,7 @@ form {
     border-width: 0.5px;
     cursor: pointer;
 }
+
 .button-generate {
     color: #309A21;
     margin-top: 8px;
@@ -275,15 +292,18 @@ form {
     border-radius: 4px;
     border-width: 0.5px;
 }
+
 .popup-label-title {
     font-size: 0.8em;
     height: 1.2em;
     margin-top: 20px;
 }
+
 .error {
     font-size: 0.7em;
     color: red;
 }
+
 .form_input_subjectName {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -293,24 +313,19 @@ form {
     border-width: 1.5px;
     padding: 5px;
 }
+
 .form_input:focus {
     outline: none !important;
     border: 1px solid #01A7F0;
 }
-.startAcademicYear {
-    margin-right: 0;
-}
-.endAcademicYear {
-    margin-left: 0;
-}
-.selectclassroom {
-    margin-top: 10px;
-}
+
+
 .popup-label-title-subject {
     font-size: 17px;
     height: 1.2em;
     margin-top: 20px;
 }
+
 .list-items a {
     display: block;
     color: #FFFFFF;
@@ -321,10 +336,12 @@ form {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
+
 .nav-link-wrapper {
     height: 22px;
     transition: border-bottom 0.5s;
 }
+
 .nav-link-wrapper a {
     color: #FFFFFF;
     text-decoration: none;
@@ -336,37 +353,14 @@ form {
 }
 
 /*Main part styles*/
-.main-wrapper {
-    width: 100%;
-    display: flex;
-    padding: 0px;
-    background-color: #AAAAAA;
-    height: 96vh;
-    position: fixed;
-}
+
+
 
 /*Sidebar styles*/
-.sidebar {
-    width: 21%;
-    padding: 0px;
-    background-color: #555555;
-    margin-left: 0px;
-    height: 96vh;
-}
 
-.sidebar a {
-    display: block;
-    color: #FFFFFF;
-    padding: 13px;
-    text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
-}
 
-.sidebar a:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
+
+
 /*Main bar style*/
 .main {
     width: 88%;
@@ -445,6 +439,7 @@ form {
     margin-left: 0px;
     margin-right: 4px;
 }
+
 .half {
     width: 50%;
     padding: 0px;
@@ -508,26 +503,46 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
+
 .allTab {
     background-color: #333333;
     color: #01A7F0 !important;
 }
-.sidebar2 {
+
+.sidebar_right {
     margin-right: 25px;
-    margin-top: 50px;
+    margin-top: 100px;
     width: 15%;
+    cursor: pointer;
+}
+
+.sidebar_right_photo {
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
+    text-align: center;
+    border: solid 2px red;
+    height: 124px;
+}
+
+.sidebar_right_links {
+    margin-top: 50px;
     background-color: #555555;
     cursor: pointer;
     text-align: left;
     height: min-content;
 }
-.content > *{
+
+.content > * {
     margin-top: 15px;
+    margin-bottom: 47px;
 }
-.sidebar2 a:hover {
+
+.sidebar_right a:hover {
     background-color: #333333;
     color: #01A7F0;
 }
+
 .show-btn:hover {
     border-color: #01A7F0;
 }
@@ -544,6 +559,7 @@ form {
     align-self: flex-end;
     color: #01A7F0;
 }
+
 .div-pddng {
     padding: 18.5px;
     width: 104px;
@@ -562,7 +578,8 @@ form {
     align-self: flex-end;
     color: #01A7F0;
 }
-.classroom-show-top{
+
+.classroom-show-top {
     margin: 80px auto;
     width: 392px;
     display: block;
@@ -573,7 +590,7 @@ form {
     font-family: "Montserrat", sans-serif;
 }
 
-.item {
+.sidebar_right_links_item {
     display: block;
     color: #FFFFFF;
     padding: 10px;
@@ -583,6 +600,7 @@ form {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
+
 list {
     width: 100%;
     padding: 0px;
@@ -602,6 +620,7 @@ list {
     height: 65vh;
     overflow-y: scroll;
 }
+
 .seleurl-pathctTeacher {
     margin-top: 6px;
 }
@@ -609,7 +628,7 @@ list {
 /*for url*/
 . {
     width: 100%;
-    display:flex;
+    display: flex;
 }
 
 .a-url {
@@ -620,10 +639,12 @@ list {
     font-family: inherit;
     font-weight: bold;
 }
-.a-url:not(:last-child)::after{
+
+.a-url:not(:last-child)::after {
     content: ' / ';
     margin: 20px;
 }
+
 .a-url:hover {
     font-size: 110%;
 }
@@ -646,7 +667,7 @@ list {
     color: green;
 }
 
-.middle{
+.middle {
     margin-left: 21%;
     width: 64%;
 }
@@ -655,7 +676,11 @@ list {
     background-color: #333333;
     color: #01A7F0 !important;
 }
-.select2-results__option--selected { display: none;}
+
+.select2-results__option--selected {
+    display: none;
+}
+
 .select2-container .select2-selection {
     height: 70px;
     overflow-y: scroll;
