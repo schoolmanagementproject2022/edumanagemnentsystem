@@ -70,7 +70,7 @@ body {
     position: fixed;
 }
 
-/*Sidebar styles*/
+/*Left sidebar styles*/
 .sidebar {
     width: 21%;
     padding: 0px;
@@ -92,6 +92,7 @@ body {
     background-color: #333333;
     color: #01A7F0;
 }
+
 /*Main bar style*/
 .main {
     width: 88%;
@@ -108,7 +109,6 @@ body {
     transition: all 0.5s ease;
     height: 7%;
 }
-
 
 .button {
     background-color: #555555;
@@ -144,14 +144,9 @@ body {
     flex-direction: column;
 }
 
-#date {
-    width: 80%;
-!important;
-    cursor: pointer;
-}
-
 .profile-items {
     width: 100%;
+    display: flex;
 }
 
 .profile-p-item {
@@ -161,15 +156,15 @@ body {
 
 .p-item {
     display: block;
-    color: #FFFFFF;
+    color: #555555;
     padding: 10px;
     text-decoration: none;
     font-size: 19px;
     cursor: pointer;
-    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
 }
 
-.profile-items p {
+.profile-items a {
     color: #555555;
     padding: 10px;
     text-decoration: none;
@@ -177,12 +172,17 @@ body {
     font-weight: 600;
 }
 
-
 .profile-items a {
     background-color: #555555;
     font-weight: 600;
 }
-
+.profile_label_title{
+    color: #555555;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1.3em;
+    font-weight: 600;
+}
 .lebel {
     display: block;
     color: #FFFFFF;
@@ -202,6 +202,7 @@ input[type="checkbox"] {
     height: 413px;
 }
 
+/*Popup container*/
 .popup-container {
     position: absolute;
     top: 50%;
@@ -282,17 +283,6 @@ form {
     cursor: pointer;
 }
 
-.button-generate {
-    color: #309A21;
-    margin-top: 8px;
-    text-align: center;
-    width: 172px;
-    height: 24px;
-    cursor: pointer;
-    border-radius: 4px;
-    border-width: 0.5px;
-}
-
 .popup-label-title {
     font-size: 0.8em;
     height: 1.2em;
@@ -319,189 +309,10 @@ form {
     border: 1px solid #01A7F0;
 }
 
-
 .popup-label-title-subject {
     font-size: 17px;
     height: 1.2em;
     margin-top: 20px;
-}
-
-.list-items a {
-    display: block;
-    color: #FFFFFF;
-    padding: 10px;
-    text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 1.3em;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-}
-
-.nav-link-wrapper {
-    height: 22px;
-    transition: border-bottom 0.5s;
-}
-
-.nav-link-wrapper a {
-    color: #FFFFFF;
-    text-decoration: none;
-    transition: color 0.5s;
-}
-
-.nav-link-wrapper a:hover {
-    color: #01A7F0;
-}
-
-/*Main part styles*/
-
-
-
-/*Sidebar styles*/
-
-
-
-
-/*Main bar style*/
-.main {
-    width: 88%;
-    padding: 0px;
-    margin-right: 0px;
-    background-color: #AAAAAA;
-    height: 96vh;
-    font-size: 1.3em;
-}
-
-/*Button part styles*/
-.create {
-    display: block;
-    transition: all 0.5s ease;
-    height: 7%;
-}
-
-.button {
-    background-color: #555555;
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 8px;
-    padding: 7px;
-}
-
-.create a {
-    text-decoration: none;
-    color: #FFFFFF;
-}
-
-.create a:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
-
-.btn {
-    padding: 5px;
-    border-radius: 5px;
-    float: right;
-    margin-right: 59px;
-    background-color: #555555;
-    color: #FFFFFF
-}
-
-.btn:hover {
-    background-color: #333333;
-    color: #01A7F0;
-}
-
-#date {
-    width: 80%;
-    cursor: pointer;
-}
-
-.popup-container .close-btn {
-    position: absolute;
-    right: 20px;
-    border-width: 0px;
-    top: 15px;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-.close-btn:hover {
-    color: red;
-}
-
-h1 {
-    text-align: left;
-    color: #007EB4;
-    margin-top: 0px;
-}
-
-form {
-    margin: 0px;
-    margin-left: 0px;
-    margin-right: 4px;
-}
-
-.half {
-    width: 50%;
-    padding: 0px;
-    margin-left: 0px;
-    height: 253px;
-}
-
-.half2 {
-    width: 50%;
-    margin-left: 20%;
-    height: 253px;
-}
-
-.halfSection {
-    margin-top: 27%;
-    margin-left: 27%;
-    display: inline-block;
-}
-
-.button-save {
-    position: absolute;
-    color: #A30014;
-    float: right;
-    margin-top: 70%;
-    margin-left: -20%;
-    width: 83px;
-    display: block;
-    height: 30px;
-    border-radius: 4px;
-    border-width: 0.5px;
-    cursor: pointer;
-}
-
-.button-generate {
-    color: #309A21;
-    margin-top: 8px;
-    text-align: center;
-    width: 172px;
-    height: 24px;
-    cursor: pointer;
-    border-radius: 4px;
-    border-width: 0.5px;
-}
-
-.popup-label-title {
-    font-size: 17px;
-    height: 1.2em;
-    margin-top: 20px;
-}
-
-.error {
-    font-size: 0.7em;
-    color: red;
-}
-
-.form_input {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    display: block;
-    width: 100%;
-    border-radius: 1px;
-    border-width: 1.5px;
 }
 
 .allTab {
@@ -509,11 +320,11 @@ form {
     color: #01A7F0 !important;
 }
 
+/*Right sidebar styles*/
 .sidebar_right {
     margin-right: 25px;
     margin-top: 100px;
     width: 15%;
-    cursor: pointer;
 }
 
 .sidebar_right_photo {
@@ -521,7 +332,6 @@ form {
     background-color: white;
     cursor: pointer;
     text-align: center;
-    border: solid 2px red;
     height: 124px;
 }
 
@@ -533,14 +343,24 @@ form {
     height: min-content;
 }
 
-.content > * {
-    margin-top: 15px;
-    margin-bottom: 47px;
+.sidebar_right_links_item {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 19px;
+    cursor: pointer;
 }
 
 .sidebar_right a:hover {
     background-color: #333333;
     color: #01A7F0;
+}
+
+.content > * {
+    margin-top: 15px;
+    margin-bottom: 47px;
 }
 
 .show-btn:hover {
@@ -558,6 +378,7 @@ form {
     border-color: #aaaaaa;
     align-self: flex-end;
     color: #01A7F0;
+    margin-bottom: 20px;
 }
 
 .div-pddng {
@@ -579,51 +400,6 @@ form {
     color: #01A7F0;
 }
 
-.classroom-show-top {
-    margin: 80px auto;
-    width: 392px;
-    display: block;
-    color: #FFFFFF;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 19px;
-    font-family: "Montserrat", sans-serif;
-}
-
-.sidebar_right_links_item {
-    display: block;
-    color: #FFFFFF;
-    padding: 10px;
-    text-decoration: none;
-    border-bottom: 0.2px solid #777777;
-    font-size: 19px;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-}
-
-list {
-    width: 100%;
-    padding: 0px;
-    background-color: #555555;
-    height: 65vh;
-    margin-top: 10px;
-    overflow-y: scroll;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
-.list {
-    width: 100%;
-    background-color: #555555;
-    height: 65vh;
-    overflow-y: scroll;
-}
-
-.seleurl-pathctTeacher {
-    margin-top: 6px;
-}
 
 /*for url*/
 . {

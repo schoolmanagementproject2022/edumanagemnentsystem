@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../static/css/parentProfile.css" rel="stylesheet">
+    <link href="/static/css/parentProfile.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
     <title th:text="'Teachers in ' + ${middleUrl}">Parent</title>
@@ -27,23 +27,27 @@
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
             <div class="profile">
-                <div class="profile-items" th:each="parent : ${parents}">
+                <div class="profile-items">
+                    <label class="profile_label_title" for="name">Name: </label>
                     <p class="p-item" th:text="${parent.getName()}"> Name </p>
                 </div>
-                <div class="profile-items" th:each="parent : ${parents}">
+                <div class="profile-items">
+                    <label class="profile_label_title" for="name">Surname: </label>
                     <p class="p-item" th:text="${parent.getSurname()}"> Surname </p>
                 </div>
-                <div class="profile-items" th:each="parent : ${parents}">
-                    <p class="p-item" th:text="${parent.getEmail()}"> Email </p>
+                <div class="profile-items">
+                    <label class="profile_label_title" for="name">Email: </label>
+                    <p class="p-item" th:text="${parent.getUser().getEmail()}"> Email </p>
                 </div>
             </div>
         </div>
         <div class="sidebar_right">
-            <div class="sidebar_right_photo" id="sidebar2">
-             <a>photo</a>
+            <div class="sidebar_right_photo">
+                <a></a>
             </div>
-            <div class="sidebar_right_links" id="sidebar2">
-                <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+            <div class="sidebar_right_links">
+                <a class="sidebar_right_links_item"
+                   th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
                    th:href="@{${allUrl}}">Profile</a>
                 <a class="sidebar_right_links_item"
                    th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
@@ -56,9 +60,9 @@
 <div class="edit">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th: th:text="${parent.getNameSurname()}">Parent name</h1>
+        <h1 th:text="${parent.getNameAndSurname()}">Parent name</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingParent}">
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${parent}">
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();
             </script>
@@ -79,9 +83,9 @@
 
                     <label class="popup-label-title" for="email">Parent email<span
                             style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
-                    <div class="error" th:if="${#fields.hasErrors('email')}"
-                         th:errors="*{email}"></div>
+                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.user.email}"/>
+                    <div class="error" th:if="${#fields.hasErrors('user')}"
+                         th:errors="*{user.email}"></div>
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>

@@ -19,8 +19,8 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
         <div class="list">
-            <div class="list-items" th:each="item: ${parents}">
-                <p class="item" th:text="${item.getNameAndSurname()}"></p>
+            <div class="list-items" th:each="parent: ${parents}">
+                <a class="item" th:text="${parent.getNameAndSurname()}" th:href="@{'/parents/' + ${parent.getNameAndSurname()} + '/profile'}">Parent</a>
             </div>
         </div>
     </div>
