@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.util.service.impl;
 
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return userRepository.save(user);
         }
-        return null;
+        throw new ObjectIsNull();
     }
 
     @Override
