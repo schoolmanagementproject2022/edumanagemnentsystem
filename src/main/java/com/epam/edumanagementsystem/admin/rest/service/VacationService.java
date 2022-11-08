@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface VacationService {
 
-    void create(Vacation vacation);
+    Vacation create(Vacation vacation);
 
     List<VacationDto> findAll();
 

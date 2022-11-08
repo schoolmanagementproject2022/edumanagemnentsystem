@@ -23,8 +23,11 @@ public class VacationServiceImpl implements VacationService {
     }
 
     @Override
-    public void create(Vacation vacation) {
-        vacationRepository.save(vacation);
+    public Vacation create(Vacation vacation) {
+        if(vacation == null){
+            throw new NullPointerException("Please, fill the required fields");
+        }
+       return vacationRepository.save(vacation);
     }
 
     @Override
