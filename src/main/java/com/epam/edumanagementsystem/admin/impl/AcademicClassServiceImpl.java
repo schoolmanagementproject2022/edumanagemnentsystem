@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
-import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,11 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public void create(AcademicClass academicClass) {
-        academicClassRepository.save(academicClass);
+    public AcademicClass create(AcademicClass academicClass) {
+        if(academicClass == null){
+            throw new NullPointerException("Please, fill the required fields");
+        }
+        return academicClassRepository.save(academicClass);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public void update(AcademicClass academicClass) {
+    public AcademicClass update(AcademicClass academicClass) {
         AcademicClass updateAcademicClass = findByName(academicClass.getClassNumber());
         if (academicClass.getClassNumber() != null) {
             updateAcademicClass.setClassNumber(academicClass.getClassNumber());
@@ -65,7 +67,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
             updateAcademicClass.setClassroomTeacher(academicClass.getClassroomTeacher());
         }
 
-        create(updateAcademicClass);
+        return create(updateAcademicClass);
     }
 
     @Override
