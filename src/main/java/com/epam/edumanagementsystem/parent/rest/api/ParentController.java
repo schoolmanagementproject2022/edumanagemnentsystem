@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/parents")
@@ -69,22 +70,20 @@ public class ParentController {
         return "redirect:/parents";
     }
 
-    @GetMapping("/{name}/profile")
-    public String openParentProfile(@PathVariable("name") String name, Model model) {
-        Parent parent = parentService.getParentByName("Parent");
+    @GetMapping("/{id}/profile")
+    public String openParentProfile(@PathVariable("id") Long id, Model model) {
+        Parent parent = parentService.findById(id).get();
         model.addAttribute("parent", parent);
         return "parentProfile";
     }
 
 
     @PostMapping("/{name}/profile")
-    public String edit(@ModelAttribute("parent") Parent parent,
-                       @PathVariable("name") String name, Model model) {
+    public String edit(@ModelAttribute("parent") Parent parent, @PathVariable("name") String name, Model model) {
 
         Parent nameParent = parentService.getParentByName("Parent");
 
         model.addAttribute("parent", nameParent);
-
 
         return "redirect:/parents/" + name + "/profile";
     }

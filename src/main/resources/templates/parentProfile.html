@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="'Teachers in ' + ${middleUrl}">Parent</title>
+    <title th:text="${middleUrl}">Parent</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -22,7 +22,7 @@
         <div class="content" id="middle">
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Parents'}"></a>
-                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${parent.getNameAndSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
@@ -32,11 +32,11 @@
                     <p class="p-item" th:text="${parent.getName()}"> Name </p>
                 </div>
                 <div class="profile-items">
-                    <label class="profile_label_title" for="name">Surname: </label>
+                    <label class="profile_label_title" for="surname">Surname: </label>
                     <p class="p-item" th:text="${parent.getSurname()}"> Surname </p>
                 </div>
                 <div class="profile-items">
-                    <label class="profile_label_title" for="name">Email: </label>
+                    <label class="profile_label_title" for="email">Email: </label>
                     <p class="p-item" th:text="${parent.getUser().getEmail()}"> Email </p>
                 </div>
             </div>
@@ -62,7 +62,7 @@
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1 th:text="${parent.getNameAndSurname()}">Parent name</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${parent}">
+        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parent.getId()} + '/profile'}" th:object="${parent}">
             <script th:inline="javascript" th:if="${blank} != null">
                 PopUpShow();
             </script>
