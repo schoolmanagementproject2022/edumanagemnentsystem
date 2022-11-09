@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -32,6 +33,8 @@ public class Teacher {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+
+    private String imageUrl;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
@@ -137,6 +140,14 @@ public class Teacher {
 
     public void setSubjectSet(Set<Subject> subjectSet) {
         this.subjectSet = subjectSet;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

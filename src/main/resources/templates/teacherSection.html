@@ -21,6 +21,7 @@
         <div class="list">
             <div class="list-items" th:each="teacher : ${teachers}">
                 <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+                <img style="height: 100px" th:src="@{/image(name=${teacher.imageUrl})}">
             </div>
         </div>
     </div>
@@ -33,7 +34,7 @@
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>New Teacher</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}" enctype="multipart/form-data">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
                 PopUpShow();
@@ -78,6 +79,7 @@
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
+                    <input type="file" name="image">
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -25,6 +26,11 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherServiceImpl(TeacherRepository teacherRepository, UserService userService) {
         this.teacherRepository = teacherRepository;
         this.userService = userService;
+    }
+
+    @Override
+    public Optional<Teacher> findById(Long id) {
+        return teacherRepository.findById(id);
     }
 
     @Override
