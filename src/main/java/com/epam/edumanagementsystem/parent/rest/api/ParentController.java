@@ -76,6 +76,7 @@ public class ParentController {
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         Parent parent = parentService.findById(id).get();
         model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
+        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
         return "parentProfile";
     }
 
@@ -92,6 +93,7 @@ public class ParentController {
                     parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
                     return "redirect:/parents/" + id + "/profile";
                 }
+                model.addAttribute("nameAndSurname", parent.getNameAndSurname());
                 return "parentProfile";
             }
         }
@@ -100,6 +102,7 @@ public class ParentController {
             for (User user : userService.findAll()) {
                 if (parentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
                     model.addAttribute("duplicated", "A user with the specified email already exists");
+                    model.addAttribute("nameAndSurname", parent.getNameAndSurname());
                     return "parentProfile";
                 }
             }
@@ -108,18 +111,22 @@ public class ParentController {
                     if (!bindingResult.hasFieldErrors("email")) {
                         if (!EmailValidation.validate(parentDto.getEmail())) {
                             model.addAttribute("invalid", "Email is invalid");
+                            model.addAttribute("nameAndSurname", parent.getNameAndSurname());
                             return "parentProfile";
                         }
                     } else if (!EmailValidation.validate(parentDto.getEmail())) {
+                        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
                         return "parentProfile";
                     }
                 } else if (bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("surname")) {
                     if (!bindingResult.hasFieldErrors("email")) {
                         if (!EmailValidation.validate(parentDto.getEmail())) {
                             model.addAttribute("invalid", "Email is invalid");
+                            model.addAttribute("nameAndSurname", parent.getNameAndSurname());
                             return "parentProfile";
                         }
                     } else if (!EmailValidation.validate(parentDto.getEmail())) {
+                        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
                         return "parentProfile";
                     }
                 }

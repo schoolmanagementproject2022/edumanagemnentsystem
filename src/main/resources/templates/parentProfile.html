@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${parentDto.getNameAndSurname()}">Parent</title>
+    <title th:text="${nameAndSurname}">Parent</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -52,7 +52,7 @@
                    th:href="@{${allUrl}}">Profile</a>
                 <a class="sidebar_right_links_item"
                    th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
-                   th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'linked students'}}">Linked students</a>
+                   th:href="@{#}">Linked students</a>
             </div>
         </div>
 
@@ -62,7 +62,7 @@
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th:text="${parentDto.getNameAndSurname()}">Parent name</h1>
+        <h1 th:text="${nameAndSurname}">Parent name</h1>
 
         <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}" th:object="${parentDto}">
 
