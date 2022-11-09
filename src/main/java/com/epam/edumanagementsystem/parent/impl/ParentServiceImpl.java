@@ -70,8 +70,9 @@ public class ParentServiceImpl implements ParentService {
         parentRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
-    public Parent getParentByName(String name) {
-        return parentRepository.findParentByName(name);
+    public void updateParentNameAndSurnameById(String name, String surname, Long id) {
+        parentRepository.updateParentNameAndSurnameById(name,surname,id);
     }
 }

@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${middleUrl}">Parent</title>
+    <title th:text="${parentDto.getNameAndSurname()}">Parent</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -22,22 +22,23 @@
         <div class="content" id="middle">
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Parents'}"></a>
-                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${parent.getNameAndSurname()}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${parentDto.getNameAndSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
+
             <div class="profile">
                 <div class="profile-items">
                     <label class="profile_label_title" for="name">Name: </label>
-                    <p class="p-item" th:text="${parent.getName()}"> Name </p>
+                    <p class="p-item" th:text="${parentDto.getName()}"> Name </p>
                 </div>
                 <div class="profile-items">
                     <label class="profile_label_title" for="surname">Surname: </label>
-                    <p class="p-item" th:text="${parent.getSurname()}"> Surname </p>
+                    <p class="p-item" th:text="${parentDto.getSurname()}"> Surname </p>
                 </div>
                 <div class="profile-items">
                     <label class="profile_label_title" for="email">Email: </label>
-                    <p class="p-item" th:text="${parent.getUser().getEmail()}"> Email </p>
+                    <p class="p-item" th:text="${parentDto.getEmail()}"> Email </p>
                 </div>
             </div>
         </div>
@@ -58,34 +59,34 @@
     </div>
 </div>
 <div class="edit">
+
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th:text="${parent.getNameAndSurname()}">Parent name</h1>
+        <h1 th:text="${parentDto.getNameAndSurname()}">Parent name</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parent.getId()} + '/profile'}" th:object="${parent}">
-            <script th:inline="javascript" th:if="${blank} != null">
+        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}" th:object="${parentDto}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
                     <div id="error"></div>
-                    <label class="popup-label-title" for="name">Parent name<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="name">Parent name</label>
                     <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
 
-                    <label class="popup-label-title" for="surname">Parent surname<span
-                            style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="surname">Parent surname</label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title" for="email">Parent email<span
-                            style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.user.email}"/>
-                    <div class="error" th:if="${#fields.hasErrors('user')}"
-                         th:errors="*{user.email}"></div>
+                    <label class="popup-label-title" for="email">Parent email</label>
+                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
+                    <div class="error" th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}"></div>
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>

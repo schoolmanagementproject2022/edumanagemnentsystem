@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.parent.rest.api;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.entity.User;
@@ -9,6 +10,7 @@ import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -73,18 +75,62 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         Parent parent = parentService.findById(id).get();
-        model.addAttribute("parent", parent);
+        model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
         return "parentProfile";
     }
 
+    @Transactional
+    @PostMapping("/{id}/profile")
+    public String edit(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
+                       @PathVariable("id") Long id, Model model) {
 
-    @PostMapping("/{name}/profile")
-    public String edit(@ModelAttribute("parent") Parent parent, @PathVariable("name") String name, Model model) {
+        Parent parent = parentService.findById(id).get();
 
-        Parent nameParent = parentService.getParentByName("Parent");
+        if (parentDto.getEmail().equalsIgnoreCase(parent.getUser().getEmail())) {
+            if (bindingResult.hasErrors()) {
+                if (!bindingResult.hasFieldErrors("name") && !bindingResult.hasFieldErrors("surname")) {
+                    parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
+                    return "redirect:/parents/" + id + "/profile";
+                }
+                return "parentProfile";
+            }
+        }
 
-        model.addAttribute("parent", nameParent);
-
-        return "redirect:/parents/" + name + "/profile";
+        if (!parentDto.getEmail().equalsIgnoreCase(parent.getUser().getEmail())) {
+            for (User user : userService.findAll()) {
+                if (parentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
+                    model.addAttribute("duplicated", "A user with the specified email already exists");
+                    return "parentProfile";
+                }
+            }
+            if (bindingResult.hasErrors()) {
+                if (!bindingResult.hasFieldErrors("name") && !bindingResult.hasFieldErrors("surname")) {
+                    if (!bindingResult.hasFieldErrors("email")) {
+                        if (!EmailValidation.validate(parentDto.getEmail())) {
+                            model.addAttribute("invalid", "Email is invalid");
+                            return "parentProfile";
+                        }
+                    } else if (!EmailValidation.validate(parentDto.getEmail())) {
+                        return "parentProfile";
+                    }
+                } else if (bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("surname")) {
+                    if (!bindingResult.hasFieldErrors("email")) {
+                        if (!EmailValidation.validate(parentDto.getEmail())) {
+                            model.addAttribute("invalid", "Email is invalid");
+                            return "parentProfile";
+                        }
+                    } else if (!EmailValidation.validate(parentDto.getEmail())) {
+                        return "parentProfile";
+                    }
+                }
+                parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
+                parent.getUser().setEmail(parentDto.getEmail());
+                userService.save(parent.getUser());
+                return "redirect:/parents/" + id + "/profile";
+            }
+        }
+        parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
+        return "redirect:/parents/" + id + "/profile";
     }
 }
+
