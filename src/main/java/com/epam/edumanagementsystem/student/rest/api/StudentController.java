@@ -10,16 +10,14 @@ import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
+import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -67,25 +65,47 @@ public class StudentController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", ParentMapper.toParentListWithoutSaveUser(findAllParents()));
         model.addAttribute("classes", findAllClasses());
-        if (userService.checkDuplicationOfEmail(studentDto.getEmail())) {
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-            return STUDENT_HTML;
-        }
-        if (result.hasErrors()) {
-            if (!result.hasFieldErrors("email")) {
-                if (!validateEmail(studentDto.getEmail())) {
-                    model.addAttribute("invalid", "Email is invalid");
-                    return STUDENT_HTML;
-                }
-            }
-            return STUDENT_HTML;
-        } else if (!validateEmail(studentDto.getEmail())) {
-            model.addAttribute("invalid", "Email is invalid");
+        userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
+        PasswordValidation.validatePassword(studentDto.getPassword(), model);
+        EmailValidation.validate(studentDto.getEmail(), model);
+
+        if (result.hasErrors() || model.containsAttribute("blank")
+                || model.containsAttribute("invalidPassword")
+                || model.containsAttribute("invalidEmail")) {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
         studentService.create(studentDto);
         return "redirect:/students";
+    }
+
+    @GetMapping("/{id}/profile")
+    public String openStudentProfile(@PathVariable("id") Long studentId, Model model) {
+        model.addAttribute("existingStudent", studentService.findByStudentId(studentId));
+        model.addAttribute("bloodGroups", BloodGroup.values());
+        model.addAttribute("genders", Gender.values());
+        model.addAttribute("parents", findAllParents());
+        model.addAttribute("classes", findAllClasses());
+        return "studentProfile";
+    }
+
+    @PostMapping("/{id}/profile")
+    public String editStudentPersonalInformation(@ModelAttribute("existingStudent") @Valid StudentDto updatableStudent,
+                                                 BindingResult result, @PathVariable("id") Long studentId, Model model) {
+        model.addAttribute("bloodGroups", BloodGroup.values());
+        model.addAttribute("genders", Gender.values());
+        model.addAttribute("parents", findAllParents());
+        model.addAttribute("classes", findAllClasses());
+        if (!updatableStudent.getEmail().equals(studentService.findByStudentId(studentId).getEmail())) {
+            userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
+        }
+        EmailValidation.validate(updatableStudent.getEmail(), model);
+
+        if (result.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
+            return "studentProfile";
+        }
+        studentService.updateFields(updatableStudent);
+        return "redirect:/students/" + updatableStudent.getId() + "/profile";
     }
 
     private List<StudentDto> findAllStudents() {
@@ -98,9 +118,5 @@ public class StudentController {
 
     private List<AcademicClassDto> findAllClasses() {
         return academicClassService.findAll();
-    }
-
-    private Boolean validateEmail(String email) {
-        return EmailValidation.validate(email);
     }
 }

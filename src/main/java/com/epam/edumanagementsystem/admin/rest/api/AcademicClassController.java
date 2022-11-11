@@ -228,7 +228,7 @@ public class AcademicClassController {
         if (null != students){
             for (Student student : students) {
                 student.setAcademicClass(academicClassByName);
-                studentService.update(student);
+                studentService.updateStudentsClass(student);
             }
         }
 

@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.teacher.rest.api;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
+import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,24 +45,15 @@ public class TeacherController {
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result, Model model) {
         model.addAttribute("teachers", teacherService.findAll());
-
-        if (userService.checkDuplicationOfEmail(teacherDto.getEmail())) {
-            model.addAttribute("duplicated", "A user with the specified email already exists");
+        userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
+        EmailValidation.validate(teacherDto.getEmail(), model);
+        PasswordValidation.validatePassword(teacherDto.getPassword(), model);
+        if (result.hasErrors() || model.containsAttribute("blank")
+                || model.containsAttribute("invalidPassword")
+                || model.containsAttribute("invalidEmail")) {
             return TEACHER_HTML;
         }
 
-        if (result.hasErrors()) {
-            if (!result.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(teacherDto.getEmail())) {
-                    model.addAttribute("invalid", "Email is invalid");
-                }
-            }
-            return TEACHER_HTML;
-
-        } else if (!EmailValidation.validate(teacherDto.getEmail())) {
-            model.addAttribute("invalid", "Email is invalid");
-            return TEACHER_HTML;
-        }
         teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
         teacherService.create(teacherDto);
         return "redirect:/teachers";

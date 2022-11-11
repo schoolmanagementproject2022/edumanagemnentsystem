@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/style.css" rel="stylesheet">
-    <script src="/static/js/passwordGenerator.js"></script>
-    <script src="/static/js/popupControl.js"></script>
+    <link href="/static/css/profileStyle.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="/static/js/popupControl.js"></script>
     <script>
         $(function () {
             $("#date").datepicker({
@@ -37,39 +40,64 @@
             color: #111111;
         }
     </style>
-    <title>Student Page</title>
+    <title th:text="${existingStudent.getNameAndSurname()}+' profile'">Title</title>
 </head>
-
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <div class="main-wrapper">
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="content-wrapper">
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+        <div class="content" id="middle">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Students'}"></a>
 
-        <div class="list">
-            <div class="list-items" th:each="student : ${students}">
-                <a th:href="@{'/students/'+${student.getId()} + '/profile'}" class="item"
-                   th:text="${student.getNameAndSurname()}">Student</a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
+                   th:text="${existingStudent.getNameAndSurname()}"></a>
+
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
+            <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
+            <div class="personalInformation">
+                <p th:text="'Name: '+${existingStudent.getName()}"></p>
+                <p th:text="'Surname: '+${existingStudent.getSurname()}"></p>
+                <p th:text="'Email: '+${existingStudent.getEmail()}"></p>
+                <p th:text="'Address: '+${existingStudent.getAddress()}"></p>
+                <p th:text="'Birth date: '+${existingStudent.getDate()}"></p>
+                <p th:text="'Blood group: '+${existingStudent.getBloodGroup().getBloodGroup()}"></p>
+                <p th:text="'Gender: '+${existingStudent.getGender().getGender()}"></p>
+                <p th:if="*{existingStudent.getParent() != null}"
+                   th:text="'Parent: '+${existingStudent.getParent().getNameAndSurname()}"></p>
+                <p th:if="*{existingStudent.getParent() == null}">Parent: N/A </p>
+                <p th:if="*{existingStudent.getAcademicClass() != null}"
+                   th:text="'Academic class: '+${existingStudent.getAcademicClass().getClassNumber()}"></p>
+                <p th:if="*{existingStudent.getAcademicClass() == null}">Academic class: N/A </p>
+            </div>
+        </div>
+
+        <div>
+            <!--                nkari masy-->
+        </div>
+
+        <div class="sidebar2 header" id="sidebar2">
+            <a class="item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${allUrl}}">Profile</a>
+            <a class="item" href="#">Journal</a>
         </div>
     </div>
 </div>
-
 <div class="create">
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
     <div class="popup-container" id="popup-container">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-        <h1>New Student</h1>
-        <form id="form" class="form" th:method="POST" th:action="@{/students}" th:object="${student}">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
-            or ${invalidEmail} != null or ${invalidPassword}!=null">
+        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+        <h1 th:text="${existingStudent.getNameAndSurname()}"></h1>
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingStudent}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
-
             <div class="popup-wrapper">
                 <div class="half">
-                    <div id="error"></div>
-                    <label class="popup-label-title">Student name<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title">Student name <span style="color:#A30014">*</span></label>
                     <input class="form_input"
                            th:type="text"
                            th:name="name"
@@ -112,7 +140,7 @@
                     <div class="error" th:if="${#fields.hasErrors('address')}"
                          th:errors="*{address}"></div>
 
-                    <label class="popup-label-title">Birth Date <span style="color:#A30014">* </span>
+                    <label class="popup-label-title">Birth Date <span style="color:#A30014">*</span>
                         <span class="check-validation-date"></span>
                     </label>
                     <input class="form_input" placeholder="Date pick &#9638;" data-date-format="dd-mm-yyyy" readonly
@@ -124,68 +152,49 @@
                     />
                     <div class="error" th:if="${#fields.hasErrors('date')}"
                          th:errors="*{date}"></div>
+                </div>
+
+                <div class="half2">
+                    <label class="popup-label-title">Student blood group <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
+                        <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
+                                th:value="${bloodGroup}"
+                                th:text="${bloodGroup.bloodGroup}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
+                         th:errors="*{bloodGroup}"></div>
+
+                    <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
+                        <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
+                                th:text="${gender.gender}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('gender')}"
+                         th:errors="*{gender}"></div>
+
+                    <label class="popup-label-title">Linked Parent </label>
+                    <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
+                        <option th:text="' Select parent'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
+                                th:text="${parent.getNameAndSurname}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('parent')}"
+                         th:errors="*{parent}"></div>
 
                     <label class="popup-label-title">Linked Class</label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
-                        <option th:if="*{academicClass == null}" th:text="'Class'" class="short" data-limit="23"
-                                th:value="null">
-                            Select academic class
-                        </option>
+                        <option th:text="' Select academic class'" class="short" data-limit="23"
+                                th:value="null"></option>
                         <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicClass')}"
-                         th:errors="*{academicClass}"></div>
-
-                </div>
-
-                <div class="half2">
-                    <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
-                    <input type="text" class="form_input" placeholder="Create Password" id="password"
-                           th:name="password" readonly
-                           th:value="${#object.password}">
-                    <div th:if="${blank}!= null" class="error">
-                        <p th:text="${blank}"></p>
-                    </div>
-                    <div th:if="${invalidPassword}!= null" class="error">
-                        <p th:text="${invalidPassword}"></p>
-                    </div>
-                    <button class="button-generate" id="btn" type="button" onclick="getPassword()">
-                        <b>Generate password</b>
-                    </button>
-                    <div class="halfSection">
-                        <label class="popup-label-title">Student blood group <span
-                                style="color:#A30014">*</span></label>
-                        <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
-                            <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23"
-                                    th:value="null"></option>
-                            <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
-                                    th:value="${bloodGroup}"
-                                    th:text="${bloodGroup.bloodGroup}"></option>
-                        </select>
-                        <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
-                             th:errors="*{bloodGroup}"></div>
-
-                        <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
-                        <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
-                            <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
-                                    th:value="null"></option>
-                            <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
-                                    th:text="${gender.gender}"></option>
-                        </select>
-                        <div class="error" th:if="${#fields.hasErrors('gender')}"
-                             th:errors="*{gender}"></div>
-
-                        <label class="popup-label-title">Linked Parent</label>
-                        <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
-                            <option th:if="*{parent == null}" class="short" data-limit="23" th:text="'Parent'"
-                                    th:value="null"></option>
-                            <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
-                                    th:text="${parent.getNameAndSurname}"></option>
-                        </select>
-                        <div class="error" th:if="${#fields.hasErrors('parent')}"
-                             th:errors="*{parent}"></div>
+                    <div class="error" th:if="${#fields.hasErrors('academicClass')}" th:errors="*{academicClass}">
                     </div>
                 </div>
                 <div name="btn-div">
@@ -197,22 +206,6 @@
 </div>
 </body>
 <script>
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd
-    }
-    if (mm < 10) {
-        mm = '0' + mm
-    }
-    yyyy = yyyy - 3;
-
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("date").setAttribute("max", today);
-
-
     function shortString(selector) {
         const elements = document.querySelectorAll(selector);
         const tail = '...';
@@ -233,5 +226,6 @@
     window.onload = function () {
         shortString('.short');
     };
+
 </script>
 </html>
