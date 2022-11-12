@@ -132,4 +132,16 @@ class ParentServiceImplTest {
         Assertions.assertThrows(NullPointerException.class, () -> parentService.deleteById(null));
     }
 
+    @Test
+    void updateParentNameAndSurnameByIdVerifiesOK(){
+        String name = "NewParent";
+        String surname = "NewParent";
+        Long id = parent.getId();
+        doNothing().when(parentRepository).updateParentNameAndSurnameById(name,surname,id);
+
+        parentService.updateParentNameAndSurnameById(name,surname,id);
+
+        verify(parentRepository, times(1)).updateParentNameAndSurnameById(name,surname,id);
+    }
+
 }
