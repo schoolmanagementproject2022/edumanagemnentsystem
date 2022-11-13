@@ -5,7 +5,11 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.student.mapper.StudentMapper;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +76,23 @@ public class ParentServiceImpl implements ParentService {
 
     @Transactional
     @Override
-    public void updateParentNameAndSurnameById(String name, String surname, Long id) {
-        parentRepository.updateParentNameAndSurnameById(name,surname,id);
+    public void updateParent(ParentDto parentForUpdate) {
+        if (parentForUpdate == null) {
+            throw new NullPointerException("The given parent must not be null!");
+        }
+        Parent parent = parentRepository.findById(parentForUpdate.getId()).get();
+
+        if (parentForUpdate.getName() != null) {
+            parent.setName(parentForUpdate.getName());
+        }
+
+        if (parentForUpdate.getSurname() != null) {
+            parent.setSurname(parentForUpdate.getSurname());
+        }
+
+        if (parentForUpdate.getEmail() != null) {
+            parent.getUser().setEmail(parentForUpdate.getEmail());
+        }
+        parentRepository.save(parent);
     }
 }

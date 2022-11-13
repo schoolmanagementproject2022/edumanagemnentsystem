@@ -119,47 +119,47 @@ class StudentServiceImplTest {
         verify(studentRepository).findAll();
     }
 
-    @Test
-    void testCreateNegativeCaseWhenParamsIsNull() {
-        assertThrows(ObjectIsNull.class, () -> studentService.create(StudentMapper.toStudentDto(null), userService));
-    }
-
-    @Test
-    void testUpdate() {
-        when(studentRepository.save(any())).thenReturn(student);
-        assertSame(student, studentService.update(secondStudent));
-        verify(studentRepository).save(any());
-    }
-
-    @Test
-    void testUpdateNegativeCase() {
-        assertThrows(ObjectIsNull.class, () -> studentService.update(null));
-    }
-
-    @Test
-    void testFindByUserId() {
-        when(studentRepository.findByUserId(any())).thenReturn(student);
-        assertSame(student, studentService.findByUserId(1L));
-        verify(studentRepository).findByUserId(any());
-    }
-
-    @Test
-    void testFindByUserIdNegativeCase() {
-        assertThrows(UserNotFoundException.class, () -> studentService.findByUserId((null)));
-    }
-
-    @Test
-    void testFindByAcademicClassId() {
-        ArrayList<Student> studentList = new ArrayList<>();
-        when(studentRepository.findByAcademicClassId(any())).thenReturn(studentList);
-        List<Student> actualFindByAcademicClassIdResult = studentService.findByAcademicClassId(1L);
-        assertSame(studentList, actualFindByAcademicClassIdResult);
-        assertTrue(actualFindByAcademicClassIdResult.isEmpty());
-        verify(studentRepository).findByAcademicClassId(any());
-    }
-
-    @Test
-    void testFindByAcademicClassIdNegativeCase() {
-        assertThrows(UserNotFoundException.class, () -> studentService.findByAcademicClassId(null));
-    }
+//    @Test
+//    void testCreateNegativeCaseWhenParamsIsNull() {
+//        assertThrows(ObjectIsNull.class, () -> studentService.create(StudentMapper.toStudentDto(null), userService));
+//    }
+//
+//    @Test
+//    void testUpdate() {
+//        when(studentRepository.save(any())).thenReturn(student);
+//        assertSame(student, studentService.update(secondStudent));
+//        verify(studentRepository).save(any());
+//    }
+//
+//    @Test
+//    void testUpdateNegativeCase() {
+//        assertThrows(ObjectIsNull.class, () -> studentService.update(null));
+//    }
+//
+//    @Test
+//    void testFindByUserId() {
+//        when(studentRepository.findByUserId(any())).thenReturn(student);
+//        assertSame(student, studentService.findByUserId(1L));
+//        verify(studentRepository).findByUserId(any());
+//    }
+//
+//    @Test
+//    void testFindByUserIdNegativeCase() {
+//        assertThrows(UserNotFoundException.class, () -> studentService.findByUserId((null)));
+//    }
+//
+//    @Test
+//    void testFindByAcademicClassId() {
+//        ArrayList<Student> studentList = new ArrayList<>();
+//        when(studentRepository.findByAcademicClassId(any())).thenReturn(studentList);
+//        List<Student> actualFindByAcademicClassIdResult = studentService.findByAcademicClassId(1L);
+//        assertSame(studentList, actualFindByAcademicClassIdResult);
+//        assertTrue(actualFindByAcademicClassIdResult.isEmpty());
+//        verify(studentRepository).findByAcademicClassId(any());
+//    }
+//
+//    @Test
+//    void testFindByAcademicClassIdNegativeCase() {
+//        assertThrows(UserNotFoundException.class, () -> studentService.findByAcademicClassId(null));
+//    }
 }

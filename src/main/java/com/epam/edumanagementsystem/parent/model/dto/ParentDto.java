@@ -21,12 +21,12 @@ public class ParentDto {
     private String email;
 
     @NotBlank
-    private String role= "PARENT";
+    private String role = "PARENT";
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
-    public ParentDto() {}
+    public ParentDto() {
+    }
 
     public ParentDto(@Size(max = 50, message = "Symbols can't be more than 50") String name,
                      @Size(max = 50, message = "Symbols can't be more than 50") String surname,

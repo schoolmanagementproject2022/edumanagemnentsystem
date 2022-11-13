@@ -18,5 +18,5 @@ public interface ParentService {
 
     void deleteById(Long id);
 
-    void updateParentNameAndSurnameById(String name, String surname, Long id);
+    void updateParent(ParentDto parentDto);
 }

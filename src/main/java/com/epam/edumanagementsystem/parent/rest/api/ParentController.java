@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
+import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,26 +45,14 @@ public class ParentController {
 
     @PostMapping()
     public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
-                             ModelMap modelMap) {
-
-        modelMap.addAttribute("parents", parentService.findAll());
-
-        for (User user : userService.findAll()) {
-            if (parentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
-                modelMap.addAttribute("duplicated", "A user with the specified email already exists");
-                return "parentSection";
-            }
-        }
-        if (bindingResult.hasErrors()) {
-            if (!bindingResult.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(parentDto.getEmail())) {
-                    modelMap.addAttribute("invalid", "Email is invalid");
-                    return "parentSection";
-                }
-            }
-            return "parentSection";
-        } else if (!EmailValidation.validate(parentDto.getEmail())) {
-            modelMap.addAttribute("invalid", "Email is invalid");
+                             Model model) {
+        model.addAttribute("parents", parentService.findAll());
+        userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+        EmailValidation.validate(parentDto.getEmail(), model);
+        PasswordValidation.validatePassword(parentDto.getPassword(), model);
+        if (bindingResult.hasErrors() || model.containsAttribute("blank")
+                || model.containsAttribute("invalidPassword")
+                || model.containsAttribute("invalidEmail")) {
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
@@ -75,67 +64,24 @@ public class ParentController {
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         Parent parent = parentService.findById(id).get();
         model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
-        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
+        model.addAttribute("parentData", parent.getNameAndSurname());
         return "parentProfile";
     }
 
-    @Transactional
     @PostMapping("/{id}/profile")
-    public String edit(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
-                       @PathVariable("id") Long id, Model model) {
+    public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
+                             @PathVariable("id") Long id, Model model) {
 
-        Parent parent = parentService.findById(id).get();
-
-        if (parentDto.getEmail().equalsIgnoreCase(parent.getUser().getEmail())) {
-            if (bindingResult.hasErrors()) {
-                if (!bindingResult.hasFieldErrors("name") && !bindingResult.hasFieldErrors("surname")) {
-                    parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
-                    return "redirect:/parents/" + id + "/profile";
-                }
-                model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                return "parentProfile";
-            }
+        if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
+            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
         }
+        EmailValidation.validate(parentDto.getEmail(), model);
 
-        if (!parentDto.getEmail().equalsIgnoreCase(parent.getUser().getEmail())) {
-            for (User user : userService.findAll()) {
-                if (parentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
-                    model.addAttribute("duplicated", "A user with the specified email already exists");
-                    model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                    return "parentProfile";
-                }
-            }
-            if (bindingResult.hasErrors()) {
-                if (!bindingResult.hasFieldErrors("name") && !bindingResult.hasFieldErrors("surname")) {
-                    if (!bindingResult.hasFieldErrors("email")) {
-                        if (!EmailValidation.validate(parentDto.getEmail())) {
-                            model.addAttribute("invalid", "Email is invalid");
-                            model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                            return "parentProfile";
-                        }
-                    } else if (!EmailValidation.validate(parentDto.getEmail())) {
-                        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                        return "parentProfile";
-                    }
-                } else if (bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("surname")) {
-                    if (!bindingResult.hasFieldErrors("email")) {
-                        if (!EmailValidation.validate(parentDto.getEmail())) {
-                            model.addAttribute("invalid", "Email is invalid");
-                            model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                            return "parentProfile";
-                        }
-                    } else if (!EmailValidation.validate(parentDto.getEmail())) {
-                        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                        return "parentProfile";
-                    }
-                }
-                parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
-                parent.getUser().setEmail(parentDto.getEmail());
-                userService.save(parent.getUser());
-                return "redirect:/parents/" + id + "/profile";
-            }
+        if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
+            model.addAttribute("parentData", parentDto.getNameAndSurname());
+            return "parentProfile";
         }
-        parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
+        parentService.updateParent(parentDto);
         return "redirect:/parents/" + id + "/profile";
     }
 }

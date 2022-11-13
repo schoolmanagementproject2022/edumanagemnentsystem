@@ -10,8 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface ParentRepository extends JpaRepository<Parent, Long> {
 
     Parent findByUserId(Long id);
-
-    @Modifying
-    @Query(nativeQuery = true, value = "UPDATE parent SET name = (?1), surname = (?2) WHERE id =(?3);")
-    void updateParentNameAndSurnameById(String name, String surname, Long id);
 }
