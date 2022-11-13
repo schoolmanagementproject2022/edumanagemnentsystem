@@ -7,15 +7,20 @@ import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ParentServiceImpl implements ParentService {
-
+    @Value("${upload.dir}")
+    private String uploadDir;
     private final ParentRepository parentRepository;
 
     private final UserService userService;
@@ -24,6 +29,7 @@ public class ParentServiceImpl implements ParentService {
         this.parentRepository = parentRepository;
         this.userService = userService;
     }
+
 
     @Override
     public Optional<Parent> findById(Long id) {
@@ -73,6 +79,20 @@ public class ParentServiceImpl implements ParentService {
     @Transactional
     @Override
     public void updateParentNameAndSurnameById(String name, String surname, Long id) {
-        parentRepository.updateParentNameAndSurnameById(name,surname,id);
+        parentRepository.updateParentNameAndSurnameById(name, surname, id);
+    }
+
+    @Override
+    public void addProfilePic(Parent parent, MultipartFile multipartFile) {
+
+        if (!multipartFile.isEmpty()) {
+            String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+            try {
+                multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
+            } catch (IOException e) {
+            }
+            parent.setPicUrl(picUrl);
+        }
+        parentRepository.save(parent);
     }
 }

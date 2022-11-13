@@ -463,3 +463,7 @@ form {
     overflow-x: hidden;
 
 }
+
+#file-input{
+  display: none;
+}

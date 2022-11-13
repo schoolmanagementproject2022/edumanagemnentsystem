@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/parentProfile.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
@@ -43,8 +44,23 @@
             </div>
         </div>
         <div class="sidebar_right">
-            <div class="sidebar_right_photo">
-                <a></a>
+            <div >
+                <div th:if="${parentDto.getPicUrl() == null}" >
+                    <form id="form-pic" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/addImg'}" th:object="${existingParent}" enctype="multipart/form-data">
+                        <div class="image-upload">
+                            <label for="file-input" width="150px" height="150px">
+                                <span id="boot-icon" class="bi bi-cloud-upload" style="font-size: 150px; color: rgb(84, 84, 84);"></span>
+                            </label>
+                            <input id="file-input" th:name="picture" multiple type="file" onchange="yourFunction()" >
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div th:if="${parentDto.getPicUrl() != null}">
+
+              <a th:href="@{'/parents/' + ${parentDto.getId()} + '/addImg'}">
+                  <img  height="150" width="150" th:src="@{/image(picUrl=${parentDto.picUrl})}">
+              </a>
             </div>
             <div class="sidebar_right_links">
                 <a class="sidebar_right_links_item"
@@ -103,5 +119,17 @@
         </form>
     </div>
 </div>
+<script>
+
+function yourFunction(){
+document.querySelector('input[type=file]').addEventListener('change',function(target){
+if(target.target.files[0].size > 2*1024*1024){
+        return alert('sometext')
+
+};
+this.form.submit()
+})
+};
+</script>
 </body>
 </html>

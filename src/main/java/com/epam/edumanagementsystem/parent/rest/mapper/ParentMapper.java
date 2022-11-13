@@ -26,6 +26,7 @@ public class ParentMapper {
         parent.setId(parentDto.getId());
         parent.setName(parentDto.getName());
         parent.setSurname(parentDto.getSurname());
+        parent.setPicUrl(parentDto.getPicUrl());
         parent.setPassword(parentDto.getPassword());
         return parent;
     }
@@ -39,6 +40,7 @@ public class ParentMapper {
         user.setEmail(parentDto.getEmail());
         user.setRole(parentDto.getRole());
         parent.setPassword(parentDto.getPassword());
+        parent.setPicUrl(parentDto.getPicUrl());
         parent.setUser(userService.findByEmail(user.getEmail()));
         return parent;
     }
@@ -51,6 +53,7 @@ public class ParentMapper {
         parentDto.setEmail(parent.getUser().getEmail());
         parentDto.setRole(parent.getUser().getRole());
         parentDto.setPassword(parent.getPassword());
+        parentDto.setPicUrl(parent.getPicUrl());
         return parentDto;
     }
 
