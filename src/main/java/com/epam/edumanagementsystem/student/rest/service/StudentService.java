@@ -2,25 +2,19 @@ package com.epam.edumanagementsystem.student.rest.service;
 
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
+import com.epam.edumanagementsystem.util.service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StudentService {
 
     Student create(StudentDto studentDto);
 
-    String delete(StudentDto studentDto);
-
-    StudentDto updateField(StudentDto studentDto);
-
-    StudentDto update(StudentDto studentDto);
+    Student create(StudentDto studentDto, UserService userService);
 
     Student update(Student student);
 
     List<StudentDto> findAll();
-
-    StudentDto getById(Long id);
 
     Student findByUserId(Long id);
 
