@@ -78,7 +78,7 @@ public class ParentController {
         EmailValidation.validate(parentDto.getEmail(), model);
 
         if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
-            model.addAttribute("parentData", parentDto.getNameAndSurname());
+            model.addAttribute("parentData", parentService.findById(id).get().getNameAndSurname());
             return "parentProfile";
         }
         parentService.updateParent(parentDto);
