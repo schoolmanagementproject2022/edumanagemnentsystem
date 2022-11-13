@@ -21,7 +21,7 @@
         <div class="list">
             <div class="list-items" th:each="teacher : ${teachers}">
                 <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
-                <img style="height: 100px" th:src="@{/image(name=${teacher.imageUrl})}">
+                <img style="height: 100px" th:if="${teacher.imageUrl} != null" th:src="@{/image(name=${teacher.imageUrl})}">
             </div>
         </div>
     </div>
@@ -79,16 +79,33 @@
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
-                    <input type="file" name="image">
+                    <div class="error" th:if="${sizeLimit}"
+                         th:text="${sizeLimit}"></div>
+                    <input type="file" name="image" accept="image/png, image/jpeg">
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
 
-
         </form>
     </div>
 </div>
+
+<!--<script th:inline="javascript" th:if="${sizeLimit}">-->
+<!--    PopUpShow();-->
+<!--</script>-->
+
+<!--<div class="popup-container" id="popup-container">-->
+<!--    <div class="popup-wrapper" id="popup-wrapper">-->
+<!--        <div class="half">-->
+<!--            <p class="successText" th:text="${sizeLimit}"></p>-->
+<!--        </div>-->
+<!--        <div name="btn-div">-->
+<!--            <button type="button" class="button-save" id="submit" onclick="PopUpHide()"><b>OK</b></button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
 </body>
 </html>
