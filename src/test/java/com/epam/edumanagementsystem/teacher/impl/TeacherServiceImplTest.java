@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
+import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +18,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -34,12 +37,16 @@ class TeacherServiceImplTest {
     @InjectMocks
     private TeacherServiceImpl teacherService;
     private User user;
+    private User theUserToBeChanged;
     private Teacher teacher;
+    private Teacher theTeacherToBeChanged;
 
     @BeforeEach
     void setUp() {
         user = new User(null, "gm@gmail.com", "TEACHER");
-        teacher = new Teacher(1L, "Text", "Textyan", user, "password",  new HashSet(), new HashSet(), new HashSet());
+        teacher = new Teacher(1L, "Text", "Textyan", user, "password", new HashSet(), new HashSet(), new HashSet());
+        theUserToBeChanged = new User(1L, "testEmail@example.org", "TEACHER");
+        theTeacherToBeChanged = new Teacher(1L, "Name", "Surname", theUserToBeChanged, "password", new HashSet<>(), new HashSet<>(), new HashSet<>());
     }
 
     @Test
@@ -83,5 +90,43 @@ class TeacherServiceImplTest {
     @DisplayName("Negative case for create methode - giving null to user")
     void canNotCreateTeacher() {
         assertThrows(ObjectIsNull.class, () -> teacherService.create(null));
+    }
+
+    @Test
+    @DisplayName("Update Teacher positive case - given all parameters")
+    void testUpdateFields() {
+        Optional<Teacher> ofResult = Optional.of(teacher);
+
+        when(teacherRepository.save(org.mockito.Mockito.any())).thenReturn(theTeacherToBeChanged);
+        when(teacherRepository.findById(org.mockito.Mockito.any())).thenReturn(ofResult);
+
+        when(userService.findByEmail(org.mockito.Mockito.any())).thenReturn(user);
+        TeacherDto actualUpdateFieldsResult = teacherService.updateFields(new TeacherDto());
+        assertEquals("testEmail@example.org", actualUpdateFieldsResult.getEmail());
+        assertEquals("Surname", actualUpdateFieldsResult.getSurname());
+        assertEquals("Name", actualUpdateFieldsResult.getName());
+        verify(teacherRepository).findById(org.mockito.Mockito.any());
+    }
+
+    @Test
+    @DisplayName("Negative case for update method - given null to user")
+    void canNotUpdateTeacher() {
+        assertThrows(ObjectIsNull.class, () -> teacherService.updateFields(null));
+    }
+
+    @Test
+    @DisplayName("Check the usage of the findById() method in the service")
+    void findById() {
+        Optional<Teacher> ofResult = Optional.of(teacher);
+        when(teacherRepository.findById(org.mockito.Mockito.any())).thenReturn(ofResult);
+        TeacherDto actualFindByIdResult = teacherService.findById(1L);
+        assertEquals(1L, actualFindByIdResult.getId().longValue());
+        verify(teacherRepository).findById(org.mockito.Mockito.any());
+    }
+
+    @Test
+    @DisplayName("Check the usage of the findById() method in the null case")
+    void findByIdNegativeCase() {
+        assertThrows(UserNotFoundException.class, () -> teacherService.findById(null));
     }
 }
