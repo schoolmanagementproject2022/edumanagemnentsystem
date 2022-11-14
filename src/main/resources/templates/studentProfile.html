@@ -40,7 +40,7 @@
             color: #111111;
         }
     </style>
-    <title th:text="${existingStudent.getNameAndSurname()}+' profile'">Title</title>
+    <title th:text="${name_surname}+' profile'">Title</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -54,7 +54,7 @@
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Students'}"></a>
 
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
-                   th:text="${existingStudent.getNameAndSurname()}"></a>
+                   th:text="${name_surname}"></a>
 
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
@@ -90,7 +90,7 @@
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th:text="${existingStudent.getNameAndSurname()}"></h1>
+        <h1 th:text="${name_surname}"></h1>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingStudent}">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
