@@ -1,9 +1,6 @@
+upload:
+  dir: C:\edumanagemnentsystem\src\main\resources\static\img\
 spring:
-  servlet:
-    multipart:
-      max-file-size: 2MB
-      max-request-size: 30MB
-      enabled: true
 
   mvc:
     static-path-pattern: /static/**

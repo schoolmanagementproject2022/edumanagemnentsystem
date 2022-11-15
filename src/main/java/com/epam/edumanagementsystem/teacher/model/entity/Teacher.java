@@ -34,8 +34,6 @@ public class Teacher {
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
-    private String imageUrl;
-
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
@@ -140,14 +138,6 @@ public class Teacher {
 
     public void setSubjectSet(Set<Subject> subjectSet) {
         this.subjectSet = subjectSet;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     @Override

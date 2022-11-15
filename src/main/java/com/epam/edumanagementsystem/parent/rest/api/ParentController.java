@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/parents")
@@ -95,6 +94,7 @@ public class ParentController {
                     return "redirect:/parents/" + id + "/profile";
                 }
                 model.addAttribute("nameAndSurname", parent.getNameAndSurname());
+                model.addAttribute("parentDto", parentDto);
                 return "parentProfile";
             }
         }
@@ -141,12 +141,12 @@ public class ParentController {
         return "redirect:/parents/" + id + "/profile";
     }
 
-    @PostMapping("/{id}/addImg")
+    @PostMapping("/{id}/image/add")
     public String addPic(@ModelAttribute("existingParent") Parent teacher, @PathVariable("id") Long id,
-                         @RequestParam("picture") MultipartFile multipartFile) throws IOException {
+                         @RequestParam("picture") MultipartFile multipartFile) {
         Parent parent = parentService.findById(id).get();
 
-        parentService.addProfilePic(parent, multipartFile);
+        parentService.addProfilePicture(parent, multipartFile);
         return "redirect:/parents/" + id + "/profile";
     }
 }

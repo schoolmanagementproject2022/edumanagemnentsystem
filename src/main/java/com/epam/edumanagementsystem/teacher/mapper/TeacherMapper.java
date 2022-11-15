@@ -18,7 +18,6 @@ public class TeacherMapper {
         teacher.setSurname(teacherDto.getSurname());
         teacher.setPassword(teacherDto.getPassword());
         teacher.setUser(user);
-        teacher.setImageUrl(teacherDto.getImageUrl());
         return teacher;
     }
 
@@ -30,7 +29,6 @@ public class TeacherMapper {
         teacherDto.setEmail(teacher.getUser().getEmail());
         teacherDto.setRole(teacher.getUser().getRole());
         teacherDto.setPassword(teacher.getPassword());
-        teacherDto.setImageUrl(teacher.getImageUrl());
         return teacherDto;
     }
 

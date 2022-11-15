@@ -27,6 +27,7 @@ public class Parent {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
+
     private String picUrl;
 
     public Parent(Long id, User user) {

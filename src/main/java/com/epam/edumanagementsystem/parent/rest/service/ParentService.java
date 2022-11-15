@@ -21,5 +21,5 @@ public interface ParentService {
 
     void updateParentNameAndSurnameById(String name, String surname, Long id);
 
-    void addProfilePic(Parent parent, MultipartFile multipartFile);
+    void addProfilePicture(Parent parent, MultipartFile multipartFile);
 }

@@ -25,8 +25,8 @@ public class ParentDto {
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
-    private String picUrl;
 
+    private String picUrl;
 
     public ParentDto() {}
 

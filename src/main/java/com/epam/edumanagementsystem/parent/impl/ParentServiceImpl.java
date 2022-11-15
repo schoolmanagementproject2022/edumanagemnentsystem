@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,13 @@ public class ParentServiceImpl implements ParentService {
     @Value("${upload.dir}")
     private String uploadDir;
     private final ParentRepository parentRepository;
-
     private final UserService userService;
+    private final ImageService imageService;
 
-    public ParentServiceImpl(ParentRepository parentRepository, UserService userService) {
+    public ParentServiceImpl(ParentRepository parentRepository, UserService userService, ImageService imageService) {
         this.parentRepository = parentRepository;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
 
@@ -83,16 +85,8 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public void addProfilePic(Parent parent, MultipartFile multipartFile) {
-
-        if (!multipartFile.isEmpty()) {
-            String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-            try {
-                multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
-            } catch (IOException e) {
-            }
-            parent.setPicUrl(picUrl);
-        }
+    public void addProfilePicture(Parent parent, MultipartFile multipartFile) {
+        parent.setPicUrl(imageService.saveImage(multipartFile));
         parentRepository.save(parent);
     }
 }

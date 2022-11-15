@@ -23,7 +23,6 @@ public class TeacherController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
     private final UserService userService;
-    private final ImageService imageService;
     private final String TEACHER_HTML = "teacherSection";
 
     @Autowired
@@ -32,7 +31,6 @@ public class TeacherController {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
-        this.imageService = imageService;
     }
 
     @GetMapping
@@ -45,7 +43,6 @@ public class TeacherController {
     @PostMapping
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
-                                @RequestParam(value = "image", required = false) MultipartFile file,
                                 Model model) throws IOException {
         model.addAttribute("teachers", teacherService.findAll());
 
@@ -66,13 +63,7 @@ public class TeacherController {
             model.addAttribute("invalid", "Email is invalid");
             return TEACHER_HTML;
         }
-        if (file.getBytes().length > 2000000) {
-            model.addAttribute("sizeLimit", "File size exceeds maximum 2mb limit");
-            return TEACHER_HTML;
-        }
 
-        String fileRealName = imageService.saveImage(file, teacherDto);
-        teacherDto.setImageUrl(fileRealName);
         teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
         teacherService.create(teacherDto);
         return "redirect:/teachers";

@@ -27,8 +27,6 @@ public class TeacherDto {
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
-    private String imageUrl;
-
     public TeacherDto() {
     }
 
@@ -91,14 +89,6 @@ public class TeacherDto {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
     @Override

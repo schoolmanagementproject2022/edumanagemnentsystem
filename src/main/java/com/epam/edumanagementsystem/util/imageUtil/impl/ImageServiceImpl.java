@@ -1,10 +1,10 @@
 package com.epam.edumanagementsystem.util.imageUtil.impl;
 
-import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.api.TeacherController;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,11 +15,14 @@ import java.nio.file.Paths;
 @Service
 public class ImageServiceImpl implements ImageService {
 
+    @Value("${upload.dir}")
+    private String uploadDir;
+
     private static final Logger logger = LoggerFactory
             .getLogger(TeacherController.class);
 
     @Override
-    public String saveImage(MultipartFile file, TeacherDto teacherDto) {
+    public String saveImage(MultipartFile file) {
         String contentType = file.getContentType();
         String[] split;
         if (contentType != null) {
@@ -32,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOADED_FOLDER + fileRealName);
+                Path path = Paths.get(uploadDir + fileRealName);
                 Files.write(path, bytes);
 
                 logger.info("You successfully uploaded file");

@@ -6,7 +6,6 @@ function PopUpShow() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
-
 }
 
 function PopUpHide() {
