@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,36 +17,24 @@ import java.nio.file.Paths;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    @Value("${upload.dir}")
-    private String uploadDir;
+
+    private String upload=System.getProperty("user.dir")+"/src/main/resources/static/img";
 
     private static final Logger logger = LoggerFactory
             .getLogger(TeacherController.class);
 
     @Override
     public String saveImage(MultipartFile file) {
-        String contentType = file.getContentType();
-        String[] split;
-        if (contentType != null) {
-            split = contentType.split("/");
-        } else {
-            throw new NullPointerException("Name is null");
-        }
-        String fileRealName = System.currentTimeMillis() + "." + split[1];
+        String picUrl="";
 
         if (!file.isEmpty()) {
+            picUrl = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             try {
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadDir + fileRealName);
-                Files.write(path, bytes);
-
-                logger.info("You successfully uploaded file");
-            } catch (Exception e) {
-                e.printStackTrace();
+                file.transferTo(new File(upload + File.separator + picUrl));
+            } catch (IOException e) {
             }
         }
-
-        return fileRealName;
+        return picUrl;
     }
 
 }

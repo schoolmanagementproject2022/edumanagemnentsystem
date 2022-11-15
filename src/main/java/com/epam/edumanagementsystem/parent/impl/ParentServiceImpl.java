@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -15,15 +15,15 @@ import java.io.InputStream;
 @Controller
 public class ImageController {
 
-    private final String UPLOADED_FOLDER = "C:\\edumanagemnentsystem\\src\\main\\resources\\static\\img\\";
 
+    private final String upload=System.getProperty("user.dir")+"/src/main/resources/static/img";
     @GetMapping(
             value = "/image",
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     public @ResponseBody
     byte[] getImage(@RequestParam("name") String imageName) throws IOException {
-        InputStream in = new FileInputStream(UPLOADED_FOLDER + File.separator + imageName);
+        InputStream in = new FileInputStream(upload + File.separator + imageName);
         return IOUtils.toByteArray(in);
     }
 

@@ -50,7 +50,7 @@
                         <label for="file-input" width="150px" height="150px">
                             <span id="boot-icon" class="bi bi-cloud-upload" style="font-size: 150px; color: rgb(84, 84, 84);"></span>
                         </label>
-                        <input id="file-input" th:name="picture" multiple type="file" onchange="yourFunction()">
+                        <input id="file-input" th:name="picture" multiple type="file" onchange="filevalidation()">
                     </div>
                 </form>
             </div>
@@ -135,7 +135,7 @@
 
 <script>
 
-	Filevalidation = () => {
+	filevalidation = () => {
 		const fi = document.getElementById('file-input');
 		// Check if any file is selected.
 		if (fi.files.length > 0) {
