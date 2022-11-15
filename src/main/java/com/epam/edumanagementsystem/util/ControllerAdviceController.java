@@ -1,11 +1,13 @@
 package com.epam.edumanagementsystem.util;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 @ControllerAdvice
 public class ControllerAdviceController {
@@ -61,6 +63,9 @@ public class ControllerAdviceController {
         if (request.getRequestURI().contains("/")) {
             String[] path = request.getRequestURI().split("/");
             if (path.length > 2) {
+                if (Arrays.stream(path).anyMatch(oneOfUrls -> oneOfUrls.equals("swagger-config"))) {
+                    return URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
+                }
                 String decode = URLDecoder.decode(path[path.length - (path.length - 3)], StandardCharsets.UTF_8);
                 return decode;
             } else if (path.length == 2) {

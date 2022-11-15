@@ -58,7 +58,7 @@ public class SecurityConfig {
 
                 .authorizeRequests()
                 .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                .mvcMatchers("/swagger-ui/**", "/swagger-ui.html", "/school-docs/**").permitAll()
+                .mvcMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()
                 .mvcMatchers("/teachers", "/parents", "/students", "/classes/**", "/years", "/vacations", "/subjects", "/courses/**").hasAuthority("ADMIN")
                 .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
                 .anyRequest().authenticated()
