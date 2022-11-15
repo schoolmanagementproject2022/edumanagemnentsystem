@@ -16,8 +16,9 @@ import java.util.Set;
 @RestController
 public class TeacherInCourseRestController {
     private final AcademicCourseService academicCourseService;
-    @Value("${upload.dir}")
-    private String uploadDir;
+
+    private String upload=System.getProperty("user.dir")+"/src/main/resources/static/img";
+
 
     public TeacherInCourseRestController(AcademicCourseService academicCourseService) {
         this.academicCourseService = academicCourseService;
@@ -30,7 +31,7 @@ public class TeacherInCourseRestController {
 
     @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public @ResponseBody byte[] getImage(@RequestParam("picUrl") String picUrl) throws IOException {
-        InputStream in = new FileInputStream(uploadDir + File.separator + picUrl);
+        InputStream in = new FileInputStream(upload + File.separator + picUrl);
         return IOUtils.toByteArray(in);
     }
 }

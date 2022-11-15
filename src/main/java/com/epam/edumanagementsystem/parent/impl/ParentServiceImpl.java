@@ -19,8 +19,8 @@ import java.util.Optional;
 
 @Service
 public class ParentServiceImpl implements ParentService {
-    @Value("${upload.dir}")
-    private String uploadDir;
+
+    private String upload=System.getProperty("user.dir")+"/src/main/resources/static/img";
     private final ParentRepository parentRepository;
 
     private final UserService userService;
@@ -88,7 +88,7 @@ public class ParentServiceImpl implements ParentService {
         if (!multipartFile.isEmpty()) {
             String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
             try {
-                multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
+                multipartFile.transferTo(new File(upload + File.separator + picUrl));
             } catch (IOException e) {
             }
             parent.setPicUrl(picUrl);
