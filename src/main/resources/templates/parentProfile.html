@@ -63,12 +63,7 @@
                     <div class="btn-img"><a href="#">Edit</a></div>
                 </div>
             </div>
-            <div th:if="${parentDto.getPicUrl() != null}">
 
-              <a th:href="@{'/parents/' + ${parentDto.getId()} + '/addImg'}">
-                  <img  height="150" width="150" th:src="@{/image(picUrl=${parentDto.picUrl})}">
-              </a>
-            </div>
             <div class="sidebar_right_links">
                 <a class="sidebar_right_links_item"
                    th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
