@@ -522,6 +522,6 @@ form {
     opacity: 1;
 }
 
-/*#file-input{*/
-/*  display: none;*/
-/*}*/
+#file-input{
+  display: none;
+}
