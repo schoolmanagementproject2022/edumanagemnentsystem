@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
-import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,8 @@ import java.util.Optional;
 
 @Service
 public class ParentServiceImpl implements ParentService {
-    @Value("${upload.dir}")
-    private String uploadDir;
+
+    private String upload=System.getProperty("user.dir")+"/src/main/resources/static/img";
     private final ParentRepository parentRepository;
     private final UserService userService;
     private final ImageService imageService;
