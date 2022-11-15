@@ -23,3 +23,10 @@ spring:
 
 server:
   port: 8082
+
+springdoc:
+  api-docs:
+    path: /school-docs
+
+
+
