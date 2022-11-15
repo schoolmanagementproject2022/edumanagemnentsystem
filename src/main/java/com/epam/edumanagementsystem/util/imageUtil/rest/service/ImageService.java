@@ -6,4 +6,6 @@ public interface ImageService {
 
     String saveImage(MultipartFile file);
 
+    void deleteImage(String name);
+
 }

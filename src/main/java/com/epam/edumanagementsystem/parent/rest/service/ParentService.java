@@ -22,4 +22,7 @@ public interface ParentService {
     void updateParentNameAndSurnameById(String name, String surname, Long id);
 
     void addProfilePicture(Parent parent, MultipartFile multipartFile);
+
+    void deletePictureById(Long id);
+
 }

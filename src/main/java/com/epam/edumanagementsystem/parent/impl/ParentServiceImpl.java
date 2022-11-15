@@ -8,20 +8,17 @@ import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ParentServiceImpl implements ParentService {
 
-    private String upload=System.getProperty("user.dir")+"/src/main/resources/static/img";
+    private String upload = System.getProperty("user.dir") + "/src/main/resources/static/img";
     private final ParentRepository parentRepository;
     private final UserService userService;
     private final ImageService imageService;
@@ -89,4 +86,11 @@ public class ParentServiceImpl implements ParentService {
         parent.setPicUrl(imageService.saveImage(multipartFile));
         parentRepository.save(parent);
     }
+
+    @Transactional
+    @Override
+    public void deletePictureById(Long id) {
+        parentRepository.updateParentPicUrl(id);
+    }
+
 }

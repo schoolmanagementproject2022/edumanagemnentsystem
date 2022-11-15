@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/parents")
@@ -26,13 +28,15 @@ public class ParentController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final ParentService parentService;
     private final UserService userService;
+    private final ImageService imageService;
 
     @Autowired
     public ParentController(PasswordEncoder bcryptPasswordEncoder, ParentService parentService,
-                            UserService userService) {
+                            UserService userService, ImageService imageService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.parentService = parentService;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @GetMapping()
@@ -149,4 +153,16 @@ public class ParentController {
         parentService.addProfilePicture(parent, multipartFile);
         return "redirect:/parents/" + id + "/profile";
     }
+
+    @GetMapping("/{id}/image/delete")
+    public String deleteImage(@PathVariable("id") Long id) {
+        Optional<Parent> byId = parentService.findById(id);
+        if (byId.isPresent()) {
+            Parent parent = byId.get();
+            parentService.deletePictureById(id);
+            imageService.deleteImage(parent.getPicUrl());
+        }
+        return "redirect:/parents/" + id + "/profile";
+    }
+
 }
