@@ -16,8 +16,7 @@ import java.nio.file.Paths;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-
-    private String upload = System.getProperty("user.dir")+"/src/main/resources/static/img/";
+    private final String upload = System.getProperty("user.dir")+"/src/main/resources/static/img/";
 
     private static final Logger logger = LoggerFactory
             .getLogger(TeacherController.class);
