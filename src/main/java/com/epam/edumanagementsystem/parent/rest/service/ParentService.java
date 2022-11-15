@@ -23,6 +23,8 @@ public interface ParentService {
 
     void addProfilePicture(Parent parent, MultipartFile multipartFile);
 
-    void deletePictureById(Long id);
+//    void deletePictureById(Long id);
 
+
+    void deletePic(Parent parentById);
 }

@@ -508,8 +508,8 @@ form {
     position: absolute;
     top: 0;
     left: 0;
-    width: 91%;
-    height: 100%;
+    width: 102%;
+    height: 98%;
     background: rgba(0, 0, 0, 0);
     transition: background 0.5s ease;
 }
@@ -582,3 +582,22 @@ form {
 #file-input{
   display: none;
 }
+
+#form-pic-edit{
+  display: none;
+}
+#submitButton{
+display: none;
+ }
+#edit {
+     text-decoration: none;
+     color: #2b80a5;
+     width: max-content;
+     cursor: pointer;
+     font-family: inherit;
+     font-weight: bold;
+     font-size:hover 110%;
+
+ }
+
+

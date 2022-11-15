@@ -146,23 +146,21 @@ public class ParentController {
     }
 
     @PostMapping("/{id}/image/add")
-    public String addPic(@ModelAttribute("existingParent") Parent teacher, @PathVariable("id") Long id,
+    public String addPic(@ModelAttribute("existingParent") Parent parent, @PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        Parent parent = parentService.findById(id).get();
+        Parent parentById = parentService.findById(id).get();
 
-        parentService.addProfilePicture(parent, multipartFile);
+        parentService.addProfilePicture(parentById, multipartFile);
+        return "redirect:/parents/" + id + "/profile";
+    }
+    @PostMapping("/{id}/image/delete")
+    public String deletePic(@ModelAttribute("deleteParentPic") Parent parent, @PathVariable("id") Long id) {
+        Parent parentById = parentService.findById(id).get();
+        String picUrl=parentById.getPicUrl();
+        parentService.deletePic(parentById);
+        imageService.deleteImage(picUrl);
         return "redirect:/parents/" + id + "/profile";
     }
 
-    @GetMapping("/{id}/image/delete")
-    public String deleteImage(@PathVariable("id") Long id) {
-        Optional<Parent> byId = parentService.findById(id);
-        if (byId.isPresent()) {
-            Parent parent = byId.get();
-            parentService.deletePictureById(id);
-            imageService.deleteImage(parent.getPicUrl());
-        }
-        return "redirect:/parents/" + id + "/profile";
-    }
 
 }

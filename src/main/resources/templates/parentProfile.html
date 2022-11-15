@@ -60,10 +60,29 @@
                 <div class="container-img">
                     <img height="150" width="150" th:src="@{/image(name=${parentDto.picUrl})}">
                     <div class="overlay"></div>
-                    <div class="btn-img"><a href="#">Edit</a></div>
-                    <a th:href="@{'/parents/' + ${parentDto.id} + '/image/delete'}">
-                        <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
-                    </a>
+                    <div class="btn-img">
+                        <label for="form-pic-edit" width="150px" height="150px">
+                            <span id="edit" class="edit">Edit</span>
+                        </label>
+                        <div class="container-img">
+                            <div class="overlay"></div>
+                            <div class="btn-img">
+
+                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}" th:object="${existingParent}" enctype="multipart/form-data">
+                                    <div class="image-upload">
+                                        <input id="form-pic-edit" th:name="picture" multiple type="file" onchange="filevalidationEdit()">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    <label for="submitButton" width="150px" height="150px">
+                            <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
+                    </label>
+                    <form  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/delete'}" th:method="POST" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" id="submitButton" > </button>
+                    </form>
                 </div>
             </div>
 
@@ -144,17 +163,29 @@
 		// Check if any file is selected.
 		if (fi.files.length > 0) {
 
-				// The size of the file.
 				if (fi.files[0].size>= 2*1024*1024) {
                     PopUpShowImage();
-					fi.files[0].remove;
+
 					return;
 				}
 				yourFunction()
 		}
 	}
 	function yourFunction(){
-  document.getElementById("form-pic").submit();// Form submission
+  document.getElementById("form-pic").submit();
+}
+	filevalidationEdit = () => {
+		const fi = document.getElementById('form-pic-edit');
+
+				if (fi.files[0].size>= 2*1024*1024) {
+                PopUpShowImage();
+   					return;
+				}
+				yourFunctionEdit()
+
+	}
+	function yourFunctionEdit(){
+  document.getElementById("form-pic-edi").submit();
 }
 </script>
 
