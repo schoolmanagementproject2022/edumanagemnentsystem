@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @GetMapping()
-    @Operation(description = "path to login")
+    @Operation(summary = "path to login the users")
     public String showLoginForm() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {

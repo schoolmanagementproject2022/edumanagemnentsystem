@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 @ControllerAdvice
 public class ControllerAdviceController {
+    private final String swaggerApiDocPath = "swagger-config";
 
     @ModelAttribute("activeTab")
     public String activeTab(HttpServletRequest request) {
@@ -63,7 +64,7 @@ public class ControllerAdviceController {
         if (request.getRequestURI().contains("/")) {
             String[] path = request.getRequestURI().split("/");
             if (path.length > 2) {
-                if (Arrays.stream(path).anyMatch(oneOfUrls -> oneOfUrls.equals("swagger-config"))) {
+                if (Arrays.stream(path).anyMatch(oneOfUrls -> oneOfUrls.equals(swaggerApiDocPath))) {
                     return URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);
                 }
                 String decode = URLDecoder.decode(path[path.length - (path.length - 3)], StandardCharsets.UTF_8);
