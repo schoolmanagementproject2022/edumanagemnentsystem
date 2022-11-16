@@ -157,8 +157,8 @@ public class ParentController {
     public String deletePic(@ModelAttribute("deleteParentPic") Parent parent, @PathVariable("id") Long id) {
         Parent parentById = parentService.findById(id).get();
         String picUrl=parentById.getPicUrl();
-        parentService.deletePic(parentById);
         imageService.deleteImage(picUrl);
+        parentService.deletePic(parentById);
         return "redirect:/parents/" + id + "/profile";
     }
 
