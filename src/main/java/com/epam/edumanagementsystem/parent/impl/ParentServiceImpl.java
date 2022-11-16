@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 public class ParentServiceImpl implements ParentService {
 
-    private String upload = System.getProperty("user.dir") + "/src/main/resources/static/img";
     private final ParentRepository parentRepository;
     private final UserService userService;
     private final ImageService imageService;
@@ -28,7 +27,6 @@ public class ParentServiceImpl implements ParentService {
         this.userService = userService;
         this.imageService = imageService;
     }
-
 
     @Override
     public Optional<Parent> findById(Long id) {
@@ -77,8 +75,24 @@ public class ParentServiceImpl implements ParentService {
 
     @Transactional
     @Override
-    public void updateParentNameAndSurnameById(String name, String surname, Long id) {
-        parentRepository.updateParentNameAndSurnameById(name, surname, id);
+    public void updateParent(ParentDto parentForUpdate) {
+        if (parentForUpdate == null) {
+            throw new NullPointerException("The given parent must not be null!");
+        }
+        Parent parent = parentRepository.findById(parentForUpdate.getId()).get();
+
+        if (parentForUpdate.getName() != null) {
+            parent.setName(parentForUpdate.getName());
+        }
+
+        if (parentForUpdate.getSurname() != null) {
+            parent.setSurname(parentForUpdate.getSurname());
+        }
+
+        if (parentForUpdate.getEmail() != null) {
+            parent.getUser().setEmail(parentForUpdate.getEmail());
+        }
+        parentRepository.save(parent);
     }
 
     @Override

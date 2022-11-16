@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -69,68 +67,24 @@ public class ParentController {
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         Parent parent = parentService.findById(id).get();
         model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
-        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
+        model.addAttribute("parentData", parent.getNameAndSurname());
         return "parentProfile";
     }
 
-    @Transactional
     @PostMapping("/{id}/profile")
-    public String edit(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
-                       @PathVariable("id") Long id, Model model) {
+    public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
+                             @PathVariable("id") Long id, Model model) {
 
-        Parent parent = parentService.findById(id).get();
-
-        if (parentDto.getEmail().equalsIgnoreCase(parent.getUser().getEmail())) {
-            if (bindingResult.hasErrors()) {
-                if (!bindingResult.hasFieldErrors("name") && !bindingResult.hasFieldErrors("surname")) {
-                    parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
-                    return "redirect:/parents/" + id + "/profile";
-                }
-                model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                model.addAttribute("parentDto", parentDto);
-                return "parentProfile";
-            }
+        if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
+            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
         }
+        EmailValidation.validate(parentDto.getEmail(), model);
 
-        if (!parentDto.getEmail().equalsIgnoreCase(parent.getUser().getEmail())) {
-            for (User user : userService.findAll()) {
-                if (parentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
-                    model.addAttribute("duplicated", "A user with the specified email already exists");
-                    model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                    return "parentProfile";
-                }
-            }
-            if (bindingResult.hasErrors()) {
-                if (!bindingResult.hasFieldErrors("name") && !bindingResult.hasFieldErrors("surname")) {
-                    if (!bindingResult.hasFieldErrors("email")) {
-                        if (!EmailValidation.validate(parentDto.getEmail())) {
-                            model.addAttribute("invalid", "Email is invalid");
-                            model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                            return "parentProfile";
-                        }
-                    } else if (!EmailValidation.validate(parentDto.getEmail())) {
-                        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                        return "parentProfile";
-                    }
-                } else if (bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("surname")) {
-                    if (!bindingResult.hasFieldErrors("email")) {
-                        if (!EmailValidation.validate(parentDto.getEmail())) {
-                            model.addAttribute("invalid", "Email is invalid");
-                            model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                            return "parentProfile";
-                        }
-                    } else if (!EmailValidation.validate(parentDto.getEmail())) {
-                        model.addAttribute("nameAndSurname", parent.getNameAndSurname());
-                        return "parentProfile";
-                    }
-                }
-                parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
-                parent.getUser().setEmail(parentDto.getEmail());
-                userService.save(parent.getUser());
-                return "redirect:/parents/" + id + "/profile";
-            }
+        if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
+            model.addAttribute("parentData", parentService.findById(id).get().getNameAndSurname());
+            return "parentProfile";
         }
-        parentService.updateParentNameAndSurnameById(parentDto.getName(), parentDto.getSurname(), parentDto.getId());
+        parentService.updateParent(parentDto);
         return "redirect:/parents/" + id + "/profile";
     }
 

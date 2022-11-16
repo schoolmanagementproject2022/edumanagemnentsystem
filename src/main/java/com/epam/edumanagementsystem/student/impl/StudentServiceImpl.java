@@ -99,8 +99,6 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDto(updatedStudent);
     }
 
-    @Transactional
-    @Override
     public Student updateStudentsClass(Student student) {
         if (student == null) {
             throw new ObjectIsNull();
@@ -129,4 +127,5 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(studentId).orElseThrow(UserNotFoundException::new);
         return StudentMapper.toStudentDto(student);
     }
+
 }

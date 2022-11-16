@@ -21,9 +21,8 @@ public class ParentDto {
     private String email;
 
     @NotBlank
-    private String role= "PARENT";
+    private String role = "PARENT";
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     private String picUrl;
@@ -131,6 +130,5 @@ public class ParentDto {
                 ", password='" + password + '\'' +
                 '}';
     }
-
 
 }

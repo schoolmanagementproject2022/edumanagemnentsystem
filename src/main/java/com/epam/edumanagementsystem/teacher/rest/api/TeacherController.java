@@ -1,24 +1,17 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
-import com.epam.edumanagementsystem.student.mapper.StudentMapper;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
-import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
-import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -58,7 +51,9 @@ public class TeacherController {
         userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
         EmailValidation.validate(teacherDto.getEmail(), model);
         PasswordValidation.validatePassword(teacherDto.getPassword(), model);
-        if (result.hasErrors() || model.containsAttribute("blank") || model.containsAttribute("invalidPassword") || model.containsAttribute("invalidEmail")) {
+        if (result.hasErrors() || model.containsAttribute("blank")
+                || model.containsAttribute("invalidPassword")
+                || model.containsAttribute("invalidEmail")) {
             return TEACHER_HTML;
         }
 

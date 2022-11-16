@@ -101,11 +101,11 @@
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th:text="${nameAndSurname}">Parent name</h1>
+        <h1 th:text="${parentData}">Parent name</h1>
 
         <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}" th:object="${parentDto}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
 
@@ -130,8 +130,8 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalid}!= null" class="error">
-                        <p th:text="${invalid}"></p>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
                     </div>
 
                 </div>
