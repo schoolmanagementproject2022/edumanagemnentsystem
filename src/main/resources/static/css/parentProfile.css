@@ -508,7 +508,7 @@ form {
     position: absolute;
     top: 0;
     left: 0;
-    width: 102%;
+    width: 91%;
     height: 98%;
     background: rgba(0, 0, 0, 0);
     transition: background 0.5s ease;
@@ -553,13 +553,18 @@ form {
     transition: opacity .35s ease;
 }
 
-.btn-img a {
+.btn-img span {
     width: 200px;
     padding: 4% 25%;
     text-align: center;
     color: white;
     border: solid 2px white;
     z-index: 1;
+}
+
+.btn-img span:hover {
+    background-color: #333333;
+    color: #01A7F0;
 }
 
 .delete-img a {
@@ -597,7 +602,6 @@ display: none;
      font-family: inherit;
      font-weight: bold;
      font-size:hover 110%;
-
  }
 
 

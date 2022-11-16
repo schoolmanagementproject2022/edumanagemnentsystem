@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/parents")
@@ -153,14 +152,14 @@ public class ParentController {
         parentService.addProfilePicture(parentById, multipartFile);
         return "redirect:/parents/" + id + "/profile";
     }
-    @PostMapping("/{id}/image/delete")
+
+    @GetMapping("/{id}/image/delete")
     public String deletePic(@ModelAttribute("deleteParentPic") Parent parent, @PathVariable("id") Long id) {
         Parent parentById = parentService.findById(id).get();
         String picUrl=parentById.getPicUrl();
-        parentService.deletePic(parentById);
         imageService.deleteImage(picUrl);
+        parentService.deletePic(parentById);
         return "redirect:/parents/" + id + "/profile";
     }
-
 
 }

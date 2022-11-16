@@ -51,7 +51,7 @@
                             <span id="boot-icon" class="bi bi-cloud-upload" style="font-size: 150px; color: rgb(84, 84, 84); border: solid 4px; padding: 3%"></span>
                         </label>
                         <p class="p-item" style="cursor: auto; padding-left: 20%; margin:0">PNG, JPEG</p>
-                        <input id="file-input" th:name="picture" multiple type="file" onchange="filevalidation()">
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
                     </div>
                 </form>
             </div>
@@ -62,7 +62,7 @@
                     <div class="overlay"></div>
                     <div class="btn-img">
                         <label for="form-pic-edit" width="150px" height="150px">
-                            <span id="edit" class="edit">Edit</span>
+                            <span id="edit">Edit</span>
                         </label>
                         <div class="container-img">
                             <div class="overlay"></div>
@@ -70,21 +70,36 @@
 
                                 <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}" th:object="${existingParent}" enctype="multipart/form-data">
                                     <div class="image-upload">
-                                        <input id="form-pic-edit" th:name="picture" multiple type="file" onchange="filevalidationEdit()">
+                                        <input id="form-pic-edit" th:name="picture" multiple type="file" accept="image/png,image/jpeg" onchange="filevalidationEdit()">
                                     </div>
                                 </form>
                             </div>
                         </div>
-                        </div>
-                    <label for="submitButton" width="150px" height="150px">
-                            <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
-                    </label>
+
+                    </div>
                     <form  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/delete'}" th:method="POST" >
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" id="submitButton" > </button>
                     </form>
+                    <a th:href="@{'/parents/' + ${parentDto.id} + '/image/delete'}">
+                        <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
+                    </a>
                 </div>
             </div>
+
+<!--            <div th:if="${parentDto.getPicUrl() != null}">-->
+<!--                <div class="container-img">-->
+<!--                    <img height="150" width="150" th:src="@{/image(name=${parentDto.picUrl})}">-->
+<!--                    <div class="overlay"></div>-->
+<!--                    <div class="btn-img">-->
+<!--                        -->
+<!--                        </div>-->
+<!--                    <label for="submitButton" width="150px" height="150px">-->
+<!--                            <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">-->
+<!--                    </label>-->
+<!--                    -->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="sidebar_right_links">
                 <a class="sidebar_right_links_item"
