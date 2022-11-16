@@ -92,7 +92,8 @@
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1 th:text="${name_surname}"></h1>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingStudent}">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
+            <script th:inline="javascript"
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
@@ -183,8 +184,6 @@
                         <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
                                 th:text="${parent.getNameAndSurname}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('parent')}"
-                         th:errors="*{parent}"></div>
 
                     <label class="popup-label-title">Linked Class</label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
@@ -194,8 +193,6 @@
                         <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicClass')}" th:errors="*{academicClass}">
-                    </div>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
