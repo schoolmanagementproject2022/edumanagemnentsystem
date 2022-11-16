@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -18,10 +19,12 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final UserService userService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, UserService userService) {
         this.studentRepository = studentRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -29,17 +32,24 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDtoList(studentRepository.findAll());
     }
 
-    @Transactional
+
     @Override
+    @Transactional
     public Student create(StudentDto studentDto) {
         if (studentDto == null) {
             throw new ObjectIsNull();
         }
-        return studentRepository.save(StudentMapper.toStudent(studentDto));
+
+        User user = new User();
+        user.setEmail(studentDto.getEmail());
+        user.setRole(studentDto.getRole());
+        User savedUser = userService.save(user);
+
+        return studentRepository.save(StudentMapper.toStudent(studentDto, savedUser));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public Student create(StudentDto studentDto, UserService userService) {
         if (studentDto == null) {
             throw new ObjectIsNull();
@@ -47,13 +57,56 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(StudentMapper.toStudent(studentDto, userService));
     }
 
-    @Transactional
     @Override
-    public Student update(Student student) {
+    @Transactional
+    public StudentDto updateFields(StudentDto studentDto) {
+        if (studentDto == null) {
+            throw new ObjectIsNull();
+        }
+        StudentDto updatableStudentDto = findByStudentId(studentDto.getId());
+        User userOfStudent = userService.findByEmail(updatableStudentDto.getEmail());
+        Student updatableStudent = StudentMapper.toStudent(updatableStudentDto, userOfStudent);
+        userOfStudent.setEmail(studentDto.getEmail());
+
+        Student newStudent = StudentMapper.toStudent(studentDto, userOfStudent);
+        if (newStudent.getId() != null) {
+            updatableStudent.setId(newStudent.getId());
+        }
+        if (newStudent.getName() != null) {
+            updatableStudent.setName(newStudent.getName());
+        }
+        if (newStudent.getSurname() != null) {
+            updatableStudent.setSurname(newStudent.getSurname());
+        }
+        if (newStudent.getUser() != null) {
+            updatableStudent.setUser(newStudent.getUser());
+        }
+        if (newStudent.getAddress() != null) {
+            updatableStudent.setAddress(newStudent.getAddress());
+        }
+        if (newStudent.getDate() != null) {
+            updatableStudent.setDate(newStudent.getDate());
+        }
+        if (newStudent.getBloodGroup() != null) {
+            updatableStudent.setBloodGroup(newStudent.getBloodGroup());
+        }
+        if (newStudent.getGender() != null) {
+            updatableStudent.setGender(newStudent.getGender());
+        }
+        updatableStudent.setParent(newStudent.getParent());
+        updatableStudent.setAcademicClass(newStudent.getAcademicClass());
+        Student updatedStudent = studentRepository.save(updatableStudent);
+        return StudentMapper.toStudentDto(updatedStudent);
+    }
+
+    @Override
+    public StudentDto updateStudentsClass(Student student) {
         if (student == null) {
             throw new ObjectIsNull();
         }
-        return studentRepository.save(student);
+        Student updatableStudent = StudentMapper.toStudent(findByStudentId(student.getId()), student.getUser());
+        updatableStudent.setAcademicClass(student.getAcademicClass());
+        return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
     }
 
     @Override
@@ -72,5 +125,9 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByAcademicClassId(id);
     }
 
-
+    @Override
+    public StudentDto findByStudentId(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(UserNotFoundException::new);
+        return StudentMapper.toStudentDto(student);
+    }
 }

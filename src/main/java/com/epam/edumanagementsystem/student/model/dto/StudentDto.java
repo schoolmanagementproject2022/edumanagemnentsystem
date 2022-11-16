@@ -47,7 +47,6 @@ public class StudentDto {
     @NotNull(message = "Please, fill the required fields")
     private Gender gender;
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     @Enumerated(EnumType.STRING)

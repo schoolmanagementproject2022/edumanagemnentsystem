@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/static/js/passwordGenerator.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title>Teacher Page</title>
+    <title th:text="${name_surname} + ' Profile'"></title>
 </head>
-
 <body>
 <div class="header" id="header">
     <div th:insert="fragments/fragments :: container"></div>
-    <div class="main-wrapper">
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="content-wrapper">
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
-
-        <div class="list">
-            <div class="list-items" th:each="teacher : ${teachers}">
-                <a class="item" th:href="@{'/teachers/'+${teacher.getId()} + '/profile'}" th:text="${teacher.getNameSurname()}"></a>
+        <div class="content" id="middle">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Teachers'}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
+                   th:text="${name_surname}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
+            <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
+            <div class="list-h2-item">
+                <h2 class="item-h2" th:text="'Name: ' + ${teacher.getName()}"></h2>
+                <h2 class="item-h2" th:text="'Surname: ' + ${teacher.getSurname()}"></h2>
+                <h2 class="item-h2" th:text="'Email: ' + ${teacher.getEmail()}"></h2>
+            </div>
+        </div>
+        <!--            <img th:if="${teacher.imageUrl} !=null" src="/static/img/" alt="Teacher Profile Photo">-->
+        <!--            th:if="${teacher.iamgeUrl} == null"-->
+        <div class="sidebar2 header" id="sidebar2">
+            <div th:insert="fragments/fragments :: teacherProfileSidebar"></div>
         </div>
     </div>
 </div>
-
+</div>
 <div class="create">
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
-
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1>New Teacher</h1>
-
-        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}" enctype="multipart/form-data">
-
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
-             or ${invalidEmail}!=null or ${invalidPassword}!=null or ${blank}!=null">
+        <h1 th:text="${name_surname}"></h1>
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${teacher}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
-
             <div class="popup-wrapper">
                 <div class="half">
-                    <div id="error"></div>
-                    <label class="popup-label-title" for="name">Teacher name <span
-                            style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="name">Teacher name <span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
@@ -54,8 +60,7 @@
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title" for="email">Teacher email <span
-                            style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="email">Teacher email <span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="email" id="email"
                            th:value="${#object.email}"/>
                     <div class="error" th:if="${#fields.hasErrors('email')}"
@@ -67,28 +72,11 @@
                         <p th:text="${invalidEmail}"></p>
                     </div>
                 </div>
-
-                <div class="half2">
-                    <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
-                    <input type="text" class="form_input" placeholder="Create Password" id="password"
-                           th:name="password"
-                           readonly
-                           th:value="${#object.password}"/>
-                    <div th:if="${blank}!= null" class="error">
-                        <p th:text="${blank}"></p>
-                    </div>
-                    <div th:if="${invalidPassword}!= null" class="error">
-                        <p th:text="${invalidPassword}"></p>
-                    </div>
-                    <button class="button-generate" id="btn" type="button" onclick="getPassword()">
-                        <b>Generate password</b>
-                    </button>
-                </div>
+                <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

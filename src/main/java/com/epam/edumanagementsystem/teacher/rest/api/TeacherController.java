@@ -1,9 +1,16 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
+import com.epam.edumanagementsystem.student.mapper.StudentMapper;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
+import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
+import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -24,6 +32,8 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final UserService userService;
     private final String TEACHER_HTML = "teacherSection";
+
+    private final String PROFILE = "teacherProfile";
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
@@ -45,22 +55,10 @@ public class TeacherController {
                                 BindingResult result,
                                 Model model) throws IOException {
         model.addAttribute("teachers", teacherService.findAll());
-
-        if (userService.checkDuplicationOfEmail(teacherDto.getEmail())) {
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-            return TEACHER_HTML;
-        }
-
-        if (result.hasErrors()) {
-            if (!result.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(teacherDto.getEmail())) {
-                    model.addAttribute("invalid", "Email is invalid");
-                }
-            }
-            return TEACHER_HTML;
-
-        } else if (!EmailValidation.validate(teacherDto.getEmail())) {
-            model.addAttribute("invalid", "Email is invalid");
+        userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
+        EmailValidation.validate(teacherDto.getEmail(), model);
+        PasswordValidation.validatePassword(teacherDto.getPassword(), model);
+        if (result.hasErrors() || model.containsAttribute("blank") || model.containsAttribute("invalidPassword") || model.containsAttribute("invalidEmail")) {
             return TEACHER_HTML;
         }
 
@@ -69,4 +67,32 @@ public class TeacherController {
         return "redirect:/teachers";
     }
 
+    @GetMapping("/{id}/profile")
+    public String openTeacherProfile(@PathVariable("id") Long id, Model model) {
+        TeacherDto existingTeacher = teacherService.findById(id);
+        model.addAttribute("name_surname", TeacherMapper.
+                toTeacher(existingTeacher,
+                        userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
+        model.addAttribute("teacher", existingTeacher);
+        return PROFILE;
+    }
+
+    @PostMapping("/{id}/profile")
+    public String editTeacherPersonalInformation(@ModelAttribute("teacher") @Valid TeacherDto updatableTeacher,
+                                                 BindingResult result, @PathVariable("id") Long id, Model model) {
+        TeacherDto existingTeacher = teacherService.findById(id);
+        model.addAttribute("name_surname", TeacherMapper.toTeacher(existingTeacher,
+                        userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
+        if (!updatableTeacher.getEmail().equals(existingTeacher.getEmail())) {
+            userService.checkDuplicationOfEmail(updatableTeacher.getEmail(), model);
+        }
+        EmailValidation.validate(updatableTeacher.getEmail(), model);
+
+        if (result.hasErrors() || model.containsAttribute("invalidEmail") ||
+                model.containsAttribute("duplicated")) {
+            return PROFILE;
+        }
+        teacherService.updateFields(updatableTeacher);
+        return "redirect:/teachers/" + id + "/profile";
+    }
 }
