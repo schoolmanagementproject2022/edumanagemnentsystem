@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @GetMapping()
-    @Operation(summary = "path to login the users")
+    @Operation(summary = "Shows login page")
     public String showLoginForm() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
@@ -27,6 +27,7 @@ public class LoginController {
         return "redirect:/";
     }
     @PostMapping()
+    @Operation(summary = "Uses parameters to log in the users")
     public String login(@RequestParam (name = "username") String username, Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -11,6 +11,8 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +28,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/courses")
+@Tag(name = "Academic course")
 public class AcademicCourseController {
     private final AcademicCourseService academicCourseService;
     private final AcademicClassService academicClassService;
@@ -39,6 +42,7 @@ public class AcademicCourseController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets the list of the academic courses and shows on admin's dashboard")
     public String openAcademicCourseSection(ModelMap model) {
         List<AcademicCourseDto> academicCourseDtos = academicCourseService.findAll();
         List<SubjectDto> all = subjectService.findAll();
@@ -49,6 +53,7 @@ public class AcademicCourseController {
     }
 
     @PostMapping
+    @Operation(summary = "Saves the created academic course")
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
                          BindingResult result,
                          Model model) {
@@ -92,6 +97,7 @@ public class AcademicCourseController {
     }
 
     @GetMapping("/{name}/teachers")
+    @Operation(summary = "Gets all teachers who teach the selected course and shows them")
     public String openAcademicCourseForTeacherCreation(@PathVariable("name") String name, Model model) {
         AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseName(name);
         Set<Teacher> result = new HashSet<>();
@@ -108,6 +114,7 @@ public class AcademicCourseController {
     }
 
     @GetMapping("/{name}/classes")
+    @Operation(summary = "Gets all classes who take the selected course and shows them")
     public String openAcademicCourseForAcademicClasses(@PathVariable("name") String name, Model model) {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
         AcademicCourse findAcademicCourseByName = academicCourseService.findAcademicCourseByAcademicCourseName(name);
@@ -138,6 +145,7 @@ public class AcademicCourseController {
     }
 
     @PostMapping("{name}/teachers")
+    @Operation(summary = "Adds a teacher to the group of teachers who run the selected course")
     public String addNewTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourse academicCourse,
                                 @PathVariable("name") String name, Model model) {
 
@@ -167,6 +175,7 @@ public class AcademicCourseController {
     }
 
     @PostMapping("{name}/classes")
+    @Operation(summary = "Adds classes to the selected course")
     public String addClasses(@ModelAttribute("newClass") @Valid AcademicClass academicClass, BindingResult result,
                              @PathVariable("name") String name, Model model) {
         Set<AcademicCourse> academicCourseSet = new HashSet<>();

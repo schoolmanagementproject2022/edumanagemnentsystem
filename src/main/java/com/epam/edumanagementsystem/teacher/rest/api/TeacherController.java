@@ -4,6 +4,8 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/teachers")
+@Tag(name = "Teachers")
 public class TeacherController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -34,6 +37,7 @@ public class TeacherController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets the list of teachers and shows on admin's dashboard")
     public String openTeacherSection(Model model) {
         model.addAttribute("teachers", teacherService.findAll());
         model.addAttribute("teacher", new TeacherDto());
@@ -41,6 +45,7 @@ public class TeacherController {
     }
 
     @PostMapping
+    @Operation(summary = "Creates a new teacher and saves in DB")
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result, Model model) {
         model.addAttribute("teachers", teacherService.findAll());

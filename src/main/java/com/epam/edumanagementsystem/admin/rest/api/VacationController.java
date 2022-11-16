@@ -3,6 +3,8 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
 import com.epam.edumanagementsystem.admin.model.entity.Vacation;
 import com.epam.edumanagementsystem.admin.rest.service.VacationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/vacations")
+@Tag(name="Vacation")
 public class VacationController {
 
     private final VacationService vacationService;
@@ -28,6 +31,7 @@ public class VacationController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets the vacations' list and shows them on admin's dashboard")
     public String openVacationSection(Model model) {
         List<VacationDto> vacationDtoList = vacationService.findAll();
         model.addAttribute("vacations", vacationDtoList);
@@ -36,6 +40,7 @@ public class VacationController {
     }
 
     @PostMapping
+    @Operation(summary = "Saves the created vacation")
     public String create(@ModelAttribute("vacation") @Valid Vacation vacation,
                          BindingResult result, Model model) {
         List<VacationDto> vacationDtos = vacationService.findAll();
