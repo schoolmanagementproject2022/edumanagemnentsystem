@@ -254,6 +254,27 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+.image-delete-btn {
+    color: #A30014;
+    margin-left: -25%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.image-delete-btn-cancel {
+    margin-left: 26%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
 .successText {
     font-size: 131%;
     white-space: nowrap;

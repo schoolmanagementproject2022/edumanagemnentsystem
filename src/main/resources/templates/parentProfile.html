@@ -77,29 +77,13 @@
                         </div>
 
                     </div>
-                    <form  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/delete'}" th:method="POST" >
+                    <form th:action="@{'/parents/' + ${parentDto.getId()} + '/image/delete'}" th:method="POST" >
                         <input type="hidden" name="_method" value="delete" />
                         <button type="submit" id="submitButton" > </button>
                     </form>
-                    <a th:href="@{'/parents/' + ${parentDto.id} + '/image/delete'}">
-                        <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
-                    </a>
+                        <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
                 </div>
             </div>
-
-<!--            <div th:if="${parentDto.getPicUrl() != null}">-->
-<!--                <div class="container-img">-->
-<!--                    <img height="150" width="150" th:src="@{/image(name=${parentDto.picUrl})}">-->
-<!--                    <div class="overlay"></div>-->
-<!--                    <div class="btn-img">-->
-<!--                        -->
-<!--                        </div>-->
-<!--                    <label for="submitButton" width="150px" height="150px">-->
-<!--                            <img class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">-->
-<!--                    </label>-->
-<!--                    -->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="sidebar_right_links">
                 <a class="sidebar_right_links_item"
@@ -167,6 +151,22 @@
         </div>
         <div name="btn-div">
             <button type="button" class="button-save" id="submit-image" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-container-image" id="popup-container-image-delete">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile picture?</p>
+        </div>
+        <div>
+            <form th:action="@{'/parents/' + ${parentDto.id} + '/image/delete'}" method="get">
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b></button>
+            </form>
+        </div>
+        <div>
+            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()"><b>Cancel</b></button>
         </div>
     </div>
 </div>

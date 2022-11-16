@@ -88,15 +88,8 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public void deletePic(Parent parentById) {
-        parentById.setPicUrl(null);
-        parentRepository.save(parentById);
+    public void deletePic(Long id) {
+        parentRepository.updateParentPicUrl(id);
     }
-
-//    @Transactional
-//    @Override
-//    public void deletePictureById(Long id) {
-//        parentRepository.updateParentPicUrl(id);
-//    }
 
 }
