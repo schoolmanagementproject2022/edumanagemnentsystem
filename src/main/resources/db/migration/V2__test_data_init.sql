@@ -149,7 +149,7 @@ INSERT INTO academic_course (name, subject_id)
 VALUES ('English', (SELECT id FROM subject WHERE name='Languages'));
 
 INSERT INTO academic_course_teacher_mapping (academic_course_id, teacher_id)
-VALUES ((SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email = 'gayushPoghosyan@gmail.com')), (SELECT id FROM academic_course WHERE name='English'));
+VALUES ((SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email = 'gayaneHovhannisyan@gmail.com')), (SELECT id FROM academic_course WHERE name='English'));
 
 INSERT INTO academic_class_academic_course_mapping (academic_class_id, academic_course_id)
 VALUES ((SELECT id FROM academic_class WHERE class_number='1A'), (SELECT id FROM academic_course WHERE name='English'));

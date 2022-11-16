@@ -95,17 +95,17 @@ class TeacherServiceImplTest {
     @Test
     @DisplayName("Update Teacher positive case - given all parameters")
     void testUpdateFields() {
-        Optional<Teacher> ofResult = Optional.of(teacher);
+        Optional<Teacher> optionalOfTeacher = Optional.of(teacher);
 
-        when(teacherRepository.save(org.mockito.Mockito.any())).thenReturn(theTeacherToBeChanged);
-        when(teacherRepository.findById(org.mockito.Mockito.any())).thenReturn(ofResult);
+        when(teacherRepository.save(any())).thenReturn(theTeacherToBeChanged);
+        when(teacherRepository.findById(any())).thenReturn(optionalOfTeacher);
 
-        when(userService.findByEmail(org.mockito.Mockito.any())).thenReturn(user);
-        TeacherDto actualUpdateFieldsResult = teacherService.updateFields(new TeacherDto());
-        assertEquals("testEmail@example.org", actualUpdateFieldsResult.getEmail());
-        assertEquals("Surname", actualUpdateFieldsResult.getSurname());
-        assertEquals("Name", actualUpdateFieldsResult.getName());
-        verify(teacherRepository).findById(org.mockito.Mockito.any());
+        when(userService.findByEmail(any())).thenReturn(user);
+        TeacherDto actualUpdateFields = teacherService.updateFields(new TeacherDto());
+        assertEquals("testEmail@example.org", actualUpdateFields.getEmail());
+        assertEquals("Surname", actualUpdateFields.getSurname());
+        assertEquals("Name", actualUpdateFields.getName());
+        verify(teacherRepository).findById(any());
     }
 
     @Test
@@ -117,11 +117,11 @@ class TeacherServiceImplTest {
     @Test
     @DisplayName("Check the usage of the findById() method in the service")
     void findById() {
-        Optional<Teacher> ofResult = Optional.of(teacher);
-        when(teacherRepository.findById(org.mockito.Mockito.any())).thenReturn(ofResult);
-        TeacherDto actualFindByIdResult = teacherService.findById(1L);
-        assertEquals(1L, actualFindByIdResult.getId().longValue());
-        verify(teacherRepository).findById(org.mockito.Mockito.any());
+        Optional<Teacher> optionalOfTeacher = Optional.of(teacher);
+        when(teacherRepository.findById(any())).thenReturn(optionalOfTeacher);
+        TeacherDto actualFindById = teacherService.findById(1L);
+        assertEquals(1L, actualFindById.getId().longValue());
+        verify(teacherRepository).findById(any());
     }
 
     @Test
