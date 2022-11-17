@@ -93,12 +93,9 @@ public class Student {
     public Student() {
     }
 
-
-
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -182,6 +179,10 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNameAndSurname() {
+        return name + " " + surname;
     }
 
     @Override

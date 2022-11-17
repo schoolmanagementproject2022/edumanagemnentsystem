@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
@@ -81,7 +82,10 @@ public class StudentController {
 
     @GetMapping("/{id}/profile")
     public String openStudentProfile(@PathVariable("id") Long studentId, Model model) {
-        model.addAttribute("existingStudent", studentService.findByStudentId(studentId));
+        StudentDto existingStudent = studentService.findByStudentId(studentId);
+        model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
+                userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
+        model.addAttribute("existingStudent", existingStudent);
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", findAllParents());
@@ -92,16 +96,20 @@ public class StudentController {
     @PostMapping("/{id}/profile")
     public String editStudentPersonalInformation(@ModelAttribute("existingStudent") @Valid StudentDto updatableStudent,
                                                  BindingResult result, @PathVariable("id") Long studentId, Model model) {
+        StudentDto existingStudent = studentService.findByStudentId(studentId);
+        model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
+                userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", findAllParents());
         model.addAttribute("classes", findAllClasses());
-        if (!updatableStudent.getEmail().equals(studentService.findByStudentId(studentId).getEmail())) {
+        if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
             userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
         }
         EmailValidation.validate(updatableStudent.getEmail(), model);
 
-        if (result.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
+        if (result.hasErrors() || model.containsAttribute("invalidEmail") ||
+                model.containsAttribute("duplicated")) {
             return "studentProfile";
         }
         studentService.updateFields(updatableStudent);
