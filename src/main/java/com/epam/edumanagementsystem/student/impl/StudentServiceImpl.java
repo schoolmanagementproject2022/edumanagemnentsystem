@@ -99,14 +99,13 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDto(updatedStudent);
     }
 
+    @Transactional
     @Override
-    public StudentDto updateStudentsClass(Student student) {
+    public Student updateStudentsClass(Student student) {
         if (student == null) {
             throw new ObjectIsNull();
         }
-        Student updatableStudent = StudentMapper.toStudent(findByStudentId(student.getId()), student.getUser());
-        updatableStudent.setAcademicClass(student.getAcademicClass());
-        return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
+        return studentRepository.save(student);
     }
 
     @Override

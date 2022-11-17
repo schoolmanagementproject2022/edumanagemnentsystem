@@ -128,16 +128,11 @@
                     <label class="popup-label-title">Linked Class</label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
-                        <option th:if="*{academicClass == null}" th:text="'Class'" class="short" data-limit="23"
-                                th:value="null">
-                            Select academic class
-                        </option>
+                        <option th:text="' Select academic class'" class="short" data-limit="23"
+                                th:value="null"></option>
                         <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicClass')}"
-                         th:errors="*{academicClass}"></div>
-
                 </div>
 
                 <div class="half2">
@@ -177,15 +172,14 @@
                         <div class="error" th:if="${#fields.hasErrors('gender')}"
                              th:errors="*{gender}"></div>
 
-                        <label class="popup-label-title">Linked Parent</label>
-                        <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
-                            <option th:if="*{parent == null}" class="short" data-limit="23" th:text="'Parent'"
-                                    th:value="null"></option>
-                            <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
-                                    th:text="${parent.getNameAndSurname}"></option>
-                        </select>
-                        <div class="error" th:if="${#fields.hasErrors('parent')}"
-                             th:errors="*{parent}"></div>
+                        <label class="popup-label-title">Linked Parent</label> <select class="form_input"
+                                                                                       th:name="parent" th:id="parent"
+                                                                                       th:field="*{parent}">
+                        <option th:text="' Select parent'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
+                                th:text="${parent.getNameAndSurname}"></option>
+                    </select>
                     </div>
                 </div>
                 <div name="btn-div">

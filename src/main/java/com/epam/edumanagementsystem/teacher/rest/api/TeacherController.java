@@ -1,12 +1,7 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
-import com.epam.edumanagementsystem.student.mapper.StudentMapper;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
-import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
-import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
@@ -75,7 +70,7 @@ public class TeacherController {
                                                  BindingResult result, @PathVariable("id") Long id, Model model) {
         TeacherDto existingTeacher = teacherService.findById(id);
         model.addAttribute("name_surname", TeacherMapper.toTeacher(existingTeacher,
-                        userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
+                userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
         if (!updatableTeacher.getEmail().equals(existingTeacher.getEmail())) {
             userService.checkDuplicationOfEmail(updatableTeacher.getEmail(), model);
         }

@@ -14,7 +14,7 @@ public interface StudentService {
 
     StudentDto updateFields(StudentDto studentDto);
 
-    StudentDto updateStudentsClass(Student student);
+    Student updateStudentsClass(Student student);
 
     List<StudentDto> findAll();
 
