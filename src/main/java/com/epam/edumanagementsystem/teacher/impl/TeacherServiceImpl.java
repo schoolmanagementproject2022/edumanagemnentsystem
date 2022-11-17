@@ -7,6 +7,7 @@ import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
+import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,12 +45,50 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    @Transactional
+    public TeacherDto updateFields(TeacherDto teacherDto) {
+        if (teacherDto == null) {
+            throw new ObjectIsNull();
+        }
+        TeacherDto updatableTeacherDto = findById(teacherDto.getId());
+        User userOfTeacher = userService.findByEmail(updatableTeacherDto.getEmail());
+        Teacher updatableTeacher = TeacherMapper.toTeacher(updatableTeacherDto, userOfTeacher);
+        userOfTeacher.setEmail(teacherDto.getEmail());
+
+        Teacher newTeacher = TeacherMapper.toTeacher(teacherDto, userOfTeacher);
+
+        if (newTeacher.getId() != null) {
+            updatableTeacher.setId(newTeacher.getId());
+        }
+        if (newTeacher.getName() != null) {
+            updatableTeacher.setName(newTeacher.getName());
+        }
+        if (newTeacher.getSurname() != null) {
+            updatableTeacher.setSurname(newTeacher.getSurname());
+        }
+        if (newTeacher.getUser() != null) {
+            updatableTeacher.setUser(newTeacher.getUser());
+        }
+        Teacher updatedTeacher = teacherRepository.save(updatableTeacher);
+        return TeacherMapper.toDto(updatedTeacher);
+    }
+
+    @Override
+    public TeacherDto findById(Long id) {
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        return TeacherMapper.toDto(teacher);
+    }
+
+    @Override
     public List<TeacherDto> findAll() {
         return TeacherMapper.toListOfTeachersDto(teacherRepository.findAll());
     }
 
     @Override
     public Teacher findByUserId(Long id) {
+        if (id == null) {
+            throw new UserNotFoundException("The Id was null");
+        }
         return teacherRepository.findByUserId(id);
     }
 }

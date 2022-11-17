@@ -147,6 +147,10 @@ body {
 .list-items{
     width: 100% ;
 }
+.list-h2-item{
+    margin-left: 3%;
+    margin-top: 5%!important;
+}
 .list-p-item{
     width: 100% ;
     background-color: #555555;
@@ -583,6 +587,10 @@ form {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
+.item-h2 {
+    padding: 10px;
+}
+
 list {
     width: 100%;
     padding: 0px;
