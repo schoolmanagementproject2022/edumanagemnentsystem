@@ -521,7 +521,7 @@ form {
 
 .container-img {
     position: relative;
-    width: 81%;
+    width: 100%;
     height: 30%;
 }
 
@@ -529,7 +529,7 @@ form {
     position: absolute;
     top: 0;
     left: 0;
-    width: 91%;
+    width: 97%;
     height: 98%;
     background: rgba(0, 0, 0, 0);
     transition: background 0.5s ease;
@@ -557,7 +557,7 @@ form {
 .btn-img {
     position: absolute;
     width: 88%;
-    left:2%;
+    left:6%;
     top: 41%;
     text-align: center;
     opacity: 0;
@@ -567,8 +567,8 @@ form {
 .delete-img {
     position: absolute;
     width: 14%;
-    left:74%;
-    top: 5%;
+    left:80%;
+    top: 4%;
     text-align: center;
     opacity: 0;
     transition: opacity .35s ease;

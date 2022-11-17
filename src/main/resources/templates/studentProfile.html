@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/profileStyle.css" rel="stylesheet">
+    <link href="/static/css/studentProfile.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
@@ -81,6 +81,48 @@
         </div>
 
         <div class="sidebar2 header" id="sidebar2">
+            <div th:if="${existingStudent.getPicUrl() == null}">
+                <form id="form-pic" class="form" th:method="POST"  th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}" th:object="${existingStudent}" enctype="multipart/form-data">
+                    <div class="image-upload">
+                        <label for="file-input" width="150px" height="150px">
+                            <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
+                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
+                            <p class="p-item" style="cursor: pointer;padding-left: 26%;margin-top: -10%;font-size: 20px;">PNG, JPEG</p>
+                        </label>
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${existingStudent.getPicUrl() != null}">
+                <div class="container-img">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${existingStudent.picUrl})}">
+                    <div class="overlay"></div>
+                    <div class="btn-img">
+                        <label for="form-pic-edit" width="150px" height="150px">
+                            <span id="edit">Edit</span>
+                        </label>
+                        <div class="container-img">
+                            <div class="overlay"></div>
+                            <div class="btn-img">
+
+                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}" th:object="${existingStudent}" enctype="multipart/form-data">
+                                    <div class="image-upload">
+                                        <input id="form-pic-edit" th:name="picture" multiple type="file" accept="image/png,image/jpeg" onchange="filevalidationEdit()">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <form th:action="@{'/students/' + ${existingStudent.getId()} + '/image/delete'}" th:method="POST" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" id="submitButton" > </button>
+                    </form>
+                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
+                </div>
+            </div>
+
             <a class="item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
                th:href="@{${allUrl}}">Profile</a>
             <a class="item" href="#">Journal</a>
@@ -201,6 +243,34 @@
         </form>
     </div>
 </div>
+
+<div class="popup-container-image" id="popup-container-image">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p class="successText">File size exceeds maximum 2mb limit</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save" id="submit-image" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-container-image" id="popup-container-image-delete">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile picture?</p>
+        </div>
+        <div>
+            <form th:action="@{'/parents/' + ${existingStudent.id} + '/image/delete'}" method="get">
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b></button>
+            </form>
+        </div>
+        <div>
+            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()"><b>Cancel</b></button>
+        </div>
+    </div>
+</div>
+
 </body>
 <script>
     function shortString(selector) {
@@ -225,4 +295,38 @@
     };
 
 </script>
+
+<script>
+
+    filevalidation = () => {
+        const fi = document.getElementById('file-input');
+        // Check if any file is selected.
+        if (fi.files.length > 0) {
+
+            if (fi.files[0].size>= 2*1024*1024) {
+                PopUpShowImage();
+
+                return;
+            }
+            yourFunction()
+        }
+    }
+    function yourFunction(){
+        document.getElementById("form-pic").submit();
+    }
+    filevalidationEdit = () => {
+        const fi = document.getElementById('form-pic-edit');
+
+        if (fi.files[0].size>= 2*1024*1024) {
+            PopUpShowImage();
+            return;
+        }
+        yourFunctionEdit()
+
+    }
+    function yourFunctionEdit(){
+        document.getElementById("form-pic-edi").submit();
+    }
+</script>
+
 </html>

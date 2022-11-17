@@ -48,9 +48,10 @@
                 <form id="form-pic" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}" th:object="${existingParent}" enctype="multipart/form-data">
                     <div class="image-upload">
                         <label for="file-input" width="150px" height="150px">
-                            <span id="boot-icon" class="bi bi-cloud-upload" style="font-size: 150px; color: rgb(84, 84, 84); border: solid 4px; padding: 3%"></span>
+                            <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
+                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
+                            <p class="p-item" style="cursor: pointer;padding-left: 26%;margin-top: -10%;font-size: 20px;">PNG, JPEG</p>
                         </label>
-                        <p class="p-item" style="cursor: auto; padding-left: 20%; margin:0">PNG, JPEG</p>
                         <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
                     </div>
                 </form>
@@ -58,7 +59,7 @@
 
             <div th:if="${parentDto.getPicUrl() != null}">
                 <div class="container-img">
-                    <img height="150" width="150" th:src="@{/image(name=${parentDto.picUrl})}">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${parentDto.picUrl})}">
                     <div class="overlay"></div>
                     <div class="btn-img">
                         <label for="form-pic-edit" width="150px" height="150px">
@@ -203,7 +204,6 @@
   document.getElementById("form-pic-edi").submit();
 }
 </script>
-
 
 </body>
 </html>

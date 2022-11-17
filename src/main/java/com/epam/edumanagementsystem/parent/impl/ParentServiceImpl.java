@@ -101,6 +101,7 @@ public class ParentServiceImpl implements ParentService {
         parentRepository.save(parent);
     }
 
+    @Transactional
     @Override
     public void deletePic(Long id) {
         parentRepository.updateParentPicUrl(id);

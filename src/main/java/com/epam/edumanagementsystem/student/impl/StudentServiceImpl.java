@@ -8,10 +8,12 @@ import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final UserService userService;
+    private final ImageService imageService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, UserService userService) {
+    public StudentServiceImpl(StudentRepository studentRepository, UserService userService, ImageService imageService) {
         this.studentRepository = studentRepository;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -126,6 +130,17 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto findByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(UserNotFoundException::new);
         return StudentMapper.toStudentDto(student);
+    }
+
+    @Override
+    public void addProfilePicture(Student student, MultipartFile multipartFile) {
+        student.setPicUrl(imageService.saveImage(multipartFile));
+        studentRepository.save(student);
+    }
+
+    @Override
+    public void deletePic(Long id) {
+        studentRepository.updateStudentPicUrl(id);
     }
 
 }

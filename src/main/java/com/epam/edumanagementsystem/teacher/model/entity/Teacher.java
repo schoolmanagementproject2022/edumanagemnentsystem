@@ -50,6 +50,8 @@ public class Teacher {
     @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
 
+    private String picUrl;
+
     public Teacher() {
     }
 
@@ -138,6 +140,14 @@ public class Teacher {
 
     public void setSubjectSet(Set<Subject> subjectSet) {
         this.subjectSet = subjectSet;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -24,16 +26,18 @@ public class TeacherController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
     private final UserService userService;
+    private final ImageService imageService;
     private final String TEACHER_HTML = "teacherSection";
 
     private final String PROFILE = "teacherProfile";
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
-                             UserService userService, ImageService imageService) {
+                             UserService userService, ImageService imageService, ImageService imageService1) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
+        this.imageService = imageService1;
     }
 
     @GetMapping
@@ -90,4 +94,22 @@ public class TeacherController {
         teacherService.updateFields(updatableTeacher);
         return "redirect:/teachers/" + id + "/profile";
     }
+
+    @PostMapping("/{id}/image/add")
+    public String addPic(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
+        TeacherDto teacherById = teacherService.findById(id);
+        User userByEmail = userService.findByEmail(teacherById.getEmail());
+        teacherService.addProfilePicture(TeacherMapper.toTeacher(teacherById, userByEmail), multipartFile);
+        return "redirect:/teachers/" + id + "/profile";
+    }
+
+    @GetMapping("/{id}/image/delete")
+    public String deletePic(@PathVariable("id") Long id) {
+        TeacherDto teacherById = teacherService.findById(id);
+        String picUrl = teacherById.getPicUrl();
+        imageService.deleteImage(picUrl);
+        teacherService.deletePic(teacherById.getId());
+        return "redirect:/teachers/" + id + "/profile";
+    }
+
 }
