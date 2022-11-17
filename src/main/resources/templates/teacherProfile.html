@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/teacherProfile.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
@@ -32,7 +34,7 @@
                 <h2 class="item-h2" th:text="'Email: ' + ${teacher.getEmail()}"></h2>
             </div>
         </div>
-
+        <div class="sidebar_right">
         <div th:if="${teacher.getPicUrl() == null}">
             <form id="form-pic" class="form" th:method="POST" th:action="@{'/teachers/' + ${teacher.getId()} + '/image/add'}" th:object="${existingTeacher}" enctype="multipart/form-data">
                 <div class="image-upload">
@@ -75,12 +77,14 @@
             </div>
         </div>
 
-        <div class="sidebar2 header" id="sidebar2">
+
+        <div >
             <div th:insert="fragments/fragments :: teacherProfileSidebar"></div>
         </div>
+
     </div>
 </div>
-
+</div>
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
@@ -132,7 +136,16 @@
         </div>
     </div>
 </div>
-
+<div class="popup-container-image-format" id="popup-container-image-format">
+    <div class="popup-wrapper" id="popup-wrapper-format">
+        <div class="half">
+            <p class="successText">Only PNG and JPEG files are allowed.</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
 <div class="popup-container-image" id="popup-container-image-delete">
     <div class="popup-wrapper" id="popup-wrapper">
         <div class="half">
@@ -153,8 +166,11 @@
 
     filevalidation = () => {
         const fi = document.getElementById('file-input');
-        // Check if any file is selected.
-        if (fi.files.length > 0) {
+    const acceptedImageTypes = ['image/jpeg', 'image/png'];
+if (!fi.files[0].name.match(/\.(jpeg|png)$/i)){
+return PopUpShowImageFormat();
+}
+  if (fi.files.length > 0) {
 
             if (fi.files[0].size>= 2*1024*1024) {
                 PopUpShowImage();
@@ -169,6 +185,10 @@
     }
     filevalidationEdit = () => {
         const fi = document.getElementById('form-pic-edit');
+            const acceptedImageTypes = ['image/jpeg', 'image/png'];
+if (!fi.files[0].name.match(/\.(jpeg|png)$/i)){
+return PopUpShowImageFormat();
+}
 
         if (fi.files[0].size>= 2*1024*1024) {
             PopUpShowImage();
