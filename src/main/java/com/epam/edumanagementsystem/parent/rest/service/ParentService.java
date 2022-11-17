@@ -18,4 +18,5 @@ public interface ParentService {
 
     void deleteById(Long id);
 
+    void updateParent(ParentDto parentDto);
 }
