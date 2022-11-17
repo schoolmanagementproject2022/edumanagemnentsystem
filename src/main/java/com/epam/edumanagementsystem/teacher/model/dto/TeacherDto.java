@@ -24,7 +24,6 @@ public class TeacherDto {
     @NotBlank
     private String role = "TEACHER";
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     public TeacherDto() {

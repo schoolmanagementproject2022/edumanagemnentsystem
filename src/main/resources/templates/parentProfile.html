@@ -7,10 +7,10 @@
     <link href="/static/css/parentProfile.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="'Teachers in ' + ${middleUrl}">Parent</title>
+    <title th:text="${nameAndSurname}">Parent</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -22,59 +22,76 @@
         <div class="content" id="middle">
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Parents'}"></a>
-                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${parentDto.getNameAndSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
-            <div class="list">
-                <div class="list-items" th:each="parent : ${parents}">
-                    <p class="item" th:text="${parent.getNameSurname()}"> Parent </p>
+
+            <div class="profile">
+                <div class="profile-items">
+                    <label class="profile_label_title" for="name">Name: </label>
+                    <p class="p-item" th:text="${parentDto.getName()}"> Name </p>
+                </div>
+                <div class="profile-items">
+                    <label class="profile_label_title" for="surname">Surname: </label>
+                    <p class="p-item" th:text="${parentDto.getSurname()}"> Surname </p>
+                </div>
+                <div class="profile-items">
+                    <label class="profile_label_title" for="email">Email: </label>
+                    <p class="p-item" th:text="${parentDto.getEmail()}"> Email </p>
                 </div>
             </div>
         </div>
-        <div class="sidebar2 header" id="sidebar2">
-            <a class="item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${allUrl}}">Profile</a>
-            <a class="item"
-               th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
-               th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'linked students'}}">Linked students</a>
+        <div class="sidebar_right">
+            <div class="sidebar_right_photo">
+                <a></a>
+            </div>
+            <div class="sidebar_right_links">
+                <a class="sidebar_right_links_item"
+                   th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${allUrl}}">Profile</a>
+                <a class="sidebar_right_links_item"
+                   th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{#}">Linked students</a>
+            </div>
         </div>
+
     </div>
 </div>
 <div class="edit">
+
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th: th:text="${parent.getNameSurname()}">Parent name</h1>
+        <h1 th:text="${parentData}">Parent name</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingParent}">
-            <script th:inline="javascript" th:if="${blank} != null">
+        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}" th:object="${parentDto}">
+
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
                     <div id="error"></div>
-                    <label class="popup-label-title" for="name">Parent name<span style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="name">Parent name</label>
                     <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
 
-                    <label class="popup-label-title" for="surname">Parent surname<span
-                            style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="surname">Parent surname</label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title" for="email">Parent email<span
-                            style="color:#A30014">*</span></label>
+                    <label class="popup-label-title" for="email">Parent email</label>
                     <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
                     <div class="error" th:if="${#fields.hasErrors('email')}"
                          th:errors="*{email}"></div>
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalid}!= null" class="error">
-                        <p th:text="${invalid}"></p>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
                     </div>
 
                 </div>

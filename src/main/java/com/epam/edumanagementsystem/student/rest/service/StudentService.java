@@ -12,11 +12,15 @@ public interface StudentService {
 
     Student create(StudentDto studentDto, UserService userService);
 
-    Student update(Student student);
+    StudentDto updateFields(StudentDto studentDto);
+
+    Student updateStudentsClass(Student student);
 
     List<StudentDto> findAll();
 
     Student findByUserId(Long id);
 
     List<Student> findByAcademicClassId(Long id);
+
+    StudentDto findByStudentId(Long studentId);
 }

@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.util.service;
 
 import com.epam.edumanagementsystem.util.entity.User;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    Boolean checkDuplicationOfEmail(String email);
+    void checkDuplicationOfEmail(String email, Model model);
 }
