@@ -37,3 +37,13 @@ function PopUpHide() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
 }
+
+function PopUpShowImageFormat() {
+    $("#popup-container-image-format").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}

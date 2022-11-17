@@ -172,18 +172,28 @@
     </div>
 </div>
 
+<div class="popup-container-image-format" id="popup-container-image-format">
+    <div class="popup-wrapper" id="popup-wrapper-format">
+        <div class="half">
+            <p class="successText">Only PNG and JPEG files are allowed.</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
 <script>
+filevalidation = () => {
+const fi = document.getElementById('file-input');
+    const acceptedImageTypes = ['image/jpeg', 'image/png'];
+if (!fi.files[0].name.match(/\.(jpeg|png)$/i)){
+return PopUpShowImageFormat();
+}
+    if (fi.files.length > 0) {
 
-	filevalidation = () => {
-		const fi = document.getElementById('file-input');
-		// Check if any file is selected.
-		if (fi.files.length > 0) {
-
-				if (fi.files[0].size>= 2*1024*1024) {
-                    PopUpShowImage();
-
-					return;
-				}
+		if (fi.files[0].size>= 2*1024*1024) {
+              PopUpShowImage();
+					return;}
 				yourFunction()
 		}
 	}
@@ -192,7 +202,10 @@
 }
 	filevalidationEdit = () => {
 		const fi = document.getElementById('form-pic-edit');
-
+    const acceptedImageTypes = ['image/jpeg', 'image/png'];
+if (!fi.files[0].name.match(/\.(jpeg|png)$/i)){
+return PopUpShowImageFormat();
+}
 				if (fi.files[0].size>= 2*1024*1024) {
                 PopUpShowImage();
    					return;
