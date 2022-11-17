@@ -81,7 +81,7 @@ public class TeacherController {
                                                  BindingResult result, @PathVariable("id") Long id, Model model) {
         TeacherDto existingTeacher = teacherService.findById(id);
         model.addAttribute("name_surname", TeacherMapper.toTeacher(existingTeacher,
-                        userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
+                userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
         if (!updatableTeacher.getEmail().equals(existingTeacher.getEmail())) {
             userService.checkDuplicationOfEmail(updatableTeacher.getEmail(), model);
         }

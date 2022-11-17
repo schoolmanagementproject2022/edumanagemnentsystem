@@ -103,6 +103,8 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDto(updatedStudent);
     }
 
+    @Transactional
+    @Override
     public Student updateStudentsClass(Student student) {
         if (student == null) {
             throw new ObjectIsNull();
