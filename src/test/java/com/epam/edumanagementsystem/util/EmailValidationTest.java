@@ -20,17 +20,17 @@ class EmailValidationTest {
                 "us$er@.ru", "us$*er@mail.com", "user@mail.r", "u@mail.ru", "user$mail.com", "user@*mail.ru", "user@ma&il.am", "user@mail.RU");
     }
 
-    @Test
-    void emailsIsValid() {
-        for (String validEmail : validEmails) {
-            assertTrue(EmailValidation.validate(validEmail));
-        }
-    }
-
-    @Test
-    void emailsIsInvalid() {
-        for (String invalidEmail : invalidEmails) {
-            assertFalse(EmailValidation.validate(invalidEmail));
-        }
-    }
+//    @Test
+//    void emailsIsValid() {
+//        for (String validEmail : validEmails) {
+//            assertTrue(EmailValidation.validate(validEmail));
+//        }
+//    }
+//
+//    @Test
+//    void emailsIsInvalid() {
+//        for (String invalidEmail : invalidEmails) {
+//            assertFalse(EmailValidation.validate(invalidEmail));
+//        }
+//    }
 }

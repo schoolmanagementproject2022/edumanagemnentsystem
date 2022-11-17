@@ -1,19 +1,21 @@
 package com.epam.edumanagementsystem.parent.rest.api;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
+import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -43,30 +45,44 @@ public class ParentController {
 
     @PostMapping()
     public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
-                             ModelMap modelMap) {
-
-        modelMap.addAttribute("parents", parentService.findAll());
-
-        for (User user : userService.findAll()) {
-            if (parentDto.getEmail().equalsIgnoreCase(user.getEmail())) {
-                modelMap.addAttribute("duplicated", "A user with the specified email already exists");
-                return "parentSection";
-            }
-        }
-        if (bindingResult.hasErrors()) {
-            if (!bindingResult.hasFieldErrors("email")) {
-                if (!EmailValidation.validate(parentDto.getEmail())) {
-                    modelMap.addAttribute("invalid", "Email is invalid");
-                    return "parentSection";
-                }
-            }
-            return "parentSection";
-        } else if (!EmailValidation.validate(parentDto.getEmail())) {
-            modelMap.addAttribute("invalid", "Email is invalid");
+                             Model model) {
+        model.addAttribute("parents", parentService.findAll());
+        userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+        EmailValidation.validate(parentDto.getEmail(), model);
+        PasswordValidation.validatePassword(parentDto.getPassword(), model);
+        if (bindingResult.hasErrors() || model.containsAttribute("blank")
+                || model.containsAttribute("invalidPassword")
+                || model.containsAttribute("invalidEmail")) {
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
         parentService.save(parentDto);
         return "redirect:/parents";
     }
+
+    @GetMapping("/{id}/profile")
+    public String openParentProfile(@PathVariable("id") Long id, Model model) {
+        Parent parent = parentService.findById(id).get();
+        model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
+        model.addAttribute("parentData", parent.getNameAndSurname());
+        return "parentProfile";
+    }
+
+    @PostMapping("/{id}/profile")
+    public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
+                             @PathVariable("id") Long id, Model model) {
+
+        if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
+            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+        }
+        EmailValidation.validate(parentDto.getEmail(), model);
+
+        if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
+            model.addAttribute("parentData", parentService.findById(id).get().getNameAndSurname());
+            return "parentProfile";
+        }
+        parentService.updateParent(parentDto);
+        return "redirect:/parents/" + id + "/profile";
+    }
 }
+
