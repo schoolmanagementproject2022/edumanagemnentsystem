@@ -141,6 +141,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public void deletePic(Long id) {
         studentRepository.updateStudentPicUrl(id);
     }

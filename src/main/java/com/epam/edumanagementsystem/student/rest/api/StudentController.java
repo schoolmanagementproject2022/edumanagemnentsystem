@@ -135,7 +135,7 @@ public class StudentController {
         StudentDto studentById = studentService.findByStudentId(id);
         imageService.deleteImage(studentById.getPicUrl());
         studentService.deletePic(studentById.getId());
-        return "redirect:/parents/" + id + "/profile";
+        return "redirect:/students/" + id + "/profile";
     }
 
     private List<StudentDto> findAllStudents() {

@@ -186,7 +186,7 @@
 filevalidation = () => {
 const fi = document.getElementById('file-input');
     const acceptedImageTypes = ['image/jpeg', 'image/png'];
-if (!fi.files[0].name.match(/\.(jpeg|png)$/i)){
+if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
 return PopUpShowImageFormat();
 }
     if (fi.files.length > 0) {
@@ -203,7 +203,7 @@ return PopUpShowImageFormat();
 	filevalidationEdit = () => {
 		const fi = document.getElementById('form-pic-edit');
     const acceptedImageTypes = ['image/jpeg', 'image/png'];
-if (!fi.files[0].name.match(/\.(jpeg|png)$/i)){
+if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
 return PopUpShowImageFormat();
 }
 				if (fi.files[0].size>= 2*1024*1024) {

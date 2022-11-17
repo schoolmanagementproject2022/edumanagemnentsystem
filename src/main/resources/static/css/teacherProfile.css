@@ -147,15 +147,34 @@ body {
 .list-items{
     width: 100% ;
 }
-.list-h2-item{
-    margin-left: 3%;
-    margin-top: 5%!important;
-}
+/*.list-h2-item{*/
+/*    margin-left: 3%;*/
+/*    margin-top: 5%!important;*/
+/*}*/
 .list-p-item{
     width: 100% ;
     background-color: #555555;
 }
 
+.p-item {
+    margin-top: -13%;
+    font-size: 20px;
+    display: block;
+    color: #555555;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.sidebar-img {
+    margin-right: 25px;
+    margin-top: 50px;
+    width: 15%;
+    cursor: pointer;
+    text-align: left;
+    height: min-content;
+}
 
 .list-items p {
     display: block;
@@ -519,7 +538,7 @@ form {
 .sidebar2 {
     margin-right: 25px;
     margin-top: 50px;
-    width: 15%;
+    width: 100%;
     background-color: #555555;
     cursor: pointer;
     text-align: left;
@@ -590,6 +609,42 @@ form {
 .item-h2 {
     padding: 10px;
     color: #555555;
+}
+
+.personalInformation p{
+    font-weight: bold;
+    color: #555555;
+    font-size: 1.2em;
+    padding: 6px;
+    margin-left: 3%;
+}
+
+.popup-container-image-format .button-save-format {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 38%;
+    margin-left: -10%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.popup-container-image-format{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 412px;
+    height: 281px;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 list {
