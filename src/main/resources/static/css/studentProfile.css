@@ -147,10 +147,6 @@ body {
 .list-items{
     width: 100% ;
 }
-.list-h2-item{
-    margin-left: 3%;
-    margin-top: 5%!important;
-}
 .list-p-item{
     width: 100% ;
     background-color: #555555;
@@ -260,7 +256,7 @@ form {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 70%;
+    margin-top: 60%;
     margin-left: -20%;
     width: 83px;
     display: block;
@@ -462,37 +458,6 @@ form {
     height: 253px;
 }
 
-.halfSection {
-    margin-top: 27%;
-    margin-left: 27%;
-    display: inline-block;
-}
-
-.button-save {
-    position: absolute;
-    color: #A30014;
-    float: right;
-    margin-top: 70%;
-    margin-left: -20%;
-    width: 83px;
-    display: block;
-    height: 30px;
-    border-radius: 4px;
-    border-width: 0.5px;
-    cursor: pointer;
-}
-
-.button-generate {
-    color: #309A21;
-    margin-top: 8px;
-    text-align: center;
-    width: 172px;
-    height: 24px;
-    cursor: pointer;
-    border-radius: 4px;
-    border-width: 0.5px;
-}
-
 .popup-label-title {
     font-size: 17px;
     height: 1.2em;
@@ -519,8 +484,28 @@ form {
 .sidebar2 {
     margin-right: 25px;
     margin-top: 50px;
-    width: 15%;
+    width: 100%;
     background-color: #555555;
+    cursor: pointer;
+    text-align: left;
+    height: min-content;
+}
+
+.p-item {
+    margin-top: -13%;
+    font-size: 20px;
+    display: block;
+    color: #555555;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.sidebar-img {
+    margin-right: 25px;
+    margin-top: 50px;
+    width: 15%;
     cursor: pointer;
     text-align: left;
     height: min-content;
@@ -580,18 +565,13 @@ form {
 .item {
     display: block;
     color: #FFFFFF;
-    padding: 10px;
+    padding: 14px;
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
     font-size: 19px;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
-.item-h2 {
-    padding: 10px;
-    color: #555555;
-}
-
 list {
     width: 100%;
     padding: 0px;
@@ -669,5 +649,201 @@ list {
     height: 70px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
 
+.personalInformation p{
+    font-weight: bold;
+    color: #555555;
+    font-size: 1.2em;
+    padding: 6px;
+    margin-left: 3%;
+}
+
+.popup-container-image-format .button-save-format {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 38%;
+    margin-left: -10%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.popup-container-image-format{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 412px;
+    height: 281px;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.container-img {
+    position: relative;
+    width: 100%;
+    height: 30%;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 97%;
+    height: 98%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+}
+
+.container-img:hover .overlay {
+    display: block;
+    background: rgba(0, 0, 0, .3);
+}
+
+.title-img {
+    position: absolute;
+    width: 500px;
+    left: 0;
+    top: 120px;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    z-index: 1;
+    transition: top .5s ease;
+}
+
+.btn-img {
+    position: absolute;
+    width: 88%;
+    left:6%;
+    top: 41%;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+.delete-img {
+    position: absolute;
+    width: 14%;
+    left:80%;
+    top: 4%;
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+.btn-img span {
+    width: 200px;
+    padding: 4% 25%;
+    text-align: center;
+    color: white;
+    border: solid 2px white;
+    z-index: 1;
+}
+
+.btn-img span:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
+.delete-img a {
+    width: 200px;
+    padding: 4% 25%;
+    text-align: center;
+    color: white;
+    border: solid 2px white;
+    z-index: 1;
+}
+
+.container-img:hover .btn-img {
+    opacity: 1;
+}
+
+.container-img:hover .delete-img {
+    opacity: 1;
+}
+
+#file-input{
+    display: none;
+}
+
+#form-pic-edit{
+    display: none;
+}
+#submitButton{
+    display: none;
+}
+#edit {
+    text-decoration: none;
+    color: #2b80a5;
+    width: max-content;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    font-size:hover 110%;
+}
+
+.popup-container-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 412px;
+    height: 281px;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.popup-container-image .button-save {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 38%;
+    margin-left: -10%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.image-delete-btn {
+    color: #A30014;
+    margin-left: -25%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.image-delete-btn-cancel {
+    margin-left: 26%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.successText {
+    font-size: 131%;
+    white-space: nowrap;
+    margin-top: 4%;
 }

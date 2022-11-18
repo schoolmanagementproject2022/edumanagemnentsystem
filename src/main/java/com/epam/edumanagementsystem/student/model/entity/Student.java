@@ -54,6 +54,8 @@ public class Student {
     @JoinColumn(name = "academic_class_id")
     private AcademicClass academicClass;
 
+    private String picUrl;
+
     public Student(Long id,
                    String name,
                    String surname,
@@ -183,6 +185,14 @@ public class Student {
 
     public String getNameAndSurname() {
         return name + " " + surname;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

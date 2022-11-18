@@ -37,6 +37,7 @@ public class StudentMapper {
         student.setParent(studentDto.getParent());
         student.setAcademicClass(studentDto.getAcademicClass());
         student.setUser(user);
+        student.setPicUrl(studentDto.getPicUrl());
         return student;
     }
 
@@ -99,6 +100,7 @@ public class StudentMapper {
         studentDto.setPassword(student.getPassword());
         studentDto.setParent(student.getParent());
         studentDto.setAcademicClass(student.getAcademicClass());
+        studentDto.setPicUrl(student.getPicUrl());
         return studentDto;
     }
 

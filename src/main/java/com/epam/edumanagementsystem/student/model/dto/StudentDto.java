@@ -59,6 +59,8 @@ public class StudentDto {
     @OneToOne
     private AcademicClass academicClass;
 
+    private String picUrl;
+
     public StudentDto(Long id,
                       String name,
                       String surname,
@@ -184,6 +186,14 @@ public class StudentDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

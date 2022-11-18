@@ -33,7 +33,7 @@
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <h1>New Teacher</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}">
+        <form id="form" class="form" th:method="POST" th:action="@{/teachers}" th:object="${teacher}" enctype="multipart/form-data">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
              or ${invalidEmail}!=null or ${invalidPassword}!=null or ${blank}!=null">
@@ -88,7 +88,6 @@
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
-
 
         </form>
     </div>

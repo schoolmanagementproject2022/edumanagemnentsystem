@@ -6,7 +6,26 @@ function PopUpShow() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
 
+function PopUpShowImage() {
+    $("#popup-container-image").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowImageDelete() {
+    $("#popup-container-image-delete").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 }
 
 function PopUpHide() {
@@ -17,4 +36,14 @@ function PopUpHide() {
     $("#main-wrapper").css("pointer-events", "auto");
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
+}
+
+function PopUpShowImageFormat() {
+    $("#popup-container-image-format").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 }

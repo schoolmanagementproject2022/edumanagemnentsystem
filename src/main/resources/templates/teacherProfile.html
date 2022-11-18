@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
+    <link href="/static/css/teacherProfile.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
@@ -26,20 +27,63 @@
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
-            <div class="list-h2-item">
-                <h2 class="item-h2" th:text="'Name: ' + ${teacher.getName()}"></h2>
-                <h2 class="item-h2" th:text="'Surname: ' + ${teacher.getSurname()}"></h2>
-                <h2 class="item-h2" th:text="'Email: ' + ${teacher.getEmail()}"></h2>
+            <div class="personalInformation">
+                <p th:text="'Name: ' + ${teacher.getName()}"></p>
+                <p th:text="'Surname: ' + ${teacher.getSurname()}"></p>
+                <p th:text="'Email: ' + ${teacher.getEmail()}"></p>
             </div>
         </div>
-        <!--            <img th:if="${teacher.imageUrl} !=null" src="/static/img/" alt="Teacher Profile Photo">-->
-        <!--            th:if="${teacher.iamgeUrl} == null"-->
-        <div class="sidebar2 header" id="sidebar2">
-            <div th:insert="fragments/fragments :: teacherProfileSidebar"></div>
+
+        <div class="sidebar-img header">
+            <div th:if="${teacher.getPicUrl() == null}">
+                <form id="form-pic" class="form" th:method="POST"  th:action="@{'/teachers/' + ${teacher.getId()} + '/image/add'}" th:object="${existingTeacher}" enctype="multipart/form-data">
+                    <div class="image-upload">
+                        <label for="file-input" width="150px" height="150px">
+                            <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
+                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
+                            <p class="p-item" style="padding-left: 26%;">PNG, JPEG</p>
+                        </label>
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${teacher.getPicUrl() != null}">
+                <div class="container-img">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
+                    <div class="overlay"></div>
+                    <div class="btn-img">
+                        <label for="form-pic-edit" width="150px" height="150px">
+                            <span id="edit">Edit</span>
+                        </label>
+                        <div class="container-img">
+                            <div class="overlay"></div>
+                            <div class="btn-img">
+
+                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/teachers/' + ${teacher.getId()} + '/image/add'}" th:object="${existingTeacher}" enctype="multipart/form-data">
+                                    <div class="image-upload">
+                                        <input id="form-pic-edit" th:name="picture" multiple type="file" accept="image/png,image/jpeg" onchange="filevalidationEdit()">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <form th:action="@{'/teachers/' + ${teacher.getId()} + '/image/delete'}" th:method="POST" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" id="submitButton" > </button>
+                    </form>
+                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
+                </div>
+            </div>
+            <div class="sidebar2 header" id="sidebar2">
+                <div th:insert="fragments/fragments :: teacherProfileSidebar"></div>
+            </div>
         </div>
+
     </div>
 </div>
-</div>
+
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
@@ -80,5 +124,81 @@
         </form>
     </div>
 </div>
+
+<div class="popup-container-image" id="popup-container-image">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p class="successText">File size exceeds maximum 2mb limit</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save" id="submit-image" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-container-image" id="popup-container-image-delete">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile picture?</p>
+        </div>
+        <div>
+            <form th:action="@{'/teachers/' + ${teacher.id} + '/image/delete'}" method="get">
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b></button>
+            </form>
+        </div>
+        <div>
+            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()"><b>Cancel</b></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-container-image-format" id="popup-container-image-format">
+    <div class="popup-wrapper" id="popup-wrapper-format">
+        <div class="half">
+            <p class="successText">Only PNG and JPEG files are allowed.</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    filevalidation = () => {
+        const fi = document.getElementById('file-input');
+        const acceptedImageTypes = ['image/jpeg', 'image/png'];
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return PopUpShowImageFormat();
+        }
+        if (fi.files.length > 0) {
+
+            if (fi.files[0].size>= 2*1024*1024) {
+                PopUpShowImage();
+                return;}
+            yourFunction()
+        }
+    }
+    function yourFunction(){
+        document.getElementById("form-pic").submit();
+    }
+    filevalidationEdit = () => {
+        const fi = document.getElementById('form-pic-edit');
+        const acceptedImageTypes = ['image/jpeg', 'image/png'];
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return PopUpShowImageFormat();
+        }
+        if (fi.files[0].size>= 2*1024*1024) {
+            PopUpShowImage();
+            return;
+        }
+        yourFunctionEdit()
+
+    }
+    function yourFunctionEdit(){
+        document.getElementById("form-pic-edi").submit();
+    }
+</script>
+
 </body>
 </html>

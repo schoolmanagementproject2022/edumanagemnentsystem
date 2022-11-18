@@ -5,14 +5,12 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
-import com.epam.edumanagementsystem.student.mapper.StudentMapper;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
-import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.entity.User;
-import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,12 +19,13 @@ import java.util.Optional;
 public class ParentServiceImpl implements ParentService {
 
     private final ParentRepository parentRepository;
-
     private final UserService userService;
+    private final ImageService imageService;
 
-    public ParentServiceImpl(ParentRepository parentRepository, UserService userService) {
+    public ParentServiceImpl(ParentRepository parentRepository, UserService userService, ImageService imageService) {
         this.parentRepository = parentRepository;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -95,4 +94,17 @@ public class ParentServiceImpl implements ParentService {
         }
         parentRepository.save(parent);
     }
+
+    @Override
+    public void addProfilePicture(Parent parent, MultipartFile multipartFile) {
+        parent.setPicUrl(imageService.saveImage(multipartFile));
+        parentRepository.save(parent);
+    }
+
+    @Transactional
+    @Override
+    public void deletePic(Long id) {
+        parentRepository.updateParentPicUrl(id);
+    }
+
 }

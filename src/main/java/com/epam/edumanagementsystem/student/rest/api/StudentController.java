@@ -12,6 +12,8 @@ import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,17 +34,19 @@ public class StudentController {
     private final StudentService studentService;
     private final UserService userService;
     private final ParentService parentService;
+    private final ImageService imageService;
     private final AcademicClassService academicClassService;
     private final String STUDENT_HTML = "studentSection";
 
     @Autowired
     public StudentController(PasswordEncoder bcryptPasswordEncoder, StudentService studentService,
                              UserService userService, ParentService parentService,
-                             AcademicClassService academicClassService) {
+                             ImageService imageService, AcademicClassService academicClassService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.studentService = studentService;
         this.userService = userService;
         this.parentService = parentService;
+        this.imageService = imageService;
         this.academicClassService = academicClassService;
 
     }
@@ -114,6 +119,23 @@ public class StudentController {
         }
         studentService.updateFields(updatableStudent);
         return "redirect:/students/" + updatableStudent.getId() + "/profile";
+    }
+
+    @PostMapping("/{id}/image/add")
+    public String addPic(@PathVariable("id") Long id,
+                         @RequestParam("picture") MultipartFile multipartFile) {
+        StudentDto studentById = studentService.findByStudentId(id);
+        User userByEmail = userService.findByEmail(studentById.getEmail());
+        studentService.addProfilePicture(StudentMapper.toStudent(studentById, userByEmail), multipartFile);
+        return "redirect:/students/" + id + "/profile";
+    }
+
+    @GetMapping("/{id}/image/delete")
+    public String deletePic(@PathVariable("id") Long id) {
+        StudentDto studentById = studentService.findByStudentId(id);
+        imageService.deleteImage(studentById.getPicUrl());
+        studentService.deletePic(studentById.getId());
+        return "redirect:/students/" + id + "/profile";
     }
 
     private List<StudentDto> findAllStudents() {
