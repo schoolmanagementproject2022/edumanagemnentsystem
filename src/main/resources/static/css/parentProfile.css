@@ -311,9 +311,10 @@ input[type="checkbox"] {
     animation-play-state: paused;
 }
 
-.text-animated:hover{
-    animation-play-state: running;              /* Run on hover! */
+.text-animated:hover {
+    animation-play-state: running;
 }
+
 @keyframes backAndForth {
     0% {
         transform: translateX(0);
@@ -331,24 +332,6 @@ input[type="checkbox"] {
         transform: translateX(calc(-100%));
         left: 100%;
     }
-    90% {
-        transform: translateX(0);
-        left: 0;
-    }
-    100% {
-        transform: translateX(0);
-        left: 0;
-    }
-}
-
-.animated{
-    animation: rotate360 1.2s linear infinite;
-    animation-play-state: paused;
-}
-.animated:hover{
-    animation-play-state: running;
-}
-@keyframes rotate360 {
     90% {
         transform: translateX(0);
         left: 0;
