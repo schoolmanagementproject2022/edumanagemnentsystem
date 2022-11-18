@@ -54,6 +54,8 @@ public class Student {
     @JoinColumn(name = "academic_class_id")
     private AcademicClass academicClass;
 
+    private String picUrl;
+
     public Student(Long id,
                    String name,
                    String surname,
@@ -93,12 +95,9 @@ public class Student {
     public Student() {
     }
 
-
-
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -182,6 +181,18 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNameAndSurname() {
+        return name + " " + surname;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

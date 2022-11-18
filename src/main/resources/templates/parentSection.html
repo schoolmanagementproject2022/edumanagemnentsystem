@@ -19,8 +19,9 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
         <div class="list">
-            <div class="list-items" th:each="item: ${parents}">
-                <p class="item" th:text="${item.getNameAndSurname()}"></p>
+            <div class="list-items" th:each="parent: ${parents}">
+                <a class="item" th:text="${parent.getNameAndSurname()}"
+                   th:href="@{'/parents/' + ${parent.getId()} + '/profile'}">Parent</a>
             </div>
         </div>
     </div>
@@ -34,7 +35,8 @@
         <h1>New Parent</h1>
         <form id="form" th:action="@{/parents}" method="POST" th:object="${parent}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
+             or ${invalidEmail}!=null or ${invalidPassword}!=null or ${blank}!=null">
                 PopUpShow();
             </script>
 
@@ -60,8 +62,8 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalid}!= null" class="error">
-                        <p th:text="${invalid}"></p>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
                     </div>
 
                 </div>
@@ -71,8 +73,12 @@
                     <input class="form_input" type="text" placeholder="Create Password" id="password"
                            th:name="password" readonly
                            th:value="${#object.password}"/>
-                    <div class="error" th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}"></div>
+                    <div th:if="${blank}!= null" class="error">
+                        <p th:text="${blank}"></p>
+                    </div>
+                    <div th:if="${invalidPassword}!= null" class="error">
+                        <p th:text="${invalidPassword}"></p>
+                    </div>
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>

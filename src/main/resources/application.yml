@@ -1,3 +1,5 @@
+upload:
+  dir: C:\edumanagemnentsystem\src\main\resources\static\img\
 spring:
 
   mvc:
@@ -20,6 +22,9 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
     enabled: true
+  servlet:
+    multipart:
+      max-request-size: 30MB
 
 server:
   port: 8082

@@ -21,12 +21,11 @@ public class StudentMapper {
         this.userService = userService;
     }
 
-    public static Student toStudent(StudentDto studentDto) {
+    public static Student toStudent(StudentDto studentDto, User user) {
         if (studentDto == null) {
             throw new ObjectIsNull();
         }
         Student student = new Student();
-        User user = new User();
         student.setId(studentDto.getId());
         student.setName(studentDto.getName());
         student.setSurname(studentDto.getSurname());
@@ -37,10 +36,8 @@ public class StudentMapper {
         student.setPassword(studentDto.getPassword());
         student.setParent(studentDto.getParent());
         student.setAcademicClass(studentDto.getAcademicClass());
-        user.setEmail(studentDto.getEmail());
-        user.setRole(studentDto.getRole());
-        User save = userService.save(user);
-        student.setUser(save);
+        student.setUser(user);
+        student.setPicUrl(studentDto.getPicUrl());
         return student;
     }
 
@@ -103,6 +100,7 @@ public class StudentMapper {
         studentDto.setPassword(student.getPassword());
         studentDto.setParent(student.getParent());
         studentDto.setAcademicClass(student.getAcademicClass());
+        studentDto.setPicUrl(student.getPicUrl());
         return studentDto;
     }
 

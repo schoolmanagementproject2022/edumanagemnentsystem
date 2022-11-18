@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,15 +11,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
-        $( function() {
-            $( "#date" ).datepicker({
+        $(function () {
+            $("#date").datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-122:-3",
                 maxDate: "+0D +0M -3Y"
             });
-        } );
+        });
     </script>
     <style>
         .ui-datepicker .ui-datepicker-header {
@@ -31,6 +30,7 @@
             margin: -1px;
             border-radius: 0;
         }
+
         .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
             border: 1px solid #01A7F0;
             background: #01A7F0;
@@ -48,7 +48,8 @@
 
         <div class="list">
             <div class="list-items" th:each="student : ${students}">
-                <p class="item" th:text="${student.getNameAndSurname()}">Student</p>
+                <a th:href="@{'/students/'+${student.getId()} + '/profile'}" class="item"
+                   th:text="${student.getNameAndSurname()}">Student</a>
             </div>
         </div>
     </div>
@@ -60,7 +61,8 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
         <form id="form" class="form" th:method="POST" th:action="@{/students}" th:object="${student}">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
+            or ${invalidEmail} != null or ${invalidPassword}!=null">
                 PopUpShow();
             </script>
 
@@ -96,8 +98,8 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalid}!= null" class="error">
-                        <p th:text="${invalid}"></p>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
                     </div>
 
                     <label class="popup-label-title">Student address <span style="color:#A30014">*</span></label>
@@ -119,20 +121,18 @@
                            th:value="*{date}"
                            th:field="*{date}"
                            th:id="date"
-                           />
+                    />
                     <div class="error" th:if="${#fields.hasErrors('date')}"
                          th:errors="*{date}"></div>
 
                     <label class="popup-label-title">Linked Class</label>
                     <select class="form_input" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
-                        <option th:if="*{academicClass == null}" th:text="'Class'" class="short" data-limit="23" th:value="null"></option>
+                        <option th:text="' Select academic class'" class="short" data-limit="23"
+                                th:value="null"></option>
                         <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
                                 th:text="${class.classNumber}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('academicClass')}"
-                         th:errors="*{academicClass}"></div>
-
                 </div>
 
                 <div class="half2">
@@ -140,8 +140,12 @@
                     <input type="text" class="form_input" placeholder="Create Password" id="password"
                            th:name="password" readonly
                            th:value="${#object.password}">
-                    <div class="error" th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}"></div>
+                    <div th:if="${blank}!= null" class="error">
+                        <p th:text="${blank}"></p>
+                    </div>
+                    <div th:if="${invalidPassword}!= null" class="error">
+                        <p th:text="${invalidPassword}"></p>
+                    </div>
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
@@ -149,7 +153,8 @@
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
-                            <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23" th:value="null"></option>
+                            <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23"
+                                    th:value="null"></option>
                             <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
                                     th:value="${bloodGroup}"
                                     th:text="${bloodGroup.bloodGroup}"></option>
@@ -159,21 +164,22 @@
 
                         <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
-                            <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23" th:value="null"></option>
+                            <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
+                                    th:value="null"></option>
                             <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
                                     th:text="${gender.gender}"></option>
                         </select>
                         <div class="error" th:if="${#fields.hasErrors('gender')}"
                              th:errors="*{gender}"></div>
 
-                        <label class="popup-label-title">Linked Parent</label>
-                        <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
-                            <option th:if="*{parent == null}" class="short" data-limit="23" th:text="'Parent'" th:value="null"></option>
-                            <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
-                                    th:text="${parent.getNameAndSurname}"></option>
-                        </select>
-                        <div class="error" th:if="${#fields.hasErrors('parent')}"
-                             th:errors="*{parent}"></div>
+                        <label class="popup-label-title">Linked Parent</label> <select class="form_input"
+                                                                                       th:name="parent" th:id="parent"
+                                                                                       th:field="*{parent}">
+                        <option th:text="' Select parent'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
+                                th:text="${parent.getNameAndSurname}"></option>
+                    </select>
                     </div>
                 </div>
                 <div name="btn-div">
@@ -221,6 +227,5 @@
     window.onload = function () {
         shortString('.short');
     };
-
 </script>
 </html>

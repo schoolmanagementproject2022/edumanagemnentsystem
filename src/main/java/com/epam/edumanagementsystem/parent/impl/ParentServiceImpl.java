@@ -6,9 +6,11 @@ import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +19,13 @@ import java.util.Optional;
 public class ParentServiceImpl implements ParentService {
 
     private final ParentRepository parentRepository;
-
     private final UserService userService;
+    private final ImageService imageService;
 
-    public ParentServiceImpl(ParentRepository parentRepository, UserService userService) {
+    public ParentServiceImpl(ParentRepository parentRepository, UserService userService, ImageService imageService) {
         this.parentRepository = parentRepository;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @Override
@@ -69,4 +72,39 @@ public class ParentServiceImpl implements ParentService {
         }
         parentRepository.deleteById(id);
     }
+
+    @Transactional
+    @Override
+    public void updateParent(ParentDto parentForUpdate) {
+        if (parentForUpdate == null) {
+            throw new NullPointerException("The given parent must not be null!");
+        }
+        Parent parent = parentRepository.findById(parentForUpdate.getId()).get();
+
+        if (parentForUpdate.getName() != null) {
+            parent.setName(parentForUpdate.getName());
+        }
+
+        if (parentForUpdate.getSurname() != null) {
+            parent.setSurname(parentForUpdate.getSurname());
+        }
+
+        if (parentForUpdate.getEmail() != null) {
+            parent.getUser().setEmail(parentForUpdate.getEmail());
+        }
+        parentRepository.save(parent);
+    }
+
+    @Override
+    public void addProfilePicture(Parent parent, MultipartFile multipartFile) {
+        parent.setPicUrl(imageService.saveImage(multipartFile));
+        parentRepository.save(parent);
+    }
+
+    @Transactional
+    @Override
+    public void deletePic(Long id) {
+        parentRepository.updateParentPicUrl(id);
+    }
+
 }

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/studentProfile.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="/static/js/popupControl.js"></script>
+    <script>
+        $(function () {
+            $("#date").datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-122:-3",
+                maxDate: "+0D +0M -3Y"
+            });
+        });
+    </script>
+    <style>
+        .ui-datepicker .ui-datepicker-header {
+            position: relative;
+            padding: 7px 0;
+            background: #01A7F0;
+            border: 0;
+            margin: -1px;
+            border-radius: 0;
+        }
+
+        .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+            border: 1px solid #01A7F0;
+            background: #01A7F0;
+            color: #111111;
+        }
+    </style>
+    <title th:text="${name_surname}+' profile'">Title</title>
+</head>
+<body>
+<div class="header" id="header">
+    <div th:insert="fragments/fragments :: container"></div>
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="content-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+        <div class="content" id="middle">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Students'}"></a>
+
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
+                   th:text="${name_surname}"></a>
+
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
+            </div>
+            <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
+            <div class="personalInformation">
+                <p th:text="'Name: '+${existingStudent.getName()}"></p>
+                <p th:text="'Surname: '+${existingStudent.getSurname()}"></p>
+                <p th:text="'Email: '+${existingStudent.getEmail()}"></p>
+                <p th:text="'Address: '+${existingStudent.getAddress()}"></p>
+                <p th:text="'Birth date: '+${existingStudent.getDate()}"></p>
+                <p th:text="'Blood group: '+${existingStudent.getBloodGroup().getBloodGroup()}"></p>
+                <p th:text="'Gender: '+${existingStudent.getGender().getGender()}"></p>
+                <p th:if="*{existingStudent.getParent() != null}"
+                   th:text="'Parent: '+${existingStudent.getParent().getNameAndSurname()}"></p>
+                <p th:if="*{existingStudent.getParent() == null}">Parent: N/A </p>
+                <p th:if="*{existingStudent.getAcademicClass() != null}"
+                   th:text="'Academic class: '+${existingStudent.getAcademicClass().getClassNumber()}"></p>
+                <p th:if="*{existingStudent.getAcademicClass() == null}">Academic class: N/A </p>
+            </div>
+        </div>
+
+        <div class="sidebar-img header">
+            <div th:if="${existingStudent.getPicUrl() == null}">
+                <form id="form-pic" class="form" th:method="POST"  th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}" th:object="${existingStudent}" enctype="multipart/form-data">
+                    <div class="image-upload">
+                        <label for="file-input" width="150px" height="150px">
+                            <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
+                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
+                            <p class="p-item" style="padding-left: 26%;">PNG, JPEG</p>
+                        </label>
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
+                    </div>
+                </form>
+            </div>
+
+            <div th:if="${existingStudent.getPicUrl() != null}">
+                <div class="container-img">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${existingStudent.picUrl})}">
+                    <div class="overlay"></div>
+                    <div class="btn-img">
+                        <label for="form-pic-edit" width="150px" height="150px">
+                            <span id="edit">Edit</span>
+                        </label>
+                        <div class="container-img">
+                            <div class="overlay"></div>
+                            <div class="btn-img">
+
+                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}" th:object="${existingStudent}" enctype="multipart/form-data">
+                                    <div class="image-upload">
+                                        <input id="form-pic-edit" th:name="picture" multiple type="file" accept="image/png,image/jpeg" onchange="filevalidationEdit()">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <form th:action="@{'/students/' + ${existingStudent.getId()} + '/image/delete'}" th:method="POST" >
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" id="submitButton" > </button>
+                    </form>
+                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" th:src="@{/image(name='x-mark-transparent-2.png')}">
+                </div>
+            </div>
+            <div class="sidebar2 header" id="sidebar2">
+                <a class="item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${allUrl}}">Profile</a>
+                <a class="item" href="#">Journal</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="create">
+    <div class="popup-container" id="popup-container">
+        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+        <h1 th:text="${name_surname}"></h1>
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingStudent}">
+            <script th:inline="javascript"
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
+                PopUpShow();
+            </script>
+            <div class="popup-wrapper">
+                <div class="half">
+                    <label class="popup-label-title">Student name <span style="color:#A30014">*</span></label>
+                    <input class="form_input"
+                           th:type="text"
+                           th:name="name"
+                           th:id="name"
+                           th:value="${#object.name}"/>
+                    <div class="error" th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}"></div>
+
+                    <label class="popup-label-title">Student surname <span style="color:#A30014">*</span></label>
+                    <input class="form_input"
+                           th:type="text"
+                           th:name="surname"
+                           th:id="surname"
+                           th:value="${#object.surname}"/>
+                    <div class="error" th:if="${#fields.hasErrors('surname')}"
+                         th:errors="*{surname}"></div>
+
+                    <label class="popup-label-title">Student email <span style="color:#A30014">*</span></label>
+                    <input class="form_input"
+                           th:type="text"
+                           th:name="email"
+                           th:id="email"
+                           th:value="${#object.email}"/>
+                    <div class="error" th:if="${#fields.hasErrors('email')}"
+                         th:errors="*{email}"></div>
+                    <div th:if="${duplicated}!= null" class="error">
+                        <p th:text="${duplicated}"></p>
+                    </div>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
+                    </div>
+
+                    <label class="popup-label-title">Student address <span style="color:#A30014">*</span></label>
+                    <input class="form_input"
+                           th:type="text"
+                           th:name="address"
+                           th:id="address"
+                           placeholder="Country/Region/City/Etc."
+                           th:value="${#object.address}"/>
+                    <div class="error" th:if="${#fields.hasErrors('address')}"
+                         th:errors="*{address}"></div>
+
+                    <label class="popup-label-title">Birth Date <span style="color:#A30014">*</span>
+                        <span class="check-validation-date"></span>
+                    </label>
+                    <input class="form_input" placeholder="Date pick &#9638;" data-date-format="dd-mm-yyyy" readonly
+                           th:type="text"
+                           th:name="date"
+                           th:value="*{date}"
+                           th:field="*{date}"
+                           th:id="date"
+                    />
+                    <div class="error" th:if="${#fields.hasErrors('date')}"
+                         th:errors="*{date}"></div>
+                </div>
+
+                <div class="half2">
+                    <label class="popup-label-title">Student blood group <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
+                        <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
+                                th:value="${bloodGroup}"
+                                th:text="${bloodGroup.bloodGroup}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
+                         th:errors="*{bloodGroup}"></div>
+
+                    <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
+                    <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
+                        <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
+                                th:text="${gender.gender}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('gender')}"
+                         th:errors="*{gender}"></div>
+
+                    <label class="popup-label-title">Linked Parent </label>
+                    <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
+                        <option th:text="' Select parent'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
+                                th:text="${parent.getNameAndSurname}"></option>
+                    </select>
+
+                    <label class="popup-label-title">Linked Class</label>
+                    <select class="form_input" th:name="academicClass" th:id="academicClass"
+                            th:field="*{academicClass}">
+                        <option th:text="' Select academic class'" class="short" data-limit="23"
+                                th:value="null"></option>
+                        <option class="short" data-limit="23" th:each="class : ${classes}" th:value="${class.id}"
+                                th:text="${class.classNumber}"></option>
+                    </select>
+                </div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="popup-container-image" id="popup-container-image">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p class="successText">File size exceeds maximum 2mb limit</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save" id="submit-image" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-container-image" id="popup-container-image-delete">
+    <div class="popup-wrapper" id="popup-wrapper">
+        <div class="half">
+            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile picture?</p>
+        </div>
+        <div>
+            <form th:action="@{'/students/' + ${existingStudent.id} + '/image/delete'}" method="get">
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b></button>
+            </form>
+        </div>
+        <div>
+            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()"><b>Cancel</b></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-container-image-format" id="popup-container-image-format">
+    <div class="popup-wrapper" id="popup-wrapper-format">
+        <div class="half">
+            <p class="successText">Only PNG and JPEG files are allowed.</p>
+        </div>
+        <div name="btn-div">
+            <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b></button>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    function shortString(selector) {
+        const elements = document.querySelectorAll(selector);
+        const tail = '...';
+        if (elements && elements.length) {
+            for (const element of elements) {
+                let text = element.innerText;
+                if (element.hasAttribute('data-limit')) {
+                    if (text.length > element.dataset.limit) {
+                        element.innerText = `${text.substring(0, element.dataset.limit - tail.length).trim()}${tail}`;
+                    }
+                } else {
+                    throw Error('Cannot find attribute \'data-limit\'');
+                }
+            }
+        }
+    }
+
+    window.onload = function () {
+        shortString('.short');
+    };
+
+</script>
+
+<script>
+    filevalidation = () => {
+        const fi = document.getElementById('file-input');
+        const acceptedImageTypes = ['image/jpeg', 'image/png'];
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return PopUpShowImageFormat();
+        }
+        if (fi.files.length > 0) {
+
+            if (fi.files[0].size>= 2*1024*1024) {
+                PopUpShowImage();
+                return;
+            }
+            yourFunction()
+        }
+    }
+    function yourFunction(){
+        document.getElementById("form-pic").submit();
+    }
+    filevalidationEdit = () => {
+        const fi = document.getElementById('form-pic-edit');
+        const acceptedImageTypes = ['image/jpeg', 'image/png'];
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return PopUpShowImageFormat();
+        }
+        if (fi.files[0].size>= 2*1024*1024) {
+            PopUpShowImage();
+            return;
+        }
+        yourFunctionEdit()
+
+    }
+    function yourFunctionEdit(){
+        document.getElementById("form-pic-edi").submit();
+    }
+</script>
+
+</html>

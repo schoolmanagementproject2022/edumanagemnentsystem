@@ -28,6 +28,8 @@ public class Parent {
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
+    private String picUrl;
+
     public Parent(Long id, User user) {
         this.id = id;
         this.user = user;
@@ -75,6 +77,14 @@ public class Parent {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
 
     public User getUser() {
         return user;

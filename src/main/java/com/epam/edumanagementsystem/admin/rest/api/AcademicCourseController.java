@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
@@ -186,7 +185,8 @@ public class AcademicCourseController {
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
         model.addAttribute("academicClasses", allAcademicClasses);
         model.addAttribute("teachersToSelect", teachersInAcademicCourse);
-        model.addAttribute("newClass", new AcademicClass());
+        model.addAttribute("existingClasses", academicClassesInCourse);
+        model.addAttribute("existingCourse", findAcademicCourseByName);
 
         if (academicClassesInCourse.size() == 0) {
             academicClassSet.addAll(allAcademicClasses);

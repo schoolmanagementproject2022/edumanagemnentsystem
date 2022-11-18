@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.parent.impl;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
@@ -16,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -32,12 +34,14 @@ class ParentServiceImplTest {
     private ParentServiceImpl parentService;
 
     private Parent parent;
+    private ParentDto parentDto;
     private User user;
 
     @BeforeEach
     private void setUp() {
         user = new User("parent@mail.com", "PARENT");
         parent = new Parent(1L, "Parent", "Parentyan", user, "password");
+        parentDto = new ParentDto("Parent", "Parentyan", "test-parent@mail.ru", "PARENT", "password");
     }
 
     @Test
@@ -130,6 +134,56 @@ class ParentServiceImplTest {
     @Test
     void deleteByIdWithNull() {
         Assertions.assertThrows(NullPointerException.class, () -> parentService.deleteById(null));
+    }
+
+    @Test
+    void updateParentSetNewName() {
+        Long id = parent.getId();
+        String name = "testName";
+
+        when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
+        Parent parent = parentRepository.findById(id).get();
+        parent.setName(name);
+
+        parentService.updateParent(ParentMapper.toParentDto(parent));
+
+        verify(parentRepository, times(1)).save(parent);
+        assertThat(parent.getName()).isEqualTo(name);
+    }
+
+    @Test
+    void updateParentSetNewSurname() {
+        Long id = parent.getId();
+        String surname = "testSurname";
+
+        when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
+        Parent parent = parentRepository.findById(id).get();
+        parent.setSurname(surname);
+
+        parentService.updateParent(ParentMapper.toParentDto(parent));
+
+        verify(parentRepository, times(1)).save(parent);
+        assertThat(parent.getSurname()).isEqualTo(surname);
+    }
+
+    @Test
+    void updateParentSetNewEmail() {
+        Long id = parent.getId();
+        String email = "test-email@gmail.com";
+
+        when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
+        Parent parent = parentRepository.findById(id).get();
+        parent.getUser().setEmail(email);
+
+        parentService.updateParent(ParentMapper.toParentDto(parent));
+
+        verify(parentRepository, times(1)).save(parent);
+        assertThat(parent.getUser().getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    void updateParentThrowsException() {
+        Assertions.assertThrows(NullPointerException.class, () -> parentService.updateParent(null));
     }
 
 }

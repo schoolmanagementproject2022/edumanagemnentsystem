@@ -21,10 +21,11 @@ public class ParentDto {
     private String email;
 
     @NotBlank
-    private String role= "PARENT";
+    private String role = "PARENT";
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
+
+    private String picUrl;
 
     public ParentDto() {}
 
@@ -94,6 +95,14 @@ public class ParentDto {
     public void setRole(String role) {
         this.role = role;
     }
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -121,4 +130,5 @@ public class ParentDto {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }

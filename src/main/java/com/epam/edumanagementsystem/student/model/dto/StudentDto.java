@@ -47,7 +47,6 @@ public class StudentDto {
     @NotNull(message = "Please, fill the required fields")
     private Gender gender;
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -59,6 +58,8 @@ public class StudentDto {
 
     @OneToOne
     private AcademicClass academicClass;
+
+    private String picUrl;
 
     public StudentDto(Long id,
                       String name,
@@ -185,6 +186,14 @@ public class StudentDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override
