@@ -25,8 +25,9 @@ public class ParentDto {
 
     private String password;
 
-    public ParentDto() {
-    }
+    private String picUrl;
+
+    public ParentDto() {}
 
     public ParentDto(@Size(max = 50, message = "Symbols can't be more than 50") String name,
                      @Size(max = 50, message = "Symbols can't be more than 50") String surname,
@@ -94,6 +95,14 @@ public class ParentDto {
     public void setRole(String role) {
         this.role = role;
     }
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -121,4 +130,5 @@ public class ParentDto {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }

@@ -11,7 +11,7 @@ public class PasswordValidation {
             model.addAttribute("blank", "Please, fill the required fields");
         } else if (!password.matches(PASSWORD_PATTERN)) {
             model.addAttribute("invalidPassword", "(Password length > 9, must contain" +
-                    " upper and lower case Latin symbols, numbers, and special characters");
+                    " upper and lower case, Latin symbols, numbers, and special characters");
         }
     }
 }

@@ -7,6 +7,7 @@ import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -25,13 +27,15 @@ public class ParentController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final ParentService parentService;
     private final UserService userService;
+    private final ImageService imageService;
 
     @Autowired
     public ParentController(PasswordEncoder bcryptPasswordEncoder, ParentService parentService,
-                            UserService userService) {
+                            UserService userService, ImageService imageService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.parentService = parentService;
         this.userService = userService;
+        this.imageService = imageService;
     }
 
     @GetMapping()
@@ -83,5 +87,23 @@ public class ParentController {
         parentService.updateParent(parentDto);
         return "redirect:/parents/" + id + "/profile";
     }
-}
 
+    @PostMapping("/{id}/image/add")
+    public String addPic(@ModelAttribute("existingParent") Parent parent, @PathVariable("id") Long id,
+                         @RequestParam("picture") MultipartFile multipartFile) {
+        Parent parentById = parentService.findById(id).get();
+
+        parentService.addProfilePicture(parentById, multipartFile);
+        return "redirect:/parents/" + id + "/profile";
+    }
+
+    @GetMapping("/{id}/image/delete")
+    public String deletePic(@PathVariable("id") Long id) {
+        Parent parentById = parentService.findById(id).get();
+        String picUrl = parentById.getPicUrl();
+        imageService.deleteImage(picUrl);
+        parentService.deletePic(parentById.getId());
+        return "redirect:/parents/" + id + "/profile";
+    }
+
+}
