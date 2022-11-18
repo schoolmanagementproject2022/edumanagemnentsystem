@@ -100,8 +100,13 @@
 <div class="edit">
 
     <div class="popup-container" id="popup-container">
-            <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+
+        <div class="clue">
             <h1 th:text="${parentData}">Parent name</h1>
+            <div class="clue-text" th:text="${parentData}" style="color: #2b80a5"> Sample Text</div>
+        </div>
+
         <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}"
               th:object="${parentDto}">
 

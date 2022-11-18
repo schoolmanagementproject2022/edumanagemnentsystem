@@ -270,15 +270,26 @@ input[type="checkbox"] {
 .close-btn:hover {
     color: red;
 }
- h1 {
+
+.clue h1 {
     text-align: left;
     color: #007EB4;
     margin-top: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
-    clear: both;
-    overflow: hidden;
     white-space: nowrap;
+}
+
+.clue-text {
+    transition: visibility 1s, opacity 1s;
+    visibility: hidden;
+    opacity: 0;
+    color: #007EB4;
+}
+
+.clue:hover > div {
+    visibility: visible;
+    opacity: 1
 }
 
 .popup-wrapper {
@@ -286,33 +297,26 @@ input[type="checkbox"] {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    margin-top: 30px;
 }
 
 .halves {
     width: 100%;
     display: flex;
-}
-
-.half_btn {
-    margin-top: 90px;
+    height: 340px;
 }
 
 .unit {
-    margin-bottom: 10px;;
+    margin-bottom: 10px;
 }
 
 .half {
     width: 50%;
     padding: 0px;
     margin-left: 0px;
-    height: 253px;
 }
 
 .half2 {
     width: 50%;
-    height: 253px;
-
 }
 
 .halfSection {
