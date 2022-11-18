@@ -71,13 +71,16 @@ public class StudentController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", ParentMapper.toParentListWithoutSaveUser(findAllParents()));
         model.addAttribute("classes", findAllClasses());
-        userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
+        if (!result.hasFieldErrors("email")) {
+            userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
+            EmailValidation.validate(studentDto.getEmail(), model);
+        }
         PasswordValidation.validatePassword(studentDto.getPassword(), model);
-        EmailValidation.validate(studentDto.getEmail(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")) {
+                || model.containsAttribute("invalidEmail")
+                || model.containsAttribute("duplicated")) {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
@@ -108,10 +111,12 @@ public class StudentController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", findAllParents());
         model.addAttribute("classes", findAllClasses());
-        if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
-            userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
+        if (!result.hasFieldErrors("email")) {
+            if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
+                userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
+            }
+            EmailValidation.validate(updatableStudent.getEmail(), model);
         }
-        EmailValidation.validate(updatableStudent.getEmail(), model);
 
         if (result.hasErrors() || model.containsAttribute("invalidEmail") ||
                 model.containsAttribute("duplicated")) {

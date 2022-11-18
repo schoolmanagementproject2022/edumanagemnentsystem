@@ -52,12 +52,16 @@ public class TeacherController {
                                 BindingResult result,
                                 Model model) throws IOException {
         model.addAttribute("teachers", teacherService.findAll());
-        userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
-        EmailValidation.validate(teacherDto.getEmail(), model);
+        if (!result.hasFieldErrors("email")) {
+            userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
+            EmailValidation.validate(teacherDto.getEmail(), model);
+        }
         PasswordValidation.validatePassword(teacherDto.getPassword(), model);
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")) {
+                || model.containsAttribute("invalidEmail")
+                || model.containsAttribute("duplicated")) {
+
             return TEACHER_HTML;
         }
 
@@ -82,10 +86,12 @@ public class TeacherController {
         TeacherDto existingTeacher = teacherService.findById(id);
         model.addAttribute("name_surname", TeacherMapper.toTeacher(existingTeacher,
                 userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
-        if (!updatableTeacher.getEmail().equals(existingTeacher.getEmail())) {
-            userService.checkDuplicationOfEmail(updatableTeacher.getEmail(), model);
+        if (!result.hasFieldErrors("email")) {
+            if (!updatableTeacher.getEmail().equals(existingTeacher.getEmail())) {
+                userService.checkDuplicationOfEmail(updatableTeacher.getEmail(), model);
+            }
+            EmailValidation.validate(updatableTeacher.getEmail(), model);
         }
-        EmailValidation.validate(updatableTeacher.getEmail(), model);
 
         if (result.hasErrors() || model.containsAttribute("invalidEmail") ||
                 model.containsAttribute("duplicated")) {

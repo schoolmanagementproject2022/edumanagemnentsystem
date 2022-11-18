@@ -458,12 +458,6 @@ form {
     height: 253px;
 }
 
-.popup-label-title {
-    font-size: 17px;
-    height: 1.2em;
-    margin-top: 20px;
-}
-
 .error {
     font-size: 0.7em;
     color: red;
@@ -477,6 +471,7 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
+
 .allTab {
     background-color: #333333;
     color: #01A7F0 !important;
