@@ -113,17 +113,17 @@
             <div class="popup-wrapper">
                 <div class="half">
                     <div id="error"></div>
-                    <label class="popup-label-title" for="name">Parent name</label>
+                    <label class="popup-label-title" for="name">Parent name<span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
 
-                    <label class="popup-label-title" for="surname">Parent surname</label>
+                    <label class="popup-label-title" for="surname">Parent surname<span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title" for="email">Parent email</label>
+                    <label class="popup-label-title" for="email">Parent email<span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
                     <input th:if="${parentDto.picUrl} != null" type="hidden" th:name="picUrl" th:value="${parentDto.picUrl}"/>
                     <div class="error" th:if="${#fields.hasErrors('email')}"
