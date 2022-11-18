@@ -28,20 +28,13 @@
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
 
-            <div class="profile">
-                <div class="profile-items">
-                    <label class="profile_label_title" for="name">Name: </label>
-                    <p class="p-item" th:text="${parentDto.getName()}"> Name </p>
+
+                <div class="personalInformation">
+                    <p th:text="'Name: '+${parentDto.getName()}"></p>
+                    <p th:text="'Surname: '+${parentDto.getSurname()}"></p>
+                    <p th:text="'Email: '+${parentDto.getEmail()}"></p>
                 </div>
-                <div class="profile-items">
-                    <label class="profile_label_title" for="surname">Surname: </label>
-                    <p class="p-item" th:text="${parentDto.getSurname()}"> Surname </p>
-                </div>
-                <div class="profile-items">
-                    <label class="profile_label_title" for="email">Email: </label>
-                    <p class="p-item" th:text="${parentDto.getEmail()}"> Email </p>
-                </div>
-            </div>
+
         </div>
         <div class="sidebar_right">
             <div th:if="${parentDto.getPicUrl() == null}">

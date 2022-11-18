@@ -133,55 +133,12 @@ body {
 }
 
 /*Profile part*/
-.profile {
-    width: 100%;
-    padding: 0px;
-    height: 65vh;
-    margin-top: 10px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
-.profile-items {
-    width: 100%;
-    display: flex;
-}
-
-.profile-p-item {
-    width: 100%;
-
-}
-
-.p-item {
-    display: block;
+.personalInformation p{
+    font-weight: bold;
     color: #555555;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 19px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.profile-items a {
-    color: #555555;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 1.3em;
-    font-weight: 600;
-}
-
-.profile-items a {
-    background-color: #555555;
-    font-weight: 600;
-}
-.profile_label_title{
-    color: #555555;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 1.3em;
-    font-weight: 600;
+    font-size: 1.2em;
+    padding: 6px;
+    margin-left: 3%;
 }
 .lebel {
     display: block;
@@ -404,7 +361,7 @@ form {
 /*Right sidebar styles*/
 .sidebar_right {
     margin-right: 25px;
-    margin-top: 100px;
+    margin-top: 50px;
     width: 15%;
 }
 
@@ -441,7 +398,6 @@ form {
 
 .content > * {
     margin-top: 15px;
-    margin-bottom: 47px;
 }
 
 .show-btn:hover {
@@ -459,7 +415,6 @@ form {
     border-color: #aaaaaa;
     align-self: flex-end;
     color: #01A7F0;
-    margin-bottom: 20px;
 }
 
 .div-pddng {
