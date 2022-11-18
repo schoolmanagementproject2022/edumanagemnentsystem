@@ -271,27 +271,71 @@ input[type="checkbox"] {
     color: red;
 }
 
-.clue h1 {
-    text-align: left;
-    color: #007EB4;
-    margin-top: 0px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+/*.clue h1 {*/
+/*    text-align: left;*/
+/*    color: #007EB4;*/
+/*    margin-top: 0px;*/
+/*    overflow: hidden;*/
+/*    text-overflow: ellipsis;*/
+/*    white-space: nowrap;*/
+/*}*/
+
+/*.clue-text {*/
+/*    transition: visibility 1s, opacity 1s;*/
+/*    visibility: hidden;*/
+/*    opacity: 0;*/
+/*    color: #007EB4;*/
+/*}*/
+
+/*.clue:hover > div {*/
+/*    visibility: visible;*/
+/*    opacity: 1*/
+/*}*/
+
+.animated {
+    position: relative;
     white-space: nowrap;
+    max-width: 400px;
+    overflow: hidden;
+    background-color: #F2F2F2;
+    display: inline-block;
+    width: fit-content;
+    position: relative;
 }
 
-.clue-text {
-    transition: visibility 1s, opacity 1s;
-    visibility: hidden;
-    opacity: 0;
+.text-animated {
+    animation: backAndForth 15s linear infinite;
+    display: inline-block;
+    position: relative;
     color: #007EB4;
 }
 
-.clue:hover > div {
-    visibility: visible;
-    opacity: 1
+@keyframes backAndForth {
+    0% {
+        transform: translateX(0);
+    left(0);
+    }
+    10% {
+        transform: translateX(0);
+        left: 0;
+    }
+    45% {
+        transform: translateX(calc(-100%));
+        left: 100%;
+    }
+    55% {
+        transform: translateX(calc(-100%));
+        left: 100%;
+    }
+    90% {
+        transform: translateX(0);
+        left: 0;
+    }
+    100% {
+        transform: translateX(0);
+        left: 0;
+    }
 }
-
 .popup-wrapper {
     width: 100%;
     display: flex;
