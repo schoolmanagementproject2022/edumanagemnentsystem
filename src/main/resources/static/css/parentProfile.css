@@ -308,8 +308,12 @@ input[type="checkbox"] {
     display: inline-block;
     position: relative;
     color: #007EB4;
+    animation-play-state: paused;
 }
 
+.text-animated:hover{
+    animation-play-state: running;              /* Run on hover! */
+}
 @keyframes backAndForth {
     0% {
         transform: translateX(0);
@@ -336,6 +340,25 @@ input[type="checkbox"] {
         left: 0;
     }
 }
+
+.animated{
+    animation: rotate360 1.2s linear infinite;
+    animation-play-state: paused;
+}
+.animated:hover{
+    animation-play-state: running;
+}
+@keyframes rotate360 {
+    90% {
+        transform: translateX(0);
+        left: 0;
+    }
+    100% {
+        transform: translateX(0);
+        left: 0;
+    }
+}
+
 .popup-wrapper {
     width: 100%;
     display: flex;

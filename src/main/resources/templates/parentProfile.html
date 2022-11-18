@@ -41,8 +41,8 @@
                       enctype="multipart/form-data">
                     <div class="image-upload">
                         <label for="file-input" width="150px" height="150px">
-                            <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
-                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
+                            <span id="boot-icon" class="bi bi-cloud-upload" style="overflow:hidden; cursor:pointer;font-size: 150px;
+                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 5% 4% 0%"></span>
                             <p class="p-item"
                                style="cursor: pointer;padding-left: 26%;margin-top: -10%;font-size: 20px;">PNG, JPEG</p>
                         </label>
@@ -101,6 +101,11 @@
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
+
+<!--        <div class="clue">-->
+<!--            <h1  class="text-animated" th:text="${parentData}">Parent name</h1>-->
+<!--            <div class="clue-text" th:text="${parentData}">Sample</div>-->
+<!--        </div>-->
 
         <div class="animated">
             <h1  class="text-animated" th:text="${parentData}">Parent name</h1>
@@ -182,12 +187,12 @@
         </div>
         <div>
             <form th:action="@{'/parents/' + ${parentDto.id} + '/image/delete'}" method="get">
-                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b>
+                <button type="submit" style="margin-left: 13%" class="button-save" id="submit-image"><b>Yes</b>
                 </button>
             </form>
         </div>
         <div>
-            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()">
+            <button type="button" class="button-save" style="margin-left: 54%" id="submit-image" onclick="PopUpHide()">
                 <b>Cancel</b></button>
         </div>
     </div>
