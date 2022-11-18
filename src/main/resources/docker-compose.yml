@@ -10,7 +10,8 @@ services:
     ports:
       - "5477:5432"
   edu-backend:
-    image: edumanagement2022/edu-backend
+    build: .
+    image: edumanagement2022/edu-backend:v2.0
     container_name: "edu-backend"
     ports:
       - "8082:8082"
