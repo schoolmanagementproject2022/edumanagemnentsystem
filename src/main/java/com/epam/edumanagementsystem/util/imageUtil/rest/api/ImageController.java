@@ -15,8 +15,8 @@ import java.io.InputStream;
 @Controller
 public class ImageController {
 
+    private final String upload = System.getProperty("user.home") + "/img/";
 
-    private final String upload=System.getProperty("user.dir")+"/src/main/resources/static/img/";
     @GetMapping(
             value = "/image",
             produces = MediaType.IMAGE_JPEG_VALUE

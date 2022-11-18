@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final String upload = System.getProperty("user.dir")+"/src/main/resources/static/img/";
+    private final String upload = System.getProperty("user.home") + "/img/";
 
     private static final Logger logger = LoggerFactory
             .getLogger(TeacherController.class);
@@ -26,6 +26,10 @@ public class ImageServiceImpl implements ImageService {
         String picUrl="";
 
         if (!file.isEmpty()) {
+            File fileToCreate = new File(upload);
+            if (!fileToCreate.exists()) {
+                fileToCreate.mkdir();
+            }
             picUrl = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             try {
                 file.transferTo(new File(upload + File.separator + picUrl));
