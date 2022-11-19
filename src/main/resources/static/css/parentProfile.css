@@ -271,27 +271,6 @@ input[type="checkbox"] {
     color: red;
 }
 
-/*.clue h1 {*/
-/*    text-align: left;*/
-/*    color: #007EB4;*/
-/*    margin-top: 0px;*/
-/*    overflow: hidden;*/
-/*    text-overflow: ellipsis;*/
-/*    white-space: nowrap;*/
-/*}*/
-
-/*.clue-text {*/
-/*    transition: visibility 1s, opacity 1s;*/
-/*    visibility: hidden;*/
-/*    opacity: 0;*/
-/*    color: #007EB4;*/
-/*}*/
-
-/*.clue:hover > div {*/
-/*    visibility: visible;*/
-/*    opacity: 1*/
-/*}*/
-
 .animated {
     position: relative;
     white-space: nowrap;
@@ -304,7 +283,7 @@ input[type="checkbox"] {
 }
 
 .text-animated {
-    animation: backAndForth 15s linear infinite;
+    animation: backAndForth 10s linear infinite;
     display: inline-block;
     position: relative;
     color: #007EB4;
