@@ -53,12 +53,15 @@ public class ParentController {
     public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
                              Model model) {
         model.addAttribute("parents", parentService.findAll());
-        userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
-        EmailValidation.validate(parentDto.getEmail(), model);
+        if (!bindingResult.hasFieldErrors("email")) {
+            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+            EmailValidation.validate(parentDto.getEmail(), model);
+        }
         PasswordValidation.validatePassword(parentDto.getPassword(), model);
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")) {
+                || model.containsAttribute("invalidEmail")
+                || model.containsAttribute("duplicated")) {
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
@@ -77,13 +80,15 @@ public class ParentController {
     @PostMapping("/{id}/profile")
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
-
-        if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
-            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+        if (!bindingResult.hasFieldErrors("email")) {
+            if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
+                userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+            }
+            EmailValidation.validate(parentDto.getEmail(), model);
         }
-        EmailValidation.validate(parentDto.getEmail(), model);
 
-        if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")) {
+        if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail")
+                || model.containsAttribute("duplicated")) {
             model.addAttribute("parentData", parentService.findById(id).get().getNameAndSurname());
             return "parentProfile";
         }

@@ -51,13 +51,16 @@ public class AdminController {
                            BindingResult result, Model model) {
 
         model.addAttribute("admins", adminService.findAllAdmins());
-        userService.checkDuplicationOfEmail(adminDto.getEmail(), model);
-        EmailValidation.validate(adminDto.getEmail(), model);
+        if (!result.hasFieldErrors("email")) {
+            userService.checkDuplicationOfEmail(adminDto.getEmail(), model);
+            EmailValidation.validate(adminDto.getEmail(), model);
+        }
         PasswordValidation.validatePassword(adminDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")) {
+                || model.containsAttribute("invalidEmail")
+                || model.containsAttribute("duplicated")) {
             return "adminSection";
         }
         adminDto.setPassword(bcryptPasswordEncoder.encode(adminDto.getPassword()));

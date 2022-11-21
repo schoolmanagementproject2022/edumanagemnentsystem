@@ -52,11 +52,13 @@ public class SubjectController {
         List<TeacherDto> allTeacher = teacherService.findAll();
         model.addAttribute("teachers", allTeacher);
 
-        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
-        for (Character character : list) {
-            if (subject.getName().contains(character.toString())) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-                return "subjectSection";
+        if (!bindingResult.hasFieldErrors("name")) {
+            Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
+            for (Character character : list) {
+                if (subject.getName().contains(character.toString())) {
+                    model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+                    return "subjectSection";
+                }
             }
         }
 

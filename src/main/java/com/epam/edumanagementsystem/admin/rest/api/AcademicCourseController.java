@@ -62,11 +62,13 @@ public class AcademicCourseController {
         List<SubjectDto> allSubjects = subjectService.findAll();
         model.addAttribute("subjects", allSubjects);
 
-        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
-        for (Character character : list) {
-            if (academicCourse.getName().contains(character.toString())) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-                return "academicCourseSection";
+        if(!result.hasFieldErrors("name")) {
+            Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
+            for (Character character : list) {
+                if (academicCourse.getName().contains(character.toString())) {
+                    model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+                    return "academicCourseSection";
+                }
             }
         }
 

@@ -38,8 +38,8 @@ public class Teacher {
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
-            joinColumns = @JoinColumn(name = "academicCourse_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<AcademicCourse> academicCourseSet;
 
     @JsonIgnore

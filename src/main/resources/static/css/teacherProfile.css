@@ -24,18 +24,21 @@ body {
     font-size: 1.7em;
     height: 1.4em;
 }
-.content-wrapper{
+
+.content-wrapper {
     display: flex;
     align-content: center;
     justify-content: space-between;
     width: 100%;
 }
-.content-wrapper .content{
+
+.content-wrapper .content {
     width: 75%;
     padding: 1px 25px;
     display: flex;
     flex-direction: column;
 }
+
 .topnav-left-side {
     margin-left: 14px;
     margin-top: 3px;
@@ -45,6 +48,7 @@ body {
     margin-right: 14px;
     margin-top: 3px;
 }
+
 .nav-link-wrapper {
     height: 22px;
     transition: border-bottom 0.5s;
@@ -55,7 +59,8 @@ body {
     text-decoration: none;
     transition: color 0.5s;
 }
-    /*Main part styles*/
+
+/*Main part styles*/
 .main-wrapper {
 
     width: 100%;
@@ -66,7 +71,7 @@ body {
     position: fixed;
 }
 
-    /*Sidebar styles*/
+/*Sidebar styles*/
 .sidebar {
     width: 21%;
     padding: 0px;
@@ -85,7 +90,8 @@ body {
     font-size: 1.3em;
 
 }
-    /*Main bar style*/
+
+/*Main bar style*/
 .main {
     width: 88%;
     padding: 0px;
@@ -95,7 +101,7 @@ body {
     font-size: 1.3em;
 }
 
-    /*Button part styles*/
+/*Button part styles*/
 .create {
     display: block;
     transition: all 0.5s ease;
@@ -144,15 +150,13 @@ body {
     cursor: pointer;
 
 }
-.list-items{
-    width: 100% ;
+
+.list-items {
+    width: 100%;
 }
-/*.list-h2-item{*/
-/*    margin-left: 3%;*/
-/*    margin-top: 5%!important;*/
-/*}*/
-.list-p-item{
-    width: 100% ;
+
+.list-p-item {
+    width: 100%;
     background-color: #555555;
 }
 
@@ -189,10 +193,12 @@ body {
     background-color: #333333;
     color: #01A7F0;
 }
+
 .list-items a:hover {
     background-color: #333333;
     color: #01A7F0;
 }
+
 .lebel {
     display: block;
     color: #FFFFFF;
@@ -201,6 +207,7 @@ body {
     border-bottom: 0.2px solid #777777;
     font-size: 1.3em;
 }
+
 input[type="checkbox"] {
     display: none;
 }
@@ -271,10 +278,12 @@ form {
     height: 253px;
 
 }
+
 .halfSection {
     margin-top: 27%;
     display: inline-block;
 }
+
 .button-save {
     position: absolute;
     color: #A30014;
@@ -288,6 +297,7 @@ form {
     border-width: 0.5px;
     cursor: pointer;
 }
+
 .button-generate {
     color: #309A21;
     margin-top: 8px;
@@ -298,15 +308,12 @@ form {
     border-radius: 4px;
     border-width: 0.5px;
 }
-.popup-label-title {
-    font-size: 0.8em;
-    height: 1.2em;
-    margin-top: 20px;
-}
+
 .error {
     font-size: 0.7em;
     color: red;
 }
+
 .form_input_subjectName {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -316,24 +323,30 @@ form {
     border-width: 1.5px;
     padding: 5px;
 }
+
 .form_input:focus {
     outline: none !important;
     border: 1px solid #01A7F0;
 }
+
 .startAcademicYear {
     margin-right: 0;
 }
+
 .endAcademicYear {
     margin-left: 0;
 }
+
 .selectclassroom {
     margin-top: 10px;
 }
+
 .popup-label-title-subject {
     font-size: 17px;
     height: 1.2em;
     margin-top: 20px;
 }
+
 .list-items a {
     display: block;
     color: #FFFFFF;
@@ -344,10 +357,12 @@ form {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
+
 .nav-link-wrapper {
     height: 22px;
     transition: border-bottom 0.5s;
 }
+
 .nav-link-wrapper a {
     color: #FFFFFF;
     text-decoration: none;
@@ -358,7 +373,7 @@ form {
     color: #01A7F0;
 }
 
-    /*Main part styles*/
+/*Main part styles*/
 .main-wrapper {
     width: 100%;
     display: flex;
@@ -368,7 +383,7 @@ form {
     position: fixed;
 }
 
-    /*Sidebar styles*/
+/*Sidebar styles*/
 .sidebar {
     width: 21%;
     padding: 0px;
@@ -390,6 +405,7 @@ form {
     background-color: #333333;
     color: #01A7F0;
 }
+
 /*Main bar style*/
 .main {
     width: 88%;
@@ -400,7 +416,7 @@ form {
     font-size: 1.3em;
 }
 
-    /*Button part styles*/
+/*Button part styles*/
 .create {
     display: block;
     transition: all 0.5s ease;
@@ -468,6 +484,7 @@ form {
     margin-left: 0px;
     margin-right: 4px;
 }
+
 .half {
     width: 50%;
     padding: 0px;
@@ -513,7 +530,7 @@ form {
 }
 
 .popup-label-title {
-    font-size: 17px;
+    font-size: 0.8em;
     height: 1.2em;
     margin-top: 20px;
 }
@@ -531,10 +548,12 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
+
 .allTab {
     background-color: #333333;
     color: #01A7F0 !important;
 }
+
 .sidebar2 {
     margin-right: 25px;
     margin-top: 50px;
@@ -544,13 +563,16 @@ form {
     text-align: left;
     height: min-content;
 }
-.content > *{
+
+.content > * {
     margin-top: 15px;
 }
+
 .sidebar2 a:hover {
     background-color: #333333;
     color: #01A7F0;
 }
+
 .show-btn:hover {
     border-color: #01A7F0;
 }
@@ -567,6 +589,7 @@ form {
     align-self: flex-end;
     color: #01A7F0;
 }
+
 .div-pddng {
     padding: 18.5px;
     width: 104px;
@@ -585,7 +608,8 @@ form {
     align-self: flex-end;
     color: #01A7F0;
 }
-.classroom-show-top{
+
+.classroom-show-top {
     margin: 80px auto;
     width: 392px;
     display: block;
@@ -606,12 +630,13 @@ form {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
+
 .item-h2 {
     padding: 10px;
     color: #555555;
 }
 
-.personalInformation p{
+.personalInformation p {
     font-weight: bold;
     color: #555555;
     font-size: 1.2em;
@@ -633,7 +658,7 @@ form {
     cursor: pointer;
 }
 
-.popup-container-image-format{
+.popup-container-image-format {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -666,14 +691,15 @@ list {
     height: 65vh;
     overflow-y: scroll;
 }
+
 .seleurl-pathctTeacher {
     margin-top: 6px;
 }
 
-    /*for url*/
+/*for url*/
 . {
     width: 100%;
-    display:flex;
+    display: flex;
 }
 
 .a-url {
@@ -684,10 +710,12 @@ list {
     font-family: inherit;
     font-weight: bold;
 }
-.a-url:not(:last-child)::after{
+
+.a-url:not(:last-child)::after {
     content: ' / ';
     margin: 20px;
 }
+
 .a-url:hover {
     font-size: 110%;
 }
@@ -710,7 +738,7 @@ list {
     color: green;
 }
 
-.middle{
+.middle {
     margin-left: 21%;
     width: 64%;
 }
@@ -719,7 +747,11 @@ list {
     background-color: #333333;
     color: #01A7F0 !important;
 }
-.select2-results__option--selected { display: none;}
+
+.select2-results__option--selected {
+    display: none;
+}
+
 .select2-container .select2-selection {
     height: 70px;
     overflow-y: scroll;
@@ -765,7 +797,7 @@ list {
 .btn-img {
     position: absolute;
     width: 88%;
-    left:6%;
+    left: 6%;
     top: 41%;
     text-align: center;
     opacity: 0;
@@ -775,7 +807,7 @@ list {
 .delete-img {
     position: absolute;
     width: 14%;
-    left:80%;
+    left: 80%;
     top: 4%;
     text-align: center;
     opacity: 0;
@@ -813,16 +845,18 @@ list {
     opacity: 1;
 }
 
-#file-input{
+#file-input {
     display: none;
 }
 
-#form-pic-edit{
+#form-pic-edit {
     display: none;
 }
-#submitButton{
+
+#submitButton {
     display: none;
 }
+
 #edit {
     text-decoration: none;
     color: #2b80a5;
@@ -830,7 +864,7 @@ list {
     cursor: pointer;
     font-family: inherit;
     font-weight: bold;
-    font-size:hover 110%;
+    font-size: hover 110%;
 }
 
 .popup-container-image {
@@ -887,6 +921,7 @@ list {
     white-space: nowrap;
     margin-top: 4%;
 }
+
 .sidebar_right {
     margin-right: 25px;
     margin-top: 53px;
@@ -937,7 +972,8 @@ list {
     border-width: 0.5px;
     cursor: pointer;
 }
-.popup-container-image-format{
+
+.popup-container-image-format {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -951,3 +987,63 @@ list {
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+
+.animated {
+    position: relative;
+    white-space: nowrap;
+    max-width: 400px;
+    overflow: hidden;
+    background-color: #F2F2F2;
+    display: inline-block;
+    width: fit-content;
+    position: relative;
+}
+
+.text-animated {
+    animation: backAndForth 10s linear infinite;
+    display: inline-block;
+    position: relative;
+    color: #007EB4;
+    animation-play-state: paused;
+}
+
+.text-animated:hover {
+    animation-play-state: running;
+}
+
+@keyframes backAndForth {
+    0% {
+        transform: translateX(0);
+    left(0);
+    }
+    10% {
+        transform: translateX(0);
+        left: 0;
+    }
+    45% {
+        transform: translateX(calc(-100%));
+        left: 100%;
+    }
+    55% {
+        transform: translateX(calc(-100%));
+        left: 100%;
+    }
+    90% {
+        transform: translateX(0);
+        left: 0;
+    }
+    100% {
+        transform: translateX(0);
+        left: 0;
+    }
+}
+
+.halves {
+    width: 100%;
+    display: flex;
+    height: 340px;
+}
+
+.unit {
+    margin-bottom: 10px;
+}

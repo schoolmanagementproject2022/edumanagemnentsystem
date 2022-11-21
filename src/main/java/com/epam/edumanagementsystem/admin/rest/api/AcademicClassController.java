@@ -60,11 +60,14 @@ public class AcademicClassController {
         List<AcademicClassDto> academicClassDtoList = academicClassService.findAll();
         List<AcademicClass> academicClassList = AcademicClassMapper.academicClassessList(academicClassDtoList);
         model.addAttribute("academicClasses", academicClassDtoList);
-        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
-        for (Character character : list) {
-            if (academicClass.getClassNumber().contains(character.toString())) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-                return "academicClassSection";
+
+        if (!result.hasFieldErrors("classNumber")) {
+            Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
+            for (Character character : list) {
+                if (academicClass.getClassNumber().contains(character.toString())) {
+                    model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+                    return "academicClassSection";
+                }
             }
         }
 
@@ -196,7 +199,7 @@ public class AcademicClassController {
         }
         for (AcademicClassDto academicClassDto : academicClassService.findAll()) {
             if (academicClass.getClassroomTeacher()
-                    .equals(academicClassDto.getClassroomTeacher())){
+                    .equals(academicClassDto.getClassroomTeacher())) {
                 model.addAttribute("duplicate", "This Teacher is already classroom teacher");
                 return "classroomTeacherSection";
             }
@@ -237,7 +240,7 @@ public class AcademicClassController {
             model.addAttribute("studentsInAcademicClass", allStudentsByAcademicClassId);
             return "academicClassSectionForStudents";
         }
-        if (null != students){
+        if (null != students) {
             for (Student student : students) {
                 student.setAcademicClass(academicClassByName);
                 studentService.updateStudentsClass(student);
