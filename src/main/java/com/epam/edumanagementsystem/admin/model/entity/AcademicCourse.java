@@ -31,8 +31,8 @@ public class AcademicCourse {
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
+            joinColumns = @JoinColumn(name = "academicCourse_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teacher;
 
     @JsonIgnore

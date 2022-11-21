@@ -12,12 +12,13 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.validation.constraints.NotNull;
+import javax.servlet.Filter;
 
 @Configuration
 public class SecurityConfig {
@@ -56,18 +57,19 @@ public class SecurityConfig {
         return http
 
                 .authorizeRequests()
-                    .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
-                    .mvcMatchers("/teachers/**", "/parents/**", "/students/**", "/classes/**", "/years", "/vacations", "/subjects" , "/courses/**").hasAuthority("ADMIN")
-                    .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
-                    .anyRequest().authenticated()
+                .mvcMatchers("/static/css/**", "/static/js/**").permitAll()
+                .mvcMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**").permitAll()
+                .mvcMatchers("/teachers/**", "/parents/**", "/students/**", "/classes/**", "/years", "/vacations", "/subjects", "/courses/**").hasAuthority("ADMIN")
+                .mvcMatchers("/admins").hasAuthority("SUPER_ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .permitAll()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll()
                 .failureHandler(customAuthenticationFailureHandler)
                 .successHandler(customLoginSuccessHandler).and().csrf().disable()
                 .build();
