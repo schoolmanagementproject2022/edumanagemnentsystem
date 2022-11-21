@@ -1000,7 +1000,7 @@ list {
 }
 
 .text-animated {
-    animation: backAndForth 25s linear infinite;
+    animation: backAndForth 10s linear infinite;
     display: inline-block;
     position: relative;
     color: #007EB4;
