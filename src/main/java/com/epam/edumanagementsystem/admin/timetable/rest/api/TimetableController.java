@@ -9,6 +9,8 @@ import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimet
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,7 @@ import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimet
 
 @Controller
 @RequestMapping("/classes/")
+@Tag(name = "Timetable")
 public class TimetableController {
 
     private final CoursesForTimetableService coursesService;
@@ -40,6 +43,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable")
+    @Operation(summary = "Shows timetable page")
     public String openingTimetablePage(@PathVariable("academicClassName") String academicClassName, Model model) {
         boolean creationStatus = false;
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
@@ -79,6 +83,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable/created")
+    @Operation(summary = "After successful creation of the timetable shows popup message")
     public String openingSuccessPopup(@PathVariable("academicClassName") String academicClassName, Model model) {
         boolean creationStatus = true;
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
@@ -89,6 +94,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable/creation")
+    @Operation(summary = "Shows timetable creation page")
     public String openingTimetableCreationPage(@PathVariable("academicClassName") String academicClassName,
                                                @RequestParam(value = "lessonId", required = false) Long lessonId,
                                                @RequestParam(value = "cancelStatus", required = false, defaultValue = "notCancel") String status,
@@ -144,6 +150,7 @@ public class TimetableController {
     }
 
     @GetMapping("course/delete/{id}/{class}")
+    @Operation(summary = "Deletes selected lesson from timetable")
     public String deleteLessonFromTimetable(@PathVariable("id") Long lessonId, @PathVariable("class") String academicClassName) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
@@ -160,6 +167,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable/edit/{lessonId}")
+    @Operation(summary = "Shows popup message for deleting a lesson during timetable editing")
     public String showDeletePopUpEdit(@PathVariable("academicClassName") String academicClassName,
                                       @PathVariable("lessonId") Long lessonId,
                                       RedirectAttributes redirectAttributes) {
@@ -169,6 +177,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable/create/{lessonId}")
+    @Operation(summary = "Shows popup message for deleting a lesson during timetable creation")
     public String showDeletePopUpCreate(@PathVariable("academicClassName") String academicClassName,
                                         @PathVariable("lessonId") Long lessonId,
                                         RedirectAttributes redirectAttributes) {
@@ -178,6 +187,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable/show")
+    @Operation(summary = "Shows the timetable for the academic class if one exists")
     public String openTimetableIfExists(@PathVariable("academicClassName") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
@@ -199,6 +209,7 @@ public class TimetableController {
     }
 
     @GetMapping("{academicClassName}/timetable/edit")
+    @Operation(summary = "Shows page for timetable editing")
     public String openingTimetableEdit(@PathVariable("academicClassName") String academicClassName,
                                        @RequestParam(value = "lessonId", required = false) Long lessonId, Model model) {
 
@@ -271,6 +282,7 @@ public class TimetableController {
     }
 
     @PostMapping("{academicClassName}/timetable/editCourse")
+    @Operation(summary = "Creates lessons for timetable being edited")
     public String addingLessonsEdit(@ModelAttribute("courseForTable") @Valid CoursesForTimetableDto coursesForTimetableDto,
                                     BindingResult result, @PathVariable("academicClassName") String academicClassName,
                                     Model model) {
@@ -347,6 +359,7 @@ public class TimetableController {
     }
 
     @PostMapping("{academicClassName}/timetable/creation")
+    @Operation(summary = "Creates timetable for academic class")
     public String createTimetable(@ModelAttribute("timetable") @Valid Timetable timetable, BindingResult result,
                                   @PathVariable("academicClassName") String academicClassName, Model model) {
         LocalDate now = LocalDate.now();
@@ -410,6 +423,7 @@ public class TimetableController {
     }
 
     @PostMapping("{academicClassName}/timetable/course")
+    @Operation(summary = "Adds lessons to timetable")
     public String addingLessonsIntoTimetable(@ModelAttribute("courseForTable") @Valid CoursesForTimetableDto coursesForTimetableDto,
                                              BindingResult result, @PathVariable("academicClassName") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
@@ -432,6 +446,7 @@ public class TimetableController {
     }
 
     @PostMapping("{academicClassName}/timetable/edit")
+    @Operation(summary = "Edits timetable for academic class")
     public String editTimetable(@ModelAttribute("timetable") @Valid Timetable timetable, BindingResult result,
                                 @PathVariable("academicClassName") String academicClassName, Model model) {
 

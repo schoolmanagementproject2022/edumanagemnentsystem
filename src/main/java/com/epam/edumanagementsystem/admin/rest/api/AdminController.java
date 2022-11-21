@@ -5,6 +5,8 @@ import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admins")
+@Tag(name="Admins")
 public class AdminController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -35,6 +38,7 @@ public class AdminController {
     }
 
     @GetMapping()
+    @Operation(summary = "Gets all admins and shows them on super admin's dashboard")
     public String getAll(ModelMap modelMap) {
         modelMap.addAttribute("admin", new AdminDto());
         modelMap.addAttribute("admins", adminService.findAllAdmins());
@@ -42,6 +46,7 @@ public class AdminController {
     }
 
     @PostMapping
+    @Operation(summary = "Creates a new admin in popup")
     public String addAdmin(@ModelAttribute("admin") @Valid AdminDto adminDto,
                            BindingResult result, Model model) {
 

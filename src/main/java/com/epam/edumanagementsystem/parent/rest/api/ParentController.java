@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ public class ParentController {
     }
 
     @GetMapping()
+    @Operation(summary = "Gets the list of parents and shows on admin's dashboard")
     public String toParents(ModelMap modelMap) {
         modelMap.addAttribute("parents", parentService.findAll());
         modelMap.addAttribute("parent", new ParentDto());
@@ -47,6 +49,7 @@ public class ParentController {
     }
 
     @PostMapping()
+    @Operation(summary = "Creates a new parent and saves in DB")
     public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
                              Model model) {
         model.addAttribute("parents", parentService.findAll());

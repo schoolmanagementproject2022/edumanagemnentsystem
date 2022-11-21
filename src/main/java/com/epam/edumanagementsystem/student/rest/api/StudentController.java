@@ -15,6 +15,8 @@ import com.epam.edumanagementsystem.util.PasswordValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/students")
+@Tag(name = "Students")
 public class StudentController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -52,6 +55,7 @@ public class StudentController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets the list of students and shows on admin's dashboard")
     public String openStudentSection(Model model) {
         model.addAttribute("student", new StudentDto());
         model.addAttribute("students", findAllStudents());
@@ -63,6 +67,7 @@ public class StudentController {
     }
 
     @PostMapping
+    @Operation(summary = "Creates a new student and saves in DB")
     public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
                                        Model model) {
