@@ -99,7 +99,11 @@
             <h1  class="text-animated" th:text="${parentData}">Parent name</h1>
         </div>
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
+        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}"
+              th:object="${parentDto}">
+
+            <script th:inline="javascript"
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
 
