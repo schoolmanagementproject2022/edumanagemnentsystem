@@ -116,4 +116,9 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     public Set<Teacher> findAllTeachersByAcademicCourseName(String name) {
         return findAcademicCourseByAcademicCourseName(name).getTeacher();
     }
+
+    @Override
+    public Set<AcademicCourse> findAcademicCoursesByTeacherId(Long id) {
+        return academicCourseRepository.findAcademicCoursesByTeacherId(id);
+    }
 }
