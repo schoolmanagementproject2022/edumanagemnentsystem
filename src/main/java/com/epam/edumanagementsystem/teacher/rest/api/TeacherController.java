@@ -84,6 +84,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}/profile")
+    @Operation(summary = "Shows selected teacher's profile")
     public String openTeacherProfile(@PathVariable("id") Long id, Model model) {
         TeacherDto existingTeacher = teacherService.findById(id);
         model.addAttribute("name_surname", TeacherMapper.
@@ -94,6 +95,7 @@ public class TeacherController {
     }
 
     @PostMapping("/{id}/profile")
+    @Operation(summary = "Edits selected teacher's profile")
     public String editTeacherPersonalInformation(@ModelAttribute("teacher") @Valid TeacherDto updatableTeacher,
                                                  BindingResult result, @PathVariable("id") Long id, Model model) {
         TeacherDto existingTeacher = teacherService.findById(id);
@@ -115,6 +117,7 @@ public class TeacherController {
     }
 
     @PostMapping("/{id}/image/add")
+    @Operation(summary = "Adds image to selected teacher's profile")
     public String addPic(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
         TeacherDto teacherById = teacherService.findById(id);
         User userByEmail = userService.findByEmail(teacherById.getEmail());
@@ -123,6 +126,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}/image/delete")
+    @Operation(summary = "Deletes image from selected teacher's profile")
     public String deletePic(@PathVariable("id") Long id) {
         TeacherDto teacherById = teacherService.findById(id);
         String picUrl = teacherById.getPicUrl();
@@ -132,6 +136,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}/subjects")
+    @Operation(summary = "Gets the list of subjects thw teacher has and shows them")
     public String openSubjectsForTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute("subjects", subjectService.findSubjectsByTeacherSetId(id));
         model.addAttribute("teacher", teacherService.findById(id));
