@@ -27,5 +27,5 @@ public interface AcademicCourseService {
 
     Set<Teacher> findAllTeachersByAcademicCourseName(String name);
 
-    Set<AcademicCourseDto> findAcademicCoursesByTeacherId(Long id);
+    Set<AcademicCourse> findAcademicCoursesByTeacherId(Long id);
 }
