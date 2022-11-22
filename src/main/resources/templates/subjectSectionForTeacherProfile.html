@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/subjectSectionForTeacherProfile.css" rel="stylesheet">
+    <link href="/static/css/teacherProfile.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${teacher.getNameSurname()} + ' Profile'"></title>
+    <title th:text="${teacher.getNameSurname()} + ' Subjects'"></title>
 </head>
 <body>
 <div class="header" id="header">
@@ -26,25 +26,20 @@
                    th:text="${teacher.getNameSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Subjects'}"></a>
             </div>
+
             <div class="list">
                 <div class="list-items" th:each="subject : ${subjects}">
-                    <p class="item" th:text="${subject}"></p>
+                    <p class="item" th:text="${subject}">Subject</p>
                 </div>
             </div>
         </div>
 
         <div class="sidebar-img header">
             <div th:if="${teacher.getPicUrl() == null}">
-
-                    <div class="image-upload">
-                        <label for="file-input" width="150px" height="150px">
-                            <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
-                             color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
-                            <p class="p-item" style="padding-left: 26%;">PNG, JPEG</p>
-                        </label>
-                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file"
-                               onchange="filevalidation()">
-                    </div>
+                <div class="image-upload">
+                    <label width="150px" height="150px">
+                        <img style="max-width: 100%" src="/static/img/avatar.png"></label>
+                </div>
             </div>
             <div th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
@@ -54,13 +49,15 @@
                 </div>
             </div>
 
+            <div>
+                <h1 class="userNameSurname" th:text="${teacher.getNameSurname()}"></h1>
+            </div>
+
             <div class="sidebar2 header" id="sidebar2">
                 <div th:insert="fragments/fragments :: teacherProfileSidebar"></div>
             </div>
         </div>
-
     </div>
 </div>
-
 </body>
 </html>
