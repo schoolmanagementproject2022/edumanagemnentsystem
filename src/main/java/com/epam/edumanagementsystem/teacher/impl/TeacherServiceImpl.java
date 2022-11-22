@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.impl;
 
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -108,4 +109,8 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepository.updateTeacherPicUrl(id);
     }
 
+    @Override
+    public List<String> findSubjectsByTeacherId(Long teacherId) {
+        return teacherRepository.findSubjectsByTeacherId(teacherId);
+    }
 }

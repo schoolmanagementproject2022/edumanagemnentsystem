@@ -33,6 +33,7 @@ public class TeacherController {
     private final String TEACHER_HTML = "teacherSection";
 
     private final String PROFILE = "teacherProfile";
+    private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
@@ -123,4 +124,10 @@ public class TeacherController {
         return "redirect:/teachers/" + id + "/profile";
     }
 
+    @GetMapping("/{id}/subjects")
+    public String openSubjectsForTeacherProfile(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("subjects", teacherService.findSubjectsByTeacherId(id));
+        model.addAttribute("teacher", teacherService.findById(id));
+        return SUBJECTS_FOR_TEACHER;
+    }
 }
