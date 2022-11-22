@@ -79,14 +79,17 @@
 
         <div class="sidebar-img header">
             <div th:if="${existingStudent.getPicUrl() == null}">
-                <form id="form-pic" class="form" th:method="POST"  th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}" th:object="${existingStudent}" enctype="multipart/form-data">
+                <form id="form-pic" class="form" th:method="POST"
+                      th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}"
+                      th:object="${existingStudent}" enctype="multipart/form-data">
                     <div class="image-upload">
                         <label for="file-input" width="150px" height="150px">
                             <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
                              color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
                             <p class="p-item" style="padding-left: 26%;">PNG, JPEG</p>
                         </label>
-                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file"
+                               onchange="filevalidation()">
                     </div>
                 </form>
             </div>
@@ -103,18 +106,21 @@
                             <div class="overlay"></div>
                             <div class="btn-img">
 
-                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}" th:object="${existingStudent}" enctype="multipart/form-data">
+                                <form id="form-pic-edi" class="form" th:method="POST"
+                                      th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}"
+                                      th:object="${existingStudent}" enctype="multipart/form-data">
                                     <div class="image-upload">
-                                        <input id="form-pic-edit" th:name="picture" multiple type="file" accept="image/png,image/jpeg" onchange="filevalidationEdit()">
+                                        <input id="form-pic-edit" th:name="picture" multiple type="file"
+                                               accept="image/png,image/jpeg" onchange="filevalidationEdit()">
                                     </div>
                                 </form>
                             </div>
                         </div>
 
                     </div>
-                    <form th:action="@{'/students/' + ${existingStudent.getId()} + '/image/delete'}" th:method="POST" >
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" id="submitButton" > </button>
+                    <form th:action="@{'/students/' + ${existingStudent.getId()} + '/image/delete'}" th:method="POST">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button type="submit" id="submitButton"></button>
                     </form>
                     <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" src="/static/img/x-mark-transparent-2.png">
                 </div>
@@ -131,7 +137,9 @@
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th:text="${name_surname}"></h1>
+        <div class="animated">
+            <h1  class="text-animated" th:text="${name_surname}">Student name</h1>
+        </div>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingStudent}">
             <script th:inline="javascript"
                     th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
@@ -257,15 +265,18 @@
 <div class="popup-container-image" id="popup-container-image-delete">
     <div class="popup-wrapper" id="popup-wrapper">
         <div class="half">
-            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile picture?</p>
+            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile
+                picture?</p>
         </div>
         <div>
             <form th:action="@{'/students/' + ${existingStudent.id} + '/image/delete'}" method="get">
-                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b></button>
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b>
+                </button>
             </form>
         </div>
         <div>
-            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()"><b>Cancel</b></button>
+            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()">
+                <b>Cancel</b></button>
         </div>
     </div>
 </div>
@@ -276,7 +287,8 @@
             <p class="successText">Only PNG and JPEG files are allowed.</p>
         </div>
         <div name="btn-div">
-            <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b></button>
+            <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b>
+            </button>
         </div>
     </div>
 </div>
@@ -310,35 +322,38 @@
     filevalidation = () => {
         const fi = document.getElementById('file-input');
         const acceptedImageTypes = ['image/jpeg', 'image/png'];
-        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)) {
             return PopUpShowImageFormat();
         }
         if (fi.files.length > 0) {
 
-            if (fi.files[0].size>= 2*1024*1024) {
+            if (fi.files[0].size >= 2 * 1024 * 1024) {
                 PopUpShowImage();
                 return;
             }
             yourFunction()
         }
     }
-    function yourFunction(){
+
+    function yourFunction() {
         document.getElementById("form-pic").submit();
     }
+
     filevalidationEdit = () => {
         const fi = document.getElementById('form-pic-edit');
         const acceptedImageTypes = ['image/jpeg', 'image/png'];
-        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)) {
             return PopUpShowImageFormat();
         }
-        if (fi.files[0].size>= 2*1024*1024) {
+        if (fi.files[0].size >= 2 * 1024 * 1024) {
             PopUpShowImage();
             return;
         }
         yourFunctionEdit()
 
     }
-    function yourFunctionEdit(){
+
+    function yourFunctionEdit() {
         document.getElementById("form-pic-edi").submit();
     }
 </script>

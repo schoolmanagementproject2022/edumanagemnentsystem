@@ -27,20 +27,10 @@
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
-
-            <div class="profile">
-                <div class="profile-items">
-                    <label class="profile_label_title" for="name">Name: </label>
-                    <p class="p-item" th:text="${parentDto.getName()}"> Name </p>
-                </div>
-                <div class="profile-items">
-                    <label class="profile_label_title" for="surname">Surname: </label>
-                    <p class="p-item" th:text="${parentDto.getSurname()}"> Surname </p>
-                </div>
-                <div class="profile-items">
-                    <label class="profile_label_title" for="email">Email: </label>
-                    <p class="p-item" th:text="${parentDto.getEmail()}"> Email </p>
-                </div>
+            <div class="personalInformation">
+                <p th:text="'Name: '+${parentDto.getName()}"></p>
+                <p th:text="'Surname: '+${parentDto.getSurname()}"></p>
+                <p th:text="'Email: '+${parentDto.getEmail()}"></p>
             </div>
         </div>
         <div class="sidebar_right">
@@ -50,9 +40,11 @@
                         <label for="file-input" width="150px" height="150px">
                             <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
                              color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
-                            <p class="p-item" style="cursor: pointer;padding-left: 26%;margin-top: -10%;font-size: 20px;">PNG, JPEG</p>
+                            <p class="p-item"
+                               style="cursor: pointer;padding-left: 26%;margin-top: -10%;font-size: 20px;">PNG, JPEG</p>
                         </label>
-                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file" onchange="filevalidation()">
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file"
+                               onchange="filevalidation()">
                     </div>
                 </form>
             </div>
@@ -102,43 +94,62 @@
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <h1 th:text="${parentData}">Parent name</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}" th:object="${parentDto}">
+        <div class="animated">
+            <h1  class="text-animated" th:text="${parentData}">Parent name</h1>
+        </div>
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
+        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parentDto.getId()} + '/profile'}"
+              th:object="${parentDto}">
+
+            <script th:inline="javascript"
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
                 PopUpShow();
             </script>
 
             <div class="popup-wrapper">
-                <div class="half">
-                    <div id="error"></div>
-                    <label class="popup-label-title" for="name">Parent name</label>
-                    <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
-                    <div class="error" th:if="${#fields.hasErrors('name')}"
-                         th:errors="*{name}"></div>
-
-                    <label class="popup-label-title" for="surname">Parent surname</label>
-                    <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
-                    <div class="error" th:if="${#fields.hasErrors('surname')}"
-                         th:errors="*{surname}"></div>
-
-                    <label class="popup-label-title" for="email">Parent email</label>
-                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
-                    <input th:if="${parentDto.picUrl} != null" type="hidden" th:name="picUrl" th:value="${parentDto.picUrl}"/>
-                    <div class="error" th:if="${#fields.hasErrors('email')}"
-                         th:errors="*{email}"></div>
-                    <div th:if="${duplicated}!= null" class="error">
-                        <p th:text="${duplicated}"></p>
+                <div class="halves">
+                    <div class="half">
+                        <div class="unit">
+                            <div id="error"></div>
+                            <label class="popup-label-title" for="name">Parent name<span
+                                    style="color:#A30014">*</span></label>
+                            <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
+                            <div class="error" th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}"></div>
+                        </div>
+                        <div class="unit">
+                            <label class="popup-label-title" for="surname">Parent surname<span
+                                    style="color:#A30014">*</span></label>
+                            <input class="form_input" type="text" th:name="surname" id="surname"
+                                   th:value="${#object.surname}">
+                            <div class="error" th:if="${#fields.hasErrors('surname')}"
+                                 th:errors="*{surname}"></div>
+                        </div>
+                        <div class="unit">
+                            <label class="popup-label-title" for="email">Parent email<span
+                                    style="color:#A30014">*</span></label>
+                            <input class="form_input" type="text" th:name="email" id="email"
+                                   th:value="${#object.email}"/>
+                            <input th:if="${parentDto.picUrl} != null" type="hidden" th:name="picUrl"
+                                   th:value="${parentDto.picUrl}"/>
+                            <div class="error" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}"></div>
+                            <div th:if="${duplicated}!= null" class="error">
+                                <p th:text="${duplicated}"></p>
+                            </div>
+                            <div th:if="${invalidEmail}!= null" class="error">
+                                <p th:text="${invalidEmail}"></p>
+                            </div>
+                        </div>
                     </div>
-                    <div th:if="${invalidEmail}!= null" class="error">
-                        <p th:text="${invalidEmail}"></p>
-                    </div>
 
+                    <div class="half2"></div>
                 </div>
-                <div class="half2"></div>
-                <div name="btn-div">
-                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                <div class="half_btn">
+                    <div name="btn-div">
+                        <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -163,11 +174,13 @@
         </div>
         <div>
             <form th:action="@{'/parents/' + ${parentDto.id} + '/image/delete'}" method="get">
-                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b></button>
+                <button type="submit" style="margin-left: 13%" class="button-save" id="submit-image"><b>Yes</b>
+                </button>
             </form>
         </div>
         <div>
-            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()"><b>Cancel</b></button>
+            <button type="button" class="button-save" style="margin-left: 54%" id="submit-image" onclick="PopUpHide()">
+                <b>Cancel</b></button>
         </div>
     </div>
 </div>

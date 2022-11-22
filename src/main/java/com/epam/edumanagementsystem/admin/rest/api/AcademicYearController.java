@@ -3,6 +3,8 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicYearDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicYearService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/years")
+@Tag(name="Academic year")
 public class AcademicYearController {
     private final AcademicYearService academicYearService;
     private final String invalidMsg = "Wrong selected dates";
@@ -28,6 +31,7 @@ public class AcademicYearController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets all academic years and shows them on admin's dashboard")
     public String openAcademicYearSection(Model model) {
         List<AcademicYearDto> academicYears = academicYearService.findAll();
         model.addAttribute("academicYears", academicYears);
@@ -36,6 +40,7 @@ public class AcademicYearController {
     }
 
     @PostMapping
+    @Operation(summary = "Saves the created academic year")
     public String create(@ModelAttribute("academicYear") @Valid AcademicYear academicYear,
                          BindingResult result, Model model) {
         LocalDate endDate = academicYear.getEndDate();
