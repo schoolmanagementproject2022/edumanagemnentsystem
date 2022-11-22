@@ -108,9 +108,4 @@ public class TeacherServiceImpl implements TeacherService {
     public void deletePic(Long id) {
         teacherRepository.updateTeacherPicUrl(id);
     }
-
-    @Override
-    public List<String> findSubjectsByTeacherId(Long teacherId) {
-        return teacherRepository.findSubjectsByTeacherId(teacherId);
-    }
 }

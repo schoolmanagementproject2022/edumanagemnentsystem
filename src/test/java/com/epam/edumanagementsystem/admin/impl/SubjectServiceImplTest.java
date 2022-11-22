@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,7 +31,7 @@ class SubjectServiceImplTest extends TestHelper {
     @Mock
     SubjectRepository subjectRepository;
     @InjectMocks
-    private  SubjectServiceImpl service;
+    private SubjectServiceImpl service;
     Subject input;
     SubjectDto returned;
     Subject forUpdate;
@@ -67,11 +68,12 @@ class SubjectServiceImplTest extends TestHelper {
 
         assumeTrue(input.getName().equals(input.getName()));
 
-        Subject subject=service.create(input);
+        Subject subject = service.create(input);
 
         assertEquals(subject, input);
         verify(subjectRepository, times(1)).save(any(Subject.class));
     }
+
     @Test
     void createSubjectButSubjectNull() {
         input = null;
@@ -130,11 +132,23 @@ class SubjectServiceImplTest extends TestHelper {
 
         assertEquals(forUpdate.getName(), result.getName());
 
-    }    @Test
+    }
+
+    @Test
     void negativeUpdate() {
         forUpdate = null;
         Assertions.assertThrows(NullPointerException.class, () -> service.update(forUpdate));
 
+    }
+
+    @Test
+    void findSubjectsByTeacherSetId() {
+        when(subjectRepository.findSubjectsByTeacherSetId(any())).thenReturn(Set.of(input));
+
+        Set<Subject> setOfSubjects = service.findSubjectsByTeacherSetId(input.getId());
+
+        assertThat(setOfSubjects).isNotNull();
+        assertEquals(Set.of(input), setOfSubjects);
     }
 
 }

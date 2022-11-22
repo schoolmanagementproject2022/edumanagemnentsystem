@@ -17,9 +17,4 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     @Query(nativeQuery = true, value = "UPDATE teacher SET pic_url = NULL WHERE id =(?1);")
     void updateTeacherPicUrl(Long id);
 
-    @Query(nativeQuery = true, value = "SELECT s.name FROM subject s " +
-            "LEFT JOIN subject_teacher_mapping m ON s.id = m.subject_id " +
-            "LEFT JOIN teacher t ON m.teacher_id = t.id WHERE m.teacher_id=(?1);")
-    List<String> findSubjectsByTeacherId(Long teacherId);
-
 }

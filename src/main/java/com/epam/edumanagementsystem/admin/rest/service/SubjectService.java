@@ -18,4 +18,6 @@ public interface SubjectService {
     SubjectDto findSubjectBySubjectName(String name);
 
     Subject update(Subject subject);
+
+    Set<Subject> findSubjectsByTeacherSetId(Long teacherId);
 }
