@@ -260,16 +260,6 @@ input[type="checkbox"] {
     visibility: visible;
     opacity: 1;
 }
-.tooltiptext::before {
-    content: '';
-    position: absolute;
-    top: -16%;
-    left: 8px;
-    display: inline-block;
-    color: #fff;
-    border: 8px solid transparent;
-    border-bottom: 8px solid #999799;
-}
 
 h1 {
     text-align: left;
