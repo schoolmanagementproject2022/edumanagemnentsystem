@@ -15,7 +15,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -161,5 +164,16 @@ class AcademicClassServiceImplTest {
         List<AcademicClassDto> academicClassDtoList = academicClassServiceImpl.findAll();
         assertNotNull(academicClassDtoList);
         assertEquals(1, academicClassDtoList.size());
+    }
+
+    @Test
+    @DisplayName("Find all academic classes when linked to the classes in teacher profile")
+    void findAcademicClassByTeacherId() {
+        Set<AcademicClass> classSet = new HashSet<>();
+        classSet.add(academicClass);
+        when(academicClassRepository.findAcademicClassByTeacherId(any())).thenReturn(classSet);
+        Set<AcademicClass> classes = academicClassServiceImpl.findAcademicClassByTeacherId(teacher.getId());
+        assertNotNull(classSet);
+        assertTrue(classes.containsAll(classSet));
     }
 }

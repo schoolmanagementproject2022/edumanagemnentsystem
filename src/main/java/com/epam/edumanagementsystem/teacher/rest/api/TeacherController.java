@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
+import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
@@ -28,6 +29,7 @@ public class TeacherController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
+    private final AcademicClassService academicClassService;
     private final UserService userService;
     private final ImageService imageService;
     private final String TEACHER_HTML = "teacherSection";
@@ -36,9 +38,10 @@ public class TeacherController {
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
-                             UserService userService, ImageService imageService, ImageService imageService1) {
+                             AcademicClassService academicClassService, UserService userService, ImageService imageService, ImageService imageService1) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
+        this.academicClassService = academicClassService;
         this.userService = userService;
         this.imageService = imageService1;
     }
@@ -121,6 +124,13 @@ public class TeacherController {
         imageService.deleteImage(picUrl);
         teacherService.deletePic(teacherById.getId());
         return "redirect:/teachers/" + id + "/profile";
+    }
+
+    @GetMapping("/{id}/classes")
+    public String classesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute("teachersClasses", academicClassService.findAcademicClassByTeacherId(id));
+        return "classesInTeacherProfile";
     }
 
 }
