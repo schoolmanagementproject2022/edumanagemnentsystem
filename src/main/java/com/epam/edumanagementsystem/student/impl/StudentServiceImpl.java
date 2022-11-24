@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -132,6 +133,13 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto findByStudentId(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(UserNotFoundException::new);
         return StudentMapper.toStudentDto(student);
+    }
+
+    public List<StudentDto> findStudentsByParentId(Long parentId) {
+        if (parentId == null) {
+            throw new UserNotFoundException();
+        }
+        return findAll().stream().filter(studentDto -> studentDto.getParent().getId().equals(parentId)).collect(Collectors.toList());
     }
 
     @Override
