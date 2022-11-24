@@ -127,5 +127,4 @@ public class ParentController {
         parentService.deletePic(parentById.getId());
         return "redirect:/parents/" + id + "/profile";
     }
-
 }

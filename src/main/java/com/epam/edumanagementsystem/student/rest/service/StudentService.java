@@ -4,7 +4,6 @@ import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
 
 public interface StudentService {

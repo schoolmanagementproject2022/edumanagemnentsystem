@@ -142,6 +142,7 @@ public class StudentServiceImpl implements StudentService {
         return findAll().stream().filter(studentDto -> studentDto.getParent().getId().equals(parentId)).collect(Collectors.toList());
     }
 
+
     @Override
     public void addProfilePicture(Student student, MultipartFile multipartFile) {
         student.setPicUrl(imageService.saveImage(multipartFile));
