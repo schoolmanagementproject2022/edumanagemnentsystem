@@ -118,7 +118,8 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public Set<AcademicCourse> findAcademicCoursesByTeacherId(Long id) {
-        return academicCourseRepository.findAcademicCoursesByTeacherId(id);
+    public Set<AcademicCourseDto> findAcademicCoursesByTeacherId(Long id) {
+        Set<AcademicCourse> academicCoursesByTeacherId = academicCourseRepository.findAcademicCoursesByTeacherId(id);
+        return AcademicCourseMapper.toSetOfAcademicCourseDto(academicCoursesByTeacherId);
     }
 }
