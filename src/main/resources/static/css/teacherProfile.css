@@ -233,6 +233,44 @@ input[type="checkbox"] {
     color: red;
 }
 
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 75px;
+    max-width: 255px;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 14px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #999799;
+    /*border: 1px solid #555;*/
+    color: #000000;
+    border-radius: 2px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 10px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
+}
+.tooltiptext::before {
+    content: '';
+    position: absolute;
+    top: -16%;
+    left: 8px;
+    display: inline-block;
+    color: #fff;
+    border: 8px solid transparent;
+    border-bottom: 8px solid #999799;
+}
+
 h1 {
     text-align: left;
     color: #007EB4;
@@ -244,35 +282,8 @@ h1 {
     color: #007EB4;
     font-size: 22px;
     font-weight: bold;
-
-    display: block;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: all .2s linear;
-    white-space: nowrap;
-    padding: .5rem 1rem;
-}
-
-.userNameSurname:focus, .userNameSurname:hover {
-    color: transparent;
-    /*content: attr(data-text);*/
-    overflow: visible;
-    text-overflow: inherit;
-    background: darkred;
-    position: relative;
-    /*left: auto;*/
-    /*top: auto;*/
-    width: auto;
-    max-width: 20rem;
-    /*border: 1px solid #eaebec;*/
-    padding: 0 .5rem;
-    /*box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .28);*/
-    white-space: nowrap;
-    /*word-wrap: break-word;*/
-    display: block;
-    color: black;
-    /*margin-top: -1.25rem;*/
 }
 
 form {
