@@ -1,6 +1,6 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
-import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
@@ -30,8 +30,11 @@ public class TeacherController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
     private final UserService userService;
-    private final AcademicCourseService academicCourseService;
     private final ImageService imageService;
+
+    private final SubjectService subjectService;
+
+
     private final String TEACHER_HTML = "teacherSection";
 
     private final String PROFILE = "teacherProfile";
@@ -39,12 +42,13 @@ public class TeacherController {
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
-                             UserService userService, ImageService imageService, AcademicCourseService academicCourseService, ImageService imageService1) {
+                             UserService userService, ImageService imageService,
+                             ImageService imageService1,SubjectService subjectService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
-        this.academicCourseService = academicCourseService;
         this.imageService = imageService1;
+        this.subjectService = subjectService;
     }
 
     @GetMapping
@@ -127,16 +131,9 @@ public class TeacherController {
         return "redirect:/teachers/" + id + "/profile";
     }
 
-    @GetMapping("/{id}/courses")
-    public String coursesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("teacher", teacherService.findById(id));
-        model.addAttribute("teachersCourses", academicCourseService.findAcademicCoursesByTeacherId(id));
-        return "coursesInTeacherProfile";
-    }
-
     @GetMapping("/{id}/subjects")
     public String openSubjectsForTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("subjects", teacherService.findSubjectsByTeacherId(id));
+        model.addAttribute("subjects", subjectService.findSubjectsByTeacherSetId(id));
         model.addAttribute("teacher", teacherService.findById(id));
         return SUBJECTS_FOR_TEACHER;
     }

@@ -29,7 +29,7 @@
 
             <div class="list">
                 <div class="list-items" th:each="subject : ${subjects}">
-                    <p class="item" th:text="${subject}">Subject</p>
+                    <p class="item" th:text="${subject.getName()}">Subject</p>
                 </div>
             </div>
         </div>

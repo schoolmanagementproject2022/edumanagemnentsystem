@@ -23,6 +23,4 @@ public interface TeacherService {
 
     void deletePic(Long id);
 
-    List<String> findSubjectsByTeacherId(Long teacherId);
-
 }

@@ -132,27 +132,4 @@ class TeacherServiceImplTest {
         assertThrows(UserNotFoundException.class, () -> teacherService.findById(null));
     }
 
-    @Test
-    @DisplayName("Finds all subjects linked to the teacher")
-    void findSubjectsByTeacherId() {
-        List<String> subjects = List.of("Literature", "Languages");
-        when(teacherRepository.findSubjectsByTeacherId(any())).thenReturn(subjects);
-
-        List<String> listOfSubjects = teacherService.findSubjectsByTeacherId(teacher.getId());
-
-        assertNotNull(listOfSubjects);
-        assertThat(listOfSubjects.containsAll(subjects));
-    }
-
-    @Test
-    @DisplayName("Returns correct number of subjects linked to the teacher")
-    void findSubjectsByTeacherIdReturnsCorrectSize() {
-        List<String> subjects = List.of("Literature", "Languages");
-        when(teacherRepository.findSubjectsByTeacherId(any())).thenReturn(subjects);
-
-        List<String> listOfSubjects = teacherService.findSubjectsByTeacherId(teacher.getId());
-
-        assertNotNull(listOfSubjects);
-        assertEquals(2, listOfSubjects.size());
-    }
 }
