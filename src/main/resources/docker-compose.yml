@@ -18,8 +18,6 @@ services:
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8787
       - UPLOAD_PATH=/images
-      - UPLOADED_PATH=/usr/edumanagemnentsystem/images
-    volumes:
-      - ./uploads:/usr/edumanagemnentsystem/images
+      - UPLOADED_PATH=/usr/edumanagementsystem/images
     links:
       - edu-db
