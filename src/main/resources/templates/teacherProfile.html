@@ -51,7 +51,7 @@
                 </form>
             </div>
 
-            <div th:if="${teacher.getPicUrl() != null}">
+            <div style="cursor: pointer" th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
                     <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
                     <div class="overlay"></div>

@@ -163,7 +163,6 @@ body {
     margin-right: 25px;
     margin-top: 50px;
     width: 15%;
-    cursor: pointer;
     text-align: left;
     height: min-content;
 }
@@ -753,7 +752,7 @@ form {
     position: absolute;
     top: 0;
     left: 0;
-    width: 97%;
+    width: 100%;
     height: 98%;
     background: rgba(0, 0, 0, 0);
     transition: background 0.5s ease;
