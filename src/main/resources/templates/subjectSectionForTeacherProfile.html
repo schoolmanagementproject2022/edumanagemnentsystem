@@ -59,6 +59,56 @@
             </div>
         </div>
     </div>
+    <script>
+        // $("#tooltip").kendoTooltip({
+        //     filter: "h1",
+        //     show: function(e){
+        //         if(this.content.text() !=""){
+        //             $("#tooltiptext").css("visibility", "visible");
+        //         }
+        //     },
+        //     hide: function(){
+        //         $("#tooltiptext").css("visibility", "hidden");
+        //     },
+        //     content: function(e){
+        //         var element = e.target[0];
+        //         if(element.offsetWidth < element.scrollWidth){
+        //             return e.target.text();
+        //         }else{
+        //             return "";
+        //         }
+        //     }
+        // })
+        // $(document).tooltip({
+        //     items: '[tooltiptext]',  // the default
+        //                        // or '[data-title]'
+        //                        // depending on HTML structure
+        //     content: function () {
+        //         // The container should be a `display: block` element,
+        //         // as overflow means a `display: inline` element excedes
+        //         // the size of a `display: block` element.
+        //         var container = this;  // or `this.parentNode`
+        //                                // depending on where `title` attribute is set
+        //                                // In any case, the element with `display: block`.
+        //
+        //         var title = this.title || this.getAttribute('tooltiptext') || this.textContent;
+        //
+        //         var overflowed = container.scrollWidth > container.clientWidth;
+        //
+        //         // Return an empty string as content won't show the tooltip
+        //         return overflowed ? title : '';
+        //     }
+        // });
+        var e = document.getElementsByClassName('tooltip')
+
+        if (!isEllipsisActive(e)){
+
+        }
+            function isEllipsisActive(e) {
+                return (e.offsetWidth < e.scrollWidth);
+
+            }
+    </script>
 </div>
 </body>
 </html>

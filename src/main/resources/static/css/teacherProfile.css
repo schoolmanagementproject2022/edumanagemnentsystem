@@ -245,17 +245,18 @@ input[type="checkbox"] {
     visibility: hidden;
     position: absolute;
     font-size: 14px;
+    padding: 7px;
 }
 
 .tooltip:hover .tooltiptext {
-    background: #999799;
-    /*border: 1px solid #555;*/
+    background: #dfdddd;
+    border: 1px solid #555;
     color: #000000;
-    border-radius: 2px;
+    border-radius: 7px;
     position: absolute;
     left: 0;
     word-break: break-word;
-    top: calc(100% + 10px);
+    top: calc(100% + 1px);
     z-index: 99;
     visibility: visible;
     opacity: 1;
