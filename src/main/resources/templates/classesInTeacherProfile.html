@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/teacherProfile.css" rel="stylesheet">
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
     <script src="/static/js/popupControl.js"></script>
     <title th:text="${teacher.getNameSurname()} + ' - Classes'"></title>
 </head>
@@ -21,12 +20,12 @@
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Teachers'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
                    th:text="${teacher.getNameSurname()}"></a>
-                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Academic Classes'}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Classes'}"></a>
             </div>
 
             <div class="list">
                 <div class="list-items" th:each="teachersClass : ${teachersClasses}">
-                    <p class="item" th:text="${teachersClass.getClassNumber()}">Academic Classes</p>
+                    <p class="item" th:text="${teachersClass.getClassNumber()}">Classes</p>
                 </div>
             </div>
         </div>
@@ -46,11 +45,15 @@
                 </div>
             </div>
 
-            <div>
-                <h2 class="userNameSurname" th:text="${teacher.getNameSurname()}" style="color: #2b80a5"></h2>
+            <div class="tooltip">
+                <div class="name_surname_sectiion">
+                    <h1 class="userNameSurname" th:text="${teacher.getName()}"></h1></div>
+                <div class="name_surname_sectiion">
+                    <h1 class="userNameSurname" th:text="${teacher.getSurname()}"></h1></div>
+                <span class="tooltiptext" th:text="${teacher.getNameSurname()}">Tooltip text</span>
             </div>
 
-            <div class="sidebar2 header" id="sidebar2" style="margin-top: -50px">
+            <div class="sidebar2 header" id="sidebar2">
                 <div th:insert="fragments/fragments :: teacherProfileSidebar"></div>
             </div>
         </div>
