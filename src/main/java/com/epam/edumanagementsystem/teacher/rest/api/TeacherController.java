@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.teacher.rest.api;
 
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
@@ -55,6 +56,7 @@ public class TeacherController {
     @Operation(summary = "Creates a new teacher and saves in DB")
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
+                                @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                                 Model model) throws IOException {
         model.addAttribute("teachers", teacherService.findAll());
         if (!result.hasFieldErrors("email")) {
@@ -71,7 +73,11 @@ public class TeacherController {
         }
 
         teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
-        teacherService.create(teacherDto);
+        Teacher teacher = teacherService.create(teacherDto);
+
+        if (!multipartFile.isEmpty()) {
+            teacherService.addProfilePicture(teacher, multipartFile);
+        }
         return "redirect:/teachers";
     }
 
