@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
@@ -70,6 +71,7 @@ public class StudentController {
     @Operation(summary = "Creates a new student and saves in DB")
     public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
+                                       @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                                        Model model) {
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
@@ -89,7 +91,11 @@ public class StudentController {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
-        studentService.create(studentDto);
+        Student student = studentService.create(studentDto);
+
+        if (!multipartFile.isEmpty()) {
+            studentService.addProfilePicture(student, multipartFile);
+        }
         return "redirect:/students";
     }
 

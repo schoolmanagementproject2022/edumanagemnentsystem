@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/teachers")
@@ -37,11 +36,11 @@ public class TeacherController {
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
-                             UserService userService, ImageService imageService, ImageService imageService1) {
+                             UserService userService, ImageService imageService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
-        this.imageService = imageService1;
+        this.imageService = imageService;
     }
 
     @GetMapping
@@ -57,7 +56,7 @@ public class TeacherController {
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
                                 @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
-                                Model model) throws IOException {
+                                Model model) {
         model.addAttribute("teachers", teacherService.findAll());
         if (!result.hasFieldErrors("email")) {
             userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);

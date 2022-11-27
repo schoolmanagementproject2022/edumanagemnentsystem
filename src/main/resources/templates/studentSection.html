@@ -60,7 +60,7 @@
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
-        <form id="form" class="form" th:method="POST" th:action="@{/students}" th:object="${student}">
+        <form id="form" class="form" th:method="POST" enctype="multipart/form-data" th:action="@{/students}" th:object="${student}">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
             or ${invalidEmail} != null or ${invalidPassword}!=null">
                 PopUpShow();
@@ -149,7 +149,12 @@
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
-                    <div class="halfSection">
+                    <div style="margin-top: 4%">
+                        <label class="popup-label-title">Image</label>
+                        <input type="file" accept="image/png,image/jpeg" class="form_input" id="picture"
+                               th:name="picture"/>
+                    </div>
+                    <div class="halfSection" style="margin-top: 2%">
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">

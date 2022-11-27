@@ -33,7 +33,7 @@
     <div class="popup-container" id="popup-container">
         <label class="close-btn" onclick="PopUpHide()" title="close">×</label>
         <h1>New Parent</h1>
-        <form id="form" th:action="@{/parents}" method="POST" th:object="${parent}">
+        <form id="form" th:action="@{/parents}" method="POST" enctype="multipart/form-data" th:object="${parent}">
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
              or ${invalidEmail}!=null or ${invalidPassword}!=null or ${blank}!=null">
@@ -82,6 +82,11 @@
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
+                    <div style="margin-top: 6%">
+                        <label class="popup-label-title">Image</label>
+                        <input type="file" accept="image/png,image/jpeg" class="form_input" id="picture"
+                               th:name="picture"/>
+                    </div>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>

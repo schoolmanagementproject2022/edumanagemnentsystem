@@ -50,7 +50,9 @@ public class ParentController {
 
     @PostMapping()
     @Operation(summary = "Creates a new parent and saves in DB")
-    public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
+    public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto,
+                             BindingResult bindingResult,
+                             @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                              Model model) {
         model.addAttribute("parents", parentService.findAll());
         if (!bindingResult.hasFieldErrors("email")) {
@@ -65,7 +67,11 @@ public class ParentController {
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
-        parentService.save(parentDto);
+        Parent parent = parentService.save(parentDto);
+
+        if (!multipartFile.isEmpty()) {
+            parentService.addProfilePicture(parent, multipartFile);
+        }
         return "redirect:/parents";
     }
 
