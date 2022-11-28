@@ -711,44 +711,53 @@ input[type="checkbox"] {
     font-family: "Montserrat", sans-serif;
 }
 
-.item-h1{
+.item-h1 {
     margin-top: 5px;
-    color:#2b80a5 ;
-}
-
-.hovertext {
-    overflow: hidden;
-    text-overflow:ellipsis;
-    position: relative;
-    border-bottom: 1px dotted black;
-}
-
-.hovertext:before {
-    content: attr(data-hover);
-    visibility: hidden;
-    opacity: 0;
-    width: 24VW;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 5px 0;
-    transition: opacity 1s ease-in-out;
-
-    position: absolute;
-    z-index: 1;
-    left: -8VW;
-    top: -70%;
-}
-
-.hovertext:hover:before {
-    opacity: 1;
-    visibility: visible;
+    color: #2b80a5;
 }
 
 .h1-name h1{
     margin-top: 5px;
     color:#2b80a5;
+}
+
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 75px;
+    max-width: 255px;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 14px;
+    padding: 7px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 7px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 1px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
+}
+
+.userNameSurname {
+    text-align: left;
+    color: #007EB4;
+    font-size: 22px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
