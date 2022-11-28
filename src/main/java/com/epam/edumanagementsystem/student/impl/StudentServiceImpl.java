@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -146,4 +147,15 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.updateStudentPicUrl(id);
     }
 
+    @Override
+    public List<StudentDto> studentsWithoutConnectionWithClass() {
+        List<StudentDto> studentsWithoutClass = new ArrayList<>();
+        List<StudentDto> allStudents = findAll();
+        for (StudentDto student : allStudents) {
+            if (null == student.getAcademicClass()) {
+                studentsWithoutClass.add(student);
+            }
+        }
+        return studentsWithoutClass;
+    }
 }
