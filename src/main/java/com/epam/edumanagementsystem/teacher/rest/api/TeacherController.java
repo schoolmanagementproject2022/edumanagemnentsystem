@@ -13,7 +13,6 @@ import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,16 +34,15 @@ public class TeacherController {
     private final AcademicCourseService academicCourseService;
     private final ImageService imageService;
     private final SubjectService subjectService;
-
     private final String TEACHER_HTML = "teacherSection";
     private final String PROFILE = "teacherProfile";
     private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
+
     private final String COURSES_FOR_TEACHER = "coursesInTeacherProfile";
 
-    @Autowired
-    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
-                             UserService userService, AcademicCourseService academicCourseService,
-                             ImageService imageService, SubjectService subjectService) {
+
+    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService, UserService userService,
+                             AcademicCourseService academicCourseService, ImageService imageService, SubjectService subjectService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
@@ -52,6 +50,7 @@ public class TeacherController {
         this.imageService = imageService;
         this.subjectService = subjectService;
     }
+
 
     @GetMapping
     @Operation(summary = "Gets the list of teachers and shows on admin's dashboard")

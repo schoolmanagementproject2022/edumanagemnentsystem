@@ -5,10 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/teacherProfile.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css'>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
     <title th:text="${teacher.getNameSurname()} + ' Subjects'"></title>
 </head>
@@ -44,8 +40,6 @@
             <div th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
                     <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
-                    <div class="overlay"></div>
-
                 </div>
             </div>
 
@@ -62,57 +56,6 @@
             </div>
         </div>
     </div>
-    <script>
-        // $("#tooltip").kendoTooltip({
-        //     filter: "h1",
-        //     show: function(e){
-        //         if(this.content.text() !=""){
-        //             $("#tooltiptext").css("visibility", "visible");
-        //         }
-        //     },
-        //     hide: function(){
-        //         $("#tooltiptext").css("visibility", "hidden");
-        //     },
-        //     content: function(e){
-        //         var element = e.target[0];
-        //         if(element.offsetWidth < element.scrollWidth){
-        //             return e.target.text();
-        //         }else{
-        //             return "";
-        //         }
-        //     }
-        // })
-        // $(document).tooltip({
-        //     items: '[tooltiptext]',  // the default
-        //                        // or '[data-title]'
-        //                        // depending on HTML structure
-        //     content: function () {
-        //         // The container should be a `display: block` element,
-        //         // as overflow means a `display: inline` element excedes
-        //         // the size of a `display: block` element.
-        //         var container = this;  // or `this.parentNode`
-        //                                // depending on where `title` attribute is set
-        //                                // In any case, the element with `display: block`.
-        //
-        //         var title = this.title || this.getAttribute('tooltiptext') || this.textContent;
-        //
-        //         var overflowed = container.scrollWidth > container.clientWidth;
-        //
-        //         // Return an empty string as content won't show the tooltip
-        //         return overflowed ? title : '';
-        //     }
-        // });
-        var e = document.getElementsByClassName('tooltip')
-
-        if (!isEllipsisActive(e)) {
-
-        }
-
-        function isEllipsisActive(e) {
-            return (e.offsetWidth < e.scrollWidth);
-
-        }
-    </script>
 </div>
 </body>
 </html>
