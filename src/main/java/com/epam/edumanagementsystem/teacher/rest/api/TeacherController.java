@@ -1,8 +1,11 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
@@ -30,23 +33,32 @@ public class TeacherController {
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
     private final UserService userService;
+    private final AcademicCourseService academicCourseService;
     private final ImageService imageService;
 
     private final SubjectService subjectService;
 
 
-    private final String TEACHER_HTML = "teacherSection";
+    private final SubjectService subjectService;
 
+    private final String TEACHER_HTML = "teacherSection";
     private final String PROFILE = "teacherProfile";
     private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
+    private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
+    private final String COURSES_FOR_TEACHER = "coursesInTeacherProfile";
 
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
                              UserService userService, ImageService imageService,
                             SubjectService subjectService) {
+                             UserService userService, AcademicCourseService academicCourseService,
+                             ImageService imageService, SubjectService subjectService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
+        this.academicCourseService = academicCourseService;
+        this.imageService = imageService;
+        this.subjectService = subjectService;
         this.imageService = imageService;
         this.subjectService = subjectService;
     }
@@ -63,6 +75,7 @@ public class TeacherController {
     @Operation(summary = "Creates a new teacher and saves in DB")
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
+                                @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                                 Model model) throws IOException {
         model.addAttribute("teachers", teacherService.findAll());
         if (!result.hasFieldErrors("email")) {
@@ -79,7 +92,11 @@ public class TeacherController {
         }
 
         teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
-        teacherService.create(teacherDto);
+        Teacher teacher = teacherService.create(teacherDto);
+
+        if (!multipartFile.isEmpty()) {
+            teacherService.addProfilePicture(teacher, multipartFile);
+        }
         return "redirect:/teachers";
     }
 
@@ -133,6 +150,14 @@ public class TeacherController {
         imageService.deleteImage(picUrl);
         teacherService.deletePic(teacherById.getId());
         return "redirect:/teachers/" + id + "/profile";
+    }
+
+    @GetMapping("/{id}/courses")
+    @Operation(summary = "Gets the list of courses thw teacher has and shows them")
+    public String coursesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute("teachersCourses", academicCourseService.findAcademicCoursesByTeacherId(id));
+        return COURSES_FOR_TEACHER;
     }
 
     @GetMapping("/{id}/subjects")

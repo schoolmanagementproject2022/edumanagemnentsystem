@@ -51,7 +51,7 @@
                 </form>
             </div>
 
-            <div th:if="${teacher.getPicUrl() != null}">
+            <div style="cursor: pointer" th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
                     <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
                     <div class="overlay"></div>
@@ -79,8 +79,7 @@
                         <input type="hidden" name="_method" value="delete"/>
                         <button type="submit" id="submitButton"></button>
                     </form>
-                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img"
-                         th:src="@{/image(name='x-mark-transparent-2.png')}">
+                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" src="/static/img/x-mark-transparent-2.png">
                 </div>
             </div>
             <div class="sidebar2 header" id="sidebar2">

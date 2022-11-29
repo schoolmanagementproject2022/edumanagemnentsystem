@@ -1,5 +1,3 @@
-upload:
-  dir: C:\edumanagemnentsystem\src\main\resources\static\img\
 spring:
 
   mvc:
@@ -32,3 +30,6 @@ server:
 springdoc:
   api-docs:
     path: /api-docs
+
+upload:
+  path: /usr/edumanagementsystem/images
