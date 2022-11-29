@@ -202,7 +202,7 @@ input[type="checkbox"] {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 38%;
+    margin-top: 31%;
     margin-left: -10%;
     width: 83px;
     display: block;
@@ -264,7 +264,7 @@ input[type="checkbox"] {
 .successText {
     font-size: 131%;
     white-space: nowrap;
-    margin-top: 4%;
+    margin-top: 20%;
 }
 
 .close-btn:hover {
