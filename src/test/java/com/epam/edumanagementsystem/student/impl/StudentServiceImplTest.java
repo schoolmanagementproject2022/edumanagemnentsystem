@@ -14,6 +14,7 @@ import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -189,6 +190,26 @@ class StudentServiceImplTest {
     @Test
     void testFindByAcademicClassIdNegativeCase() {
         assertThrows(UserNotFoundException.class, () -> studentService.findByAcademicClassId(null));
+    }
+
+
+    @Test
+    void testFindStudentsByParentId() {
+        when(studentRepository.findAll()).thenReturn(new ArrayList<>());
+        assertTrue(studentService.findStudentsByParentId(123L).isEmpty());
+        verify(studentRepository).findAll();
+    }
+
+    @Test
+    void testFindStudentsByParentIdNegativeCase() {
+        when(studentRepository.findAll()).thenThrow(new ObjectIsNull("Not all who wander are lost"));
+        assertThrows(ObjectIsNull.class, () -> studentService.findStudentsByParentId(123L));
+        verify(studentRepository).findAll();
+    }
+
+    @Test
+    void testFindByParentIdStudentsNegativeCase() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> studentService.findStudentsByParentId(null));
     }
 
     @Test
