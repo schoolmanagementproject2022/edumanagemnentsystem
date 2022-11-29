@@ -43,11 +43,11 @@ public class TeacherController {
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
                              UserService userService, ImageService imageService,
-                             ImageService imageService1,SubjectService subjectService) {
+                            SubjectService subjectService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.userService = userService;
-        this.imageService = imageService1;
+        this.imageService = imageService;
         this.subjectService = subjectService;
     }
 
