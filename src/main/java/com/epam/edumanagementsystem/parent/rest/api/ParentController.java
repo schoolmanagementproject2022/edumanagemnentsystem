@@ -70,6 +70,7 @@ public class ParentController {
     }
 
     @GetMapping("/{id}/profile")
+    @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         Parent parent = parentService.findById(id).get();
         model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
@@ -78,6 +79,7 @@ public class ParentController {
     }
 
     @PostMapping("/{id}/profile")
+    @Operation(summary = "Edits selected parent's profile")
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
         if (!bindingResult.hasFieldErrors("email")) {
@@ -97,6 +99,7 @@ public class ParentController {
     }
 
     @PostMapping("/{id}/image/add")
+    @Operation(summary = "Adds image to selected parent's profile")
     public String addPic(@ModelAttribute("existingParent") Parent parent, @PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
         Parent parentById = parentService.findById(id).get();
@@ -106,6 +109,7 @@ public class ParentController {
     }
 
     @GetMapping("/{id}/image/delete")
+    @Operation(summary = "Deletes image to selected parent's profile")
     public String deletePic(@PathVariable("id") Long id) {
         Parent parentById = parentService.findById(id).get();
         String picUrl = parentById.getPicUrl();

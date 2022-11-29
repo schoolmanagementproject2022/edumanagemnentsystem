@@ -131,18 +131,6 @@ body {
     color: #01A7F0;
 }
 
-.list {
-    width: 100%;
-    padding: 0px;
-    background-color: #555555;
-    height: 65vh;
-    margin-top: 10px;
-    overflow-y: scroll;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-}
 
 #date {
     width: 80%;
@@ -175,7 +163,6 @@ body {
     margin-right: 25px;
     margin-top: 50px;
     width: 15%;
-    cursor: pointer;
     text-align: left;
     height: min-content;
 }
@@ -245,11 +232,49 @@ input[type="checkbox"] {
     color: red;
 }
 
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 75px;
+    max-width: 255px;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 14px;
+    padding: 7px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 7px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 1px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
+}
+
 h1 {
     text-align: left;
     color: #007EB4;
     margin-top: 0px;
+}
 
+.userNameSurname {
+    text-align: left;
+    color: #007EB4;
+    font-size: 22px;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 form {
@@ -327,18 +352,6 @@ form {
 .form_input:focus {
     outline: none !important;
     border: 1px solid #01A7F0;
-}
-
-.startAcademicYear {
-    margin-right: 0;
-}
-
-.endAcademicYear {
-    margin-left: 0;
-}
-
-.selectclassroom {
-    margin-top: 10px;
 }
 
 .popup-label-title-subject {
@@ -473,12 +486,6 @@ form {
     color: red;
 }
 
-h1 {
-    text-align: left;
-    color: #007EB4;
-    margin-top: 0px;
-}
-
 form {
     margin: 0px;
     margin-left: 0px;
@@ -556,7 +563,7 @@ form {
 
 .sidebar2 {
     margin-right: 25px;
-    margin-top: 50px;
+    margin-top: 20px;
     width: 100%;
     background-color: #555555;
     cursor: pointer;
@@ -627,7 +634,6 @@ form {
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
     font-size: 19px;
-    cursor: pointer;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -672,24 +678,12 @@ form {
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-list {
-    width: 100%;
-    padding: 0px;
-    background-color: #555555;
-    height: 65vh;
-    margin-top: 10px;
-    overflow-y: scroll;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
 .list {
     width: 100%;
     background-color: #555555;
-    height: 65vh;
+    height: 60vh;
     overflow-y: scroll;
+    margin-top: 8%;
 }
 
 .seleurl-pathctTeacher {
@@ -748,17 +742,6 @@ list {
     color: #01A7F0 !important;
 }
 
-.select2-results__option--selected {
-    display: none;
-}
-
-.select2-container .select2-selection {
-    height: 70px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-}
-
 .container-img {
     position: relative;
     width: 100%;
@@ -769,7 +752,7 @@ list {
     position: absolute;
     top: 0;
     left: 0;
-    width: 97%;
+    width: 100%;
     height: 98%;
     background: rgba(0, 0, 0, 0);
     transition: background 0.5s ease;
@@ -937,7 +920,6 @@ list {
 }
 
 .sidebar_right_links {
-    margin-top: 53px;
     background-color: #555555;
     cursor: pointer;
     text-align: left;
