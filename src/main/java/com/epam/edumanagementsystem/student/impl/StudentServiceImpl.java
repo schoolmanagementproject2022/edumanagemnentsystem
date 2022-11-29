@@ -136,10 +136,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public List<StudentDto> findStudentsByParentId(Long parentId) {
-        if (parentId == null) {
-            throw new UserNotFoundException();
+        if (parentId != null) {
+            return findAll().stream().filter(studentDto -> studentDto.getParent().getId().equals(parentId)).collect(Collectors.toList());
         }
-        return findAll().stream().filter(studentDto -> studentDto.getParent().getId().equals(parentId)).collect(Collectors.toList());
+        throw new UserNotFoundException();
     }
 
     @Override
