@@ -39,15 +39,11 @@ public class TeacherController {
     private final String TEACHER_HTML = "teacherSection";
     private final String PROFILE = "teacherProfile";
     private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
-
     private final String COURSES_FOR_TEACHER = "coursesInTeacherProfile";
 
 
-    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService, UserService userService,
+    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService, AcademicClassService academicClassService, UserService userService,
                              AcademicCourseService academicCourseService, ImageService imageService, SubjectService subjectService) {
-    @Autowired
-    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
-                             AcademicClassService academicClassService, UserService userService, ImageService imageService, ImageService imageService1) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
         this.academicClassService = academicClassService;
@@ -56,7 +52,6 @@ public class TeacherController {
         this.imageService = imageService;
         this.subjectService = subjectService;
     }
-
 
     @GetMapping
     @Operation(summary = "Gets the list of teachers and shows on admin's dashboard")
