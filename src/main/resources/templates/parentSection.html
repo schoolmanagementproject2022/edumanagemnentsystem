@@ -103,7 +103,6 @@
 <script>
 filevalidation = () => {
     const fi = document.getElementById('picture');
-    const span = document.getElementById('errorPic');
     const acceptedImageTypes = ['image/jpeg', 'image/png'];
 
         if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
@@ -112,7 +111,7 @@ filevalidation = () => {
         }
 		if (fi.files[0].size> 2*1024*1024) {
 		     fi.value='';
-              span.textContent = 'size';
+
                 return;
 		}
 	}
