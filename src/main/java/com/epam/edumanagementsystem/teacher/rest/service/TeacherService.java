@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.rest.service;
 
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.web.multipart.MultipartFile;

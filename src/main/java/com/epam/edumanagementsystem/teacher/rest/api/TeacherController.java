@@ -1,8 +1,11 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
+import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
 import com.epam.edumanagementsystem.util.PasswordValidation;
@@ -11,7 +14,6 @@ import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,11 +33,18 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final AcademicClassService academicClassService;
     private final UserService userService;
+    private final AcademicCourseService academicCourseService;
     private final ImageService imageService;
+    private final SubjectService subjectService;
     private final String TEACHER_HTML = "teacherSection";
-
     private final String PROFILE = "teacherProfile";
+    private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
 
+    private final String COURSES_FOR_TEACHER = "coursesInTeacherProfile";
+
+
+    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService, UserService userService,
+                             AcademicCourseService academicCourseService, ImageService imageService, SubjectService subjectService) {
     @Autowired
     public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService,
                              AcademicClassService academicClassService, UserService userService, ImageService imageService, ImageService imageService1) {
@@ -43,8 +52,11 @@ public class TeacherController {
         this.teacherService = teacherService;
         this.academicClassService = academicClassService;
         this.userService = userService;
-        this.imageService = imageService1;
+        this.academicCourseService = academicCourseService;
+        this.imageService = imageService;
+        this.subjectService = subjectService;
     }
+
 
     @GetMapping
     @Operation(summary = "Gets the list of teachers and shows on admin's dashboard")
@@ -58,6 +70,7 @@ public class TeacherController {
     @Operation(summary = "Creates a new teacher and saves in DB")
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
+                                @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                                 Model model) throws IOException {
         model.addAttribute("teachers", teacherService.findAll());
         if (!result.hasFieldErrors("email")) {
@@ -74,11 +87,16 @@ public class TeacherController {
         }
 
         teacherDto.setPassword(bcryptPasswordEncoder.encode(teacherDto.getPassword()));
-        teacherService.create(teacherDto);
+        Teacher teacher = teacherService.create(teacherDto);
+
+        if (!multipartFile.isEmpty()) {
+            teacherService.addProfilePicture(teacher, multipartFile);
+        }
         return "redirect:/teachers";
     }
 
     @GetMapping("/{id}/profile")
+    @Operation(summary = "Shows selected teacher's profile")
     public String openTeacherProfile(@PathVariable("id") Long id, Model model) {
         TeacherDto existingTeacher = teacherService.findById(id);
         model.addAttribute("name_surname", TeacherMapper.
@@ -89,6 +107,7 @@ public class TeacherController {
     }
 
     @PostMapping("/{id}/profile")
+    @Operation(summary = "Edits selected teacher's profile")
     public String editTeacherPersonalInformation(@ModelAttribute("teacher") @Valid TeacherDto updatableTeacher,
                                                  BindingResult result, @PathVariable("id") Long id, Model model) {
         TeacherDto existingTeacher = teacherService.findById(id);
@@ -110,6 +129,7 @@ public class TeacherController {
     }
 
     @PostMapping("/{id}/image/add")
+    @Operation(summary = "Adds image to selected teacher's profile")
     public String addPic(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
         TeacherDto teacherById = teacherService.findById(id);
         User userByEmail = userService.findByEmail(teacherById.getEmail());
@@ -118,6 +138,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}/image/delete")
+    @Operation(summary = "Deletes image from selected teacher's profile")
     public String deletePic(@PathVariable("id") Long id) {
         TeacherDto teacherById = teacherService.findById(id);
         String picUrl = teacherById.getPicUrl();
@@ -133,4 +154,19 @@ public class TeacherController {
         return "classesInTeacherProfile";
     }
 
+    @GetMapping("/{id}/courses")
+    @Operation(summary = "Gets the list of courses thw teacher has and shows them")
+    public String coursesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute("teachersCourses", academicCourseService.findAcademicCoursesByTeacherId(id));
+        return COURSES_FOR_TEACHER;
+    }
+
+    @GetMapping("/{id}/subjects")
+    @Operation(summary = "Gets the list of subjects thw teacher has and shows them")
+    public String openSubjectsForTeacherProfile(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("subjects", subjectService.findSubjectsByTeacherSetId(id));
+        model.addAttribute("teacher", teacherService.findById(id));
+        return SUBJECTS_FOR_TEACHER;
+    }
 }

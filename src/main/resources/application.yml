@@ -32,4 +32,4 @@ springdoc:
     path: /api-docs
 
 upload:
-  path: /usr/edumanagemnentsystem/images
+  path: /usr/edumanagementsystem/images

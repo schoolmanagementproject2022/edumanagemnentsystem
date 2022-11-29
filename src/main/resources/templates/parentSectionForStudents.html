@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/parentProfile.css" rel="stylesheet">
+    <title th:text="${parent.getNameAndSurname()}">Parent's Student</title>
+</head>
+<body>
+<div class="header" id="header">
+    <div th:insert="fragments/fragments :: container"></div>
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="content-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+        <div style="width: 79% !important;" class="content" id="middle">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Parents'}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/profile'}"
+                   th:text="${parent.getNameAndSurname()}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Linked students'}"></a>
+            </div>
+            <div th:if="${students.size() != 0}" class="list-p-item" th:each="student: ${students}">
+                <a class="item" th:text="${student.getNameAndSurname()}"
+                   th:href="@{'/students/' + ${student.getId()} + '/profile'}"></a>
+            </div>
+            <div th:if="${students.size() == 0}">
+                <p class="student-show-top">This parent isn't yet attached to a student </p>
+                <a th:type="button" th:href="${'/students'}" class="vis-btn-each" id="vis-btn-each"><b>Add
+                    student</b></a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar_right">
+        <div th:if="${parent.getPicUrl() == null}">
+            <img class="img-user" src="/static/img/user.jpg" alt="This User haven't got a ProfPic">
+        </div>
+        <div th:if="${parent.getPicUrl() != null}">
+            <div class="container-img">
+                <img class="img-user" th:src="@{/image(name=${parent.picUrl})}" alt="The User ProfPic can't find">
+            </div>
+        </div>
+        <div class="tooltip">
+            <div class="name_surname_sectiion">
+                <h1 class="userNameSurname" th:text="${parent.getName()}"></h1></div>
+            <div class="name_surname_sectiion">
+                <h1 class="userNameSurname" th:text="${parent.getSurname()}"></h1></div>
+            <span class="tooltiptext" th:text="${parent.getNameAndSurname()}">Tooltip text</span>
+        </div>
+        <div class="sidebar_right_link">
+            <a class="sidebar_right_links_item"
+               th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+               th:href="${'/' + firstUrl + '/' + middleUrl + '/profile'}">Profile</a>
+            <a class="sidebar_right_links_item"
+               th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
+               th:href="@{${allUrl}}">Linked students</a>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
