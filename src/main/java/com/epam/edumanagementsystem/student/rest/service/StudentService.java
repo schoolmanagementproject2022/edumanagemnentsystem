@@ -31,4 +31,5 @@ public interface StudentService {
 
     void deletePic(Long id);
 
+    List<StudentDto> studentsWithoutConnectionWithClass();
 }
