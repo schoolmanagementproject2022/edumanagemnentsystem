@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:scropt="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +34,7 @@
                 yearRange: "-0:+10",
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function(dateStr) {
+                onSelect: function (dateStr) {
                     var date = $(this).datepicker('getDate');
                     if (date) {
                         date.setDate(date.getDate() + 1);
@@ -485,7 +485,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -522,7 +523,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -559,7 +561,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -596,7 +599,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -633,7 +637,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -666,11 +671,13 @@
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
                         <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null">Select Course</option>
+                                data-limit="23" th:value="null">Select Course
+                        </option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -707,7 +714,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -719,6 +727,31 @@
         </form>
     </div>
 </div>
+
+
+<script>
+
+    window.onload = function () {
+        var start = sessionStorage.getItem('startDate');
+        var end = sessionStorage.getItem('endDate');
+        if (start !== null) {
+            document.getElementById("startDate").value = start;
+        }
+        if (end !== null) {
+            document.getElementById("endDate").value = end;
+        }
+    }
+    window.onbeforeunload = function () {
+        sessionStorage.removeItem("startDate");
+        sessionStorage.removeItem("endDate");
+
+        var start = document.getElementById("startDate").value;
+        var end = document.getElementById("endDate").value;
+
+        sessionStorage.setItem("startDate", start);
+        sessionStorage.setItem("endDate", end);
+    }
+</script>
 
 </body>
 </html>
