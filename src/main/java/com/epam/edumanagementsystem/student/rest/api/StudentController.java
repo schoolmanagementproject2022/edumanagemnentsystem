@@ -112,6 +112,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/profile")
+    @Operation(summary = "Shows selected student's profile")
     public String openStudentProfile(@PathVariable("id") Long studentId, Model model) {
         StudentDto existingStudent = studentService.findByStudentId(studentId);
         model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
@@ -125,6 +126,7 @@ public class StudentController {
     }
 
     @PostMapping("/{id}/profile")
+    @Operation(summary = "Edits selected student's profile")
     public String editStudentPersonalInformation(@ModelAttribute("existingStudent") @Valid StudentDto updatableStudent,
                                                  BindingResult result, @PathVariable("id") Long studentId, Model model) {
         StudentDto existingStudent = studentService.findByStudentId(studentId);
@@ -150,6 +152,7 @@ public class StudentController {
     }
 
     @PostMapping("/{id}/image/add")
+    @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
         StudentDto studentById = studentService.findByStudentId(id);
@@ -159,6 +162,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}/image/delete")
+    @Operation(summary = "Deletes image to selected student's profile")
     public String deletePic(@PathVariable("id") Long id) {
         StudentDto studentById = studentService.findByStudentId(id);
         imageService.deleteImage(studentById.getPicUrl());

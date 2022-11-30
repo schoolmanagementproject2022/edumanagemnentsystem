@@ -83,8 +83,8 @@
                    th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
                    th:href="@{${allUrl}}">Profile</a>
                 <a class="sidebar_right_links_item"
-                   th:classappend="${lastUrl eq 'linked students' ? 'activeTab' : 'notActiveTab'}"
-                   th:href="@{#}">Linked students</a>
+                   th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
+                   th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'students'}}">Linked students</a>
             </div>
         </div>
 

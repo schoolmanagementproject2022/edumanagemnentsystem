@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.impl;
 
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -19,10 +20,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -65,6 +66,7 @@ class TeacherServiceImplTest {
         assertThat(allTeachers).isNotNull();
         assertThat(allTeachers.size()).isEqualTo(2);
     }
+
     @Test
     @DisplayName("Check the usage of the findByUserId() method in the service")
     void findByUserId() {
@@ -129,4 +131,5 @@ class TeacherServiceImplTest {
     void findByIdNegativeCase() {
         assertThrows(UserNotFoundException.class, () -> teacherService.findById(null));
     }
+
 }

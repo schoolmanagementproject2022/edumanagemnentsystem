@@ -10,6 +10,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.IllegalCharactersValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,21 +55,15 @@ public class AcademicCourseController {
     @PostMapping
     @Operation(summary = "Saves the created academic course")
     public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
-                         BindingResult result,
-                         Model model) {
+                         BindingResult result, Model model) {
 
         List<AcademicCourseDto> all = academicCourseService.findAll();
         model.addAttribute("academicCourses", all);
-        List<SubjectDto> allSubjects = subjectService.findAll();
-        model.addAttribute("subjects", allSubjects);
+        model.addAttribute("subjects", subjectService.findAll());
 
-        if(!result.hasFieldErrors("name")) {
-            Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
-            for (Character character : list) {
-                if (academicCourse.getName().contains(character.toString())) {
-                    model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-                    return "academicCourseSection";
-                }
+        if (!result.hasFieldErrors("name")) {
+            if (IllegalCharactersValidation.checkingForIllegalCharacters(academicCourse.getName(), model)) {
+                return "academicCourseSection";
             }
         }
 
@@ -92,7 +87,6 @@ public class AcademicCourseController {
                 return "academicCourseSection";
             }
         }
-
         academicCourseService.create(academicCourse);
         return "redirect:/courses";
     }

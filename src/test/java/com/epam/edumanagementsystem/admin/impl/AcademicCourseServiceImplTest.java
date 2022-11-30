@@ -7,6 +7,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseRepository;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +18,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AcademicCourseServiceImplTest {
@@ -33,13 +35,20 @@ class AcademicCourseServiceImplTest {
 
     @InjectMocks
     private AcademicCourseServiceImpl academicCourseService;
+    private Set<AcademicCourse> coursesSet;
 
     @BeforeEach
     void init() {
+        User user = new User(null, "gm@gmail.com", "TEACHER");
+        Teacher teacher = new Teacher(1L, "Teacher", "Teacheryan", user,
+                "password", coursesSet, new HashSet(), new HashSet());
         Set<Teacher> teacherSet = new HashSet<>();
         Set<AcademicClass> academicClasses = new HashSet<>();
         academicCourse = new AcademicCourse(1L, "firstAcademicCourse",
                 subject, teacherSet, academicClasses);
+        coursesSet = new LinkedHashSet<>();
+        coursesSet.add(academicCourse);
+
     }
 
     @Test
@@ -176,5 +185,15 @@ class AcademicCourseServiceImplTest {
     @DisplayName("should update academic course")
     void testUpdateFail() {
         assertThrows(NullPointerException.class, () -> academicCourseService.update(null));
+    }
+
+    @Test
+    void findAcademicCoursesByTeacherId() {
+        when(academicCourseRepository.findAcademicCoursesByTeacherId(1L)).thenReturn(coursesSet);
+        Set<AcademicCourseDto> academicCoursesByTeacherId = academicCourseService.findAcademicCoursesByTeacherId(1L);
+        Set<AcademicCourseDto> academicCourseDto = AcademicCourseMapper.toSetOfAcademicCourseDto(coursesSet);
+        academicCourseService.findAcademicCoursesByTeacherId(1L);
+        assertEquals(academicCoursesByTeacherId, academicCourseDto);
+        assertThat(coursesSet).isNotNull();
     }
 }
