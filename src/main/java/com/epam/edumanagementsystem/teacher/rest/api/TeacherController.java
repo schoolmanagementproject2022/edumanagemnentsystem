@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.teacher.rest.api;
 
+import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
@@ -30,6 +31,7 @@ public class TeacherController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
     private final TeacherService teacherService;
+    private final AcademicClassService academicClassService;
     private final UserService userService;
     private final AcademicCourseService academicCourseService;
     private final ImageService imageService;
@@ -37,20 +39,19 @@ public class TeacherController {
     private final String TEACHER_HTML = "teacherSection";
     private final String PROFILE = "teacherProfile";
     private final String SUBJECTS_FOR_TEACHER = "subjectSectionForTeacherProfile";
-
     private final String COURSES_FOR_TEACHER = "coursesInTeacherProfile";
 
 
-    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService, UserService userService,
+    public TeacherController(PasswordEncoder bcryptPasswordEncoder, TeacherService teacherService, AcademicClassService academicClassService, UserService userService,
                              AcademicCourseService academicCourseService, ImageService imageService, SubjectService subjectService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.teacherService = teacherService;
+        this.academicClassService = academicClassService;
         this.userService = userService;
         this.academicCourseService = academicCourseService;
         this.imageService = imageService;
         this.subjectService = subjectService;
     }
-
 
     @GetMapping
     @Operation(summary = "Gets the list of teachers and shows on admin's dashboard")
@@ -139,6 +140,13 @@ public class TeacherController {
         imageService.deleteImage(picUrl);
         teacherService.deletePic(teacherById.getId());
         return "redirect:/teachers/" + id + "/profile";
+    }
+
+    @GetMapping("/{id}/classes")
+    public String classesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute("teachersClasses", academicClassService.findAcademicClassByTeacherId(id));
+        return "classesInTeacherProfile";
     }
 
     @GetMapping("/{id}/courses")
