@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/parents")
@@ -56,17 +58,20 @@ public class ParentController {
     public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto,
                              BindingResult bindingResult,
                              @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
-                             Model model) {
-        boolean formatPic = false;
-        boolean sizePic = false;
-        String picName = multipartFile.getOriginalFilename().toLowerCase();
-
-        if (picName.equals("")) {
-            sizePic = true;
-            model.addAttribute("size", "size is not valid");
-        }else if (!picName.endsWith(".jpg") && !picName.endsWith(".JPEG") && !picName.endsWith(".png")) {
-            formatPic = true;
-            model.addAttribute("message", "format is not valid");
+                             @RequestParam(value = "status", required = false) String status,
+                             Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            if (multipartFile.getBytes().length == 2097152) {
+                model.addAttribute("size", "File size exceeds maximum 2mb limit");
+            }
+            if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
+                    && !multipartFile.getContentType().equals("image/jpeg")
+                    && !multipartFile.getContentType().equals("image/png")) {
+                model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
+            }
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
 
         model.addAttribute("parents", parentService.findAll());
@@ -79,8 +84,8 @@ public class ParentController {
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
                 || model.containsAttribute("duplicated")
-                || formatPic
-                || sizePic) {
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
 
             return "parentSection";
         }

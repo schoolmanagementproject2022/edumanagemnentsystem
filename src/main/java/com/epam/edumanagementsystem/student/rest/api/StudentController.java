@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/students")
@@ -72,7 +74,22 @@ public class StudentController {
     public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
                                        @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
-                                       Model model) {
+                                       @RequestParam(value = "status", required = false) String status,
+                                       Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            if (multipartFile.getBytes().length == 2097152) {
+                model.addAttribute("size", "File size exceeds maximum 2mb limit");
+            }
+            if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
+                    && !multipartFile.getContentType().equals("image/jpeg")
+                    && !multipartFile.getContentType().equals("image/png")) {
+                model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
+            }
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
+
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
@@ -87,7 +104,9 @@ public class StudentController {
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));

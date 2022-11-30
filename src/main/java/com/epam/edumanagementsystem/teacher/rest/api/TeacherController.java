@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/teachers")
@@ -56,7 +58,22 @@ public class TeacherController {
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
                                 @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
-                                Model model) {
+                                @RequestParam(value = "status", required = false) String status,
+                                Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            if (multipartFile.getBytes().length == 2097152) {
+                model.addAttribute("size", "File size exceeds maximum 2mb limit");
+            }
+            if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
+                    && !multipartFile.getContentType().equals("image/jpeg")
+                    && !multipartFile.getContentType().equals("image/png")) {
+                model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
+            }
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
+
         model.addAttribute("teachers", teacherService.findAll());
         if (!result.hasFieldErrors("email")) {
             userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
@@ -66,7 +83,9 @@ public class TeacherController {
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
 
             return TEACHER_HTML;
         }

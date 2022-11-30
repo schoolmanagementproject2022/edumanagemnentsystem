@@ -27,7 +27,7 @@ public class ImageController {
     )
     public @ResponseBody
     byte[] getImage(@RequestParam("name") String imageName) throws IOException {
-        InputStream in = new FileInputStream(upload_path + File.separator + imageName);
+        InputStream in = new FileInputStream(upload + File.separator + imageName);
         return IOUtils.toByteArray(in);
     }
 
