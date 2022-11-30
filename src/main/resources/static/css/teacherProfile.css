@@ -162,7 +162,7 @@ body {
 
 .p-item {
     margin-top: -13%;
-    font-size: 20px;
+    font-size: 17px;
     display: block;
     color: #555555;
     padding: 10px;
@@ -644,34 +644,6 @@ form {
     margin-left: 3%;
 }
 
-.popup-container-image-format .button-save-format {
-    position: absolute;
-    color: #A30014;
-    float: right;
-    margin-top: 38%;
-    margin-left: -10%;
-    width: 83px;
-    display: block;
-    height: 30px;
-    border-radius: 4px;
-    border-width: 0.5px;
-    cursor: pointer;
-}
-
-.popup-container-image-format {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    background-color: #F2F2F2;
-    transform: translate(-50%, -50%);
-    display: none;
-    width: 412px;
-    height: 281px;
-    padding: 20px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
 list {
     width: 100%;
     padding: 0px;
@@ -917,7 +889,7 @@ list {
 }
 
 .successText {
-    font-size: 131%;
+    font-size: 112%;
     white-space: nowrap;
     margin-top: 4%;
 }
