@@ -3,7 +3,7 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.Validation;
 import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +55,7 @@ public class AdminController {
             userService.checkDuplicationOfEmail(adminDto.getEmail(), model);
             EmailValidation.validate(adminDto.getEmail(), model);
         }
-        PasswordValidation.validatePassword(adminDto.getPassword(), model);
+        Validation.validatePassword(adminDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")

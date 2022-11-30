@@ -12,7 +12,7 @@ import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.Validation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -77,14 +77,7 @@ public class StudentController {
                                        @RequestParam(value = "status", required = false) String status,
                                        Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            if (multipartFile.getBytes().length == 2097152) {
-                model.addAttribute("size", "File size exceeds maximum 2mb limit");
-            }
-            if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
-                    && !multipartFile.getContentType().equals("image/jpeg")
-                    && !multipartFile.getContentType().equals("image/png")) {
-                model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
-            }
+            Validation.validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
@@ -99,7 +92,7 @@ public class StudentController {
             userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
             EmailValidation.validate(studentDto.getEmail(), model);
         }
-        PasswordValidation.validatePassword(studentDto.getPassword(), model);
+        Validation.validatePassword(studentDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")

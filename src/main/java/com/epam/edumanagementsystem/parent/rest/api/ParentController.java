@@ -5,7 +5,7 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.Validation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -61,14 +61,7 @@ public class ParentController {
                              @RequestParam(value = "status", required = false) String status,
                              Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            if (multipartFile.getBytes().length == 2097152) {
-                model.addAttribute("size", "File size exceeds maximum 2mb limit");
-            }
-            if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
-                    && !multipartFile.getContentType().equals("image/jpeg")
-                    && !multipartFile.getContentType().equals("image/png")) {
-                model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
-            }
+            Validation.validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
@@ -79,7 +72,7 @@ public class ParentController {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             EmailValidation.validate(parentDto.getEmail(), model);
         }
-        PasswordValidation.validatePassword(parentDto.getPassword(), model);
+        Validation.validatePassword(parentDto.getPassword(), model);
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
