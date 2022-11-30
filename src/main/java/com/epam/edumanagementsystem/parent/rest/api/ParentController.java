@@ -19,10 +19,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/parents")
+@MultipartConfig(maxFileSize = 2 * 2048 * 2048, maxRequestSize = 2 * 2048 * 2048)
+@ControllerAdvice
 public class ParentController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -54,6 +57,18 @@ public class ParentController {
                              BindingResult bindingResult,
                              @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                              Model model) {
+        boolean formatPic = false;
+        boolean sizePic = false;
+        String picName = multipartFile.getOriginalFilename().toLowerCase();
+
+        if (picName.equals("")) {
+            sizePic = true;
+            model.addAttribute("size", "size is not valid");
+        }else if (!picName.endsWith(".jpg") && !picName.endsWith(".JPEG") && !picName.endsWith(".png")) {
+            formatPic = true;
+            model.addAttribute("message", "format is not valid");
+        }
+
         model.addAttribute("parents", parentService.findAll());
         if (!bindingResult.hasFieldErrors("email")) {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
@@ -63,7 +78,10 @@ public class ParentController {
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || formatPic
+                || sizePic) {
+
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
@@ -119,5 +137,6 @@ public class ParentController {
         parentService.deletePic(parentById.getId());
         return "redirect:/parents/" + id + "/profile";
     }
+
 
 }
