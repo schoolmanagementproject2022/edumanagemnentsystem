@@ -192,21 +192,6 @@ class StudentServiceImplTest {
         assertThrows(UserNotFoundException.class, () -> studentService.findByAcademicClassId(null));
     }
 
-
-    @Test
-    void testFindStudentsByParentId() {
-        when(studentRepository.findAll()).thenReturn(new ArrayList<>());
-        assertTrue(studentService.findStudentsByParentId(123L).isEmpty());
-        verify(studentRepository).findAll();
-    }
-
-    @Test
-    void testFindStudentsByParentIdNegativeCase() {
-        when(studentRepository.findAll()).thenThrow(new ObjectIsNull("Not all who wander are lost"));
-        assertThrows(ObjectIsNull.class, () -> studentService.findStudentsByParentId(123L));
-        verify(studentRepository).findAll();
-    }
-
     @Test
     void testFindByParentIdStudentsNegativeCase() {
         Assertions.assertThrows(UserNotFoundException.class, () -> studentService.findStudentsByParentId(null));
