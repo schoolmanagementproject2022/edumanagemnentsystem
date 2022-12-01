@@ -18,4 +18,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query(nativeQuery = true, value = "UPDATE student SET pic_url = NULL WHERE id =(?1);")
     void updateStudentPicUrl(Long id);
 
+    List<Student> findAllByParentId(Long parentId);
 }

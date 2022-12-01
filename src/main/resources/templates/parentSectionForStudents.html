@@ -21,9 +21,11 @@
                    th:text="${parent.getNameAndSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Linked students'}"></a>
             </div>
-            <div th:if="${students.size() != 0}" class="list-p-item" th:each="student: ${students}">
+            <div class="list-p-item">
+            <div th:if="${students.size() != 0}" th:each="student: ${students}">
                 <a class="item" th:text="${student.getNameAndSurname()}"
                    th:href="@{'/students/' + ${student.getId()} + '/profile'}"></a>
+            </div>
             </div>
             <div th:if="${students.size() == 0}">
                 <p class="student-show-top">This parent isn't yet attached to a student </p>
