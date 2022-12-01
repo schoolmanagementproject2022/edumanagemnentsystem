@@ -26,6 +26,8 @@
     </script>
 
     <script>
+
+
         $(function () {
             $("#startDate").datepicker({
                 dateFormat: "dd-mm-yy",
@@ -35,10 +37,15 @@
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
                 onSelect: function (dateStr) {
-                    var date = $(this).datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() + 1);
-                    }
+                    var date = $("#startDate").datepicker('getDate');
+                    // if (date) {
+                    //     date.setDate(date.getDate() + 1);
+                    // }
+
+
+                        localStorage.setItem("startDate", date);
+
+
                     $('#endDate').datepicker('option', 'minDate', date);
                 }
             });
@@ -58,6 +65,14 @@
                 }
 
             });
+
+            window.onbeforeunload = closingCode;
+            function closingCode(){
+                localStorage.removeItem("startDate");
+                console.log('CLOSED');
+                return null;
+            }
+
         });
     </script>
 
@@ -731,26 +746,20 @@
 
 <script>
 
-    window.onload = function () {
-        var start = sessionStorage.getItem('startDate');
-        var end = sessionStorage.getItem('endDate');
-        if (start !== null) {
-            document.getElementById("startDate").value = start;
-        }
-        if (end !== null) {
-            document.getElementById("endDate").value = end;
-        }
-    }
-    window.onbeforeunload = function () {
-        sessionStorage.removeItem("startDate");
-        sessionStorage.removeItem("endDate");
+    // const moment = require("moment");
+    // //current Date
+    // var date = moment().format("YYYY-MM-DD");
+    // //selecting input date
+    // var datepick = document.getElementById("datepicker");
+    // var start = document.getElementById("startDate").value;
+    // if (start !== "") {
+    //     document.cookie = "startDate=" + start;
+    // } else {
+    //     document.cookie = "startDate=" + start;
+    // }
+    var saved_startDate = localStorage.getItem("startDate");
+    document.getElementById('startDate').value = saved_startDate;
 
-        var start = document.getElementById("startDate").value;
-        var end = document.getElementById("endDate").value;
-
-        sessionStorage.setItem("startDate", start);
-        sessionStorage.setItem("endDate", end);
-    }
 </script>
 
 </body>
