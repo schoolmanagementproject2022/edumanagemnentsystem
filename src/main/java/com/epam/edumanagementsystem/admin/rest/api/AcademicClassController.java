@@ -94,7 +94,7 @@ public class AcademicClassController {
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingClass", new AcademicClass());
-        model.addAttribute("allCourses", allCourses);
+//        model.addAttribute("allCourses", allCourses);
         if (academicCoursesInClass.size() == 0) {
             for (AcademicCourse course : allCourses) {
                 if (course.getTeacher().size() > 0) {
@@ -127,7 +127,7 @@ public class AcademicClassController {
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
-        model.addAttribute("existingClass", new AcademicClass());
+//        model.addAttribute("existingClass", new AcademicClass());
         for (AcademicCourse course : allCourses) {
             if (!academicCoursesInClass.contains(course)) {
                 if (course.getTeacher().size() > 0)
@@ -138,7 +138,7 @@ public class AcademicClassController {
         model.addAttribute("coursesForSelect", result);
         model.addAttribute("academicCourseSet", academicCoursesInClass);
 
-        if (academicClass.getAcademicCourseSet().size() == 0 && academicClass.getTeacher() == null) {
+        if (academicClass.getAcademicCourseSet().size() == 0 && academicClass.getTeacher().size() == 0) {
             model.addAttribute("blank", "Please, select the required fields");
             model.addAttribute("blankClass", "Please, select the required fields");
             return "academicCourseForAcademicClass";
@@ -146,7 +146,7 @@ public class AcademicClassController {
         } else if (academicClass.getAcademicCourseSet().size() == 0) {
             model.addAttribute("blankClass", "Please, select the required fields");
             return "academicCourseForAcademicClass";
-        } else if (academicClass.getTeacher() == null) {
+        } else if (academicClass.getTeacher() == null || academicClass.getTeacher().size() == 0) {
             model.addAttribute("blank", "Please, select the required fields");
             return "academicCourseForAcademicClass";
         } else {

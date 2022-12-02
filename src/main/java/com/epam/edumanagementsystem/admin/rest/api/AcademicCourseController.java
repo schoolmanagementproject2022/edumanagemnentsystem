@@ -117,7 +117,6 @@ public class AcademicCourseController {
         Set<Teacher> allTeachersByAcademicCourseName = findAcademicCourseByName.getTeacher();
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
         model.addAttribute("teachersToSelect", allTeachersByAcademicCourseName);
-        model.addAttribute("existingCourse", findAcademicCourseByName);
         model.addAttribute("academicClasses", allAcademicClasses);
         model.addAttribute("existingClasses", academicClassesInCourse);
         model.addAttribute("newClass", new AcademicClass());
