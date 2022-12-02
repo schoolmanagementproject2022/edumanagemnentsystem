@@ -58,7 +58,6 @@ function PopUpShowFriday() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
 
-
 function PopUpShowSunday() {
     obj.refreshValue = "notToReload";
     console.log("Changed to notToReload");

@@ -34,13 +34,9 @@
                 yearRange: "-0:+10",
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function (dateStr) {
+                onSelect: function () {
                     var date = $("#startDate").datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() + 1);
-                    }
                     localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
-                    $('#endDate').datepicker('option', 'minDate', date);
                 }
             });
             $("#endDate").datepicker({
@@ -50,25 +46,21 @@
                 yearRange: "-0:+10",
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function (selectedDate) {
+                onSelect: function () {
                     var date = $("#endDate").datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() - 1);
-                    }
                     localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
-                    $('#startDate').datepicker('option', 'maxDate', date || 0);
                 }
             });
         });
     </script>
 
     <script>
+
         const obj = {
             refreshValue: "toReload",
             get getValue() {
                 return this.refreshValue;
             },
-
             set setValue(name) {
                 this.refreshValue = name;
             },
