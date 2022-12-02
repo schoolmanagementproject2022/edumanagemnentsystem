@@ -116,4 +116,18 @@ function clearErrorMessageOnPopUpClose() {
     }
 }
 
-
+window.onload = function () {
+    var start = localStorage.getItem('startDate');
+    var end = localStorage.getItem('endDate');
+    if (start !== null) {
+        document.getElementById("startDate").value = start;
+    }
+    if (end !== null) {
+        document.getElementById("endDate").value = end;
+    }
+}
+window.onbeforeunload = function () {
+    localStorage.removeItem("startDate");
+    localStorage.removeItem("endDate");
+    return null;
+}

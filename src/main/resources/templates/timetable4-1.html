@@ -26,8 +26,6 @@
     </script>
 
     <script>
-
-
         $(function () {
             $("#startDate").datepicker({
                 dateFormat: "dd-mm-yy",
@@ -38,14 +36,10 @@
                 maxDate: "+0D +0M +1Y",
                 onSelect: function (dateStr) {
                     var date = $("#startDate").datepicker('getDate');
-                    // if (date) {
-                    //     date.setDate(date.getDate() + 1);
-                    // }
-
-
-                        localStorage.setItem("startDate", date);
-
-
+                    if (date) {
+                        date.setDate(date.getDate() + 1);
+                    }
+                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
                     $('#endDate').datepicker('option', 'minDate', date);
                 }
             });
@@ -57,22 +51,14 @@
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
                 onSelect: function (selectedDate) {
-                    var date = $(this).datepicker('getDate');
+                    var date = $("#endDate").datepicker('getDate');
                     if (date) {
                         date.setDate(date.getDate() - 1);
                     }
+                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
                     $('#startDate').datepicker('option', 'maxDate', date || 0);
                 }
-
             });
-
-            window.onbeforeunload = closingCode;
-            function closingCode(){
-                localStorage.removeItem("startDate");
-                console.log('CLOSED');
-                return null;
-            }
-
         });
     </script>
 
@@ -742,25 +728,6 @@
         </form>
     </div>
 </div>
-
-
-<script>
-
-    // const moment = require("moment");
-    // //current Date
-    // var date = moment().format("YYYY-MM-DD");
-    // //selecting input date
-    // var datepick = document.getElementById("datepicker");
-    // var start = document.getElementById("startDate").value;
-    // if (start !== "") {
-    //     document.cookie = "startDate=" + start;
-    // } else {
-    //     document.cookie = "startDate=" + start;
-    // }
-    var saved_startDate = localStorage.getItem("startDate");
-    document.getElementById('startDate').value = saved_startDate;
-
-</script>
 
 </body>
 </html>
