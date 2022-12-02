@@ -8,7 +8,7 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.Validation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -66,17 +66,27 @@ public class TeacherController {
     public String createTeacher(@ModelAttribute("teacher") @Valid TeacherDto teacherDto,
                                 BindingResult result,
                                 @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
+                                @RequestParam(value = "status", required = false) String status,
                                 Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            Validation.validateImage(multipartFile, model);
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
+
         model.addAttribute("teachers", teacherService.findAll());
         if (!result.hasFieldErrors("email")) {
             userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
             EmailValidation.validate(teacherDto.getEmail(), model);
         }
-        PasswordValidation.validatePassword(teacherDto.getPassword(), model);
+        Validation.validatePassword(teacherDto.getPassword(), model);
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
 
             return TEACHER_HTML;
         }

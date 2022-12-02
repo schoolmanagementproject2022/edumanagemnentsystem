@@ -60,11 +60,12 @@
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
-        <form id="form" class="form" th:method="POST" th:action="@{/students}" th:object="${student}">
+        <form id="form" class="form" th:method="POST" enctype="multipart/form-data" th:action="@{/students}" th:object="${student}" onsubmit="return filevalidation()">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
-            or ${invalidEmail} != null or ${invalidPassword}!=null">
+            or ${invalidEmail} != null or ${invalidPassword}!=null or ${formatValidationMessage}!=null or ${size}!=null">
                 PopUpShow();
             </script>
+            <input type="hidden" id="status" name="status" th:value="null">
 
             <div class="popup-wrapper">
                 <div class="half">
@@ -149,7 +150,16 @@
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
-                    <div class="halfSection">
+                    <div style="margin-top: 4%">
+                        <label class="popup-label-title">Image</label>
+                        <input type="file" accept="image/png,image/jpeg,image/jpg" class="form_input" id="picture"
+                               th:name="picture"/>
+                        <div class="error">
+                            <p id="errorPic" th:text="${formatValidationMessage}"></p>
+                            <p  th:text="${size}"></p>
+                        </div>
+                    </div>
+                    <div class="halfSection" style="margin-top: 2%">
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
                         <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
@@ -228,4 +238,20 @@
         shortString('.short');
     };
 </script>
+
+<script>
+    filevalidation = () => {
+        const fi = document.getElementById('picture');
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return;
+        }
+
+        if (fi.files[0].size> 2*1024*1024) {
+            document.getElementById("status").value = "validationFail"
+            fi.value = '';
+            return;
+        }
+    }
+</script>
+
 </html>

@@ -86,7 +86,7 @@
                         <label for="file-input" width="150px" height="150px">
                             <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
                              color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
-                            <p class="p-item" style="padding-left: 26%;">PNG, JPEG</p>
+                            <p class="p-item" style="padding-left: 18%;">PNG, JPEG, JPG</p>
                         </label>
                         <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file"
                                onchange="filevalidation()">
@@ -254,7 +254,7 @@
 <div class="popup-container-image" id="popup-container-image">
     <div class="popup-wrapper" id="popup-wrapper">
         <div class="half">
-            <p class="successText">File size exceeds maximum 2mb limit</p>
+            <p class="successText" style="margin-left: 12%;">File size exceeds maximum 2mb limit</p>
         </div>
         <div name="btn-div">
             <button type="button" class="button-save" id="submit-image" onclick="PopUpHide()"><b>OK</b></button>
@@ -265,8 +265,7 @@
 <div class="popup-container-image" id="popup-container-image-delete">
     <div class="popup-wrapper" id="popup-wrapper">
         <div class="half">
-            <p style="margin-left: -2%; font-size: 109%" class="successText">Are you sure you want to delete profile
-                picture?</p>
+            <p style="margin-left: 19%; font-size: 109%" class="successText">Do you want to delete this image?</p>
         </div>
         <div>
             <form th:action="@{'/students/' + ${existingStudent.id} + '/image/delete'}" method="get">
@@ -284,7 +283,7 @@
 <div class="popup-container-image-format" id="popup-container-image-format">
     <div class="popup-wrapper" id="popup-wrapper-format">
         <div class="half">
-            <p class="successText">Only PNG and JPEG files are allowed.</p>
+            <p class="successText">Only PNG, JPEG and JPG files are allowed.</p>
         </div>
         <div name="btn-div">
             <button type="button" class="button-save-format" id="submit-image-format" onclick="PopUpHide()"><b>OK</b>

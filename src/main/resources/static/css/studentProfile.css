@@ -488,7 +488,7 @@ form {
 
 .p-item {
     margin-top: -13%;
-    font-size: 20px;
+    font-size: 17px;
     display: block;
     color: #555555;
     padding: 10px;
@@ -838,7 +838,7 @@ list {
 }
 
 .successText {
-    font-size: 131%;
+    font-size: 112%;
     white-space: nowrap;
     margin-top: 4%;
 }

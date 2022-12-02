@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface StudentService {

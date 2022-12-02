@@ -150,7 +150,7 @@ body {
 
 .p-item {
     margin-top: -13%;
-    font-size: 20px;
+    font-size: 17px;
     display: block;
     color: #555555;
     padding: 10px;
@@ -650,6 +650,19 @@ form {
     margin-left: 3%;
 }
 
+list {
+    width: 100%;
+    padding: 0px;
+    background-color: #555555;
+    height: 65vh;
+    margin-top: 10px;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
 .popup-container-image-format .button-save-format {
     position: absolute;
     color: #A30014;
@@ -900,7 +913,7 @@ form {
 }
 
 .successText {
-    font-size: 131%;
+    font-size: 112%;
     white-space: nowrap;
     margin-top: 4%;
 }

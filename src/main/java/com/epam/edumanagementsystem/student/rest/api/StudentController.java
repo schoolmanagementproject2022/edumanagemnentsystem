@@ -9,9 +9,10 @@ import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.Validation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -70,7 +72,16 @@ public class StudentController {
     @Operation(summary = "Creates a new student and saves in DB")
     public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
-                                       Model model) {
+                                       @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
+                                       @RequestParam(value = "status", required = false) String status,
+                                       Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            Validation.validateImage(multipartFile, model);
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
+
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
@@ -80,16 +91,22 @@ public class StudentController {
             userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
             EmailValidation.validate(studentDto.getEmail(), model);
         }
-        PasswordValidation.validatePassword(studentDto.getPassword(), model);
+        Validation.validatePassword(studentDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
-        studentService.create(studentDto);
+        Student student = studentService.create(studentDto);
+
+        if (!multipartFile.isEmpty()) {
+            studentService.addProfilePicture(student, multipartFile);
+        }
         return "redirect:/students";
     }
 

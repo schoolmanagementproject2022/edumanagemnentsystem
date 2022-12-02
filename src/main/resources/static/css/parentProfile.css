@@ -184,6 +184,17 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+.p-item {
+    margin-top: -13%;
+    font-size: 17px;
+    display: block;
+    color: #555555;
+    padding: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
 .popup-container-image {
     position: absolute;
     top: 50%;
@@ -202,8 +213,8 @@ input[type="checkbox"] {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 38%;
-    margin-left: -10%;
+    margin-top: 31%;
+    margin-left: 31%;
     width: 83px;
     display: block;
     height: 30px;
@@ -251,8 +262,8 @@ input[type="checkbox"] {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 38%;
-    margin-left: -10%;
+    margin-top: 31%;
+    margin-left: 32%;
     width: 83px;
     display: block;
     height: 30px;
@@ -262,9 +273,9 @@ input[type="checkbox"] {
 }
 
 .successText {
-    font-size: 131%;
+    font-size: 112%;
     white-space: nowrap;
-    margin-top: 4%;
+    margin-top: 20%;
 }
 
 .close-btn:hover {
