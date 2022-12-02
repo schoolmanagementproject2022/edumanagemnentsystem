@@ -4,8 +4,10 @@ import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.PasswordValidation;
+import com.epam.edumanagementsystem.util.Validation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -19,10 +21,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
+import java.util.List;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/parents")
+@MultipartConfig(maxFileSize = 2 * 2048 * 2048, maxRequestSize = 2 * 2048 * 2048)
+@ControllerAdvice
 public class ParentController {
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -30,13 +37,16 @@ public class ParentController {
     private final UserService userService;
     private final ImageService imageService;
 
+    private final StudentService studentService;
+
     @Autowired
     public ParentController(PasswordEncoder bcryptPasswordEncoder, ParentService parentService,
-                            UserService userService, ImageService imageService) {
+                            UserService userService, ImageService imageService, StudentService studentService) {
         this.bcryptPasswordEncoder = bcryptPasswordEncoder;
         this.parentService = parentService;
         this.userService = userService;
         this.imageService = imageService;
+        this.studentService = studentService;
     }
 
     @GetMapping()
@@ -50,26 +60,44 @@ public class ParentController {
 
     @PostMapping()
     @Operation(summary = "Creates a new parent and saves in DB")
-    public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto, BindingResult bindingResult,
-                             Model model) {
+    public String saveParent(@Valid @ModelAttribute(value = "parent") ParentDto parentDto,
+                             BindingResult bindingResult,
+                             @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
+                             @RequestParam(value = "status", required = false) String status,
+                             Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            Validation.validateImage(multipartFile, model);
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
+
         model.addAttribute("parents", parentService.findAll());
         if (!bindingResult.hasFieldErrors("email")) {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             EmailValidation.validate(parentDto.getEmail(), model);
         }
-        PasswordValidation.validatePassword(parentDto.getPassword(), model);
+        Validation.validatePassword(parentDto.getPassword(), model);
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
+
             return "parentSection";
         }
         parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
-        parentService.save(parentDto);
+        Parent parent = parentService.save(parentDto);
+
+        if (!multipartFile.isEmpty()) {
+            parentService.addProfilePicture(parent, multipartFile);
+        }
         return "redirect:/parents";
     }
 
     @GetMapping("/{id}/profile")
+    @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         Parent parent = parentService.findById(id).get();
         model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
@@ -77,7 +105,16 @@ public class ParentController {
         return "parentProfile";
     }
 
+    @GetMapping("/{id}/students")
+    public String openParentOfStudent(@PathVariable("id") Long id, Model model) {
+        List<StudentDto> studentsByParentId = studentService.findStudentsByParentId(id);
+        model.addAttribute("students", studentsByParentId);
+        model.addAttribute("parent", parentService.findById(id).get());
+        return "parentSectionForStudents";
+    }
+
     @PostMapping("/{id}/profile")
+    @Operation(summary = "Edits selected parent's profile")
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
         if (!bindingResult.hasFieldErrors("email")) {
@@ -97,6 +134,7 @@ public class ParentController {
     }
 
     @PostMapping("/{id}/image/add")
+    @Operation(summary = "Adds image to selected parent's profile")
     public String addPic(@ModelAttribute("existingParent") Parent parent, @PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
         Parent parentById = parentService.findById(id).get();
@@ -106,6 +144,7 @@ public class ParentController {
     }
 
     @GetMapping("/{id}/image/delete")
+    @Operation(summary = "Deletes image to selected parent's profile")
     public String deletePic(@PathVariable("id") Long id) {
         Parent parentById = parentService.findById(id).get();
         String picUrl = parentById.getPicUrl();

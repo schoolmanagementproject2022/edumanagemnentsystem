@@ -128,8 +128,8 @@ INSERT INTO teacher (name, surname, user_id, password)
 VALUES ('Gayush', 'Poghosyan', (SELECT id FROM user_table WHERE email='gayushPoghosyan@gmail.com'),
         '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC');
 
-INSERT INTO academic_class (class_number, classroom_teacher_id)
-VALUES ('1A', (SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email='gayushPoghosyan@gmail.com')));
+INSERT INTO academic_class (class_number)
+VALUES ('1A');
 
 INSERT INTO student (name, surname, user_id, address, date, gender, blood_group, password, academic_class_id)
 VALUES ('Student', 'Studentyan', (SELECT id FROM user_table WHERE email='student@gmail.com'), 'Gyumri',

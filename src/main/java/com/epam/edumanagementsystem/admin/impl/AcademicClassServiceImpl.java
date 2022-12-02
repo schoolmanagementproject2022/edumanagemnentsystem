@@ -24,7 +24,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public AcademicClass create(AcademicClass academicClass) {
-        if(academicClass == null){
+        if (academicClass == null) {
             throw new NullPointerException("Please, fill the required fields");
         }
         return academicClassRepository.save(academicClass);
@@ -63,7 +63,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
                 updateAcademicClass.getTeacher().add(teachers);
         }
 
-        if (academicClass.getClassroomTeacher() !=null){
+        if (academicClass.getClassroomTeacher() != null) {
             updateAcademicClass.setClassroomTeacher(academicClass.getClassroomTeacher());
         }
 
@@ -72,7 +72,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public List<AcademicCourse> findAllAcademicCourses(String name) {
-        List<AcademicCourse> listOfCourses= new ArrayList<>();
+        List<AcademicCourse> listOfCourses = new ArrayList<>();
         Set<AcademicCourse> academicCourseSet = findByName(name).getAcademicCourseSet();
         for (AcademicCourse course : academicCourseSet) {
             listOfCourses.add(course);
@@ -101,5 +101,10 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     public List<AcademicClassDto> findAll() {
         List<AcademicClass> academicClassList = academicClassRepository.findAll();
         return AcademicClassMapper.academicClassDtoList(academicClassList);
+    }
+
+    @Override
+    public Set<AcademicClass> findAcademicClassByTeacherId(Long id) {
+        return academicClassRepository.findAcademicClassByTeacherId(id);
     }
 }

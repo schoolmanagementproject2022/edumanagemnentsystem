@@ -25,4 +25,6 @@ public interface AcademicClassService {
     Set<Teacher> findAllTeachers(String name);
 
     Set<Teacher> findAllTeacher();
+
+    Set<AcademicClass> findAcademicClassByTeacherId(Long id);
 }

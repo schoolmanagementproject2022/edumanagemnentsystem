@@ -12,7 +12,7 @@ public class CoursesForTimetableDto {
 
     private Long id;
 
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = "There is no new selection.")
     private AcademicCourse academicCourse;
 
     @NotNull(message = "Please, fill the required fields")

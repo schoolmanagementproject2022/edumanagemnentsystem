@@ -107,5 +107,4 @@ public class TeacherServiceImpl implements TeacherService {
     public void deletePic(Long id) {
         teacherRepository.updateTeacherPicUrl(id);
     }
-
 }

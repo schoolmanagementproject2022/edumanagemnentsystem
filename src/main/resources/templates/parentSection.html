@@ -33,10 +33,11 @@
     <div class="popup-container" id="popup-container">
         <label class="close-btn" onclick="PopUpHide()" title="close">×</label>
         <h1>New Parent</h1>
-        <form id="form" th:action="@{/parents}" method="POST" th:object="${parent}">
+        <form id="form" th:action="@{/parents}" method="POST" enctype="multipart/form-data" th:object="${parent}" onsubmit="return filevalidation()">
 
+            <input type="hidden" id="status" name="status" th:value="null">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
-             or ${invalidEmail}!=null or ${invalidPassword}!=null or ${blank}!=null">
+             or ${invalidEmail}!=null or ${invalidPassword}!=null or ${blank}!=null or ${formatValidationMessage}!=null or ${size}!=null">
                 PopUpShow();
             </script>
 
@@ -82,15 +83,38 @@
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
+                    <div style="margin-top: 6%">
+                        <label class="popup-label-title">Image</label>
+                        <input type="file" accept="image/png,image/jpeg,image/jpg" class="form_input" id="picture"
+                               th:name="picture"/>
+                        <div class="error">
+                            <p id="errorPic" th:text="${formatValidationMessage}"></p>
+                            <p  th:text="${size}"></p>
+                        </div>
+                    </div>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
         </form>
+
     </div>
 </div>
+<script>
+filevalidation = () => {
+    const fi = document.getElementById('picture');
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return;
+        }
 
+		if (fi.files[0].size> 2*1024*1024) {
+		    document.getElementById("status").value = "validationFail"
+            fi.value = '';
+            return;
+		}
+}
+</script>
 </body>
 
 </html>

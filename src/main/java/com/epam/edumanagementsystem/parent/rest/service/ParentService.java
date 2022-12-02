@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

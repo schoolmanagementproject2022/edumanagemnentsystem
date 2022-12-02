@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface StudentService {
@@ -25,8 +26,11 @@ public interface StudentService {
 
     StudentDto findByStudentId(Long studentId);
 
+    List<StudentDto> findStudentsByParentId(Long parentId);
+
     void addProfilePicture(Student student, MultipartFile multipartFile);
 
     void deletePic(Long id);
 
+    List<StudentDto> studentsWithoutConnectionWithClass();
 }

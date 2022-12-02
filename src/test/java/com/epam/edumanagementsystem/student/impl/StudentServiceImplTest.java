@@ -14,6 +14,7 @@ import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -189,6 +190,11 @@ class StudentServiceImplTest {
     @Test
     void testFindByAcademicClassIdNegativeCase() {
         assertThrows(UserNotFoundException.class, () -> studentService.findByAcademicClassId(null));
+    }
+
+    @Test
+    void testFindByParentIdStudentsNegativeCase() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> studentService.findStudentsByParentId(null));
     }
 
     @Test
