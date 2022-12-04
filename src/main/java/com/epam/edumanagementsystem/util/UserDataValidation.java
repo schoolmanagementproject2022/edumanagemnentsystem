@@ -6,10 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Validation {
+public class UserDataValidation {
 
     private static final String PASSWORD_PATTERN
             = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&])[A-Za-z\\\\d()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&]{9,50}";
+    private static final String PATTERN_EMAIL
+            = "^([^! #$%&*+\\-/=?^_`{|\\.](?!.*[!#$%&*+-/=?^_`{|]{2})[a-zA-Z0-9!#$%&*+-/=?^_`{|]{0,50}[^! #$%&*+\\-/=?^_`{|\\.@]+)@([a-zA-Z0-9\\-]{1,50})\\.([a-z]{2,50})$";
 
     public static void validatePassword(String password, Model model) {
         if (password.isBlank()) {
@@ -18,6 +20,15 @@ public class Validation {
             model.addAttribute("invalidPassword", "(Password length > 9, must contain" +
                     " upper and lower case, Latin symbols, numbers, and special characters");
         }
+    }
+
+    public static boolean validateEmail(String email) {
+        if (!email.isBlank()) {
+            if (!email.matches(PATTERN_EMAIL)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void validateImage(MultipartFile multipartFile, Model model) throws IOException {
@@ -30,4 +41,5 @@ public class Validation {
             model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
         }
     }
+
 }

@@ -2,8 +2,8 @@ package com.epam.edumanagementsystem.admin.rest.api;
 
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
-import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.Validation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
+import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -51,16 +51,30 @@ public class AdminController {
                            BindingResult result, Model model) {
 
         model.addAttribute("admins", adminService.findAllAdmins());
-        if (!result.hasFieldErrors("email")) {
-            userService.checkDuplicationOfEmail(adminDto.getEmail(), model);
-            EmailValidation.validate(adminDto.getEmail(), model);
+        if (InputFieldsValidation.validateInputFieldSize(adminDto.getUsername())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
         }
-        Validation.validatePassword(adminDto.getPassword(), model);
+        if (InputFieldsValidation.validateInputFieldSize(adminDto.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(adminDto.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+
+        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+            userService.checkDuplicationOfEmail(adminDto.getEmail(), model);
+            if(UserDataValidation.validateEmail(adminDto.getEmail())){
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }        }
+        UserDataValidation.validatePassword(adminDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute("emailSize")
+                || model.containsAttribute("nameSize")
+                || model.containsAttribute("surnameSize")) {
             return "adminSection";
         }
         adminDto.setPassword(bcryptPasswordEncoder.encode(adminDto.getPassword()));

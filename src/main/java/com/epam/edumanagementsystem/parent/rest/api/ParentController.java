@@ -6,8 +6,8 @@ import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
-import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.Validation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
+import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
-import java.util.List;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/parents")
@@ -66,22 +66,36 @@ public class ParentController {
                              @RequestParam(value = "status", required = false) String status,
                              Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            Validation.validateImage(multipartFile, model);
+            UserDataValidation.validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
 
         model.addAttribute("parents", parentService.findAll());
-        if (!bindingResult.hasFieldErrors("email")) {
-            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
-            EmailValidation.validate(parentDto.getEmail(), model);
+        if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
         }
-        Validation.validatePassword(parentDto.getPassword(), model);
+        if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+
+        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+            if (UserDataValidation.validateEmail(parentDto.getEmail())) {
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }
+        }
+        UserDataValidation.validatePassword(parentDto.getPassword(), model);
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")
+                || model.containsAttribute("duplicated") || model.containsAttribute("emailSize")
+                || model.containsAttribute("nameSize")
+                || model.containsAttribute("surnameSize")
                 || model.containsAttribute("size")
                 || model.containsAttribute("formatValidationMessage")) {
 
@@ -117,11 +131,23 @@ public class ParentController {
     @Operation(summary = "Edits selected parent's profile")
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
-        if (!bindingResult.hasFieldErrors("email")) {
+        if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+
+        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
             if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
                 userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             }
-            EmailValidation.validate(parentDto.getEmail(), model);
+            if (UserDataValidation.validateEmail(parentDto.getEmail())) {
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }
         }
 
         if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail")

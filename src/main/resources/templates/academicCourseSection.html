@@ -33,8 +33,8 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Academic course</h1>
         <form id="form" class="form" th:method="POST" th:action="@{/courses}" th:object="${academicCourse}">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
-                                                         or ${invalidURL} != null">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidURL}
+            or ${nameSize}">
                 PopUpShow();
             </script>
 
@@ -54,6 +54,9 @@
                     </div>
                     <div th:if="${invalidURL}!= null" class="error">
                         <p th:text="${invalidURL}"></p>
+                    </div>
+                    <div th:if="${nameSize}!= null" class="error">
+                        <p th:text="${nameSize}"></p>
                     </div>
 
                     <label class="popup-label-title">Subject <span style="color:#A30014">*</span></label>

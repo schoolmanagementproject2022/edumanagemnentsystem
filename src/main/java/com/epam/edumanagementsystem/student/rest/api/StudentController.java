@@ -11,8 +11,8 @@ import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
-import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.Validation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
+import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -76,7 +76,7 @@ public class StudentController {
                                        @RequestParam(value = "status", required = false) String status,
                                        Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            Validation.validateImage(multipartFile, model);
+            UserDataValidation.validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
@@ -87,18 +87,33 @@ public class StudentController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", ParentMapper.toParentListWithoutSaveUser(findAllParents()));
         model.addAttribute("classes", findAllClasses());
-        if (!result.hasFieldErrors("email")) {
-            userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
-            EmailValidation.validate(studentDto.getEmail(), model);
+        if (InputFieldsValidation.validateInputFieldSize(studentDto.getName())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
         }
-        Validation.validatePassword(studentDto.getPassword(), model);
+        if (InputFieldsValidation.validateInputFieldSize(studentDto.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(studentDto.getAddress())) {
+            model.addAttribute("addressSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(studentDto.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+            userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
+            if (UserDataValidation.validateEmail(studentDto.getEmail())) {
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }
+        }
+        UserDataValidation.validatePassword(studentDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")
                 || model.containsAttribute("duplicated")
-                || model.containsAttribute("size")
-                || model.containsAttribute("formatValidationMessage")) {
+                || model.containsAttribute("emailSize") || model.containsAttribute("nameSize")
+                || model.containsAttribute("surnameSize") || model.containsAttribute("addressSize")
+                || model.containsAttribute("size") || model.containsAttribute("formatValidationMessage")) {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
@@ -135,15 +150,30 @@ public class StudentController {
         model.addAttribute("genders", Gender.values());
         model.addAttribute("parents", findAllParents());
         model.addAttribute("classes", findAllClasses());
-        if (!result.hasFieldErrors("email")) {
+        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getName())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getAddress())) {
+            model.addAttribute("addressSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
             if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
                 userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
             }
-            EmailValidation.validate(updatableStudent.getEmail(), model);
+            if (UserDataValidation.validateEmail(updatableStudent.getEmail())) {
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }
         }
 
-        if (result.hasErrors() || model.containsAttribute("invalidEmail") ||
-                model.containsAttribute("duplicated")) {
+        if (result.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")
+                || model.containsAttribute("emailSize") || model.containsAttribute("emailSize")
+                || model.containsAttribute("nameSize") || model.containsAttribute("surnameSize")) {
             return "studentProfile";
         }
         studentService.updateFields(updatableStudent);

@@ -32,6 +32,7 @@ public class Teacher {
     private User user;
 
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, min = 9, message = "Symbols can't be more than 50")
     private String password;
 
     @JsonIgnore

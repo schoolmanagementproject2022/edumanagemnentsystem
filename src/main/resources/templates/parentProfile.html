@@ -103,7 +103,8 @@
               th:object="${parentDto}">
 
             <script th:inline="javascript"
-                    th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated}or ${invalidEmail} or ${emailSize}
+            or ${surnameSize} or ${nameSize}">
                 PopUpShow();
             </script>
 
@@ -118,6 +119,10 @@
                             <div class="error" th:if="${#fields.hasErrors('name')}"
                                  th:errors="*{name}"></div>
                         </div>
+                        <div th:if="${nameSize}!= null" class="error">
+                            <p th:text="${nameSize}"></p>
+                        </div>
+
                         <div class="unit">
                             <label class="popup-label-title" for="surname">Parent surname<span
                                     style="color:#A30014">*</span></label>
@@ -125,7 +130,11 @@
                                    th:value="${#object.surname}">
                             <div class="error" th:if="${#fields.hasErrors('surname')}"
                                  th:errors="*{surname}"></div>
+                            <div th:if="${surnameSize}!= null" class="error">
+                                <p th:text="${surnameSize}"></p>
+                            </div>
                         </div>
+
                         <div class="unit">
                             <label class="popup-label-title" for="email">Parent email<span
                                     style="color:#A30014">*</span></label>
@@ -140,6 +149,9 @@
                             </div>
                             <div th:if="${invalidEmail}!= null" class="error">
                                 <p th:text="${invalidEmail}"></p>
+                            </div>
+                            <div th:if="${emailSize}!= null" class="error">
+                                <p th:text="${emailSize}"></p>
                             </div>
                         </div>
                     </div>
