@@ -47,35 +47,3 @@ function PopUpShowImageFormat() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 }
-
-function chooseTeachersOfConcreteCourse() {
-    let elem = document.getElementById("course")
-    let elem1 = document.getElementById("teacher")
-    elem.addEventListener("click", (item) => {
-        fetch(`http://localhost:8082/teacherByCourseId?teachers=${item.target.value}`).then(data => {
-            return data.json()
-        })
-            .then(elem => {
-                elem1.innerHTML = "";
-                let a = document.createElement("option")
-                a.textContent = "Select teacher"
-                a.setAttribute("disabled", true)
-                a.setAttribute("selected", true)
-                a.setAttribute("hidden", true)
-                elem1.appendChild(a)
-                if (elem.length === 0) {
-                    let a = document.createElement("option")
-                    a.textContent = "Select teacher"
-                    a.setAttribute("disabled", true)
-                    elem1.appendChild(a)
-                }
-                elem.forEach(item => {
-                    let newElem = document.createElement("option")
-                    newElem.textContent = item.name + " " + item.surname
-                    newElem.setAttribute("value", item.id);
-                    elem1.appendChild(newElem)
-                })
-            })
-    })
-}
-

@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
+    <script src="/static/js/concreteCourseTeachersSelection.js"></script>
     <title>Academic Class For Courses</title>
 </head>
 <body>
@@ -35,7 +36,6 @@
             <div th:insert="fragments/fragments :: sidebar2"></div>
         </div>
     </div>
-</div>
 </div>
 <div class="create">
     <div class="popup-container" id="popup-container">
@@ -64,7 +64,7 @@
                     <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
                             style="width: 250px">
                         <option th:if="*{teacher  == null or teacher.size()==0}" th:value="null"
-                                th:text="'Select teacher'" >
+                                th:text="'Select teacher'">
                         </option>
                     </select>
                     <div th:if="${blank}!= null" class="error">
@@ -80,8 +80,8 @@
     </div>
 </div>
 </body>
-<script th:inline="javascript" >
+<script th:inline="javascript">
     chooseTeachersOfConcreteCourse();
-    met();
+    chooseTeachersOfConcreteCourseAfterError();
 </script>
 </html>
