@@ -98,7 +98,8 @@
         </div>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${teacher}">
             <script th:inline="javascript"
-                    th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidEmail}">
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidEmail} or ${emailSize}
+            or ${surnameSize} or ${nameSize}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
@@ -108,11 +109,17 @@
                     <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
+                    <div th:if="${nameSize}!= null" class="error">
+                        <p th:text="${nameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title" for="surname">Teacher surname <span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}"/>
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
+                    <div th:if="${surnameSize}!= null" class="error">
+                        <p th:text="${surnameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title" for="email">Teacher email <span
                             style="color:#A30014">*</span></label>
@@ -125,6 +132,9 @@
                     </div>
                     <div th:if="${invalidEmail}!= null" class="error">
                         <p th:text="${invalidEmail}"></p>
+                    </div>
+                    <div th:if="${emailSize}!= null" class="error">
+                        <p th:text="${emailSize}"></p>
                     </div>
                 </div>
                 <div class="half2"></div>

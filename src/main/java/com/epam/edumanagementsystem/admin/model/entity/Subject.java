@@ -17,7 +17,6 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})

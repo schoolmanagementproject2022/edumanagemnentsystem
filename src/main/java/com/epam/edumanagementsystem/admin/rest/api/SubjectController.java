@@ -5,7 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
-import com.epam.edumanagementsystem.util.IllegalCharactersValidation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
@@ -54,9 +54,16 @@ public class SubjectController {
         model.addAttribute("teachers", allTeacher);
 
         if (!bindingResult.hasFieldErrors("name")) {
-            if (IllegalCharactersValidation.checkingForIllegalCharacters(subject.getName(), model)) {
-                return "subjectSection";
+            if(InputFieldsValidation.validateInputFieldSize(subject.getName())){
+                model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
+            if (InputFieldsValidation.checkingForIllegalCharacters(subject.getName(), model)) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+            }
+        }
+
+        if(bindingResult.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
+            return "subjectSection";
         }
 
         for (SubjectDto subject1 : all) {

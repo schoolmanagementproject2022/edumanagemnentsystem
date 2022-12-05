@@ -10,7 +10,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import com.epam.edumanagementsystem.util.IllegalCharactersValidation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +61,17 @@ public class AcademicClassController {
         model.addAttribute("academicClasses", academicClassDtoList);
 
         if (!result.hasFieldErrors("classNumber")) {
-            if (IllegalCharactersValidation.checkingForIllegalCharacters(academicClass
-                    .getClassNumber(), model)) {
-                return "academicClassSection";
+            if(InputFieldsValidation.validateInputFieldSize(academicClass.getClassNumber())){
+                model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
+            if (InputFieldsValidation.checkingForIllegalCharacters(academicClass
+                    .getClassNumber(), model)) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+            }
+        }
+
+        if(result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
+            return "academicClassSection";
         }
 
         for (AcademicClass existingListOfAcademicClass : academicClassList) {

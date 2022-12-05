@@ -34,12 +34,12 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{/classes}" th:object="${academicClass}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalidURL}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidURL}
+             or ${nameSize}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <div id="error"></div>
                     <label class="popup-label-title" for="classNumber">Class Number<span
                             style="color:#A30014">*</span></label>
                     <input class="form_input" th:name="classNumber" id="classNumber"
@@ -51,6 +51,9 @@
                     </div>
                     <div th:if="${invalidURL}!= null" class="error">
                         <p th:text="${invalidURL}"></p>
+                    </div>
+                    <div th:if="${nameSize}!= null" class="error">
+                        <p th:text="${nameSize}"></p>
                     </div>
                 </div>
                 <div class="half2"></div>

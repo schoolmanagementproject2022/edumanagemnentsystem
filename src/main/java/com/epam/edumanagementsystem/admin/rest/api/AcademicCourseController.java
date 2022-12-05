@@ -10,7 +10,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import com.epam.edumanagementsystem.util.IllegalCharactersValidation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +62,16 @@ public class AcademicCourseController {
         model.addAttribute("subjects", subjectService.findAll());
 
         if (!result.hasFieldErrors("name")) {
-            if (IllegalCharactersValidation.checkingForIllegalCharacters(academicCourse.getName(), model)) {
-                return "academicCourseSection";
+            if(InputFieldsValidation.validateInputFieldSize(academicCourse.getName())){
+                model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
+            if (InputFieldsValidation.checkingForIllegalCharacters(academicCourse.getName(), model)) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+            }
+        }
+
+        if(result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
+            return "academicCourseSection";
         }
 
         for (AcademicCourseDto aCourse : all) {

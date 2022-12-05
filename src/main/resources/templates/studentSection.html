@@ -61,8 +61,9 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
         <form id="form" class="form" th:method="POST" enctype="multipart/form-data" th:action="@{/students}" th:object="${student}" onsubmit="return filevalidation()">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null
-            or ${invalidEmail} != null or ${invalidPassword}!=null or ${formatValidationMessage}!=null or ${size}!=null">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${emailSize}
+            or ${surnameSize} or ${nameSize} or ${addressSize} or ${invalidEmail} or ${invalidPassword}
+            or ${formatValidationMessage}or ${size}!=null">
                 PopUpShow();
             </script>
             <input type="hidden" id="status" name="status" th:value="null">
@@ -78,6 +79,9 @@
                            th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
+                    <div th:if="${nameSize}!= null" class="error">
+                        <p th:text="${nameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title">Student surname <span style="color:#A30014">*</span></label>
                     <input class="form_input"
@@ -87,6 +91,9 @@
                            th:value="${#object.surname}"/>
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
+                    <div th:if="${surnameSize}!= null" class="error">
+                        <p th:text="${surnameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title">Student email <span style="color:#A30014">*</span></label>
                     <input class="form_input"
@@ -102,7 +109,9 @@
                     <div th:if="${invalidEmail}!= null" class="error">
                         <p th:text="${invalidEmail}"></p>
                     </div>
-
+                    <div th:if="${emailSize}!= null" class="error">
+                        <p th:text="${emailSize}"></p>
+                    </div>
                     <label class="popup-label-title">Student address <span style="color:#A30014">*</span></label>
                     <input class="form_input"
                            th:type="text"
@@ -112,6 +121,9 @@
                            th:value="${#object.address}"/>
                     <div class="error" th:if="${#fields.hasErrors('address')}"
                          th:errors="*{address}"></div>
+                    <div th:if="${addressSize}!= null" class="error">
+                        <p th:text="${addressSize}"></p>
+                    </div>
 
                     <label class="popup-label-title">Birth Date <span style="color:#A30014">* </span>
                         <span class="check-validation-date"></span>

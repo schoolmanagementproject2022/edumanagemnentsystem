@@ -7,8 +7,8 @@ import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
-import com.epam.edumanagementsystem.util.EmailValidation;
-import com.epam.edumanagementsystem.util.Validation;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
+import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -69,25 +69,39 @@ public class TeacherController {
                                 @RequestParam(value = "status", required = false) String status,
                                 Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            Validation.validateImage(multipartFile, model);
+            UserDataValidation.validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
 
         model.addAttribute("teachers", teacherService.findAll());
-        if (!result.hasFieldErrors("email")) {
-            userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
-            EmailValidation.validate(teacherDto.getEmail(), model);
+
+        if (InputFieldsValidation.validateInputFieldSize(teacherDto.getName())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
         }
-        Validation.validatePassword(teacherDto.getPassword(), model);
-        if (result.hasErrors() || model.containsAttribute("blank")
-                || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")
+        if (InputFieldsValidation.validateInputFieldSize(teacherDto.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(teacherDto.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+
+        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+            userService.checkDuplicationOfEmail(teacherDto.getEmail(), model);
+            if (UserDataValidation.validateEmail(teacherDto.getEmail())) {
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }
+        }
+
+        UserDataValidation.validatePassword(teacherDto.getPassword(), model);
+        if (result.hasErrors() || model.containsAttribute("blank") || model.containsAttribute("invalidPassword")
+                || model.containsAttribute("emailSize")
+                || model.containsAttribute("nameSize")
+                || model.containsAttribute("surnameSize")
                 || model.containsAttribute("duplicated")
                 || model.containsAttribute("size")
                 || model.containsAttribute("formatValidationMessage")) {
-
             return TEACHER_HTML;
         }
 
@@ -118,15 +132,28 @@ public class TeacherController {
         TeacherDto existingTeacher = teacherService.findById(id);
         model.addAttribute("name_surname", TeacherMapper.toTeacher(existingTeacher,
                 userService.findByEmail(existingTeacher.getEmail())).getNameSurname());
-        if (!result.hasFieldErrors("email")) {
+
+        if (InputFieldsValidation.validateInputFieldSize(updatableTeacher.getName())) {
+            model.addAttribute("nameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(updatableTeacher.getSurname())) {
+            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+        }
+        if (InputFieldsValidation.validateInputFieldSize(updatableTeacher.getEmail())) {
+            model.addAttribute("emailSize", "Symbols can't be more than 50");
+        }
+        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
             if (!updatableTeacher.getEmail().equals(existingTeacher.getEmail())) {
                 userService.checkDuplicationOfEmail(updatableTeacher.getEmail(), model);
             }
-            EmailValidation.validate(updatableTeacher.getEmail(), model);
+            if (UserDataValidation.validateEmail(updatableTeacher.getEmail())) {
+                model.addAttribute("invalidEmail", "Email is invalid");
+            }
         }
 
         if (result.hasErrors() || model.containsAttribute("invalidEmail") ||
-                model.containsAttribute("duplicated")) {
+                model.containsAttribute("duplicated") || model.containsAttribute("emailSize")
+                || model.containsAttribute("nameSize") || model.containsAttribute("surnameSize")) {
             return PROFILE;
         }
         teacherService.updateFields(updatableTeacher);
