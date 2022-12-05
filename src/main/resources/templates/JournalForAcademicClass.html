@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+    <script src="/static/js/popupControlTimetable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/static/css/styleForJournal.css">
+    <script src="/static/js/popupControl.js"></script>
+    <title>Journal</title>
+    <style>
+        .date-form {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .absent{
+            background-color: #D7D7D7 !important;
+        }
+        .exist{
+            background-color: #7F7F7F !important;
+        }
+        .today_date a:first-child {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .arrow_today_date {
+            color: black;
+            font-size: 30px;
+            margin-left: 5px;
+            font-weight: 300;
+            text-decoration: none;
+        }
+        #abc:after{
+            content: "     V"
+        }
+
+        .input_form {
+            margin-left: 20px;
+        }
+
+        .form_input {
+            cursor: pointer;
+        }
+        .nav-link-wrapper a{
+            color: white !important;
+        }
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header" id="header">
+    <div th:insert="fragments/fragments :: container"></div>
+</div>
+<div class="main-wrapper" id="main-wrapper">
+    <div class="content-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+        <div class="content" id="middle">
+            <div class="url-path">
+                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Classes'}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
+                <span class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Journal'}"></span>
+            </div>
+            <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td class="emptyList"></td>
+                            <td colspan="7" style="background-color: transparent; border:0px !important;  ">
+                                <div class="date-form">
+                                    <div class="today_date" style="display: flex;align-items: center">
+                                        <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='today')}">Today</a>
+                                        <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='previous')}"
+                                           class="arrow_today_date"><
+                                        </a>
+                                        <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='next')}"
+                                           class="arrow_today_date">>
+                                        </a>
+                                        <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}" id="middleUrl"/>
+                                    </div>
+                                    <!--                                <label for="dateInput" id="abc" style="text-transform: uppercase; margin-left: 15px;" th:text="${month} + ' ' +${year}"></label>-->
+                                    <div class="input_form">
+                                        <input class="form_input" placeholder="Date pick &#9638;"
+                                               data-date-format="yyyy-mm-dd"
+                                               readonly
+                                               onchange="elog('change',this);return false;"
+                                               style="background:transparent; border:none; outline: none;"
+                                               th:type="text"
+                                               th:name="dateInput"
+                                               th:value="${month} + ' ' +${year}"
+                                               th:id="dateInput"/></div>
+                                    <div class="error" th:if="${#fields.hasErrors('startDate')}"
+                                         th:errors="*{startDate}"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="">
+                        <td class="emptyList"></td>
+                        <td th:if="${Monday}" ><span th:text="${MONDAY}">123</span><br/><span>Monday</span></td>
+                        <td th:if="${Tuesday}"><span th:text="${TUESDAY}">123</span><br/><span>Tuesday</span></td>
+                        <td th:if="${Wednesday}"><span th:text="${WEDNESDAY}">123</span><br/><span>Wednesday</span></td>
+                        <td th:if="${Thursday}"><span th:text="${THURSDAY}">123</span><br/><span>Thursday</span></td>
+                        <td th:if="${Friday}"><span th:text="${FRIDAY}">123</span><br/><span>Friday</span></td>
+                        <td th:if="${Saturday}"><span th:text="${SATURDAY}">123</span><br/><span>Saturday</span></td>
+                        <td th:if="${Sunday}"><span th:text="${SUNDAY}">123</span><br/><span>Sunday</span></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${allCoursesInAcademicClass}">
+                            <td th:text="${course.getName}"></td>
+                            <td class="exist" th:if="${monday.contains(course.getName) && Monday}"></td>
+                            <td  class="absent" th:unless="${monday.contains(course.getName) || !Monday}" ></td>
+                            <td class="exist"  th:if="${tuesday.contains(course.getName) && Tuesday}"></td>
+                            <td  class="absent" th:unless="${tuesday.contains(course.getName) || !Tuesday}" ></td>
+                            <td  class="exist" th:if="${wednesday.contains(course.getName) && Wednesday}" ></td>
+                            <td  class="absent" th:unless="${wednesday.contains(course.getName) || !Wednesday}" ></td>
+                            <td class="exist"  th:if="${thursday.contains(course.getName) && Thursday}"></td>
+                            <td  class="absent" th:unless="${thursday.contains(course.getName) || !Thursday}" ></td>
+                            <td class="exist"  th:if="${friday.contains(course.getName) && Friday}"></td>
+                            <td  class="absent" th:unless="${friday.contains(course.getName) || !Friday}" ></td>
+                            <td class="exist"  th:if="${saturday.contains(course.getName) && Saturday}"></td>
+                            <td   class="absent" th:unless="${saturday.contains(course.getName) || !Saturday}"></td>
+                            <td class="exist"  th:if="${sunday.contains(course.getName) && Sunday}" ></td>
+                            <td  class="absent" th:unless="${sunday.contains(course.getName) || !Sunday}"></td>
+                        </tr>
+            </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="sidebar2 header" id="sidebar2">
+            <div th:insert="fragments/fragments :: sidebar2"></div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function elog(ev, object) {
+        console.log(object.id + " - " + ev + ": " + object.value);
+    }
+
+    $("#abc").on('click', function (){
+        $( "#dateInput" ).datepicker("show");
+    });
+    // #middleUrl
+    $( document ).ready(function() {
+        var id = $("#middleUrl").val()
+        $('#dateInput').val($('#dateInput').val() + `  ⋁`);
+    });
+    $(function () {
+        $("#dateInput").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-0:+10",
+            dateFormat: 'yy-mm-dd',
+            minDate: 0,
+            maxDate: "+0D +0M +1Y",
+            onSelect: function (dateInput) {
+                $('#dateInput').val($('#dateInput').val() + `  ⋁`);
+                var id = $("#middleUrl").val()
+                let formatedDate = dateInput.replaceAll('/','-')
+                    window.location.href=`http://localhost:8082/classes/${id}/journal?date=${formatedDate}`
+            }
+        });
+    });
+</script>
+</body>
+</html>

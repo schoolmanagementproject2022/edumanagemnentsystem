@@ -7,22 +7,32 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
+import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
+
+import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
 
 @Controller
 @RequestMapping("/classes")
@@ -31,21 +41,24 @@ public class AcademicClassController {
     private final AcademicClassService academicClassService;
     private final AcademicCourseService academicCourseService;
     private final StudentService studentService;
+    private final TimetableService timetableService;
+    private final CoursesForTimetableService coursesForTimetableService;
 
     @Autowired
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService) {
+    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TimetableService timetableService, CoursesForTimetableService coursesForTimetableService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.studentService = studentService;
+        this.timetableService = timetableService;
+        this.coursesForTimetableService = coursesForTimetableService;
     }
 
     @GetMapping
     public String openAcademicCourse(Model model) {
+
         List<AcademicClassDto> academicClassDtoList = academicClassService.findAll();
         model.addAttribute("academicClasses", academicClassDtoList);
-
         model.addAttribute("academicClass", new AcademicClassDto());
-
         return "academicClassSection";
     }
 
@@ -173,6 +186,7 @@ public class AcademicClassController {
             return "classroomTeacherSection";
         }
     }
+
     @PostMapping("{name}/classroom")
     public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClass academicClass,
                                                      @PathVariable("name") String name,
@@ -186,7 +200,7 @@ public class AcademicClassController {
         }
         for (AcademicClassDto academicClassDto : academicClassService.findAll()) {
             if (academicClass.getClassroomTeacher()
-                    .equals(academicClassDto.getClassroomTeacher())){
+                    .equals(academicClassDto.getClassroomTeacher())) {
                 model.addAttribute("duplicate", "This Teacher is already classroom teacher");
                 return "classroomTeacherSection";
             }
@@ -196,6 +210,7 @@ public class AcademicClassController {
         academicClassService.update(academicClassFindByName);
         return "redirect:/classes/" + name + "/classroom";
     }
+
     @GetMapping("/{name}/students")
     public String showAcademicClassStudents(@PathVariable("name") String name, Model model) {
         Long id = academicClassService.findByName(name).getId();
@@ -225,7 +240,7 @@ public class AcademicClassController {
             model.addAttribute("studentsInAcademicClass", allStudentsByAcademicClassId);
             return "academicClassSectionForStudents";
         }
-        if (null != students){
+        if (null != students) {
             for (Student student : students) {
                 student.setAcademicClass(academicClassByName);
                 studentService.update(student);
@@ -245,4 +260,86 @@ public class AcademicClassController {
         return "teachersForAcademicClass";
     }
 
+    @GetMapping("/{name}/journal")
+    public Object journal(Model model, @PathVariable("name") String name,
+                          @RequestParam(name = "date", required = false) String date,
+                          @RequestParam(name = "startDate", required = false) String startDate,
+                          @RequestParam(name = "sel", required = false) String select) {
+        if (date != null) {
+           startDate = date;
+           select =  null;
+        }
+        AcademicClass academicClassByName = academicClassService.findByName(name);
+
+        if (null != timetableService.findTimetableByAcademicClassName(name)) {
+            LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
+            LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
+            LocalDate journalStartDate = null;
+            if (startDate != null && select == null){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localdate = LocalDate.parse(startDate, formatter);
+                if (!localdate.isAfter(timetableEndDate) && !localdate.isBefore(timetableStartDate)) {
+                    journalStartDate = localdate;
+                } else if (!localdate.isAfter(timetableStartDate)){
+                    journalStartDate = timetableStartDate;
+                } else if (!localdate.isBefore(timetableEndDate)){
+                    journalStartDate = timetableEndDate;
+                }
+
+            } else if (startDate != null && select.equals("previous")) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localDate = LocalDate.parse(startDate, formatter);
+                if (localDate.minusDays(7).isAfter(timetableStartDate)) {
+                    journalStartDate = localDate.minusDays(14);
+                } else {
+                    journalStartDate = localDate.minusDays(7);
+                }
+            } else if (startDate == null || select.equals("today")) {
+                if (timetableStartDate.isAfter(LocalDate.now())) {
+                    journalStartDate = timetableStartDate;
+                } else {
+                    journalStartDate = LocalDate.now();
+                }
+            } else if (startDate != null && select.equals("next")) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localdate = LocalDate.parse(startDate, formatter);
+                if (!localdate.isAfter(timetableEndDate)) {
+                    journalStartDate = localdate;
+                } else {
+                    journalStartDate = localdate.minusDays(7);
+                }
+            }
+            journalStartDate = academicClassService.recurs(journalStartDate);
+            List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
+            model.addAttribute("allCoursesInAcademicClass", academicCoursesInClass);
+            for (int i = 0; i < 7; i++) {
+                int dayOfMonth = journalStartDate.getDayOfMonth();
+                String dayOfMontString = Integer.valueOf(dayOfMonth).toString();
+                DayOfWeek dayOfWeeks = journalStartDate.getDayOfWeek();
+                String deyOfWeek = dayOfWeeks.toString();
+                String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
+                List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
+                        .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByName.getId());
+                model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
+                if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
+                        !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                    model.addAttribute(day, true);
+                } else {
+                    model.addAttribute(day, false);
+                }
+                model.addAttribute(deyOfWeek, dayOfMontString);
+                journalStartDate = journalStartDate.plusDays(1);
+            }
+            String journalStartDateToString = journalStartDate.toString();
+            model.addAttribute("month", journalStartDate.getMonth());
+            model.addAttribute("year", journalStartDate.getYear());
+            model.addAttribute("startDate", journalStartDateToString);
+            return "JournalForAcademicClass";
+        } else {
+            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
+            model.addAttribute("creationStatus", false);
+            putLessons(model, academicClassByName.getId());
+            return "timetableFromJournal";
+        }
+    }
 }

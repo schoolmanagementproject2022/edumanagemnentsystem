@@ -6,10 +6,12 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -24,7 +26,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public AcademicClass create(AcademicClass academicClass) {
-        if(academicClass == null){
+        if (academicClass == null) {
             throw new NullPointerException("Please, fill the required fields");
         }
         return academicClassRepository.save(academicClass);
@@ -63,7 +65,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
                 updateAcademicClass.getTeacher().add(teachers);
         }
 
-        if (academicClass.getClassroomTeacher() !=null){
+        if (academicClass.getClassroomTeacher() != null) {
             updateAcademicClass.setClassroomTeacher(academicClass.getClassroomTeacher());
         }
 
@@ -72,7 +74,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public List<AcademicCourse> findAllAcademicCourses(String name) {
-        List<AcademicCourse> listOfCourses= new ArrayList<>();
+        List<AcademicCourse> listOfCourses = new ArrayList<>();
         Set<AcademicCourse> academicCourseSet = findByName(name).getAcademicCourseSet();
         for (AcademicCourse course : academicCourseSet) {
             listOfCourses.add(course);
@@ -95,6 +97,15 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         }
         return teachersByAcademicClass;
 
+    }
+
+    @Override
+    public LocalDate recurs(LocalDate localDate) {
+        if (!localDate.getDayOfWeek().toString().equals("MONDAY")) {
+            localDate = localDate.minusDays(1);
+            localDate = recurs(localDate);
+        }
+        return localDate;
     }
 
     @Override

@@ -122,7 +122,7 @@ body {
 
 .sidebar-right {
     margin-top: 3%;
-    height: 216px;
+    height: fit-content;
     width: 24%;
     background-color: #555555;
     cursor: pointer;

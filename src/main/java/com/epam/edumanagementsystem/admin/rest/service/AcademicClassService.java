@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -25,4 +26,7 @@ public interface AcademicClassService {
     Set<Teacher> findAllTeachers(String name);
 
     Set<Teacher> findAllTeacher();
+
+    LocalDate recurs(LocalDate localDate);
+
 }

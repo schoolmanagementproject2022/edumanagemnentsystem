@@ -1,0 +1,20 @@
+td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.emptyList{
+    border:none;
+    background: transparent !important;
+}
+.list{
+    background: #AAAAAA !important;
+}
+::-webkit-scrollbar {
+    display: none !important;
+}
+tr td:first-child{
+    background: #7F7F7F;
+}
+tr td:not(:first-child){
+    background-color: #D7D7D7;
+}
