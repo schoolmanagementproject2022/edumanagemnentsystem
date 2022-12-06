@@ -710,9 +710,10 @@ input[type="checkbox"] {
     background-color: #333333;
 }
 
+
 .student-show-top{
     margin-top: 10VW;
-    margin-left: 23VW;
+    margin-left: 20VW;
     width: 392px;
     display: block;
     color: #FFFFFF;
