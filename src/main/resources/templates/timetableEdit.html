@@ -37,10 +37,7 @@
                 maxDate: "+0D +0M +1Y",
                 onSelect: function(dateStr) {
                     var date = $(this).datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() + 1);
-                    }
-                    $('#endDate').datepicker('option', 'minDate', date);
+                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
             });
             $("#endDate").datepicker({
@@ -52,12 +49,8 @@
                 maxDate: "+0D +0M +1Y",
                 onSelect: function (selectedDate) {
                     var date = $(this).datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() - 1);
-                    }
-                    $('#startDate').datepicker('option', 'maxDate', date || 0);
+                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
-
             });
         });
     </script>

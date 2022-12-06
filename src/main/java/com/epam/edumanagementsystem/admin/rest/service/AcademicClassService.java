@@ -27,6 +27,8 @@ public interface AcademicClassService {
 
     Set<Teacher> findAllTeacher();
 
+    Set<AcademicClass> findAcademicClassByTeacherId(Long id);
+
     LocalDate recurs(LocalDate localDate);
 
 }

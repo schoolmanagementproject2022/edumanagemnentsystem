@@ -17,5 +17,7 @@ services:
       - "8787:8787"
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8787
+      - UPLOAD_PATH=/images
+      - UPLOADED_PATH=/usr/edumanagementsystem/images
     links:
       - edu-db

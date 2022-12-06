@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.epam</groupId>
-	<artifactId>edumanagemnentsystem</artifactId>
+	<artifactId>edumanagementsystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>edumanagemnentsystem</name>
+	<name>edumanagementsystem</name>
 	<description>Management System for Edu Centers</description>
 	<properties>
 		<java.version>11</java.version>
@@ -24,6 +24,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.7</version>
 		</dependency>
 		<dependency>
             <groupId>org.thymeleaf.extras</groupId>
@@ -83,6 +88,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.3</version>
+        </dependency>
 	</dependencies>
 
 	<build>

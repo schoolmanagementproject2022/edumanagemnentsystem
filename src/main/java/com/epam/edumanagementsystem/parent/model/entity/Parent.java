@@ -26,7 +26,10 @@ public class Parent {
     private User user;
 
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, min = 9, message = "Symbols can't be more than 50")
     private String password;
+
+    private String picUrl;
 
     public Parent(Long id, User user) {
         this.id = id;
@@ -75,6 +78,14 @@ public class Parent {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
 
     public User getUser() {
         return user;

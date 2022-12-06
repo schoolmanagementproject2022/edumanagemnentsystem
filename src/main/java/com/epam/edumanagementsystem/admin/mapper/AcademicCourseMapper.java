@@ -5,7 +5,9 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AcademicCourseMapper {
 
@@ -48,4 +50,13 @@ public class AcademicCourseMapper {
         }
         return academicCourses;
     }
+
+    public static Set<AcademicCourseDto> toSetOfAcademicCourseDto(Set<AcademicCourse> academicCourses) {
+        Set<AcademicCourseDto> academicCourseDtos = new LinkedHashSet<>();
+        for (AcademicCourse academicCourse : academicCourses) {
+            academicCourseDtos.add(toDto(academicCourse));
+        }
+        return academicCourseDtos;
+    }
+
 }

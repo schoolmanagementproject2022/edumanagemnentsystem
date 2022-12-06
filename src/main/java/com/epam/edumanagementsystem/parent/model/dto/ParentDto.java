@@ -9,22 +9,20 @@ public class ParentDto {
     private Long id;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
 
     @NotBlank
-    private String role= "PARENT";
+    private String role = "PARENT";
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
+
+    private String picUrl;
 
     public ParentDto() {}
 
@@ -94,6 +92,14 @@ public class ParentDto {
     public void setRole(String role) {
         this.role = role;
     }
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -121,4 +127,5 @@ public class ParentDto {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 }

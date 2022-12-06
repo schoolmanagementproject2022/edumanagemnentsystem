@@ -58,7 +58,6 @@ function PopUpShowFriday() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
 }
 
-
 function PopUpShowSunday() {
     obj.refreshValue = "notToReload";
     console.log("Changed to notToReload");
@@ -116,4 +115,18 @@ function clearErrorMessageOnPopUpClose() {
     }
 }
 
-
+window.onload = function () {
+    var start = localStorage.getItem('startDate');
+    var end = localStorage.getItem('endDate');
+    if (start !== null) {
+        document.getElementById("startDate").value = start;
+    }
+    if (end !== null) {
+        document.getElementById("endDate").value = end;
+    }
+}
+window.onbeforeunload = function () {
+    localStorage.removeItem("startDate");
+    localStorage.removeItem("endDate");
+    return null;
+}

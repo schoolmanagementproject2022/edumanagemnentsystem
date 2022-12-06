@@ -113,4 +113,9 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         List<AcademicClass> academicClassList = academicClassRepository.findAll();
         return AcademicClassMapper.academicClassDtoList(academicClassList);
     }
+
+    @Override
+    public Set<AcademicClass> findAcademicClassByTeacherId(Long id) {
+        return academicClassRepository.findAcademicClassByTeacherId(id);
+    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:scropt="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,12 +34,9 @@
                 yearRange: "-0:+10",
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function(dateStr) {
-                    var date = $(this).datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() + 1);
-                    }
-                    $('#endDate').datepicker('option', 'minDate', date);
+                onSelect: function () {
+                    var date = $("#startDate").datepicker('getDate');
+                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
             });
             $("#endDate").datepicker({
@@ -49,25 +46,21 @@
                 yearRange: "-0:+10",
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function (selectedDate) {
-                    var date = $(this).datepicker('getDate');
-                    if (date) {
-                        date.setDate(date.getDate() - 1);
-                    }
-                    $('#startDate').datepicker('option', 'maxDate', date || 0);
+                onSelect: function () {
+                    var date = $("#endDate").datepicker('getDate');
+                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
-
             });
         });
     </script>
 
     <script>
+
         const obj = {
             refreshValue: "toReload",
             get getValue() {
                 return this.refreshValue;
             },
-
             set setValue(name) {
                 this.refreshValue = name;
             },
@@ -306,7 +299,7 @@
                 </div>
 
                 <div class="dayOfWeek">
-                    <div class="dayHeader"><a>Tuesday</a></div>
+                    <div class="dayHeader" id="tuesday"><a>Tuesday</a></div>
                     <div class="lessons">
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
@@ -326,7 +319,7 @@
                 </div>
 
                 <div class="dayOfWeek">
-                    <div class="dayHeader"><a>Wednesday</a></div>
+                    <div class="dayHeader" id="wednesday"><a>Wednesday</a></div>
                     <div class="lessons">
 
                         <div class="single_lesson_wrapper">
@@ -347,7 +340,7 @@
                 </div>
 
                 <div class="dayOfWeek">
-                    <div class="dayHeader"><a>Thursday</a></div>
+                    <div class="dayHeader" id="thursday"><a>Thursday</a></div>
                     <div class="lessons">
 
                         <div class="single_lesson_wrapper">
@@ -368,7 +361,7 @@
                 </div>
 
                 <div class="dayOfWeek">
-                    <div class="dayHeader"><a>Friday</a></div>
+                    <div class="dayHeader" id="friday"><a>Friday</a></div>
                     <div class="lessons">
 
                         <div class="single_lesson_wrapper">
@@ -389,7 +382,7 @@
                 </div>
 
                 <div class="dayOfWeek">
-                    <div class="dayHeader"><a>Saturday</a></div>
+                    <div class="dayHeader" id="saturday"><a>Saturday</a></div>
                     <div class="lessons">
 
                         <div class="single_lesson_wrapper">
@@ -410,7 +403,7 @@
                 </div>
 
                 <div class="dayOfWeek">
-                    <div class="dayHeader"><a>Sunday</a></div>
+                    <div class="dayHeader" id="sunday"><a>Sunday</a></div>
                     <div class="lessons">
 
                         <div class="single_lesson_wrapper">
@@ -485,7 +478,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -522,7 +516,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -559,7 +554,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -596,7 +592,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -633,7 +630,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -666,11 +664,13 @@
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
                         <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null">Select Course</option>
+                                data-limit="23" th:value="null">Select Course
+                        </option>
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -707,7 +707,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>

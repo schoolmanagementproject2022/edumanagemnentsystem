@@ -1,10 +1,12 @@
 package com.epam.edumanagementsystem.util.service.impl;
 
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +14,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
         if (user != null) {
             return userRepository.save(user);
         }
-        return null;
+        throw new ObjectIsNull();
     }
 
     @Override
@@ -47,7 +49,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean checkDuplicationOfEmail(String email) {
-        return findAll().stream().anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email));
+    public void checkDuplicationOfEmail(String email, Model model) {
+        if (findAll().stream().anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email))) {
+            model.addAttribute("duplicated", "A user with the specified email already exists");
+        }
     }
 }

@@ -19,8 +19,9 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
         <div class="list">
-            <div class="list-items" th:each="item: ${parents}">
-                <p class="item" th:text="${item.getNameAndSurname()}"></p>
+            <div class="list-items" th:each="parent: ${parents}">
+                <a class="item" th:text="${parent.getNameAndSurname()}"
+                   th:href="@{'/parents/' + ${parent.getId()} + '/profile'}">Parent</a>
             </div>
         </div>
     </div>
@@ -32,9 +33,12 @@
     <div class="popup-container" id="popup-container">
         <label class="close-btn" onclick="PopUpHide()" title="close">×</label>
         <h1>New Parent</h1>
-        <form id="form" th:action="@{/parents}" method="POST" th:object="${parent}">
+        <form id="form" th:action="@{/parents}" method="POST" enctype="multipart/form-data" th:object="${parent}" onsubmit="return filevalidation()">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
+            <input type="hidden" id="status" name="status" th:value="null">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${emailSize}
+            or ${surnameSize} or ${nameSize} or ${invalidEmail} or ${invalidPassword}or ${blank} or
+            ${formatValidationMessage} or ${size}">
                 PopUpShow();
             </script>
 
@@ -45,12 +49,18 @@
                     <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
+                    <div th:if="${nameSize}!= null" class="error">
+                        <p th:text="${nameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title" for="surname">Parent surname<span
                             style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
+                    <div th:if="${surnameSize}!= null" class="error">
+                        <p th:text="${surnameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title" for="email">Parent email<span
                             style="color:#A30014">*</span></label>
@@ -60,10 +70,12 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalid}!= null" class="error">
-                        <p th:text="${invalid}"></p>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
                     </div>
-
+                    <div th:if="${emailSize}!= null" class="error">
+                        <p th:text="${emailSize}"></p>
+                    </div>
                 </div>
 
                 <div class="half2">
@@ -71,20 +83,47 @@
                     <input class="form_input" type="text" placeholder="Create Password" id="password"
                            th:name="password" readonly
                            th:value="${#object.password}"/>
-                    <div class="error" th:if="${#fields.hasErrors('password')}"
-                         th:errors="*{password}"></div>
+                    <div th:if="${blank}!= null" class="error">
+                        <p th:text="${blank}"></p>
+                    </div>
+                    <div th:if="${invalidPassword}!= null" class="error">
+                        <p th:text="${invalidPassword}"></p>
+                    </div>
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b>Generate password</b>
                     </button>
+                    <div style="margin-top: 6%">
+                        <label class="popup-label-title">Image</label>
+                        <input type="file" accept="image/png,image/jpeg,image/jpg" class="form_input" id="picture"
+                               th:name="picture"/>
+                        <div class="error">
+                            <p id="errorPic" th:text="${formatValidationMessage}"></p>
+                            <p  th:text="${size}"></p>
+                        </div>
+                    </div>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
                 </div>
             </div>
         </form>
+
     </div>
 </div>
+<script>
+filevalidation = () => {
+    const fi = document.getElementById('picture');
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+            return;
+        }
 
+		if (fi.files[0].size> 2*1024*1024) {
+		    document.getElementById("status").value = "validationFail"
+            fi.value = '';
+            return;
+		}
+}
+</script>
 </body>
 
 </html>

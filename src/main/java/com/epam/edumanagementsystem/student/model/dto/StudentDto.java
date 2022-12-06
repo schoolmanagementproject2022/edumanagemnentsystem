@@ -21,22 +21,18 @@ public class StudentDto {
     private Long id;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
 
     @NotBlank
     private String role= "STUDENT";
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String address;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -47,7 +43,6 @@ public class StudentDto {
     @NotNull(message = "Please, fill the required fields")
     private Gender gender;
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -59,6 +54,8 @@ public class StudentDto {
 
     @OneToOne
     private AcademicClass academicClass;
+
+    private String picUrl;
 
     public StudentDto(Long id,
                       String name,
@@ -185,6 +182,14 @@ public class StudentDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

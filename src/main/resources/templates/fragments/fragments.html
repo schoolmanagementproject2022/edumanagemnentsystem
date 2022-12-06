@@ -21,7 +21,6 @@
 <th:block th:fragment="menu">
     <div>
         <p hidden th:text="${allUrl}" id="tab"></p>
-
         <a th:classappend="${firstUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}" href="/teachers">Teachers</a>
         <a th:classappend="${firstUrl eq 'students' ? 'activeTab' : 'notActiveTab'}" href="/students">Students</a>
         <a th:classappend="${firstUrl eq 'parents' ? 'activeTab' : 'notActiveTab'}" href="/parents">Parents</a>
@@ -50,6 +49,19 @@
            th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>
         <a class="item" th:classappend="${lastUrl eq 'journal' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}}">Journal</a>
+    </div>
+</th:block>
+
+<th:block th:fragment="teacherProfileSidebar">
+    <div class="sidebar_right_links">
+        <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/profile'}}">Profile</a>
+        <a th:classappend="${lastUrl eq 'subjects' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'subjects'}}" class="item">Subjects</a>
+        <a class="sidebar_right_links_item"  th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Academic Courses</a>
+        <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classes'}}">Classes</a>
     </div>
 </th:block>
 

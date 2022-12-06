@@ -56,7 +56,7 @@
                             th:name="academicClass"
                             th:id="academicClass"
                             th:field="*{classNumber}">
-                        <option th:if="*{classNumber == null}" th:text="'Class'" class="short" data-limit="23"
+                        <option th:if="*{classNumber == null or classNumber.isBlank()}" th:text="'Class'" class="short" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="class : ${academicClasses}"
                                 th:value="${class.classNumber}"
@@ -67,7 +67,7 @@
                     </div>
                     <label class="popup-label-title">Teacher<span style="color:#A30014"> *</span></label>
                     <select class="form_input" th:name="teacher" th:id="teacher" th:field="*{teacher}">
-                        <option th:if="*{teacher == null}" th:text="'Teacher'" class="short" data-limit="23"
+                        <option th:if="*{teacher == null or teacher.size()==0}" th:text="'Teacher'" class="short" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="select : ${teachersToSelect}"
                                 th:value="${select.id}"

@@ -2,6 +2,8 @@ package com.epam.edumanagementsystem.teacher.model.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -10,22 +12,20 @@ public class TeacherDto {
     private Long id;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
 
     @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String email;
 
     @NotBlank
     private String role = "TEACHER";
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
+
+    private String picUrl;
 
     public TeacherDto() {
     }
@@ -89,6 +89,14 @@ public class TeacherDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

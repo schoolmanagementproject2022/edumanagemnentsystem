@@ -5,6 +5,9 @@ import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
+import com.epam.edumanagementsystem.util.InputFieldsValidation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,6 +23,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/subjects")
+@Tag(name = "Subject")
 public class SubjectController {
     private final SubjectService subjectService;
     private final TeacherService teacherService;
@@ -30,6 +34,7 @@ public class SubjectController {
     }
 
     @GetMapping
+    @Operation(summary = "Gets the list of the subjects and shows them on admin's dashboard")
     public String getAll(ModelMap modelMap) {
         List<TeacherDto> teachers = teacherService.findAll();
         List<SubjectDto> all = subjectService.findAll();
@@ -40,6 +45,7 @@ public class SubjectController {
     }
 
     @PostMapping
+    @Operation(summary = "Creates a new subject in popup and saves it in DB")
     public String createSubject(@ModelAttribute("subject") @Valid Subject subject,
                                 BindingResult bindingResult, Model model) {
         List<SubjectDto> all = subjectService.findAll();
@@ -47,12 +53,17 @@ public class SubjectController {
         List<TeacherDto> allTeacher = teacherService.findAll();
         model.addAttribute("teachers", allTeacher);
 
-        Character[] list = {'!', '#', '@', '#', '$', '%', '^', '&', '+', '=', '\'', '/', '?', ';', '.', '~', '[', ']', '{', '}', '"'};
-        for (Character character : list) {
-            if (subject.getName().contains(character.toString())) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-                return "subjectSection";
+        if (!bindingResult.hasFieldErrors("name")) {
+            if(InputFieldsValidation.validateInputFieldSize(subject.getName())){
+                model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
+            if (InputFieldsValidation.checkingForIllegalCharacters(subject.getName(), model)) {
+                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
+            }
+        }
+
+        if(bindingResult.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
+            return "subjectSection";
         }
 
         for (SubjectDto subject1 : all) {
@@ -71,6 +82,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{name}/teachers")
+    @Operation(summary = "Gets concrete subject page with their teachers list")
     public String openSubjectForTeacherCreation(@PathVariable("name") String name, Model model) {
 
         Set<TeacherDto> teachersToSelect = new LinkedHashSet<>();
@@ -97,6 +109,7 @@ public class SubjectController {
     }
 
     @PostMapping("{name}/teachers")
+    @Operation(summary = "Updates the list of teachers for a concrete subject")
     public String addNewTeacher(@ModelAttribute("existingSubject") Subject subject,
                                 @PathVariable("name") String name, Model model) {
 

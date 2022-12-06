@@ -54,6 +54,8 @@ public class Student {
     @JoinColumn(name = "academic_class_id")
     private AcademicClass academicClass;
 
+    private String picUrl;
+
     public Student(Long id,
                    String name,
                    String surname,
@@ -76,13 +78,26 @@ public class Student {
         this.academicClass = academicClass;
     }
 
+    public Student(Long id, String name, String surname, User user, String address, LocalDate date, Gender gender, String password, BloodGroup bloodGroup, Parent parent, AcademicClass academicClass) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.user = user;
+        this.address = address;
+        this.date = date;
+        this.gender = gender;
+        this.password = password;
+        this.bloodGroup = bloodGroup;
+        this.parent = parent;
+        this.academicClass = academicClass;
+    }
+
     public Student() {
     }
 
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -166,6 +181,18 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getNameAndSurname() {
+        return name + " " + surname;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

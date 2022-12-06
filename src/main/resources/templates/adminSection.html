@@ -48,7 +48,8 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{/admins}" th:object="${admin}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} != null or ${invalid}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidEmail}
+            or ${invalidPassword} or ${blank} or ${emailSize} or ${surnameSize} or ${nameSize}">
                 PopUpShow();
             </script>
 
@@ -59,12 +60,18 @@
                     <input class="form_input" type="text" th:name="username" id="name" th:value="${#object.username}">
                     <div class="error" th:if="${#fields.hasErrors('username')}"
                          th:errors="*{username}"></div>
+                    <div th:if="${nameSize}!= null" class="error">
+                        <p th:text="${nameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title" for="surname">Admin surname <span
                             style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}">
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
+                    <div th:if="${surnameSize}!= null" class="error">
+                        <p th:text="${surnameSize}"></p>
+                    </div>
 
                     <label class="popup-label-title" for="email">Admin email<span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
@@ -73,8 +80,11 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalid}!= null" class="error">
-                        <p th:text="${invalid}"></p>
+                    <div th:if="${invalidEmail}!= null" class="error">
+                        <p th:text="${invalidEmail}"></p>
+                    </div>
+                    <div th:if="${emailSize}!= null" class="error">
+                        <p th:text="${emailSize}"></p>
                     </div>
                 </div>
 
@@ -85,8 +95,12 @@
                                th:name="password"
                                readonly
                                th:value="${#object.password}"/>
-                        <div class="error" th:if="${#fields.hasErrors('password')}"
-                             th:errors="*{password}"></div>
+                        <div th:if="${blank}!= null" class="error">
+                            <p th:text="${blank}"></p>
+                        </div>
+                        <div th:if="${invalidPassword}!= null" class="error">
+                            <p th:text="${invalidPassword}"></p>
+                        </div>
                     </label>
                     <button class="button-generate" id="btn" type="button" onclick="getPassword()">
                         <b> Generate password</b>

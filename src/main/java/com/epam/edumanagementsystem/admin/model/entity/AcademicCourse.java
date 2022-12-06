@@ -18,7 +18,6 @@ public class AcademicCourse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 50, message = "Symbols can't be more than 50")
     @Column(unique = true)
     @NotBlank(message = "Please, fill the required fields")
     private String name;
@@ -31,8 +30,8 @@ public class AcademicCourse {
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
-            joinColumns = @JoinColumn(name = "teacher_id"),
-            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
+            joinColumns = @JoinColumn(name = "academicCourse_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private Set<Teacher> teacher;
 
     @JsonIgnore

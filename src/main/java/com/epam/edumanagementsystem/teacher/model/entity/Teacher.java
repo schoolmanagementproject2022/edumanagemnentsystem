@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -31,14 +32,15 @@ public class Teacher {
     private User user;
 
     @NotBlank(message = "Please, fill the required fields")
+    @Size(max = 50, min = 9, message = "Symbols can't be more than 50")
     private String password;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
-            joinColumns = @JoinColumn(name = "academicCourse_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
     private Set<AcademicCourse> academicCourseSet;
 
     @JsonIgnore
@@ -48,6 +50,8 @@ public class Teacher {
     @JsonIgnore
     @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
+
+    private String picUrl;
 
     public Teacher() {
     }
@@ -137,6 +141,14 @@ public class Teacher {
 
     public void setSubjectSet(Set<Subject> subjectSet) {
         this.subjectSet = subjectSet;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override
