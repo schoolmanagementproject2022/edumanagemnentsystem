@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <title>Students Without Parent</title>
+</head>
+<body>
+<div class="header" id="header">
+    <div th:insert="fragments/fragments :: container"></div>
+    <div class="main-wrapper">
+        <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
+        <div class="list">
+            <div class="list-items" th:each="student : ${students}">
+                <a th:href="@{'/students/'+${student.getId()} + '/profile'}" class="item" th:text="${student.getNameAndSurname()}"></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

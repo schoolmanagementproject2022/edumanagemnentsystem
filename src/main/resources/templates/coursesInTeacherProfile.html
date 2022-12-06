@@ -20,14 +20,16 @@
                    th:text="${teacher.getNameSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Academic Courses'}"></a>
             </div>
-
-            <div class="list">
-                <div class="list-items" th:each="teachersCourse : ${teachersCourses}">
-                    <p class="item" th:text="${teachersCourse.getName()}">Academic Courses</p>
+            <div class="list" th:if="${teachersCourses.size() != 0}">
+                <div class="list-items" th:each="course: ${teachersCourses}">
+                    <a class="item" th:text="${course.getName()}" th:href="@{'/courses/' + ${course.getName()} + '/teachers'}"></a>
                 </div>
             </div>
+            <div th:if="${teachersCourses.size() == 0}">
+                <p class="student-show-top">This teacher isn't attached to a course yet</p>
+                <a th:type="button" th:href="${'/courses'}" class="vis-btn-each" id="vis-btn-each"><b>Add course</b></a>
+            </div>
         </div>
-
         <div class="sidebar-img header">
             <div th:if="${teacher.getPicUrl() == null}">
                 <div class="image-upload">
