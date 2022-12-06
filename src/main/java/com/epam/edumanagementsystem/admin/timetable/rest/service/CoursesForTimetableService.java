@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.timetable.rest.service;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CoursesForTimetableService {
 
@@ -27,4 +28,7 @@ public interface CoursesForTimetableService {
     List<CoursesForTimetable> getCoursesWithNotActiveStatusByAcademicCourseId(Long academicClassId);
 
     List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId);
+
+    List<String> getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId);
+
 }

@@ -6,10 +6,12 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -95,6 +97,15 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         }
         return teachersByAcademicClass;
 
+    }
+
+    @Override
+    public LocalDate recurs(LocalDate localDate) {
+        if (!localDate.getDayOfWeek().toString().equals("MONDAY")) {
+            localDate = localDate.minusDays(1);
+            localDate = recurs(localDate);
+        }
+        return localDate;
     }
 
     @Override

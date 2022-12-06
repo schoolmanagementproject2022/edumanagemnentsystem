@@ -32,6 +32,15 @@ public class CoursesForTimetable {
     public CoursesForTimetable() {
     }
 
+    public CoursesForTimetable(String academicCourse, List<AcademicClass> academicClass,
+                               String dayOfWeek, String status) {
+
+        this.academicCourse = academicCourse;
+        this.academicClass = academicClass;
+        this.dayOfWeek = dayOfWeek;
+        this.status = status;
+    }
+
     public CoursesForTimetable(Long id, String academicCourse, List<AcademicClass> academicClass,
                                String dayOfWeek, String status) {
         this.id = id;
