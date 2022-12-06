@@ -93,8 +93,9 @@
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <div class="animated">
-            <h1 class="text-animated" th:text="${name_surname}">Teacher name</h1>
+        <div class="tooltip">
+            <h1 th:text="${name_surname}">Teacher name</h1>
+            <span class="tooltiptext" th:text="${name_surname}">Tooltip text</span>
         </div>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${teacher}">
             <script th:inline="javascript"
