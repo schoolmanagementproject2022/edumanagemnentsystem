@@ -338,7 +338,9 @@ public class AcademicClassController {
             model.addAttribute("month", journalStartDate.getMonth());
             model.addAttribute("year", journalStartDate.getYear());
             model.addAttribute("startDate", journalStartDateToString);
-            return "JournalForAcademicClass";
+//            return "JournalForAcademicClass";     journal page created by Edgar
+            return "journalWithCourseInfo";
+
         } else {
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
             model.addAttribute("creationStatus", false);
