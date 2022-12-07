@@ -1,15 +1,11 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
-import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Classwork;
-import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Homework;
-import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Test;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -40,14 +36,6 @@ public class AcademicCourse {
     @JsonIgnore
     @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
     private Set<AcademicClass> academicClass;
-
-    @ManyToMany(mappedBy = "coursesOfHomework", fetch = FetchType.LAZY)
-    private List<Homework> homeworks;
-    @ManyToMany(mappedBy = "coursesOfTest", fetch = FetchType.LAZY)
-    private List<Test> tests;
-    @ManyToMany(mappedBy = "coursesOfClasswork", fetch = FetchType.LAZY)
-    private List<Classwork> classworks;
-
 
     public AcademicCourse() {
     }
@@ -99,30 +87,6 @@ public class AcademicCourse {
 
     public void setAcademicClass(Set<AcademicClass> academicClass) {
         this.academicClass = academicClass;
-    }
-
-    public List<Homework> getHomeworks() {
-        return homeworks;
-    }
-
-    public void setHomeworks(List<Homework> homeworks) {
-        this.homeworks = homeworks;
-    }
-
-    public List<Test> getTests() {
-        return tests;
-    }
-
-    public void setTests(List<Test> tests) {
-        this.tests = tests;
-    }
-
-    public List<Classwork> getClassworks() {
-        return classworks;
-    }
-
-    public void setClassworks(List<Classwork> classworks) {
-        this.classworks = classworks;
     }
 
     @Override

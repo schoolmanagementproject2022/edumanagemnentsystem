@@ -1,9 +1,9 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ClassworkDto {
 
@@ -11,18 +11,21 @@ public class ClassworkDto {
     private String classwork;
     private int grade;
     private LocalDate dateOfClasswork;
-    private List<AcademicCourse> coursesOfClasswork;
+    private AcademicCourse academicCourse;
+
+    private AcademicClass academicClass;
 
     public ClassworkDto() {
 
     }
 
-    public ClassworkDto(Long id, String classwork, int grade, LocalDate dateOfClasswork, List<AcademicCourse> coursesOfClasswork) {
+    public ClassworkDto(Long id, String classwork, int grade, LocalDate dateOfClasswork, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
         this.classwork = classwork;
         this.grade = grade;
         this.dateOfClasswork = dateOfClasswork;
-        this.coursesOfClasswork = coursesOfClasswork;
+        this.academicCourse = academicCourse;
+        this.academicClass = academicClass;
     }
 
     public Long getId() {
@@ -57,12 +60,20 @@ public class ClassworkDto {
         this.dateOfClasswork = dateOfClasswork;
     }
 
-    public List<AcademicCourse> getCoursesOfClasswork() {
-        return coursesOfClasswork;
+    public AcademicCourse getCourseOfClasswork() {
+        return academicCourse;
     }
 
-    public void setCoursesOfClasswork(List<AcademicCourse> coursesOfClasswork) {
-        this.coursesOfClasswork = coursesOfClasswork;
+    public void setCourseOfClasswork(AcademicCourse academicCourse) {
+        this.academicCourse = academicCourse;
+    }
+
+    public AcademicClass getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(AcademicClass academicClass) {
+        this.academicClass = academicClass;
     }
 
     @Override
@@ -72,7 +83,8 @@ public class ClassworkDto {
                 ", classwork='" + classwork + '\'' +
                 ", grade=" + grade +
                 ", dateOfClasswork=" + dateOfClasswork +
-                ", coursesOfClasswork=" + coursesOfClasswork +
+                ", academicCourse=" + academicCourse +
+                ", academicClass=" + academicClass +
                 '}';
     }
 }

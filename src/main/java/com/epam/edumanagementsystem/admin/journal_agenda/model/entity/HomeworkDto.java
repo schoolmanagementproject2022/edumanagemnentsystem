@@ -1,27 +1,28 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class HomeworkDto {
     private Long id;
     private String homework;
     private int grade;
     private LocalDate dateOfHomework;
-    private List<AcademicCourse> coursesOfHomework;
+    private AcademicCourse academicCourse;
+    private AcademicClass academicClass;
 
     public HomeworkDto() {
-
     }
 
-    public HomeworkDto(Long id, String homework, int grade, LocalDate dateOfHomework, List<AcademicCourse> coursesOfHomework) {
+    public HomeworkDto(Long id, String homework, int grade, LocalDate dateOfHomework, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
         this.homework = homework;
         this.grade = grade;
         this.dateOfHomework = dateOfHomework;
-        this.coursesOfHomework = coursesOfHomework;
+        this.academicCourse = academicCourse;
+        this.academicClass = academicClass;
     }
 
     public Long getId() {
@@ -56,12 +57,20 @@ public class HomeworkDto {
         this.dateOfHomework = dateOfHomework;
     }
 
-    public List<AcademicCourse> getCoursesOfHomework() {
-        return coursesOfHomework;
+    public AcademicCourse getCourseOfHomework() {
+        return academicCourse;
     }
 
-    public void setCoursesOfHomework(List<AcademicCourse> coursesOfHomework) {
-        this.coursesOfHomework = coursesOfHomework;
+    public void setCourseOfHomework(AcademicCourse academicCourse) {
+        this.academicCourse = academicCourse;
+    }
+
+    public AcademicClass getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(AcademicClass academicClass) {
+        this.academicClass = academicClass;
     }
 
     @Override
@@ -71,7 +80,8 @@ public class HomeworkDto {
                 ", homework='" + homework + '\'' +
                 ", grade=" + grade +
                 ", dateOfHomework=" + dateOfHomework +
-                ", coursesOfHomework=" + coursesOfHomework +
+                ", academicCourse=" + academicCourse +
+                ", academicClass=" + academicClass +
                 '}';
     }
 }

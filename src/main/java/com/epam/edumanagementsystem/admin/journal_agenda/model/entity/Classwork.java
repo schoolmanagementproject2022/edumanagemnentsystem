@@ -1,10 +1,10 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "agenda_classwork")
@@ -16,21 +16,21 @@ public class Classwork {
     private String classwork;
     private int grade;
     private LocalDate dateOfClasswork;
-//    @ManyToMany
-//    @JoinTable(name = "course_classwork_mapping",
-//            joinColumns = @JoinColumn(name = "agenda_classwork_id"),
-//            inverseJoinColumns = @JoinColumn(name = "academic_course_id"))
-//    private List<AcademicCourse> coursesOfClasswork;
+    @ManyToOne
+    private AcademicCourse academicCourse;
+    @ManyToOne
+    private AcademicClass academicClass;
 
     public Classwork() {
     }
 
-    public Classwork(Long id, String classwork, int grade, LocalDate dateOfClasswork, List<AcademicCourse> coursesOfClasswork) {
+    public Classwork(Long id, String classwork, int grade, LocalDate dateOfClasswork, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
         this.classwork = classwork;
         this.grade = grade;
         this.dateOfClasswork = dateOfClasswork;
-        this.coursesOfClasswork = coursesOfClasswork;
+        this.academicCourse = academicCourse;
+        this.academicClass = academicClass;
     }
 
     public Long getId() {
@@ -65,12 +65,20 @@ public class Classwork {
         this.dateOfClasswork = dateOfClasswork;
     }
 
-    public List<AcademicCourse> getCoursesOfClasswork() {
-        return coursesOfClasswork;
+    public AcademicCourse getCourseOfClasswork() {
+        return academicCourse;
     }
 
-    public void setCoursesOfClasswork(List<AcademicCourse> coursesOfClasswork) {
-        this.coursesOfClasswork = coursesOfClasswork;
+    public void setCourseOfClasswork(AcademicCourse courseOfClasswork) {
+        this.academicCourse = academicCourse;
+    }
+
+    public AcademicClass getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(AcademicClass academicClass) {
+        this.academicClass = academicClass;
     }
 
     @Override
@@ -80,7 +88,8 @@ public class Classwork {
                 ", classwork='" + classwork + '\'' +
                 ", grade=" + grade +
                 ", dateOfClasswork=" + dateOfClasswork +
-                ", coursesOfClasswork=" + coursesOfClasswork +
+                ", academicCourse=" + academicCourse +
+                ", academicClass=" + academicClass +
                 '}';
     }
 }

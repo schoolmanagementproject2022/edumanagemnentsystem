@@ -1,35 +1,35 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "agenda_homework")
 public class Homework {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String homework;
-    int grade;
-    LocalDate dateOfHomework;
-    @ManyToMany
-    @JoinTable(name = "course_homework_mapping",
-            joinColumns = @JoinColumn(name = "agenda_homework_id"),
-            inverseJoinColumns = @JoinColumn(name = "academic_course_id"))
-    List<AcademicCourse> coursesOfHomework;
+    private Long id;
+    private String homework;
+    private int grade;
+    private LocalDate dateOfHomework;
+    @ManyToOne
+    private AcademicCourse academicCourse;
+    @ManyToOne
+    private AcademicClass academicClass;
 
     public Homework() {
     }
 
-    public Homework(Long id, String homework, int grade, LocalDate dateOfHomework, List<AcademicCourse> coursesOfHomework) {
+    public Homework(Long id, String homework, int grade, LocalDate dateOfHomework, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
         this.homework = homework;
         this.grade = grade;
         this.dateOfHomework = dateOfHomework;
-        this.coursesOfHomework = coursesOfHomework;
+        this.academicCourse = academicCourse;
+        this.academicClass = academicClass;
     }
 
     public Long getId() {
@@ -64,12 +64,20 @@ public class Homework {
         this.dateOfHomework = dateOfHomework;
     }
 
-    public List<AcademicCourse> getCoursesOfHomework() {
-        return coursesOfHomework;
+    public AcademicCourse getCourseOfHomework() {
+        return academicCourse;
     }
 
-    public void setCoursesOfHomework(List<AcademicCourse> coursesOfHomework) {
-        this.coursesOfHomework = coursesOfHomework;
+    public void setCourseOfHomework(AcademicCourse academicCourse) {
+        this.academicCourse = academicCourse;
+    }
+
+    public AcademicClass getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(AcademicClass academicClass) {
+        this.academicClass = academicClass;
     }
 
     @Override
@@ -79,7 +87,8 @@ public class Homework {
                 ", homework='" + homework + '\'' +
                 ", grade=" + grade +
                 ", dateOfHomework=" + dateOfHomework +
-                ", coursesOfHomework=" + coursesOfHomework +
+                ", academicCourse=" + academicCourse +
+                ", academicClass=" + academicClass +
                 '}';
     }
 }

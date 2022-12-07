@@ -1,9 +1,9 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class TestDto {
 
@@ -11,17 +11,19 @@ public class TestDto {
     private String test;
     private int grade;
     private LocalDate dateOfTest;
-    private List<AcademicCourse> coursesOfTest;
+    private AcademicCourse academicCourse;
+    private AcademicClass academicClass;
 
     public TestDto() {
     }
 
-    public TestDto(Long id, String test, int grade, LocalDate dateOfTest, List<AcademicCourse> coursesOfTest) {
+    public TestDto(Long id, String test, int grade, LocalDate dateOfTest, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
         this.test = test;
         this.grade = grade;
         this.dateOfTest = dateOfTest;
-        this.coursesOfTest = coursesOfTest;
+        this.academicCourse = academicCourse;
+        this.academicClass = academicClass;
     }
 
     public Long getId() {
@@ -56,12 +58,20 @@ public class TestDto {
         this.dateOfTest = dateOfTest;
     }
 
-    public List<AcademicCourse> getCoursesOfTest() {
-        return coursesOfTest;
+    public AcademicCourse getCourseOfTest() {
+        return academicCourse;
     }
 
-    public void setCoursesOfTest(List<AcademicCourse> coursesOfTest) {
-        this.coursesOfTest = coursesOfTest;
+    public void setCourseOfTest(AcademicCourse academicCourse) {
+        this.academicCourse = academicCourse;
+    }
+
+    public AcademicClass getAcademicClass() {
+        return academicClass;
+    }
+
+    public void setAcademicClass(AcademicClass academicClass) {
+        this.academicClass = academicClass;
     }
 
     @Override
@@ -71,7 +81,8 @@ public class TestDto {
                 ", test='" + test + '\'' +
                 ", grade=" + grade +
                 ", dateOfTest=" + dateOfTest +
-                ", coursesOfTest=" + coursesOfTest +
+                ", academicCourse=" + academicCourse +
+                ", academicClass=" + academicClass +
                 '}';
     }
 }
