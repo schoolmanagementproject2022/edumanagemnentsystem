@@ -471,6 +471,14 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
+.form_input_right {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block;
+    width: 100%;
+    border-radius: 1px;
+    border-width: 1.5px;
+}
 
 .allTab {
     background-color: #333333;

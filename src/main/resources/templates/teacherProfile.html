@@ -108,7 +108,7 @@
                 <div class="half">
                     <label class="popup-label-title">Teacher name <span
                             style="color:#A30014">*</span></label>
-                    <input title="" class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
+                    <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
                     <div th:if="${nameSize}!= null" class="error">
@@ -147,15 +147,6 @@
         </form>
     </div>
 </div>
-<script>
-    var texttooltip = document.getElementsByClassName("form_input");
-    var updatetitle = function () {
-        this.setAttribute("title", this.value);
-    };
-    for (var i = 0; i < texttooltip.length; i++) {
-        texttooltip[i].addEventListener('mouseover', updatetitle, false);
-    }
-</script>
 
 <div class="popup-container-image" id="popup-container-image">
     <div class="popup-wrapper" id="popup-wrapper">
@@ -197,6 +188,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    showInputFieldsOnMouseover();
+</script>
 
 <script>
 

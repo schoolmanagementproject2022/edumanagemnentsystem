@@ -47,3 +47,13 @@ function PopUpShowImageFormat() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 }
+
+function showInputFieldsOnMouseover() {
+    var texttooltip = document.getElementsByClassName("form_input");
+        var updatetitle = function () {
+            this.setAttribute("title", this.value);
+        };
+        for (var i = 0; i < texttooltip.length; i++) {
+            texttooltip[i].addEventListener('mouseover', updatetitle, false);
+    }
+}

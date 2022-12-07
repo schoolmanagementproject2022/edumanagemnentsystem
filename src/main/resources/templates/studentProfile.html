@@ -122,7 +122,8 @@
                         <input type="hidden" name="_method" value="delete"/>
                         <button type="submit" id="submitButton"></button>
                     </form>
-                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" src="/static/img/x-mark-transparent-2.png">
+                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img"
+                         src="/static/img/x-mark-transparent-2.png">
                 </div>
             </div>
             <div class="sidebar2 header" id="sidebar2">
@@ -220,7 +221,7 @@
 
                 <div class="half2">
                     <label class="popup-label-title">Student blood group <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
+                    <select class="form_input_right" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
                         <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
@@ -231,7 +232,7 @@
                          th:errors="*{bloodGroup}"></div>
 
                     <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
-                    <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
+                    <select class="form_input_right" th:name="gender" th:id="gender" th:field="*{gender}">
                         <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
@@ -241,7 +242,7 @@
                          th:errors="*{gender}"></div>
 
                     <label class="popup-label-title">Linked Parent </label>
-                    <select class="form_input" th:name="parent" th:id="parent" th:field="*{parent}">
+                    <select class="form_input_right" th:name="parent" th:id="parent" th:field="*{parent}">
                         <option th:text="' Select parent'" class="short" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
@@ -249,7 +250,7 @@
                     </select>
 
                     <label class="popup-label-title">Linked Class</label>
-                    <select class="form_input" th:name="academicClass" th:id="academicClass"
+                    <select class="form_input_right" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
                         <option th:text="' Select academic class'" class="short" data-limit="23"
                                 th:value="null"></option>
@@ -307,6 +308,9 @@
 </div>
 
 </body>
+<script>
+    showInputFieldsOnMouseover();
+</script>
 <script>
     function shortString(selector) {
         const elements = document.querySelectorAll(selector);

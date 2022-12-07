@@ -550,9 +550,9 @@ form {
     color: red;
 }
 
-title:hover:after{
+input[title]:hover:after{
     content: attr(title);
-    background: red;
+    background-color: red;
     position: absolute;
     left: 5%;
     top: 10%;

@@ -81,7 +81,7 @@
 
                 <div class="half2">
                     <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
-                    <input type="text" class="form_input" placeholder="Create Password" id="password"
+                    <input type="text" class="form_input_right" placeholder="Create Password" id="password"
                            th:name="password"
                            readonly
                            th:value="${#object.password}"/>
@@ -126,6 +126,9 @@
             return;
         }
     }
+</script>
+<script>
+    showInputFieldsOnMouseover();
 </script>
 
 </html>
