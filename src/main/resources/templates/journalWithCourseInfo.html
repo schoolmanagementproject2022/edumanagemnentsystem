@@ -138,13 +138,13 @@
                     </tr>
                     <tr class="">
                         <td class="emptyList" th:text="${course.getName()}"></td>
-                        <td th:if="${Monday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${Tuesday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${Wednesday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${Thursday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${Friday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${Saturday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${Sunday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Monday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Tuesday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Wednesday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Thursday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Friday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Saturday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
+                        <td th:if="${Sunday}" onclick="PopUpShow()" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -169,7 +169,39 @@
         </div>
     </div>
 </div>
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container">
+        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <h1 style="font-size: 1.8rem">Course 1: Agenda 06/Sep/2022</h1>
+
+        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + 'name' + '/journal/agenda/add'}">
+
+<!--            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">-->
+<!--                PopUpShowTuesday();-->
+<!--            </script>-->
+            <div class="popup-wrapper">
+                <div class="half">
+                    <input type="hidden" name="dayOfWeek" th:value="Tuesday"/>
+                    <label class="popup-label-title">Classwork</label>
+                    <input type="text" class="form_input" style="cursor:auto;" th:name="classwork" th:id="classwork">
+                    <label class="popup-label-title">Test</label>
+                    <input type="text" class="form_input" style="cursor:auto;" th:name="test" th:id="test">
+                    <label class="popup-label-title">Homework</label>
+                    <input type="text" class="form_input" style="cursor:auto;" th:name="homework" th:id="homework">
+
+                </div>
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
 <script>
     function elog(ev, object) {
         console.log(object.id + " - " + ev + ": " + object.value);

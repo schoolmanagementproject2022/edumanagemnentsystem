@@ -1,26 +1,27 @@
-package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
+package com.epam.edumanagementsystem.admin.journal_agenda.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
 
-public class HomeworkDto {
+public class TestDto {
+
     private Long id;
-    private String homework;
+    private String test;
     private int grade;
-    private LocalDate dateOfHomework;
+    private LocalDate dateOfTest;
     private AcademicCourse academicCourse;
     private AcademicClass academicClass;
 
-    public HomeworkDto() {
+    public TestDto() {
     }
 
-    public HomeworkDto(Long id, String homework, int grade, LocalDate dateOfHomework, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public TestDto(Long id, String test, int grade, LocalDate dateOfTest, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
-        this.homework = homework;
+        this.test = test;
         this.grade = grade;
-        this.dateOfHomework = dateOfHomework;
+        this.dateOfTest = dateOfTest;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
     }
@@ -33,12 +34,12 @@ public class HomeworkDto {
         this.id = id;
     }
 
-    public String getHomework() {
-        return homework;
+    public String getTest() {
+        return test;
     }
 
-    public void setHomework(String homework) {
-        this.homework = homework;
+    public void setTest(String test) {
+        this.test = test;
     }
 
     public int getGrade() {
@@ -49,19 +50,19 @@ public class HomeworkDto {
         this.grade = grade;
     }
 
-    public LocalDate getDateOfHomework() {
-        return dateOfHomework;
+    public LocalDate getDateOfTest() {
+        return dateOfTest;
     }
 
-    public void setDateOfHomework(LocalDate dateOfHomework) {
-        this.dateOfHomework = dateOfHomework;
+    public void setDateOfTest(LocalDate dateOfTest) {
+        this.dateOfTest = dateOfTest;
     }
 
-    public AcademicCourse getCourseOfHomework() {
+    public AcademicCourse getCourseOfTest() {
         return academicCourse;
     }
 
-    public void setCourseOfHomework(AcademicCourse academicCourse) {
+    public void setCourseOfTest(AcademicCourse academicCourse) {
         this.academicCourse = academicCourse;
     }
 
@@ -75,11 +76,11 @@ public class HomeworkDto {
 
     @Override
     public String toString() {
-        return "HomeworkDto{" +
+        return "TestDto{" +
                 "id=" + id +
-                ", homework='" + homework + '\'' +
+                ", test='" + test + '\'' +
                 ", grade=" + grade +
-                ", dateOfHomework=" + dateOfHomework +
+                ", dateOfTest=" + dateOfTest +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +
                 '}';

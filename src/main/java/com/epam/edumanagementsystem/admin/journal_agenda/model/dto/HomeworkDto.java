@@ -1,29 +1,26 @@
-package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
+package com.epam.edumanagementsystem.admin.journal_agenda.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
 
-public class ClassworkDto {
-
+public class HomeworkDto {
     private Long id;
-    private String classwork;
+    private String homework;
     private int grade;
-    private LocalDate dateOfClasswork;
+    private LocalDate dateOfHomework;
     private AcademicCourse academicCourse;
-
     private AcademicClass academicClass;
 
-    public ClassworkDto() {
-
+    public HomeworkDto() {
     }
 
-    public ClassworkDto(Long id, String classwork, int grade, LocalDate dateOfClasswork, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public HomeworkDto(Long id, String homework, int grade, LocalDate dateOfHomework, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
-        this.classwork = classwork;
+        this.homework = homework;
         this.grade = grade;
-        this.dateOfClasswork = dateOfClasswork;
+        this.dateOfHomework = dateOfHomework;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
     }
@@ -36,12 +33,12 @@ public class ClassworkDto {
         this.id = id;
     }
 
-    public String getClasswork() {
-        return classwork;
+    public String getHomework() {
+        return homework;
     }
 
-    public void setClasswork(String classwork) {
-        this.classwork = classwork;
+    public void setHomework(String homework) {
+        this.homework = homework;
     }
 
     public int getGrade() {
@@ -52,19 +49,19 @@ public class ClassworkDto {
         this.grade = grade;
     }
 
-    public LocalDate getDateOfClasswork() {
-        return dateOfClasswork;
+    public LocalDate getDateOfHomework() {
+        return dateOfHomework;
     }
 
-    public void setDateOfClasswork(LocalDate dateOfClasswork) {
-        this.dateOfClasswork = dateOfClasswork;
+    public void setDateOfHomework(LocalDate dateOfHomework) {
+        this.dateOfHomework = dateOfHomework;
     }
 
-    public AcademicCourse getCourseOfClasswork() {
+    public AcademicCourse getCourseOfHomework() {
         return academicCourse;
     }
 
-    public void setCourseOfClasswork(AcademicCourse academicCourse) {
+    public void setCourseOfHomework(AcademicCourse academicCourse) {
         this.academicCourse = academicCourse;
     }
 
@@ -78,11 +75,11 @@ public class ClassworkDto {
 
     @Override
     public String toString() {
-        return "ClassworkDto{" +
+        return "HomeworkDto{" +
                 "id=" + id +
-                ", classwork='" + classwork + '\'' +
+                ", homework='" + homework + '\'' +
                 ", grade=" + grade +
-                ", dateOfClasswork=" + dateOfClasswork +
+                ", dateOfHomework=" + dateOfHomework +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +
                 '}';

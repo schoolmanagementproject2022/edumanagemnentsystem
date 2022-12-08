@@ -87,6 +87,7 @@ function PopUpHide() {
     console.log("Changed to toReload");
     clearErrorMessageOnPopUpClose();
     $('select').prop('selectedIndex', 0);
+    $("#popup-container").hide();
     $("#popup-container-monday").hide();
     $("#popup-container-tuesday").hide();
     $("#popup-container-wednesday").hide();

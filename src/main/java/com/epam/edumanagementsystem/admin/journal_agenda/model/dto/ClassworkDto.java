@@ -1,27 +1,29 @@
-package com.epam.edumanagementsystem.admin.journal_agenda.model.entity;
+package com.epam.edumanagementsystem.admin.journal_agenda.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
 
-public class TestDto {
+public class ClassworkDto {
 
     private Long id;
-    private String test;
+    private String classwork;
     private int grade;
-    private LocalDate dateOfTest;
+    private LocalDate dateOfClasswork;
     private AcademicCourse academicCourse;
+
     private AcademicClass academicClass;
 
-    public TestDto() {
+    public ClassworkDto() {
+
     }
 
-    public TestDto(Long id, String test, int grade, LocalDate dateOfTest, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public ClassworkDto(Long id, String classwork, int grade, LocalDate dateOfClasswork, AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
-        this.test = test;
+        this.classwork = classwork;
         this.grade = grade;
-        this.dateOfTest = dateOfTest;
+        this.dateOfClasswork = dateOfClasswork;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
     }
@@ -34,12 +36,12 @@ public class TestDto {
         this.id = id;
     }
 
-    public String getTest() {
-        return test;
+    public String getClasswork() {
+        return classwork;
     }
 
-    public void setTest(String test) {
-        this.test = test;
+    public void setClasswork(String classwork) {
+        this.classwork = classwork;
     }
 
     public int getGrade() {
@@ -50,19 +52,19 @@ public class TestDto {
         this.grade = grade;
     }
 
-    public LocalDate getDateOfTest() {
-        return dateOfTest;
+    public LocalDate getDateOfClasswork() {
+        return dateOfClasswork;
     }
 
-    public void setDateOfTest(LocalDate dateOfTest) {
-        this.dateOfTest = dateOfTest;
+    public void setDateOfClasswork(LocalDate dateOfClasswork) {
+        this.dateOfClasswork = dateOfClasswork;
     }
 
-    public AcademicCourse getCourseOfTest() {
+    public AcademicCourse getCourseOfClasswork() {
         return academicCourse;
     }
 
-    public void setCourseOfTest(AcademicCourse academicCourse) {
+    public void setCourseOfClasswork(AcademicCourse academicCourse) {
         this.academicCourse = academicCourse;
     }
 
@@ -76,11 +78,11 @@ public class TestDto {
 
     @Override
     public String toString() {
-        return "TestDto{" +
+        return "ClassworkDto{" +
                 "id=" + id +
-                ", test='" + test + '\'' +
+                ", classwork='" + classwork + '\'' +
                 ", grade=" + grade +
-                ", dateOfTest=" + dateOfTest +
+                ", dateOfClasswork=" + dateOfClasswork +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +
                 '}';
