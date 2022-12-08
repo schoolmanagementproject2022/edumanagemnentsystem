@@ -35,7 +35,7 @@
                 yearRange: "-0:+10",
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function(dateStr) {
+                onSelect: function (dateStr) {
                     var date = $(this).datepicker('getDate');
                     localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
@@ -285,12 +285,16 @@
                     <div class="lessons">
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfMonday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -304,12 +308,16 @@
                     <div class="lessons">
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfTuesday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -324,12 +332,16 @@
 
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfWednesday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -344,12 +356,16 @@
 
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfThursday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -364,12 +380,16 @@
 
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfFriday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -384,12 +404,16 @@
 
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfSaturday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -404,12 +428,16 @@
 
                         <div class="single_lesson_wrapper">
                             <div class="single_item" th:each="lesson : ${lessonsOfSunday}">
-                                <a onclick="deleteSend()" th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
+                                <a onclick="deleteSend()"
+                                   th:href="@{'/classes/' + ${academicClass.classNumber} + '/timetable/edit/' + ${lesson.id}}">
                                     <div class="btn">
                                         <label class="close-btn" title="close">×</label>
                                     </div>
                                 </a>
-                                <div class="title"><a th:text="${lesson.academicCourse}">Name</a></div>
+                                <div class="tooltip">
+                                    <p class="title" th:text="${lesson.academicCourse}">Name</p>
+                                    <span class="tooltiptext" th:text="${lesson.academicCourse}">Tooltip text</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -474,7 +502,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -510,7 +539,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -545,12 +575,14 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" onclick="wednesday_popUp()" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" onclick="wednesday_popUp()" class="button-save" id="submit"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
@@ -580,12 +612,14 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" onclick="thursday_popUp()" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" onclick="thursday_popUp()" class="button-save" id="submit"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
@@ -615,7 +649,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
@@ -650,12 +685,14 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">
-                    <button type="submit" onclick="saturday_popUp()" class="button-save" id="submit"><b>Save</b></button>
+                    <button type="submit" onclick="saturday_popUp()" class="button-save" id="submit"><b>Save</b>
+                    </button>
                 </div>
             </div>
         </form>
@@ -686,7 +723,8 @@
                         <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
                                 th:text="${item.getName()}"></option>
                     </select>
-                    <div id="error" class="error" th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
+                    <div id="error" class="error"
+                         th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
                          th:errors="*{academicCourse}"></div>
                 </div>
                 <div class="half2"></div>
