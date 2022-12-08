@@ -9,7 +9,6 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -337,13 +336,13 @@ public class AcademicClassController {
             model.addAttribute("month", journalStartDate.getMonth());
             model.addAttribute("year", journalStartDate.getYear());
             model.addAttribute("startDate", journalStartDateToString);
-            return "JournalForAcademicClass";
+            return "journalForAcademicClass";
 
         } else {
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
             model.addAttribute("creationStatus", false);
             putLessons(model, academicClassByName.getId());
-            return "timetableFromJournal";
+            return "createTimetableMsgFromJournal";
         }
     }
 
@@ -400,7 +399,7 @@ public class AcademicClassController {
             journalStartDate = academicClassService.recurs(journalStartDate);
             model.addAttribute("allStudentsInAcademicClass", studentService.findStudentsByClassName(name));
             model.addAttribute("allCoursesInAcademicClass", academicClassService.findAllAcademicCourses(name));
-            model.addAttribute("course",academicCourseService.findByID(courseId));
+            model.addAttribute("course", academicCourseService.findByID(courseId));
             for (int i = 0; i < 7; i++) {
                 int dayOfMonth = journalStartDate.getDayOfMonth();
                 String dayOfMontString = Integer.valueOf(dayOfMonth).toString();
@@ -426,10 +425,10 @@ public class AcademicClassController {
             return "journalWithCourseInfo";
 
         } else {
-            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
-            model.addAttribute("creationStatus", false);
+            model.addAttribute("timetable ", timetableService.findTimetableByAcademicClassName(name));
+            model.addAttribute("creationStatus ", false);
             putLessons(model, academicClassByName.getId());
-            return "timetableFromJournal";
+            return "createTimetableMsgFromJournal";
         }
     }
 }
