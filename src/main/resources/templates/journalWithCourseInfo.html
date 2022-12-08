@@ -13,9 +13,6 @@
 
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControlTimetable.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -100,17 +97,15 @@
                                 <div class="today_date" style="display: flex;align-items: center">
                                     <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='today')}">Today</a>
                                     <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='previous')}"
-                                       class="arrow_today_date"><
-                                    </a>
+                                       class="arrow_today_date"> < </a>
                                     <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='next')}"
-                                       class="arrow_today_date">>
-                                    </a>
+                                       class="arrow_today_date"> > </a>
                                     <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}"
                                            id="middleUrl"/>
                                     <input type="text" style="display: none; overflow: hidden" th:value="${activeTab}"
                                            id="activeTab"/>
                                 </div>
-                                <!--                                <label for="dateInput" id="abc" style="text-transform: uppercase; margin-left: 15px;" th:text="${month} + ' ' +${year}"></label>-->
+
                                 <div class="input_form">
                                     <input class="form_input" placeholder="Date pick &#9638;"
                                            data-date-format="yyyy-mm-dd"
@@ -188,27 +183,30 @@
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-        <h1 style="font-size: 1.8rem">Course 1: Agenda 06/Sep/2022</h1>
+        <h1 style="font-size: 1.8rem; font-weight: bold">Course 1: Agenda 06/Sep/2022</h1>
 
         <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + 'name' + '/journal/agenda/add'}">
 
             <!--            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">-->
             <!--                PopUpShowTuesday();-->
             <!--            </script>-->
-            <div class="popup-wrapper">
-                <div class="half">
-                    <input type="hidden" name="dayOfWeek" th:value="Tuesday"/>
+            <div class="popup-wrap">
+                <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
-                    <input type="text" class="form_input" style="cursor:auto;" th:name="classwork" th:id="classwork">
+                    <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
+                              th:id="classwork"></textarea>
                     <label class="popup-label-title">Test</label>
-                    <input type="text" class="form_input" style="cursor:auto;" th:name="test" th:id="test">
-                    <label class="popup-label-title">Homework</label>
-                    <input type="text" class="form_input" style="cursor:auto;" th:name="homework" th:id="homework">
+                    <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
+                              th:id="test"></textarea>
 
+                    <label class="popup-label-title">Homework</label>
+                    <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
+                              th:id="homework"></textarea>
+                    <input type="hidden" name="dayOfWeek" th:value="Tuesday"/>
                 </div>
-                <div class="half2"></div>
+                <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="button-save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
                     </button>
                 </div>
             </div>

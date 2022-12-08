@@ -48,3 +48,91 @@ tr td:not(:first-child) {
     --bs-table-accent-bg: var(--bs-table-hover-bg);
     color: #01a7f0;
 }
+
+.popup-container {
+    display: none;
+    width: 620px;
+    height: 530px;
+    padding: 20px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.popup-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #F2F2F2;
+    transform: translate(-50%, -50%)
+}
+
+.popup-container .close-btn {
+    position: absolute;
+    right: 20px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+.popup-wrap {
+    width: 579px;
+    height: 399px;
+    display: flex;
+    padding: 10px;
+}
+
+.half_1 {
+    width: 100%;
+    margin-top: -4%;
+    height: 360px;
+}
+
+.half_2 {
+    width: 30%;
+    margin-left: 20%;
+    height: 360px;
+}
+
+
+.save {
+    position: absolute;
+    color: #A30014;
+    float: right;
+    margin-top: 65%;
+    margin-left: -15%;
+    width: 83px;
+    display: block;
+    height: 30px;
+    border-radius: 4px;
+    border-width: 0.5px;
+    cursor: pointer;
+}
+
+.popup-label-title {
+    font-size: 17px;
+    height: 1.2em;
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+.error {
+    font-size: 0.7em;
+    color: red;
+}
+
+.form_input {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block;
+    width: 100%;
+    border-radius: 1px;
+    border-width: 1.5px;
+}
+
+textarea {
+    resize: none;
+}
