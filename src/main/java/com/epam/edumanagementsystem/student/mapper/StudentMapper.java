@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -118,5 +119,13 @@ public class StudentMapper {
                 .map(StudentMapper::toStudentDto)
                 .collect(Collectors
                         .toList());
+    }
+
+    public static Set<StudentDto> toStudentDtoSet(Set<Student> studentEntities) {
+        return studentEntities
+                .stream()
+                .map(StudentMapper::toStudentDto)
+                .collect(Collectors
+                        .toSet());
     }
 }

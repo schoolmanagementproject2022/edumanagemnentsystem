@@ -85,9 +85,10 @@
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
         <div class="content" id="middle">
             <div class="url-path">
-                <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Academic Classes'}"></a>
-                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
-                <span class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Journal'}"></span>
+                <a class="a-url" th:href="@{'/'+${firstUrl}}" th:text="${'Academic Classes'}"></a>
+                <a class="a-url" th:href="@{'/'+${firstUrl}+'/'+${middleUrl}+'/journal'}" th:text="${middleUrl}"></a>
+                <a class="a-url" th:href="@{'/'+${firstUrl}+'/'+${middleUrl}+'/journal'}" th:text="${'Journal'}"></a>
+                <a class="a-url" th:href="@{${allUrl}}" th:text="${course.getName()}"></a>
             </div>
             <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
                 <table class="table table-hover">
@@ -97,15 +98,17 @@
                         <td colspan="7" style="background-color: transparent; border:0px !important;  ">
                             <div class="date-form">
                                 <div class="today_date" style="display: flex;align-items: center">
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='today')}">Today</a>
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='previous')}"
+                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='today')}">Today</a>
+                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='previous')}"
                                        class="arrow_today_date"><
                                     </a>
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='next')}"
+                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='next')}"
                                        class="arrow_today_date">>
                                     </a>
                                     <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}"
                                            id="middleUrl"/>
+                                    <input type="text" style="display: none; overflow: hidden" th:value="${activeTab}"
+                                           id="activeTab"/>
                                 </div>
                                 <!--                                <label for="dateInput" id="abc" style="text-transform: uppercase; margin-left: 15px;" th:text="${month} + ' ' +${year}"></label>-->
                                 <div class="input_form">
@@ -134,8 +137,7 @@
                         <td th:if="${Sunday}"><span th:text="${SUNDAY}">123</span><br/><span>Sunday</span></td>
                     </tr>
                     <tr class="">
-<!--                        get concrete course-->
-                        <td class="emptyList" th:text="English"></td>
+                        <td class="emptyList" th:text="${course.getName()}"></td>
                         <td th:if="${Monday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
                         <td th:if="${Tuesday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
                         <td th:if="${Wednesday}" th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
@@ -146,23 +148,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!--                    find all students in this class and show-->
-                    <tr th:each="course : ${allCoursesInAcademicClass}">
-                        <td th:text="${course.getName}"></td>
-                        <td class="exist" th:if="${monday.contains(course.getName) && Monday}"></td>
-                        <td class="absent" th:unless="${monday.contains(course.getName) || !Monday}"></td>
-                        <td class="exist" th:if="${tuesday.contains(course.getName) && Tuesday}"></td>
-                        <td class="absent" th:unless="${tuesday.contains(course.getName) || !Tuesday}"></td>
-                        <td class="exist" th:if="${wednesday.contains(course.getName) && Wednesday}"></td>
-                        <td class="absent" th:unless="${wednesday.contains(course.getName) || !Wednesday}"></td>
-                        <td class="exist" th:if="${thursday.contains(course.getName) && Thursday}"></td>
-                        <td class="absent" th:unless="${thursday.contains(course.getName) || !Thursday}"></td>
-                        <td class="exist" th:if="${friday.contains(course.getName) && Friday}"></td>
-                        <td class="absent" th:unless="${friday.contains(course.getName) || !Friday}"></td>
-                        <td class="exist" th:if="${saturday.contains(course.getName) && Saturday}"></td>
-                        <td class="absent" th:unless="${saturday.contains(course.getName) || !Saturday}"></td>
-                        <td class="exist" th:if="${sunday.contains(course.getName) && Sunday}"></td>
-                        <td class="absent" th:unless="${sunday.contains(course.getName) || !Sunday}"></td>
+
+                    <tr th:each="student : ${allStudentsInAcademicClass}">
+                        <td class="horizontalGrids" th:text="${student.getNameAndSurname()}"></td>
+                        <td class="absent" th:if="${Monday}"></td>
+                        <td class="absent" th:if="${Tuesday}"></td>
+                        <td class="absent" th:if="${Wednesday}"></td>
+                        <td class="absent" th:if="${Thursday}"></td>
+                        <td class="absent" th:if="${Friday}"></td>
+                        <td class="absent" th:if="${Saturday}"></td>
+                        <td class="absent" th:if="${Sunday}"></td>
                     </tr>
                     </tbody>
 
@@ -199,8 +194,9 @@
             onSelect: function (dateInput) {
                 $('#dateInput').val($('#dateInput').val() + `  ⋁`);
                 var id = $("#middleUrl").val()
+                var courseId = $("#activeTab").val()
                 let formatedDate = dateInput.replaceAll('/', '-')
-                window.location.href = `http://localhost:8082/classes/${id}/journal?date=${formatedDate}`
+                window.location.href = `http://localhost:8082/classes/${id}/journal/${courseId}?date=${formatedDate}`
             }
         });
     });

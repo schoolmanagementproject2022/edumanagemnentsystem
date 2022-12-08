@@ -5,7 +5,11 @@ td {
 
 .emptyList {
     border: none;
+    color: #555555;
+    font-weight: bold;
     background: transparent !important;
+    text-align: center;
+    font-size: 19px;
 }
 
 .list {
@@ -25,6 +29,21 @@ tr td:not(:first-child) {
 }
 
 .agendaStyle {
-    color: #333333;
+    color: #555555;
     font-weight: bold;
+}
+
+.horizontalGrids, a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.horizontalGrids a:hover {
+    color: #01A7F0;
+}
+
+.table-hover > tbody > tr:hover > * {
+    --bs-table-accent-bg: var(--bs-table-hover-bg);
+    color: #01a7f0;
 }
