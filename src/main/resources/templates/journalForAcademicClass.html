@@ -136,8 +136,9 @@
                     </thead>
                     <tbody>
                     <tr th:each="course : ${allCoursesInAcademicClass}">
-                        <td class="horizontalGrids"><a  th:text="${course.getName}"
-                               th:href="@{'/classes/' + ${middleUrl} + '/journal/'+${course.getId()}}"></a></td>
+                        <td class="horizontalGrids"><a th:text="${course.getName}"
+                                                       th:href="@{'/classes/' + ${middleUrl} + '/journal/'+${course.getId()}}"></a>
+                        </td>
                         <td class="exist" th:if="${monday.contains(course.getName) && Monday}"></td>
                         <td class="absent" th:unless="${monday.contains(course.getName) || !Monday}"></td>
                         <td class="exist" th:if="${tuesday.contains(course.getName) && Tuesday}"></td>

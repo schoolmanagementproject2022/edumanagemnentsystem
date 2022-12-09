@@ -12,7 +12,7 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/static/js/popupControlTimetable.js"></script>
+<!--    <script src="/static/js/popupControlTimetable.js"></script>-->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -87,7 +87,14 @@
                 <a class="a-url" th:href="@{'/'+${firstUrl}+'/'+${middleUrl}+'/journal'}" th:text="${'Journal'}"></a>
                 <a class="a-url" th:href="@{${allUrl}}" th:text="${course.getName()}"></a>
             </div>
-            <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
+            <div th:if="${allStudentsInAcademicClass.size()==0}">
+                <p class="message">At first add student to the class, for being able to use the journal</p>
+
+                <a class="create-btn" th:href="@{'/classes/' + ${middleUrl} + '/students'}"
+                   id="create-btn"><b>Add students</b></a>
+            </div>
+            <div th:if="${allStudentsInAcademicClass.size()!=0}" class="list"
+                 style=" -ms-overflow-style: none !important; scrollbar-width: none !important;">
                 <table class="table table-hover">
                     <thead>
                     <tr>

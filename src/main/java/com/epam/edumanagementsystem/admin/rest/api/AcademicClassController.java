@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -397,9 +398,13 @@ public class AcademicClassController {
                 }
             }
             journalStartDate = academicClassService.recurs(journalStartDate);
-            model.addAttribute("allStudentsInAcademicClass", studentService.findStudentsByClassName(name));
             model.addAttribute("allCoursesInAcademicClass", academicClassService.findAllAcademicCourses(name));
             model.addAttribute("course", academicCourseService.findByID(courseId));
+            List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
+            model.addAttribute("allStudentsInAcademicClass", studentsInClass);
+            if (studentsInClass.size() == 0) {
+                return "journalWithCourseInfo";
+            }
             for (int i = 0; i < 7; i++) {
                 int dayOfMonth = journalStartDate.getDayOfMonth();
                 String dayOfMontString = Integer.valueOf(dayOfMonth).toString();

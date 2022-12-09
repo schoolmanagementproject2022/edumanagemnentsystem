@@ -1,3 +1,15 @@
+body {
+    font-size: 16px;
+    color: #000000;
+    background: #ffffff;
+    font-family: "Montserrat", sans-serif;
+}
+
+.sidebar a:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
 td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -34,11 +46,18 @@ tr td:not(:first-child) {
     cursor: pointer;
 }
 
-.horizontalGrids, a {
+.horizontalGrids {
     text-decoration: none;
     color: white;
     font-weight: bold;
 }
+
+.horizontalGrids a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
 
 .horizontalGrids a:hover {
     color: #01A7F0;
@@ -97,7 +116,6 @@ tr td:not(:first-child) {
     height: 360px;
 }
 
-
 .save {
     position: absolute;
     color: #A30014;
@@ -135,4 +153,35 @@ tr td:not(:first-child) {
 
 textarea {
     resize: none;
+}
+
+.create-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 16%;
+    text-align: center;
+    background-color: #555555;
+    position: absolute;
+    top: 39%;
+    left: 52%;
+    border-radius: 6px;
+    transform: translate(-50%, -50%);
+    color: #01A7F0;
+    text-decoration: none;
+}
+
+.create-btn:hover {
+    border-color: #01a7f0;
+    color: white;
+}
+
+.message {
+    font-size: 25px;
+    position: absolute;
+    top: 29%;
+    left: 52%;
+    color: white;
+    width: 712px;
+    transform: translate(-50%, -50%);
 }
