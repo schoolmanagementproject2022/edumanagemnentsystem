@@ -96,5 +96,13 @@
         texttooltip[i].addEventListener('mouseover', updatetitle, false);
     }
 </script>
+<script>
+    var maxLength = 23;
+    $('#teacher > option').text(function (i, text) {
+        if (text.length > maxLength) {
+            return text.substr(0, maxLength) + '...';
+        }
+    });
+</script>
 </body>
 </html>

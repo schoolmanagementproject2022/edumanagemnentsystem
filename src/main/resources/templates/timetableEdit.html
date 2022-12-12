@@ -497,10 +497,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Monday'}"
@@ -534,10 +533,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Tuesday'}"
@@ -570,10 +568,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Wednesday'}"
@@ -607,10 +604,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Thursday'}"
@@ -644,10 +640,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Friday'}"
@@ -680,10 +675,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Saturday'}"
@@ -718,10 +712,9 @@
                     <input type="hidden" name="academicClass" th:value="${academicClass.id}"/>
                     <label class="popup-label-title">Course <span style="color:#A30014">*</span></label>
                     <select class="form_input" th:name="academicCourse" th:id="academicCourse">
-                        <option class="short" th:text="'Select Course'"
-                                data-limit="23" th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="item : ${courses}" th:value="${item.id}"
-                                th:text="${item.getName()}"></option>
+                        <option th:text="'Select Course'" th:value="null"></option>
+                        <option th:each="item : ${courses}" th:value="${item.id}"
+                                th:title="${item.getName()}" th:text="${item.getName()}"></option>
                     </select>
                     <div id="error" class="error"
                          th:if="${#fields.hasErrors('academicCourse')} and ${dayOfWeek eq 'Sunday'}"
@@ -736,5 +729,13 @@
     </div>
 </div>
 
+<script>
+    var maxLength = 23;
+    $('#academicCourse > option').text(function (i, text) {
+        if (text.length > maxLength) {
+            return text.substr(0, maxLength) + '...';
+        }
+    });
+</script>
 </body>
 </html>
