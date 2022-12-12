@@ -23,56 +23,7 @@
     <script src="/static/js/popupControl.js"></script>
     <title>Journal</title>
     <style>
-        .date-form {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
 
-        .absent {
-            background-color: #D7D7D7 !important;
-        }
-
-        .exist {
-            background-color: #7F7F7F !important;
-        }
-
-        .today_date a:first-child {
-            color: black;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .arrow_today_date {
-            color: black;
-            font-size: 30px;
-            margin-left: 5px;
-            font-weight: 300;
-            text-decoration: none;
-        }
-
-        #abc:after {
-            content: "     V"
-        }
-
-        .input_form {
-            margin-left: 20px;
-        }
-
-        .form_input {
-            cursor: pointer;
-        }
-
-        .nav-link-wrapper a {
-            color: white !important;
-        }
-
-        .container {
-            max-width: 100% !important;
-            width: 100% !important;
-            padding: 0 !important;
-        }
     </style>
 </head>
 <body>
@@ -89,49 +40,52 @@
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${middleUrl}"></a>
                 <span class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Journal'}"></span>
             </div>
+
+            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateInput}" />
+            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateInput}" />
+
+            <input type="hidden" id="1234date" th:value="${startDate}"/>
             <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-                        <td class="emptyList"></td>
-                        <td colspan="7" style="background-color: transparent; border:0px !important;  ">
-                            <div class="date-form">
-                                <div class="today_date" style="display: flex;align-items: center">
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='today')}">Today</a>
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='previous')}"
-                                       class="arrow_today_date"><
-                                    </a>
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}(startDate=${startDate},sel='next')}"
-                                       class="arrow_today_date">>
-                                    </a>
-                                    <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}"
-                                           id="middleUrl"/>
+                        <tr>
+                            <td class="emptyList"></td>
+                            <td colspan="7" style="background-color: transparent; border:0px !important;  ">
+                                <div class="date-form">
+                                    <div class="today_date" style="display: flex;align-items: center">
+                                        <a id="todayDate">Today</a>
+                                        <a id="previousDate"
+                                           class="arrow_today_date"><
+                                        </a>
+                                        <a id="nextDate"
+                                           class="arrow_today_date">>
+                                        </a>
+                                        <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}" id="middleUrl"/>
+                                    </div>
+                                    <div class="input_form">
+                                        <input class="form_input" placeholder="Date pick &#9638;"
+                                               data-date-format="yyyy-mm-dd"
+                                               readonly
+                                               onchange="elog('change',this);return false;"
+                                               style="background:transparent; border:none; outline: none;"
+                                               th:type="text"
+                                               th:name="dateInput"
+                                               th:value="${month} + ' ' +${year}"
+                                               th:id="dateInput"/></div>
+                                    <div class="error" th:if="${#fields.hasErrors('startDate')}"
+                                         th:errors="*{startDate}"></div>
                                 </div>
-                                <!--                                <label for="dateInput" id="abc" style="text-transform: uppercase; margin-left: 15px;" th:text="${month} + ' ' +${year}"></label>-->
-                                <div class="input_form">
-                                    <input class="form_input" placeholder="Date pick &#9638;"
-                                           data-date-format="yyyy-mm-dd"
-                                           readonly
-                                           onchange="elog('change',this);return false;"
-                                           style="background:transparent; border:none; outline: none;"
-                                           th:type="text"
-                                           th:name="dateInput"
-                                           th:value="${month} + ' ' +${year}"
-                                           th:id="dateInput"/></div>
-                                <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                                     th:errors="*{startDate}"></div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="">
+                            </td>
+                        </tr>
+                        <tr class="">
                         <td class="emptyList"></td>
-                        <td th:if="${Monday}"><span th:text="${MONDAY}">123</span><br/><span>Monday</span></td>
-                        <td th:if="${Tuesday}"><span th:text="${TUESDAY}">123</span><br/><span>Tuesday</span></td>
-                        <td th:if="${Wednesday}"><span th:text="${WEDNESDAY}">123</span><br/><span>Wednesday</span></td>
-                        <td th:if="${Thursday}"><span th:text="${THURSDAY}">123</span><br/><span>Thursday</span></td>
-                        <td th:if="${Friday}"><span th:text="${FRIDAY}">123</span><br/><span>Friday</span></td>
-                        <td th:if="${Saturday}"><span th:text="${SATURDAY}">123</span><br/><span>Saturday</span></td>
-                        <td th:if="${Sunday}"><span th:text="${SUNDAY}">123</span><br/><span>Sunday</span></td>
+                        <td class="day_of_week" th:if="${Monday}" ><span th:text="${MONDAY}">123</span><br/><span>Monday</span></td>
+                        <td class="day_of_week" th:if="${Tuesday}"><span th:text="${TUESDAY}">123</span><br/><span>Tuesday</span></td>
+                        <td class="day_of_week" th:if="${Wednesday}"><span th:text="${WEDNESDAY}">123</span><br/><span>Wednesday</span></td>
+                        <td class="day_of_week" th:if="${Thursday}"><span th:text="${THURSDAY}">123</span><br/><span>Thursday</span></td>
+                        <td class="day_of_week" th:if="${Friday}"><span th:text="${FRIDAY}">123</span><br/><span>Friday</span></td>
+                        <td class="day_of_week" th:if="${Saturday}"><span th:text="${SATURDAY}">123</span><br/><span>Saturday</span></td>
+                        <td class="day_of_week" th:if="${Sunday}"><span th:text="${SUNDAY}">123</span><br/><span>Sunday</span></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -166,32 +120,62 @@
 </div>
 </div>
 <script>
-    function elog(ev, object) {
-        console.log(object.id + " - " + ev + ": " + object.value);
-    }
+    $("#abc").on('click', function (){
+        $( "#dateInput" ).datepicker("show");
+    });
 
-    $("#abc").on('click', function () {
-        $("#dateInput").datepicker("show");
+    let startDateFromDB = $("#1234date").val()
+    let newPreviousDate = new Date(startDateFromDB);
+    newPreviousDate.setDate(newPreviousDate.getDate() - 14);
+    let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newPreviousDate);
+    let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(newPreviousDate);
+    let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newPreviousDate);
+    let finalPreviousDate = `${ye}-${mo}-${da}`
+
+    let newNextDate = new Date(startDateFromDB);
+    newNextDate.setDate(newNextDate.getDate());
+    let nextYear = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(newNextDate);
+    let nextMonth = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(newNextDate);
+    let nextDay = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(newNextDate);
+    let finalNextDate = `${nextYear}-${nextMonth}-${nextDay}`
+
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    let id = $("#middleUrl").val()
+    $("#previousDate").on('click', function (){
+        window.location.href=`http://localhost:8082/classes/${id}/journal?date=${finalPreviousDate}`
+    });
+    $("#todayDate").on('click', function (){
+        window.location.href=`http://localhost:8082/classes/${id}/journal?date=${today}`
+    });
+    $("#nextDate").on('click', function (){
+        window.location.href=`http://localhost:8082/classes/${id}/journal?date=${finalNextDate}`
     });
     // #middleUrl
-    $(document).ready(function () {
-        var id = $("#middleUrl").val()
+    $( document ).ready(function() {
+        let id = $("#middleUrl").val()
         $('#dateInput').val($('#dateInput').val() + `  ⋁`);
     });
+    let startDateTimeVal = $("#startDateTime").val()
+    let endDateTimeVal = $("#endDateTime").val()
     $(function () {
         $("#dateInput").datepicker({
             changeMonth: true,
             changeYear: true,
             yearRange: "-0:+10",
             dateFormat: 'yy-mm-dd',
-            minDate: 0,
-            maxDate: "+0D +0M +1Y",
+            minDate: startDateTimeVal,
+            maxDate: endDateTimeVal,
             onSelect: function (dateInput) {
                 $('#dateInput').val($('#dateInput').val() + `  ⋁`);
-                var id = $("#middleUrl").val()
-
-                let formatedDate = dateInput.replaceAll('/', '-')
-                window.location.href = `http://localhost:8082/classes/${id}/journal/?date=${formatedDate}`
+                let id = $("#middleUrl").val()
+                let formatedDate = dateInput.replaceAll('/','-')
+                    window.location.href=`http://localhost:8082/classes/${id}/journal?date=${formatedDate}`
             }
         });
     });
