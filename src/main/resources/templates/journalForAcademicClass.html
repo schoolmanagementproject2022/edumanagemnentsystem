@@ -12,7 +12,6 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/static/js/popupControlTimetable.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -43,41 +42,41 @@
 
             <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateInput}" />
             <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateInput}" />
-
             <input type="hidden" id="1234date" th:value="${startDate}"/>
+
             <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <td class="emptyList"></td>
-                            <td colspan="7" style="background-color: transparent; border:0px !important;  ">
-                                <div class="date-form">
-                                    <div class="today_date" style="display: flex;align-items: center">
-                                        <a id="todayDate">Today</a>
-                                        <a id="previousDate"
-                                           class="arrow_today_date"><
-                                        </a>
-                                        <a id="nextDate"
-                                           class="arrow_today_date">>
-                                        </a>
-                                        <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}" id="middleUrl"/>
-                                    </div>
-                                    <div class="input_form">
-                                        <input class="form_input" placeholder="Date pick &#9638;"
-                                               data-date-format="yyyy-mm-dd"
-                                               readonly
-                                               onchange="elog('change',this);return false;"
-                                               style="background:transparent; border:none; outline: none;"
-                                               th:type="text"
-                                               th:name="dateInput"
-                                               th:value="${month} + ' ' +${year}"
-                                               th:id="dateInput"/></div>
-                                    <div class="error" th:if="${#fields.hasErrors('startDate')}"
-                                         th:errors="*{startDate}"></div>
+                    <tr>
+                        <td class="emptyList"></td>
+                        <td colspan="7" style="background-color: transparent; border:0px !important;  ">
+                            <div class="date-form">
+                                <div class="today_date" style="display: flex;align-items: center">
+                                    <a id="todayDate">Today</a>
+                                    <a id="previousDate"
+                                       class="arrow_today_date"><
+                                    </a>
+                                    <a id="nextDate"
+                                       class="arrow_today_date">>
+                                    </a>
+                                    <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}" id="middleUrl"/>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr class="">
+                                <div class="input_form">
+                                    <input class="form_input" placeholder="Date pick &#9638;"
+                                           data-date-format="yyyy-mm-dd"
+                                           readonly
+                                           onchange="elog('change',this);return false;"
+                                           style="background:transparent; border:none; outline: none;"
+                                           th:type="text"
+                                           th:name="dateInput"
+                                           th:value="${month} + ' ' +${year}"
+                                           th:id="dateInput"/></div>
+                                <div class="error" th:if="${#fields.hasErrors('startDate')}"
+                                     th:errors="*{startDate}"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="">
                         <td class="emptyList"></td>
                         <td class="day_of_week" th:if="${Monday}" ><span th:text="${MONDAY}">123</span><br/><span>Monday</span></td>
                         <td class="day_of_week" th:if="${Tuesday}"><span th:text="${TUESDAY}">123</span><br/><span>Tuesday</span></td>
@@ -94,22 +93,21 @@
                                                        th:href="@{'/classes/' + ${middleUrl} + '/journal/'+${course.getId()}}"></a>
                         </td>
                         <td class="exist" th:if="${monday.contains(course.getName) && Monday}"></td>
-                        <td class="absent" th:unless="${monday.contains(course.getName) || !Monday}"></td>
-                        <td class="exist" th:if="${tuesday.contains(course.getName) && Tuesday}"></td>
-                        <td class="absent" th:unless="${tuesday.contains(course.getName) || !Tuesday}"></td>
-                        <td class="exist" th:if="${wednesday.contains(course.getName) && Wednesday}"></td>
-                        <td class="absent" th:unless="${wednesday.contains(course.getName) || !Wednesday}"></td>
-                        <td class="exist" th:if="${thursday.contains(course.getName) && Thursday}"></td>
-                        <td class="absent" th:unless="${thursday.contains(course.getName) || !Thursday}"></td>
-                        <td class="exist" th:if="${friday.contains(course.getName) && Friday}"></td>
-                        <td class="absent" th:unless="${friday.contains(course.getName) || !Friday}"></td>
-                        <td class="exist" th:if="${saturday.contains(course.getName) && Saturday}"></td>
-                        <td class="absent" th:unless="${saturday.contains(course.getName) || !Saturday}"></td>
-                        <td class="exist" th:if="${sunday.contains(course.getName) && Sunday}"></td>
-                        <td class="absent" th:unless="${sunday.contains(course.getName) || !Sunday}"></td>
+                        <td  class="absent" th:unless="${monday.contains(course.getName) || !Monday}" ></td>
+                        <td class="exist"  th:if="${tuesday.contains(course.getName) && Tuesday}"></td>
+                        <td  class="absent" th:unless="${tuesday.contains(course.getName) || !Tuesday}" ></td>
+                        <td  class="exist" th:if="${wednesday.contains(course.getName) && Wednesday}" ></td>
+                        <td  class="absent" th:unless="${wednesday.contains(course.getName) || !Wednesday}" ></td>
+                        <td class="exist"  th:if="${thursday.contains(course.getName) && Thursday}"></td>
+                        <td  class="absent" th:unless="${thursday.contains(course.getName) || !Thursday}" ></td>
+                        <td class="exist"  th:if="${friday.contains(course.getName) && Friday}"></td>
+                        <td  class="absent" th:unless="${friday.contains(course.getName) || !Friday}" ></td>
+                        <td class="exist"  th:if="${saturday.contains(course.getName) && Saturday}"></td>
+                        <td   class="absent" th:unless="${saturday.contains(course.getName) || !Saturday}"></td>
+                        <td class="exist"  th:if="${sunday.contains(course.getName) && Sunday}" ></td>
+                        <td  class="absent" th:unless="${sunday.contains(course.getName) || !Sunday}"></td>
                     </tr>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -175,7 +173,7 @@
                 $('#dateInput').val($('#dateInput').val() + `  ⋁`);
                 let id = $("#middleUrl").val()
                 let formatedDate = dateInput.replaceAll('/','-')
-                    window.location.href=`http://localhost:8082/classes/${id}/journal?date=${formatedDate}`
+                window.location.href=`http://localhost:8082/classes/${id}/journal?date=${formatedDate}`
             }
         });
     });
