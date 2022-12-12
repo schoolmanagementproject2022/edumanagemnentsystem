@@ -151,7 +151,8 @@ public class ParentController {
         }
 
         if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")) {
+                || model.containsAttribute("duplicated")|| model.containsAttribute("emailSize")
+                || model.containsAttribute("nameSize") || model.containsAttribute("surnameSize")) {
             model.addAttribute("parentData", parentService.findById(id).get().getNameAndSurname());
             return "parentProfile";
         }
