@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,5 +31,9 @@ public interface AcademicClassService {
     Set<AcademicClass> findAcademicClassByTeacherId(Long id);
 
     LocalDate recurs(LocalDate localDate);
+
+    void openJournal(String date, String startDate, String name, Model model);
+
+    void doNotOpenJournal_timetableIsNotExist(String date, String startDate, String className, Model model);
 
 }

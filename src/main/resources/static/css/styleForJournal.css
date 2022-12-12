@@ -1,3 +1,15 @@
+body {
+    font-size: 16px;
+    color: #000000;
+    background: #ffffff;
+    font-family: "Montserrat", sans-serif;
+}
+
+.sidebar a:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
 td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -10,6 +22,67 @@ td {
     background: transparent !important;
     text-align: center;
     font-size: 19px;
+}
+
+.date-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.absent{
+    background-color: #D7D7D7 !important;
+}
+
+.exist{
+    background-color: #7F7F7F !important;
+}
+
+.today_date a:first-child {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.today_date:hover{
+    color: #2b80a5;
+}
+
+.arrow_today_date {
+    color: black;
+    cursor: pointer;
+    font-size: 30px;
+    margin-left: 5px;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+#abc:after{
+    content: "     V"
+}
+
+.input_form {
+    margin-left: 20px;
+}
+
+.form_input {
+    cursor: pointer;
+}
+
+.form_input:hover{
+    color: #2b80a5;
+}
+
+.nav-link-wrapper a{
+    color: white !important;
+}
+
+.container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
 }
 
 .list {
@@ -34,11 +107,18 @@ tr td:not(:first-child) {
     cursor: pointer;
 }
 
-.horizontalGrids, a {
+.horizontalGrids {
     text-decoration: none;
     color: white;
     font-weight: bold;
 }
+
+.horizontalGrids a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
 
 .horizontalGrids a:hover {
     color: #01A7F0;
@@ -97,7 +177,6 @@ tr td:not(:first-child) {
     height: 360px;
 }
 
-
 .save {
     position: absolute;
     color: #A30014;
@@ -135,4 +214,35 @@ tr td:not(:first-child) {
 
 textarea {
     resize: none;
+}
+
+.create-btn {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    width: 16%;
+    text-align: center;
+    background-color: #555555;
+    position: absolute;
+    top: 39%;
+    left: 52%;
+    border-radius: 6px;
+    transform: translate(-50%, -50%);
+    color: #01A7F0;
+    text-decoration: none;
+}
+
+.create-btn:hover {
+    border-color: #01a7f0;
+    color: white;
+}
+
+.message {
+    font-size: 25px;
+    position: absolute;
+    top: 29%;
+    left: 52%;
+    color: white;
+    width: 712px;
+    transform: translate(-50%, -50%);
 }

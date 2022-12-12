@@ -4,73 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!--    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>-->
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="/static/js/popupControlTimetable.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styleForJournal.css">
     <script src="/static/js/popupControl.js"></script>
     <title>Journal</title>
-    <style>
-        .date-form {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
 
-        .absent {
-            background-color: #D7D7D7 !important;
-        }
-
-        .exist {
-            background-color: #7F7F7F !important;
-        }
-
-        .today_date a:first-child {
-            color: black;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .arrow_today_date {
-            color: black;
-            font-size: 30px;
-            margin-left: 5px;
-            font-weight: 300;
-            text-decoration: none;
-        }
-
-        #abc:after {
-            content: "     V"
-        }
-
-        .input_form {
-            margin-left: 20px;
-        }
-
-        .form_input {
-            cursor: pointer;
-        }
-
-        .nav-link-wrapper a {
-            color: white !important;
-        }
-
-        .container {
-            max-width: 100% !important;
-            width: 100% !important;
-            padding: 0 !important;
-        }
-    </style>
 </head>
 <body>
 
@@ -87,7 +35,19 @@
                 <a class="a-url" th:href="@{'/'+${firstUrl}+'/'+${middleUrl}+'/journal'}" th:text="${'Journal'}"></a>
                 <a class="a-url" th:href="@{${allUrl}}" th:text="${course.getName()}"></a>
             </div>
-            <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
+            <div th:if="${allStudentsInAcademicClass.size()==0}">
+                <p class="message">At first add student to the class, for being able to use the journal</p>
+
+                <a class="create-btn" th:href="@{'/classes/' + ${middleUrl} + '/students'}"
+                   id="create-btn"><b>Add students</b></a>
+            </div>
+
+            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateInput}"/>
+            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateInput}"/>
+            <input type="hidden" id="1234date" th:value="${startDate}"/>
+
+            <div th:if="${allStudentsInAcademicClass.size()!=0}" class="list"
+                 style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -95,17 +55,18 @@
                         <td colspan="7" style="background-color: transparent; border:0px !important;  ">
                             <div class="date-form">
                                 <div class="today_date" style="display: flex;align-items: center">
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='today')}">Today</a>
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='previous')}"
-                                       class="arrow_today_date"> < </a>
-                                    <a th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal/'+ activeTab}(startDate=${startDate},sel='next')}"
-                                       class="arrow_today_date"> > </a>
+                                    <a id="todayDate">Today</a>
+                                    <a id="previousDate"
+                                       class="arrow_today_date"><
+                                    </a>
+                                    <a id="nextDate"
+                                       class="arrow_today_date">>
+                                    </a>
                                     <input type="text" style="display: none; overflow: hidden" th:value="${middleUrl}"
                                            id="middleUrl"/>
                                     <input type="text" style="display: none; overflow: hidden" th:value="${activeTab}"
                                            id="activeTab"/>
                                 </div>
-
                                 <div class="input_form">
                                     <input class="form_input" placeholder="Date pick &#9638;"
                                            data-date-format="yyyy-mm-dd"
@@ -217,32 +178,65 @@
 </div>
 
 <script>
-    function elog(ev, object) {
-        console.log(object.id + " - " + ev + ": " + object.value);
-    }
-
     $("#abc").on('click', function () {
         $("#dateInput").datepicker("show");
     });
+
+    let startDateFromDB = $("#1234date").val()
+    let newPreviousDate = new Date(startDateFromDB);
+    newPreviousDate.setDate(newPreviousDate.getDate() - 14);
+    let ye = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(newPreviousDate);
+    let mo = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(newPreviousDate);
+    let da = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(newPreviousDate);
+    let finalPreviousDate = `${ye}-${mo}-${da}`
+
+    let newNextDate = new Date(startDateFromDB);
+    newNextDate.setDate(newNextDate.getDate());
+    let nextYear = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(newNextDate);
+    let nextMonth = new Intl.DateTimeFormat('en', {month: '2-digit'}).format(newNextDate);
+    let nextDay = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(newNextDate);
+    let finalNextDate = `${nextYear}-${nextMonth}-${nextDay}`
+
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    let id = $("#middleUrl").val()
+    let course_id = $("#activeTab").val()
+    $("#previousDate").on('click', function () {
+        window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${finalPreviousDate}`
+    });
+    $("#todayDate").on('click', function () {
+        window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${today}`
+    });
+    $("#nextDate").on('click', function () {
+        window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${finalNextDate}`
+    });
     // #middleUrl
     $(document).ready(function () {
-        var id = $("#middleUrl").val()
+        let id = $("#middleUrl").val()
+        let course_id = $("#activeTab").val()
         $('#dateInput').val($('#dateInput').val() + `  ⋁`);
     });
+    let startDateTimeVal = $("#startDateTime").val()
+    let endDateTimeVal = $("#endDateTime").val()
     $(function () {
         $("#dateInput").datepicker({
             changeMonth: true,
             changeYear: true,
             yearRange: "-0:+10",
             dateFormat: 'yy-mm-dd',
-            minDate: 0,
-            maxDate: "+0D +0M +1Y",
+            minDate: startDateTimeVal,
+            maxDate: endDateTimeVal,
             onSelect: function (dateInput) {
                 $('#dateInput').val($('#dateInput').val() + `  ⋁`);
-                var id = $("#middleUrl").val()
-                var courseId = $("#activeTab").val()
+                let id = $("#middleUrl").val()
+                let course_id = $("#activeTab").val()
                 let formatedDate = dateInput.replaceAll('/', '-')
-                window.location.href = `http://localhost:8082/classes/${id}/journal/${courseId}?date=${formatedDate}`
+                window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${formatedDate}`
             }
         });
     });
