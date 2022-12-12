@@ -82,6 +82,7 @@ body {
     background-color: #AAAAAA;
     font-size: 1.3em;
     overflow: hidden;
+    display: flex;
 }
 
 .activeTab {
@@ -121,7 +122,7 @@ body {
 
 .sidebar-right {
     margin-top: 3%;
-    height: 213px;
+    height: fit-content;
     width: 24%;
     background-color: #555555;
     cursor: pointer;
@@ -189,7 +190,7 @@ body {
 
 /*timetable style*/
 .timetable {
-    width: 90%;
+    width: 100%;
     margin: 0px 90px 0px 60px;
     padding: 0px;
     background-color: #AAAAAA;

@@ -47,6 +47,8 @@
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/teachers'}}">Teachers</a>
         <a th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>
+        <a class="item" th:classappend="${lastUrl eq 'journal' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}}">Journal</a>
     </div>
 </th:block>
 

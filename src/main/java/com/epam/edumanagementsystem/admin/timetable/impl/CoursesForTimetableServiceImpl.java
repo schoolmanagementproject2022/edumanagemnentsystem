@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CoursesForTimetableServiceImpl implements CoursesForTimetableService {
@@ -22,7 +26,7 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     @Transactional
     @Override
     public void create(CoursesForTimetable coursesForTimetable) {
-       coursesRepository.create(coursesForTimetable.getDayOfWeek(),
+        coursesRepository.create(coursesForTimetable.getDayOfWeek(),
                 coursesForTimetable.getAcademicCourse(),
                 coursesForTimetable.getAcademicClass().get(0).getId(),
                 coursesForTimetable.getStatus());
@@ -80,4 +84,14 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     public List<CoursesForTimetable> getCoursesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
         return coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId);
     }
+
+    @Override
+    public List<String> getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
+        List<String> classes = new ArrayList<>();
+        coursesRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId).forEach(coursesForTimetable -> {
+            classes.add(coursesForTimetable.getAcademicCourse());
+        });
+        return classes;
+    }
+
 }
