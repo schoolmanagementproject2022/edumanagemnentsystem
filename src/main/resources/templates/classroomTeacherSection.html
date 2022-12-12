@@ -57,7 +57,7 @@
                     th:field="*{classroomTeacher}">
               <option th:if="*{classroomTeacher == null}" th:text="'Select Teacher'" class="short" data-limit="23" th:value="null"></option>
               <option class="short" data-limit="23" th:each="select : ${teachers}" th:value="${select.id}"
-                      th:text="${select.getNameSurname()}"></option>
+                      th:title= "${select.getNameSurname()}" th:text="${select.getNameSurname()}"></option>
             </select>
             <div th:if="${blank}!= null" class="error">
               <p th:text="${blank}"></p>

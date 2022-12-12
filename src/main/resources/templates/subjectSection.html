@@ -61,6 +61,7 @@
                         <select id="teacher" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple >
                             <option
                                     th:each="teacher:${teachers}"
+                                    th:title="${teacher.getNameSurname()}"
                                     th:text="${teacher.getNameSurname()}"
                                     th:value="${teacher.id}">
                             </option>
