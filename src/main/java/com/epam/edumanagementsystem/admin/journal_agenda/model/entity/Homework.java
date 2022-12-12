@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "agenda_homework")
 public class Homework {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

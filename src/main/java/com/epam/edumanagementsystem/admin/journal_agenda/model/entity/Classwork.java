@@ -65,11 +65,11 @@ public class Classwork {
         this.dateOfClasswork = dateOfClasswork;
     }
 
-    public AcademicCourse getCourseOfClasswork() {
+    public AcademicCourse getAcademicCourse() {
         return academicCourse;
     }
 
-    public void setCourseOfClasswork(AcademicCourse courseOfClasswork) {
+    public void setAcademicCourse(AcademicCourse academicCourse) {
         this.academicCourse = academicCourse;
     }
 

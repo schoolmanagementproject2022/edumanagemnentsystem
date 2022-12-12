@@ -350,13 +350,18 @@ public class AcademicClassController {
     public String journalWithCourseInfo(@PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                         Model model, @RequestParam(name = "date", required = false) String date,
                                         @RequestParam(name = "startDate", required = false) String startDate,
-                                        @RequestParam(name = "sel", required = false) String select) {
+                                        @RequestParam(name = "sel", required = false) String select,
+                                        @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage) {
         if (date != null) {
             startDate = date;
             select = null;
         }
 
         AcademicClass academicClassByName = academicClassService.findByName(name);
+
+        if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
+            model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
+        }
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
@@ -422,11 +427,14 @@ public class AcademicClassController {
             model.addAttribute("month", journalStartDate.getMonth());
             model.addAttribute("year", journalStartDate.getYear());
             model.addAttribute("startDate", journalStartDateToString);
+            model.addAttribute("class", academicClassByName);
             return "journalWithCourseInfo";
 
         } else {
             model.addAttribute("timetable ", timetableService.findTimetableByAcademicClassName(name));
             model.addAttribute("creationStatus ", false);
+            model.addAttribute("class", academicClassByName);
+            model.addAttribute("course", academicCourseService.findByID(courseId));
             putLessons(model, academicClassByName.getId());
             return "createTimetableMsgFromJournal";
         }

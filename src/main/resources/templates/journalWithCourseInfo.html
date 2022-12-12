@@ -140,7 +140,7 @@
                     </tr>
                     <tr class="">
                         <td class="emptyList" th:text="${course.getName()}"></td>
-                        <td th:if="${monday.contains(course.getName) && Monday}" onclick="PopUpShow()" th:text="AGENDA"
+                        <td th:if="${monday.contains(course.getName) && Monday}" id="journalMonday" onclick="PopUpShow()" th:text="AGENDA"
                             class="agendaStyle"><span>AGENDA</span></td>
                         <td th:if="${tuesday.contains(course.getName) && Tuesday}" onclick="PopUpShow()"
                             th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
@@ -185,11 +185,11 @@
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1 style="font-size: 1.8rem; font-weight: bold">Course 1: Agenda 06/Sep/2022</h1>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/classes/' + 'name' + '/journal/agenda/add'}">
+        <form id="form" class="form" th:method="POST" th:action="@{'/agenda/' + ${class.id} + '/' + ${course.id} + '/add'}">
 
-            <!--            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${dayOfWeek eq 'Tuesday'}">-->
-            <!--                PopUpShowTuesday();-->
-            <!--            </script>-->
+            <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                PopUpShow();
+            </script>
             <div class="popup-wrap">
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
@@ -202,7 +202,9 @@
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
                               th:id="homework"></textarea>
-                    <input type="hidden" name="dayOfWeek" th:value="Tuesday"/>
+                    <input type="hidden" id="dayOfWeek" name="dayOfWeek"/>
+                    <div class="error"
+                         th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
