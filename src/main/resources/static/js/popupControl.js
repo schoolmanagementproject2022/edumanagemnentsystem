@@ -56,4 +56,13 @@ function showInputFieldsOnMouseover() {
         for (var i = 0; i < texttooltip.length; i++) {
             texttooltip[i].addEventListener('mouseover', updatetitle, false);
     }
+
+}
+function showDotsInLength(){
+    var maxLength = 23;
+    $('#classroomTeacher > option').text(function (i, text) {
+        if (text.length > maxLength) {
+            return text.substr(0, maxLength) + '...';
+        }
+    });
 }
