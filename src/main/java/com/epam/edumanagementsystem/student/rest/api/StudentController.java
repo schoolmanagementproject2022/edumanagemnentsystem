@@ -42,6 +42,7 @@ public class StudentController {
     private final ImageService imageService;
     private final AcademicClassService academicClassService;
     private final String STUDENT_HTML = "studentSection";
+    private final String FILTERED_STUDENTS = "filteredStudentSection";
 
     @Autowired
     public StudentController(PasswordEncoder bcryptPasswordEncoder, StudentService studentService,
@@ -66,6 +67,12 @@ public class StudentController {
         model.addAttribute("parents", findAllParents());
         model.addAttribute("classes", findAllClasses());
         return STUDENT_HTML;
+    }
+
+    @GetMapping("/without/parent")
+    public String openStudentsWithoutParent(Model model) {
+        model.addAttribute("students", studentService.findStudentsWithoutParent());
+        return FILTERED_STUDENTS;
     }
 
     @PostMapping
