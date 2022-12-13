@@ -262,9 +262,16 @@ public class AcademicClassController {
     @GetMapping("/{name}/journal/{courseId}")
     public String journalWithCourseInfo(@PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                         @RequestParam(name = "date", required = false) String date,
-                                        @RequestParam(name = "startDate", required = false) String startDate, Model model) {
+                                        @RequestParam(name = "startDate", required = false) String startDate,
+                                        @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
+                                        Model model) {
+        if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
+            model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
+        }
+
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             model.addAttribute("course", academicCourseService.findByID(courseId));
+            model.addAttribute("class", academicClassService.findByName(name));
             List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
             model.addAttribute("allStudentsInAcademicClass", studentsInClass);
             if (studentsInClass.size() == 0) {
@@ -274,6 +281,7 @@ public class AcademicClassController {
             return "journalWithCourseInfo";
         } else {
             academicClassService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
+            model.addAttribute("class", academicClassService.findByName(name));
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
             model.addAttribute("creationStatus", false);
             return "createTimetableMsgFromJournal";
