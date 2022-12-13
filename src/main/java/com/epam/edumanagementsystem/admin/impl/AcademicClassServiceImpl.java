@@ -194,9 +194,9 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClass academicClassByName,
                                          LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay) {
-        String dayOfMontString = Integer.valueOf(journalStartDate.getDayOfMonth()).toString();
+
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
-        model.addAttribute(deyOfWeek, dayOfMontString);
+        model.addAttribute(deyOfWeek, journalStartDate);
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
         List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                 .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByName.getId());

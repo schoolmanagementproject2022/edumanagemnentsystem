@@ -78,13 +78,13 @@
                     </tr>
                     <tr class="">
                         <td class="emptyList"></td>
-                        <td class="day_of_week" th:if="${Monday}" ><span th:text="${MONDAY}">123</span><br/><span>Monday</span></td>
-                        <td class="day_of_week" th:if="${Tuesday}"><span th:text="${TUESDAY}">123</span><br/><span>Tuesday</span></td>
-                        <td class="day_of_week" th:if="${Wednesday}"><span th:text="${WEDNESDAY}">123</span><br/><span>Wednesday</span></td>
-                        <td class="day_of_week" th:if="${Thursday}"><span th:text="${THURSDAY}">123</span><br/><span>Thursday</span></td>
-                        <td class="day_of_week" th:if="${Friday}"><span th:text="${FRIDAY}">123</span><br/><span>Friday</span></td>
-                        <td class="day_of_week" th:if="${Saturday}"><span th:text="${SATURDAY}">123</span><br/><span>Saturday</span></td>
-                        <td class="day_of_week" th:if="${Sunday}"><span th:text="${SUNDAY}">123</span><br/><span>Sunday</span></td>
+                        <td class="day_of_week" th:if="${Monday}" ><span th:text="${MONDAY.getDayOfMonth()}">123</span><br/><span>Monday</span></td>
+                        <td class="day_of_week" th:if="${Tuesday}"><span th:text="${TUESDAY.getDayOfMonth()}">123</span><br/><span>Tuesday</span></td>
+                        <td class="day_of_week" th:if="${Wednesday}"><span th:text="${WEDNESDAY.getDayOfMonth()}">123</span><br/><span>Wednesday</span></td>
+                        <td class="day_of_week" th:if="${Thursday}"><span th:text="${THURSDAY.getDayOfMonth()}">123</span><br/><span>Thursday</span></td>
+                        <td class="day_of_week" th:if="${Friday}"><span th:text="${FRIDAY.getDayOfMonth()}">123</span><br/><span>Friday</span></td>
+                        <td class="day_of_week" th:if="${Saturday}"><span th:text="${SATURDAY.getDayOfMonth()}">123</span><br/><span>Saturday</span></td>
+                        <td class="day_of_week" th:if="${Sunday}"><span th:text="${SUNDAY.getDayOfMonth()}">123</span><br/><span>Sunday</span></td>
                     </tr>
                     </thead>
                     <tbody>
