@@ -57,6 +57,7 @@
                         <select id="student" name="student" style="width: 250px" multiple>
                             <option th:each="select : ${students}"
                                     th:value="${select.id}"
+                                    th:title="${select.getName() + ' ' + select.getSurname()}"
                                     th:text="${select.getName() + ' ' + select.getSurname()}"></option>
                         </select>
                         <div th:if="${blank}!= null" class="error">

@@ -334,6 +334,49 @@ body {
     color: #007EB4;
 }
 
+.title {
+    padding: 3px;
+    text-align: center;
+    color: #007EB4;
+    font-weight: bold;
+    font-size: 0.43em;
+    margin-bottom: 20px;
+    margin-top: -14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 28px;
+    max-width: 90px;
+}
+
+.tooltip .tooltiptext {
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 10px;
+    padding: 3px;
+    width: 104%;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 4px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% - 40px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
+}
 
 .close-btn:hover {
     color: red;
@@ -353,15 +396,6 @@ body {
 .button .a {
     text-decoration: none;
     font-size: 0.5em;
-}
-
-.title {
-    text-align: center;
-    color: #007EB4;
-    font-weight: bold;
-    font-size: 0.43em;
-    margin-bottom: 20px;
-    margin-top: -14px;
 }
 
 /*url style*/

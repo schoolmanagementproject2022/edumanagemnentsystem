@@ -80,7 +80,7 @@
 
                 <div class="half2">
                     <label class="popup-label-title">Password<span style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" placeholder="Create Password" id="password"
+                    <input class="form_input_right" type="text" placeholder="Create Password" id="password"
                            th:name="password" readonly
                            th:value="${#object.password}"/>
                     <div th:if="${blank}!= null" class="error">
@@ -123,6 +123,9 @@ filevalidation = () => {
             return;
 		}
 }
+</script>
+<script>
+    showInputFieldsOnMouseover();
 </script>
 </body>
 

@@ -61,6 +61,7 @@
                         <select id="teacher" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple >
                             <option
                                     th:each="teacher:${teachers}"
+                                    th:title="${teacher.getNameSurname()}"
                                     th:text="${teacher.getNameSurname()}"
                                     th:value="${teacher.id}">
                             </option>
@@ -85,6 +86,23 @@
         });
     });
 
+</script>
+<script>
+    var texttooltip = document.getElementsByClassName("form_input_subjectName");
+    var updatetitle = function () {
+        this.setAttribute("title", this.value);
+    };
+    for (var i = 0; i < texttooltip.length; i++) {
+        texttooltip[i].addEventListener('mouseover', updatetitle, false);
+    }
+</script>
+<script>
+    var maxLength = 23;
+    $('#teacher > option').text(function (i, text) {
+        if (text.length > maxLength) {
+            return text.substr(0, maxLength) + '...';
+        }
+    });
 </script>
 </body>
 </html>

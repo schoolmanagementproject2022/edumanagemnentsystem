@@ -60,6 +60,7 @@
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="class : ${academicClasses}"
                                 th:value="${class.classNumber}"
+                                th:title="${class.classNumber}"
                                 th:text="${class.classNumber}"></option>
                     </select>
                     <div th:if="${blankClass}!= null" class="error">
@@ -71,6 +72,7 @@
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="select : ${teachersToSelect}"
                                 th:value="${select.id}"
+                                th:title="${select.getNameSurname()}"
                                 th:text="${select.getNameSurname()}"></option>
                     </select>
                     <div class="error" th:if="${#fields.hasErrors('teacher')}"
