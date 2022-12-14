@@ -79,12 +79,7 @@
 </div>
 
 <script>
-    var maxLength = 23;
-    $('#classroomTeacher > option').text(function (i, text) {
-        if (text.length > maxLength) {
-            return text.substr(0, maxLength) + '...';
-        }
-    });
+    showDotsInLength();
 </script>
 </body>
 </html>
