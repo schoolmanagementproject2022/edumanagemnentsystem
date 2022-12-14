@@ -172,6 +172,21 @@ body {
     overflow-y: scroll;
 }
 
+.list-items {
+    width: 100%;
+}
+
+.item {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 19px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
 #date {
     width: 80%;
 !important;
@@ -418,4 +433,36 @@ form {
 .list-items a:hover {
     background-color: #333333;
     color: #01A7F0;
+}
+
+.vis-btn-each {
+    margin: auto 33VW;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    width: 100%;
+    text-align: center;
+    background-color: #777777;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    align-self: flex-end;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.vis-btn-each:hover{
+    color: #01A7F0;
+    background-color: #333333;
+}
+
+.student-show-top{
+    margin-top: 10VW;
+    margin-left: 27VW;
+    width: 392px;
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 19px;
+    font-family: "Montserrat", sans-serif;
 }
