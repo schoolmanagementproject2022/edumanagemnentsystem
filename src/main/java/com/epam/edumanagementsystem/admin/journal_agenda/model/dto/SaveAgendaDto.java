@@ -5,6 +5,9 @@ public class SaveAgendaDto {
     private String classwork;
     private String homework;
     private String test;
+    private String date;
+    private Long classId;
+    private Long courseId;
 
     public SaveAgendaDto(String classwork, String homework, String test) {
         this.classwork = classwork;
@@ -37,6 +40,30 @@ public class SaveAgendaDto {
 
     public void setTest(String test) {
         this.test = test;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Long classId) {
+        this.classId = classId;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     @Override

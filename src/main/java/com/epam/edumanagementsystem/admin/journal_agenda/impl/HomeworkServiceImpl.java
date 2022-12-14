@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Homework;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.HomeworkRepository;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.service.HomeworkService;
@@ -23,12 +24,12 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public Homework save(String homeworkDesc, Long classId, Long courseId) {
+    public Homework save(SaveAgendaDto saveAgendaDto) {
         Homework homework = new Homework();
-        homework.setHomework(homeworkDesc);
-        homework.setDateOfHomework(LocalDate.now());
-        homework.setAcademicClass(academicClassRepository.findById(classId).get());
-        homework.setCourseOfHomework(academicCourseRepository.findById(courseId).get());
+        homework.setHomework(saveAgendaDto.getHomework());
+        homework.setDateOfHomework(LocalDate.parse(saveAgendaDto.getDate()));
+        homework.setAcademicClass(academicClassRepository.findById(saveAgendaDto.getClassId()).get());
+        homework.setCourseOfHomework(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return homeworkRepository.save(homework);
     }
 

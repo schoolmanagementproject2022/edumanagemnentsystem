@@ -8,7 +8,6 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,26 +30,24 @@ public class AgendaOfJournalController {
         this.academicClassService = academicClassService;
     }
 
-    @PostMapping("/{classId}/{courseId}/add")
-    public String addAgenda(@PathVariable("classId") Long classId,
-                            @PathVariable("courseId") Long courseId,
-                            @ModelAttribute(value = "saveAgenda") SaveAgendaDto agendaDto,
-                            ModelMap modelMap, RedirectAttributes redirectAttributes) {
-        AcademicClassDto classById = academicClassService.getById(classId);
+    @PostMapping("/add")
+    public String addAgenda(@ModelAttribute(value = "saveAgenda") SaveAgendaDto agendaDto,
+                            RedirectAttributes redirectAttributes) {
+        AcademicClassDto classById = academicClassService.getById(agendaDto.getClassId());
         if (agendaDto.getClasswork().isBlank() && agendaDto.getTest().isBlank() && agendaDto.getHomework().isBlank()) {
             redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
-            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + courseId;
+            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
         }
         if (!agendaDto.getClasswork().isBlank()) {
-            classworkService.save(agendaDto.getClasswork(), classId, courseId);
+            classworkService.save(agendaDto);
         }
         if (!agendaDto.getHomework().isBlank()) {
-            homeworkService.save(agendaDto.getHomework(), classId, courseId);
+            homeworkService.save(agendaDto);
         }
         if (!agendaDto.getTest().isBlank()) {
-            testService.save(agendaDto.getTest(), classId, courseId);
+            testService.save(agendaDto);
         }
-        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + courseId;
+        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
     }
 
 }

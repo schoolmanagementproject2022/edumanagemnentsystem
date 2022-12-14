@@ -93,29 +93,43 @@
                         <td th:if="${thursday.contains(course.getName) && Thursday}"><span
                                 th:text="${THURSDAY.getDayOfMonth()}">123</span><br/><span>Thursday</span></td>
                         <td th:if="${friday.contains(course.getName) && Friday}"><span
-                                th:text="${FRIDAY..getDayOfMonth()}">123</span><br/><span>Friday</span></td>
+                                th:text="${FRIDAY.getDayOfMonth()}">123</span><br/><span>Friday</span></td>
                         <td th:if="${saturday.contains(course.getName) && Saturday}"><span
                                 th:text="${SATURDAY}.getDayOfMonth()">123</span><br/><span>Saturday</span></td>
                         <td th:if="${sunday.contains(course.getName) && Sunday}"><span
                                 th:text="${SUNDAY.getDayOfMonth()}">123</span><br/><span>Sunday</span></td>
                     </tr>
                     <tr class="">
-                        <td class="emptyList" th:text="${course.getName()}"></td>
+                        <td class="emptyList" id="course-name" th:text="${course.getName()}"></td>
                         <td th:if="${monday.contains(course.getName) && Monday}" th:value="${MONDAY}" id="journalMonday"
-                            onclick="PopUpShow()" th:text="AGENDA"
+                            onclick="PopUpShowAgendaMonday()" th:text="AGENDA"
                             class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${tuesday.contains(course.getName) && Tuesday}" th:value="${TUESDAY}" onclick="PopUpShow()"
+                        <td style="display: none" id="mondayDate" th:if="${monday.contains(course.getName) && Monday}" th:text="${MONDAY}"></td>
+
+                        <td th:if="${tuesday.contains(course.getName) && Tuesday}" th:value="${TUESDAY}" onclick="PopUpShowAgendaTuesday()"
                             th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${wednesday.contains(course.getName) && Wednesday}"  onclick="PopUpShow()"
+                        <td style="display: none" id="tuesdayDate" th:if="${tuesday.contains(course.getName) && Tuesday}" th:text="${TUESDAY}"></td>
+
+                        <td th:if="${wednesday.contains(course.getName) && Wednesday}"  onclick="PopUpShowAgendaWednesday()"
                             th:text="AGENDA" class="agendaStyle"> <span>AGENDA</span></td>
-                        <td th:if="${thursday.contains(course.getName) && Thursday}" th:value="${THURSDAY}" onclick="PopUpShow()"
+                        <td style="display: none" id="wednesdayDate" th:if="${wednesday.contains(course.getName) && Wednesday}" th:text="${WEDNESDAY}"></td>
+
+                        <td th:if="${thursday.contains(course.getName) && Thursday}" th:value="${THURSDAY}" onclick="PopUpShowAgendaThursday()"
                             th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${friday.contains(course.getName) && Friday}" th:value="${FRIDAY}" onclick="PopUpShow()" th:text="AGENDA"
+                        <td style="display: none" id="thursdayDate" th:if="${thursday.contains(course.getName) && Thursday}" th:text="${THURSDAY}"></td>
+
+                        <td th:if="${friday.contains(course.getName) && Friday}" th:value="${FRIDAY}" onclick="PopUpShowAgendaFriday()" th:text="AGENDA"
                             class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${saturday.contains(course.getName) && Saturday}" th:value="${SATURDAY}" onclick="PopUpShow()"
+                        <td style="display: none" id="fridayDate" th:if="${friday.contains(course.getName) && Friday}" th:text="${FRIDAY}"></td>
+
+                        <td th:if="${saturday.contains(course.getName) && Saturday}" th:value="${SATURDAY}" onclick="PopUpShowAgendaSaturday()"
                             th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td th:if="${sunday.contains(course.getName) && Sunday}" th:value="${SUNDAY}" onclick="PopUpShow()" th:text="AGENDA"
+                        <td style="display: none" id="saturdayDate" th:if="${saturday.contains(course.getName) && Saturday}" th:text="${SATURDAY}"></td>
+
+                        <td th:if="${sunday.contains(course.getName) && Sunday}" th:value="${SUNDAY}" onclick="PopUpShowAgendaSunday()" th:text="AGENDA"
                             class="agendaStyle"><span>AGENDA</span></td>
+                        <td style="display: none" id="sundayDate" th:if="${sunday.contains(course.getName) && Sunday}" th:text="${SUNDAY}"></td>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -145,13 +159,13 @@
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
-        <h1 style="font-size: 1.8rem; font-weight: bold">Course 1: Agenda 06/Sep/2022</h1>
+        <h1 id="course" style="font-size: 1.8rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
-              th:action="@{'/agenda/' + ${class.id} + '/' + ${course.id} + '/add'}">
+              th:action="@{'/agenda/add'}">
 
             <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
-                PopUpShow();
+                PopUpShowAgendaThursday();
             </script>
             <div class="popup-wrap">
                 <div class="half_1">
@@ -165,7 +179,9 @@
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
                               th:id="homework"></textarea>
-                    <input type="hidden" id="dayOfWeek" name="dayOfWeek"/>
+                    <input type="hidden" id="date" name="date"/>
+                    <input type="hidden" name="classId" th:value="${class.id}"/>
+                    <input type="hidden" name="courseId" th:value="${course.id}"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                 </div>

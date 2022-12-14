@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Classwork;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.ClassworkRepository;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.service.ClassworkService;
@@ -23,12 +24,13 @@ public class ClassworkServiceImpl implements ClassworkService {
     }
 
     @Override
-    public Classwork save(String classworkDesc, Long classId, Long courseId) {
+    public Classwork save(SaveAgendaDto saveAgendaDto) {
         Classwork classwork = new Classwork();
-        classwork.setClasswork(classworkDesc);
-        classwork.setDateOfClasswork(LocalDate.now());
-        classwork.setAcademicClass(academicClassRepository.findById(classId).get());
-        classwork.setAcademicCourse(academicCourseRepository.findById(courseId).get());
+        classwork.setClasswork(saveAgendaDto.getClasswork());
+        classwork.setDateOfClasswork(LocalDate.parse(saveAgendaDto.getDate()));
+        classwork.setAcademicClass(academicClassRepository.findById(saveAgendaDto.getClassId()).get());
+        classwork.setAcademicCourse(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return classworkRepository.save(classwork);
     }
+
 }

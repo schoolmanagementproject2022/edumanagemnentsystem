@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Test;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.TestRepository;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.service.TestService;
@@ -23,12 +24,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Test save(String testDesc, Long classId, Long courseId) {
+    public Test save(SaveAgendaDto saveAgendaDto) {
         Test test = new Test();
-        test.setTest(testDesc);
-        test.setDateOfTest(LocalDate.now());
-        test.setAcademicClass(academicClassRepository.findById(classId).get());
-        test.setCourseOfTest(academicCourseRepository.findById(courseId).get());
+        test.setTest(saveAgendaDto.getTest());
+        test.setDateOfTest(LocalDate.parse(saveAgendaDto.getDate()));
+        test.setAcademicClass(academicClassRepository.findById(saveAgendaDto.getClassId()).get());
+        test.setCourseOfTest(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return testRepository.save(test);
     }
 
