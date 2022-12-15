@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/multilanguage.css" >
+
     <link href="/static/css/style.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/passwordGenerator.js"></script>
@@ -14,7 +16,9 @@
 
 <body>
 <div class="header" id="header">
+
     <div th:insert="fragments/fragments :: container"></div>
+
     <div class="main-wrapper">
         <div class="sidebar" th:insert="fragments/fragments :: menu"></div>
 
@@ -27,7 +31,7 @@
 </div>
 
 <div class="create">
-    <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Create</b></button>
+    <button class="show-btn" id="show-btn" onclick="PopUpShow()" th:text="#{home.menu.create.page}"><b>Create</b></button>
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>

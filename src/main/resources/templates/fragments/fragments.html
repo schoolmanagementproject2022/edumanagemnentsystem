@@ -6,13 +6,16 @@
         <div class="topnav-wrapper">
             <div class="topnav-left-side">
                 <div class="nav-link-wrapper">
-                    <a href="#">Admin</a>
+                    <a href="#"  th:text="#{home.menu.admin.page}">Admin</a>
                 </div>
             </div>
             <div class="topnav-right-side">
                 <div class="nav-link-wrapper">
                     <a th:text="${#authentication.principal.getUsername()}"></a>
+                    <div th:include="/fragments/fragments:: lang"></div>
+
                 </div>
+
             </div>
         </div>
     </div>
@@ -21,15 +24,15 @@
 <th:block th:fragment="menu">
     <div>
         <p hidden th:text="${allUrl}" id="tab"></p>
-        <a th:classappend="${firstUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}" href="/teachers">Teachers</a>
-        <a th:classappend="${firstUrl eq 'students' ? 'activeTab' : 'notActiveTab'}" href="/students">Students</a>
-        <a th:classappend="${firstUrl eq 'parents' ? 'activeTab' : 'notActiveTab'}" href="/parents">Parents</a>
-        <a th:classappend="${firstUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}" href="/classes">Academic classes</a>
-        <a th:classappend="${firstUrl eq 'years' ? 'activeTab' : 'notActiveTab'}" href="/years">Academic years</a>
-        <a th:classappend="${firstUrl eq 'subjects' ? 'activeTab' : 'notActiveTab'}" href="/subjects">Subjects</a>
-        <a th:classappend="${firstUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}" href="/courses">Academic courses</a>
-        <a th:classappend="${firstUrl eq 'vacations' ? 'activeTab' : 'notActiveTab'}" href="/vacations">Vacations</a>
-        <a href="#settings">Settings</a>
+        <a th:classappend="${firstUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}" href="/teachers" th:text="#{home.menu.teacher.page}">Teachers</a>
+        <a th:classappend="${firstUrl eq 'students' ? 'activeTab' : 'notActiveTab'}" href="/students" th:text="#{home.menu.teacher.page}">Students</a>
+        <a th:classappend="${firstUrl eq 'parents' ? 'activeTab' : 'notActiveTab'}" href="/parents" th:text="#{home.menu.parent.page}">Parents</a>
+        <a th:classappend="${firstUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}" href="/classes" th:text="#{home.menu.academicClass.page}">Academic classes</a>
+        <a th:classappend="${firstUrl eq 'years' ? 'activeTab' : 'notActiveTab'}" href="/years" th:text="#{home.menu.academicYear.page}">Academic years</a>
+        <a th:classappend="${firstUrl eq 'subjects' ? 'activeTab' : 'notActiveTab'}" href="/subjects" th:text="#{home.menu.subject.page}"> Subjects</a>
+        <a th:classappend="${firstUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}" href="/courses" th:text="#{home.menu.academicCourse.page}">Academic courses</a>
+        <a th:classappend="${firstUrl eq 'vacations' ? 'activeTab' : 'notActiveTab'}" href="/vacations" th:text="#{home.menu.vacation.page}">Vacations</a>
+        <a href="#settings" th:text="#{home.menu.settings.page}">Settings</a>
     </div>
 
 </th:block>
@@ -75,5 +78,23 @@
     <script src="/static/js/popupControl.js"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
 </th:block>
+<div th:fragment="lang">
 
+    <div class="switch-lang">
+        <div class="current-lang"  th:if="${?lang=hy}" class="error"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png"/>
+            <a href="?lang=hy" class="lang-text">Armenian</a>
+        </div>
+        <div class="lang-dropdown">
+            <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png"/>
+                <a href="?lang=hy" class="lang-text">Armenian</a>
+            </div>
+            <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Russia.png"/>
+                <a href="?lang=ru" class="lang-text">Russian</a>
+            </div>
+            <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_United_Kingdom.png"/>
+                <a href="?lang=en" class="lang-text">English</a>
+            </div>
+        </div>
+    </div>
+</div>
 </html>

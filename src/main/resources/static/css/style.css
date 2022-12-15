@@ -39,7 +39,7 @@ body {
 }
 
 .topnav-right-side {
-    margin-right: 14px;
+    margin-right: 150px;
     margin-top: 3px;
 }
 
@@ -52,6 +52,7 @@ body {
     color: #FFFFFF;
     text-decoration: none;
     transition: color 0.5s;
+    right: 100px;
 }
 
 .nav-link-wrapper a:hover {
