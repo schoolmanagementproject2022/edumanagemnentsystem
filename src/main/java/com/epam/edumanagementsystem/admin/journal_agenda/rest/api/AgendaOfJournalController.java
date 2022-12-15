@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -34,12 +35,12 @@ public class AgendaOfJournalController {
 
     @PostMapping("/add")
     public String addAgenda(@ModelAttribute(value = "saveAgenda") SaveAgendaDto agendaDto,
+                            @RequestParam("concreteDay") String concreteDay,
                             RedirectAttributes redirectAttributes) {
         AcademicClassDto classById = academicClassService.getById(agendaDto.getClassId());
-        String[] split = agendaDto.getDate().split("/");
         if (agendaDto.getClasswork().isBlank() && agendaDto.getTest().isBlank() && agendaDto.getHomework().isBlank()) {
             redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
-            redirectAttributes.addAttribute("weakDayOfPopup", split[1]);
+            redirectAttributes.addAttribute("concreteDay", concreteDay);
             return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
         }
         if (!agendaDto.getClasswork().isBlank()) {
@@ -51,7 +52,7 @@ public class AgendaOfJournalController {
         if (!agendaDto.getTest().isBlank()) {
             testService.save(agendaDto);
         }
-        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + split[0];
+        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
     }
 
 }

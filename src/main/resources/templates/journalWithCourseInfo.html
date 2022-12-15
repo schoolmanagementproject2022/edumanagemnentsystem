@@ -108,7 +108,7 @@
 
                         <td th:if="${tuesday.contains(course.getName) && Tuesday}" th:value="${TUESDAY}" onclick="PopUpShowAgendaTuesday()"
                             th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td style="display: none" id="tuesdayDate" th:if="${tuesday.contains(course.getName) && Tuesday}" th:text="${TUESDAY} + '/'+ ${TUESDAY.getDayOfWeek()}"></td>
+                        <td style="display: none" id="tuesdayDate" th:if="${tuesday.contains(course.getName) && Tuesday}" th:text="${TUESDAY}"></td>
 
                         <td th:if="${wednesday.contains(course.getName) && Wednesday}"  onclick="PopUpShowAgendaWednesday()"
                             th:text="AGENDA" class="agendaStyle"> <span>AGENDA</span></td>
@@ -179,9 +179,10 @@
                     <input type="hidden" id="date-monday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'MONDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'MONDAY'">
                         PopUpShowAgendaMonday();
                     </script>
                 </div>
@@ -219,9 +220,10 @@
                     <input type="hidden" id="date-tuesday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'TUESDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${weakDayOfPopup}eq 'TUESDAY'">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'TUESDAY'">
                         PopUpShowAgendaTuesday();
                     </script>
                 </div>
@@ -259,9 +261,10 @@
                     <input type="hidden" id="date-wednesday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'WEDNESDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'WEDNESDAY'">
                         PopUpShowAgendaWednesday();
                     </script>
                 </div>
@@ -299,9 +302,10 @@
                     <input type="hidden" id="date-thursday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'THURSDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'THURSDAY'">
                         PopUpShowAgendaThursday();
                     </script>
                 </div>
@@ -339,9 +343,10 @@
                     <input type="hidden" id="date-friday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'FRIDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'FRIDAY'">
                         PopUpShowAgendaFriday();
                     </script>
                 </div>
@@ -379,9 +384,10 @@
                     <input type="hidden" id="date-saturday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SATURDAY'">
                         PopUpShowAgendaSaturday();
                     </script>
                 </div>
@@ -419,9 +425,10 @@
                     <input type="hidden" id="date-sunday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} ">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SUNDAY'">
                         PopUpShowAgendaSunday();
                     </script>
                 </div>

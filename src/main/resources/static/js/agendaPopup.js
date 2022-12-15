@@ -98,7 +98,7 @@ function PopUpShowAgendaSunday() {
 
 function hideMondayPopup() {
     let dateValue = document.getElementById("mondayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -106,18 +106,10 @@ function hideMondayPopup() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
 }
+
 function hideTuesdayPopup() {
     let dateValue = document.getElementById("tuesdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
-    $("#header").css("-webkit-filter", "blur(0px)");
-    $("#header").css("pointer-events", "auto");
-    $("#show-btn").css("pointer-events", "auto");
-    $("#main-wrapper").css("pointer-events", "auto");
-    $("#show-btn").css("-webkit-filter", "blur(0px)");
-    $("#main-wrapper").css("-webkit-filter", "blur(0px)");
-}function hideWednesdayPopup() {
-    let dateValue = document.getElementById("wednesdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -125,9 +117,21 @@ function hideTuesdayPopup() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
 }
+
+function hideWednesdayPopup() {
+    let dateValue = document.getElementById("wednesdayDate").innerText
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    $("#header").css("-webkit-filter", "blur(0px)");
+    $("#header").css("pointer-events", "auto");
+    $("#show-btn").css("pointer-events", "auto");
+    $("#main-wrapper").css("pointer-events", "auto");
+    $("#show-btn").css("-webkit-filter", "blur(0px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(0px)");
+}
+
 function hideThursdayPopup() {
     let dateValue = document.getElementById("thursdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -135,9 +139,10 @@ function hideThursdayPopup() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
 }
+
 function hideFridayPopup() {
     let dateValue = document.getElementById("fridayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -145,9 +150,10 @@ function hideFridayPopup() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
 }
+
 function hideSaturdayPopup() {
     let dateValue = document.getElementById("saturdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -155,9 +161,10 @@ function hideSaturdayPopup() {
     $("#show-btn").css("-webkit-filter", "blur(0px)");
     $("#main-wrapper").css("-webkit-filter", "blur(0px)");
 }
+
 function hideSundayPopup() {
     let dateValue = document.getElementById("sundayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=`+dateValue;
+    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
