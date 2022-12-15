@@ -176,9 +176,14 @@ body {
     font-size: 1.3em;
 }
 
-.list-items p:hover {
-    background-color: #333333;
-    color: #01A7F0;
+.p-item-list {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 19px;
+    font-family: "Montserrat", sans-serif;
 }
 
 .list-items a:hover {
