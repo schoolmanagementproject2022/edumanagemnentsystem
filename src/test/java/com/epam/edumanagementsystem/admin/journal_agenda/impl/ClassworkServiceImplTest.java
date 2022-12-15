@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Classwork;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.ClassworkRepository;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
@@ -36,6 +37,7 @@ class ClassworkServiceImplTest {
     private Classwork classwork;
     private AcademicClass academicClass;
     private AcademicCourse academicCourse;
+    private SaveAgendaDto saveAgendaDto;
 
     @InjectMocks
     private ClassworkServiceImpl classworkService;
@@ -49,17 +51,18 @@ class ClassworkServiceImplTest {
         academicCourse.setId(1L);
         academicCourse.setName("Course 1");
         classwork = new Classwork(1L, "classwork", 5, LocalDate.now(), academicCourse, academicClass);
+        saveAgendaDto = new SaveAgendaDto(classwork.getClasswork(), "homework", "test");
     }
 
     @Test
     @DisplayName("Classwork field save")
     void testSaveClasswork() {
-        Long classId = academicClass.getId();
-        Long courseId = academicCourse.getId();
+        LocalDate date = LocalDate.parse("2022-12-17");
         when(classworkRepository.save(any(Classwork.class))).thenReturn(classwork);
-        when(academicClassRepository.findById(classId)).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(courseId)).thenReturn(Optional.of(academicCourse));
-        Classwork actualClasswork = classworkService.save("classwork", classId, courseId);
+        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        saveAgendaDto.setDate(date.toString());
+        Classwork actualClasswork = classworkService.save(saveAgendaDto);
         Assertions.assertNotNull(actualClasswork);
         assertEquals(classwork.getClasswork(), actualClasswork.getClasswork());
     }
@@ -67,12 +70,12 @@ class ClassworkServiceImplTest {
     @Test
     @DisplayName("Classwork field save with null classId and courseId")
     void testSaveByNullId() {
-        Long classId = null;
-        Long courseId = null;
+        LocalDate date = LocalDate.parse("2022-12-15");
         when(classworkRepository.save(any(Classwork.class))).thenReturn(classwork);
-        when(academicClassRepository.findById(classId)).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(courseId)).thenReturn(Optional.of(academicCourse));
-        Classwork actualClasswork = classworkService.save("classwork", classId, courseId);
+        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        saveAgendaDto.setDate(date.toString());
+        Classwork actualClasswork = classworkService.save(saveAgendaDto);
         assertThat(actualClasswork.getAcademicClass().getId()).isNotNull();
         assertThat(actualClasswork.getAcademicCourse().getId()).isNotNull();
     }
