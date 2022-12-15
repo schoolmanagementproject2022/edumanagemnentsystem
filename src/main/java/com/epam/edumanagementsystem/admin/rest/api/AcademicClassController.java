@@ -260,10 +260,12 @@ public class AcademicClassController {
     public String journalWithCourseInfo(@PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                         @RequestParam(name = "date", required = false) String date,
                                         @RequestParam(name = "startDate", required = false) String startDate,
+                                        @RequestParam(name = "weakDayOfPopup", required = false) String weakDayOfPopup,
                                         @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
                                         Model model) {
         if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
             model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
+            model.addAttribute("weakDayOfPopup", weakDayOfPopup);
         }
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
@@ -274,10 +276,11 @@ public class AcademicClassController {
             if (studentsInClass.isEmpty()) {
                 return "journalWithCourseInfo";
             }
-            academicClassService.openJournal(date, startDate, name, model);
+
+            academicClassService.openJournal(date.split("/")[0], startDate, name, model);
             return "journalWithCourseInfo";
         } else {
-            academicClassService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
+            academicClassService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
             model.addAttribute("class", academicClassService.findByName(name));
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
             model.addAttribute("creationStatus", false);

@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!--    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>-->
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -17,6 +16,7 @@
     <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styleForJournal.css">
     <script src="/static/js/popupControl.js"></script>
+    <script src="/static/js/agendaPopup.js"></script>
     <title>Journal</title>
 
 </head>
@@ -108,7 +108,7 @@
 
                         <td th:if="${tuesday.contains(course.getName) && Tuesday}" th:value="${TUESDAY}" onclick="PopUpShowAgendaTuesday()"
                             th:text="AGENDA" class="agendaStyle"><span>AGENDA</span></td>
-                        <td style="display: none" id="tuesdayDate" th:if="${tuesday.contains(course.getName) && Tuesday}" th:text="${TUESDAY}"></td>
+                        <td style="display: none" id="tuesdayDate" th:if="${tuesday.contains(course.getName) && Tuesday}" th:text="${TUESDAY} + '/'+ ${TUESDAY.getDayOfWeek()}"></td>
 
                         <td th:if="${wednesday.contains(course.getName) && Wednesday}"  onclick="PopUpShowAgendaWednesday()"
                             th:text="AGENDA" class="agendaStyle"> <span>AGENDA</span></td>
@@ -158,7 +158,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-monday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideMondayPopup()">×</button>
         <h1 id="course-monday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -198,7 +198,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-tuesday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideTuesdayPopup()">×</button>
         <h1 id="course-tuesday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -221,7 +221,7 @@
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${weakDayOfPopup}eq 'TUESDAY'">
                         PopUpShowAgendaTuesday();
                     </script>
                 </div>
@@ -238,7 +238,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-wednesday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideWednesdayPopup()">×</button>
         <h1 id="course-wednesday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -278,7 +278,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-thursday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideThursdayPopup()">×</button>
         <h1 id="course-thursday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -318,7 +318,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-friday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideFridayPopup()">×</button>
         <h1 id="course-friday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -358,7 +358,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-saturday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideSaturdayPopup()">×</button>
         <h1 id="course-saturday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -398,7 +398,7 @@
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-agenda-sunday">
-        <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
+        <button class="close-btn" title="close" onclick="hideSundayPopup()">×</button>
         <h1 id="course-sunday" style="font-size: 1.5rem; font-weight: bold"></h1>
 
         <form id="form" class="form" th:method="POST"
@@ -421,7 +421,7 @@
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage}">
+                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} ">
                         PopUpShowAgendaSunday();
                     </script>
                 </div>
@@ -499,5 +499,6 @@
         });
     });
 </script>
+
 </body>
 </html>

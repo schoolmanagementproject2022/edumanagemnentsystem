@@ -27,7 +27,8 @@ public class ClassworkServiceImpl implements ClassworkService {
     public Classwork save(SaveAgendaDto saveAgendaDto) {
         Classwork classwork = new Classwork();
         classwork.setClasswork(saveAgendaDto.getClasswork());
-        classwork.setDateOfClasswork(LocalDate.parse(saveAgendaDto.getDate()));
+        String[] split = saveAgendaDto.getDate().split("/");
+        classwork.setDateOfClasswork(LocalDate.parse(split[0]));
         classwork.setAcademicClass(academicClassRepository.findById(saveAgendaDto.getClassId()).get());
         classwork.setAcademicCourse(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return classworkRepository.save(classwork);

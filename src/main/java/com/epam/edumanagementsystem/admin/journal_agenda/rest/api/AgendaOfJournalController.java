@@ -36,8 +36,10 @@ public class AgendaOfJournalController {
     public String addAgenda(@ModelAttribute(value = "saveAgenda") SaveAgendaDto agendaDto,
                             RedirectAttributes redirectAttributes) {
         AcademicClassDto classById = academicClassService.getById(agendaDto.getClassId());
+        String[] split = agendaDto.getDate().split("/");
         if (agendaDto.getClasswork().isBlank() && agendaDto.getTest().isBlank() && agendaDto.getHomework().isBlank()) {
             redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
+            redirectAttributes.addAttribute("weakDayOfPopup", split[1]);
             return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
         }
         if (!agendaDto.getClasswork().isBlank()) {
@@ -49,7 +51,7 @@ public class AgendaOfJournalController {
         if (!agendaDto.getTest().isBlank()) {
             testService.save(agendaDto);
         }
-        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
+        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + split[0];
     }
 
 }
