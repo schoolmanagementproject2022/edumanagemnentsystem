@@ -141,7 +141,8 @@ function PopUpShowImageDelete() {
 }
 
 function PopUpHide() {
-    window.location.href = $("#tab").text();
+    // window.location.href = $("#tab").text();
+    $("#popup-container").hide();
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");

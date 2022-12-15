@@ -32,5 +32,4 @@ public class ClassworkServiceImpl implements ClassworkService {
         classwork.setAcademicCourse(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return classworkRepository.save(classwork);
     }
-
 }

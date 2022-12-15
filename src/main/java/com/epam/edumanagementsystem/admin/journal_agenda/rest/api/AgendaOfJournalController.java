@@ -8,7 +8,9 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -36,7 +38,7 @@ public class AgendaOfJournalController {
         AcademicClassDto classById = academicClassService.getById(agendaDto.getClassId());
         if (agendaDto.getClasswork().isBlank() && agendaDto.getTest().isBlank() && agendaDto.getHomework().isBlank()) {
             redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
-            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
+            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
         }
         if (!agendaDto.getClasswork().isBlank()) {
             classworkService.save(agendaDto);
@@ -47,7 +49,7 @@ public class AgendaOfJournalController {
         if (!agendaDto.getTest().isBlank()) {
             testService.save(agendaDto);
         }
-        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
+        return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
     }
 
 }

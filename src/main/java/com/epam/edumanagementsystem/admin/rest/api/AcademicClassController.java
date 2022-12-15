@@ -7,7 +7,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
-import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -272,7 +271,7 @@ public class AcademicClassController {
             model.addAttribute("class", academicClassService.findByName(name));
             List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
             model.addAttribute("allStudentsInAcademicClass", studentsInClass);
-            if (studentsInClass.size() == 0) {
+            if (studentsInClass.isEmpty()) {
                 return "journalWithCourseInfo";
             }
             academicClassService.openJournal(date, startDate, name, model);
