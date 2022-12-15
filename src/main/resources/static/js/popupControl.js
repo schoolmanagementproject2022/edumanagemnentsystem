@@ -127,8 +127,7 @@ function PopUpShowImageDelete() {
 }
 
 function PopUpHide() {
-    // window.location.href = $("#tab").text();
-    $("#popup-container").hide();
+    window.location.href = $("#tab").text();
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -146,3 +145,4 @@ function PopUpShowImageFormat() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 }
+
