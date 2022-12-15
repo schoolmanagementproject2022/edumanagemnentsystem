@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Homework;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.HomeworkRepository;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
@@ -36,6 +37,7 @@ class HomeworkServiceImplTest {
     private Homework homework;
     private AcademicClass academicClass;
     private AcademicCourse academicCourse;
+    private SaveAgendaDto saveAgendaDto;
 
     @InjectMocks
     private HomeworkServiceImpl homeworkService;
@@ -49,17 +51,18 @@ class HomeworkServiceImplTest {
         academicCourse.setId(1L);
         academicCourse.setName("Course 1");
         homework = new Homework(1L, "homework", 5, LocalDate.now(), academicCourse, academicClass);
+        saveAgendaDto = new SaveAgendaDto("classwork", homework.getHomework(), "test");
     }
 
     @Test
     @DisplayName("Homework field save")
     void testSaveHomework() {
-        Long classId = academicClass.getId();
-        Long courseId = academicCourse.getId();
+        LocalDate date = LocalDate.parse("2022-12-17");
         when(homeworkRepository.save(any(Homework.class))).thenReturn(homework);
-        when(academicClassRepository.findById(classId)).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(courseId)).thenReturn(Optional.of(academicCourse));
-        Homework actualHomework = homeworkService.save("homework", classId, courseId);
+        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        saveAgendaDto.setDate(date.toString());
+        Homework actualHomework = homeworkService.save(saveAgendaDto);
         Assertions.assertNotNull(actualHomework);
         assertEquals(homework.getHomework(), actualHomework.getHomework());
     }
@@ -67,12 +70,12 @@ class HomeworkServiceImplTest {
     @Test
     @DisplayName("Homework field save with null classId and courseId")
     void testSaveByNullId() {
-        Long classId = null;
-        Long courseId = null;
+        LocalDate date = LocalDate.parse("2022-12-15");
         when(homeworkRepository.save(any(Homework.class))).thenReturn(homework);
-        when(academicClassRepository.findById(classId)).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(courseId)).thenReturn(Optional.of(academicCourse));
-        Homework actualHomework = homeworkService.save("homework", classId, courseId);
+        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        saveAgendaDto.setDate(date.toString());
+        Homework actualHomework = homeworkService.save(saveAgendaDto);
         assertThat(actualHomework.getAcademicClass().getId()).isNotNull();
         assertThat(actualHomework.getCourseOfHomework().getId()).isNotNull();
     }
