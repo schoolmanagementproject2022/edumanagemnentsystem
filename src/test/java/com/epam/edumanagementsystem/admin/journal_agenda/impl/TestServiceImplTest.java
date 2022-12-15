@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Test;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.TestRepository;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
@@ -35,6 +36,7 @@ class TestServiceImplTest {
     private Test test;
     private AcademicClass academicClass;
     private AcademicCourse academicCourse;
+    private SaveAgendaDto saveAgendaDto;
 
     @InjectMocks
     private TestServiceImpl testService;
@@ -48,17 +50,18 @@ class TestServiceImplTest {
         academicCourse.setId(1L);
         academicCourse.setName("Course 1");
         test = new Test(1L, "test", 5, LocalDate.now(), academicCourse, academicClass);
+        saveAgendaDto = new SaveAgendaDto("classwork", "homework", test.getTest());
     }
 
     @org.junit.jupiter.api.Test
     @DisplayName("Test field save")
     void testSaveTest() {
-        Long classId = academicClass.getId();
-        Long courseId = academicCourse.getId();
+        LocalDate date = LocalDate.parse("2022-12-17");
         when(testRepository.save(any(Test.class))).thenReturn(test);
-        when(academicClassRepository.findById(classId)).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(courseId)).thenReturn(Optional.of(academicCourse));
-        Test actualTest = testService.save("test", classId, courseId);
+        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        saveAgendaDto.setDate(date.toString());
+        Test actualTest = testService.save(saveAgendaDto);
         Assertions.assertNotNull(actualTest);
         assertEquals(test.getTest(), actualTest.getTest());
     }
@@ -66,12 +69,12 @@ class TestServiceImplTest {
     @org.junit.jupiter.api.Test
     @DisplayName("Test field save with null classId and courseId")
     void testSaveByNullId() {
-        Long classId = null;
-        Long courseId = null;
+        LocalDate date = LocalDate.parse("2022-12-15");
         when(testRepository.save(any(Test.class))).thenReturn(test);
-        when(academicClassRepository.findById(classId)).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(courseId)).thenReturn(Optional.of(academicCourse));
-        Test actualTest = testService.save("test", classId, courseId);
+        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        saveAgendaDto.setDate(date.toString());
+        Test actualTest = testService.save(saveAgendaDto);
         assertThat(actualTest.getAcademicClass().getId()).isNotNull();
         assertThat(actualTest.getCourseOfTest().getId()).isNotNull();
     }
