@@ -70,10 +70,12 @@ class HomeworkServiceImplTest {
     @Test
     @DisplayName("Homework field save with null classId and courseId")
     void testSaveByNullId() {
+        AcademicClass aClass = new AcademicClass();
+        AcademicCourse aCourse = new AcademicCourse();
         LocalDate date = LocalDate.parse("2022-12-15");
         when(homeworkRepository.save(any(Homework.class))).thenReturn(homework);
-        when(academicClassRepository.findById(saveAgendaDto.getClassId())).thenReturn(Optional.of(academicClass));
-        when(academicCourseRepository.findById(saveAgendaDto.getCourseId())).thenReturn(Optional.of(academicCourse));
+        when(academicClassRepository.findById(aClass.getId())).thenReturn(Optional.of(academicClass));
+        when(academicCourseRepository.findById(aCourse.getId())).thenReturn(Optional.of(academicCourse));
         saveAgendaDto.setDate(date.toString());
         Homework actualHomework = homeworkService.save(saveAgendaDto);
         assertThat(actualHomework.getAcademicClass().getId()).isNotNull();
