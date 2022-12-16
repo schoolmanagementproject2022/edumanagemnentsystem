@@ -4,14 +4,14 @@ public enum Gender {
     MALE("Male"),
     FEMALE("Female");
 
-    private final String gender;
+    private final String genderIdentity;
 
-    Gender(String gender) {
-        this.gender = gender;
+    Gender(String genderIdentity) {
+        this.genderIdentity = genderIdentity;
     }
 
-    public String getGender() {
-        return gender;
+    public String getGenderIdentity() {
+        return genderIdentity;
     }
 
 }

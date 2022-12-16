@@ -12,41 +12,42 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class StudentDto {
 
+    private static final String REQUIRED_FIELDS = "Please, fill the required fields";
+
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = REQUIRED_FIELDS)
     private String name;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = REQUIRED_FIELDS)
     private String surname;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = REQUIRED_FIELDS)
     private String email;
 
     @NotBlank
-    private String role= "STUDENT";
+    private String role = "STUDENT";
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = REQUIRED_FIELDS)
     private String address;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = REQUIRED_FIELDS)
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = REQUIRED_FIELDS)
     private Gender gender;
 
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = REQUIRED_FIELDS)
     private BloodGroup bloodGroup;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -56,7 +57,7 @@ public class StudentDto {
     private AcademicClass academicClass;
 
     private String picUrl;
-
+//@ToDo Constructor should not have too many params!!!
     public StudentDto(Long id,
                       String name,
                       String surname,

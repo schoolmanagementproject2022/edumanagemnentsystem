@@ -180,7 +180,7 @@
                                     th:value="null"></option>
                             <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
                                     th:value="${bloodGroup}"
-                                    th:text="${bloodGroup.bloodGroup}"></option>
+                                    th:text="${bloodGroup.blood}"></option>
                         </select>
                         <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
                              th:errors="*{bloodGroup}"></div>
@@ -190,7 +190,7 @@
                             <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
                                     th:value="null"></option>
                             <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
-                                    th:text="${gender.gender}"></option>
+                                    th:text="${gender.genderIdentity}"></option>
                         </select>
                         <div class="error" th:if="${#fields.hasErrors('gender')}"
                              th:errors="*{gender}"></div>

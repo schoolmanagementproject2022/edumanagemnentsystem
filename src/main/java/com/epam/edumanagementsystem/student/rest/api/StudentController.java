@@ -41,8 +41,21 @@ public class StudentController {
     private final ParentService parentService;
     private final ImageService imageService;
     private final AcademicClassService academicClassService;
-    private final String STUDENT_HTML = "studentSection";
-    private final String FILTERED_STUDENTS = "filteredStudentSection";
+    private static final String STUDENT_HTML = "studentSection";
+    private static final String FILTERED_STUDENTS = "filteredStudentSection";
+    private static final String STUDENTS = "students";
+    private static final String GROUP = "bloodGroups";
+    private static final String GENDER = "genders";
+    private static final String PARENTS = "parents";
+    private static final String CLASSES = "classes";
+    private static final String NAME_SIZE = "nameSize";
+    private static final String SURNAME_SIZE = "surnameSize";
+    private static final String ADDRESS_SIZE = "addressSize";
+    private static final String EMAIL_SIZE = "emailSize";
+    private static final String INVALID_EMAIL = "invalidEmail";
+    private static final String SYMBOLS_ERROR_MSG = "Symbols can't be more than 50";
+    private static final String REDIRECT = "redirect:/students/";
+    private static final String PROFILE = "/profile";
 
     @Autowired
     public StudentController(PasswordEncoder bcryptPasswordEncoder, StudentService studentService,
@@ -61,17 +74,17 @@ public class StudentController {
     @Operation(summary = "Gets the list of students and shows on admin's dashboard")
     public String openStudentSection(Model model) {
         model.addAttribute("student", new StudentDto());
-        model.addAttribute("students", findAllStudents());
-        model.addAttribute("bloodGroups", BloodGroup.values());
-        model.addAttribute("genders", Gender.values());
-        model.addAttribute("parents", findAllParents());
-        model.addAttribute("classes", findAllClasses());
+        model.addAttribute(STUDENTS, findAllStudents());
+        model.addAttribute(GROUP, BloodGroup.values());
+        model.addAttribute(GENDER, Gender.values());
+        model.addAttribute(PARENTS, findAllParents());
+        model.addAttribute(CLASSES, findAllClasses());
         return STUDENT_HTML;
     }
 
     @GetMapping("/without/parent")
     public String openStudentsWithoutParent(Model model) {
-        model.addAttribute("students", studentService.findStudentsWithoutParent());
+        model.addAttribute(STUDENTS, studentService.findStudentsWithoutParent());
         return FILTERED_STUDENTS;
     }
 
@@ -89,37 +102,37 @@ public class StudentController {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
 
-        model.addAttribute("students", findAllStudents());
-        model.addAttribute("bloodGroups", BloodGroup.values());
-        model.addAttribute("genders", Gender.values());
-        model.addAttribute("parents", ParentMapper.toParentListWithoutSaveUser(findAllParents()));
-        model.addAttribute("classes", findAllClasses());
+        model.addAttribute(STUDENTS, findAllStudents());
+        model.addAttribute(GROUP, BloodGroup.values());
+        model.addAttribute(GENDER, Gender.values());
+        model.addAttribute(PARENTS, ParentMapper.toParentListWithoutSaveUser(findAllParents()));
+        model.addAttribute(CLASSES, findAllClasses());
         if (InputFieldsValidation.validateInputFieldSize(studentDto.getName())) {
-            model.addAttribute("nameSize", "Symbols can't be more than 50");
+            model.addAttribute(NAME_SIZE, SYMBOLS_ERROR_MSG);
         }
         if (InputFieldsValidation.validateInputFieldSize(studentDto.getSurname())) {
-            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+            model.addAttribute(SURNAME_SIZE, SYMBOLS_ERROR_MSG);
         }
         if (InputFieldsValidation.validateInputFieldSize(studentDto.getAddress())) {
-            model.addAttribute("addressSize", "Symbols can't be more than 50");
+            model.addAttribute(ADDRESS_SIZE, SYMBOLS_ERROR_MSG);
         }
         if (InputFieldsValidation.validateInputFieldSize(studentDto.getEmail())) {
-            model.addAttribute("emailSize", "Symbols can't be more than 50");
+            model.addAttribute(EMAIL_SIZE, SYMBOLS_ERROR_MSG);
         }
-        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+        if (!result.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
             userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
             if (UserDataValidation.validateEmail(studentDto.getEmail())) {
-                model.addAttribute("invalidEmail", "Email is invalid");
+                model.addAttribute(INVALID_EMAIL, "Email is invalid");
             }
         }
         UserDataValidation.validatePassword(studentDto.getPassword(), model);
 
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")
+                || model.containsAttribute(INVALID_EMAIL)
                 || model.containsAttribute("duplicated")
-                || model.containsAttribute("emailSize") || model.containsAttribute("nameSize")
-                || model.containsAttribute("surnameSize") || model.containsAttribute("addressSize")
+                || model.containsAttribute(EMAIL_SIZE) || model.containsAttribute(NAME_SIZE)
+                || model.containsAttribute(SURNAME_SIZE) || model.containsAttribute(ADDRESS_SIZE)
                 || model.containsAttribute("size") || model.containsAttribute("formatValidationMessage")) {
             return STUDENT_HTML;
         }
@@ -129,7 +142,7 @@ public class StudentController {
         if (!multipartFile.isEmpty()) {
             studentService.addProfilePicture(student, multipartFile);
         }
-        return "redirect:/students";
+        return REDIRECT;
     }
 
     @GetMapping("/{id}/profile")
@@ -139,10 +152,10 @@ public class StudentController {
         model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
         model.addAttribute("existingStudent", existingStudent);
-        model.addAttribute("bloodGroups", BloodGroup.values());
-        model.addAttribute("genders", Gender.values());
-        model.addAttribute("parents", findAllParents());
-        model.addAttribute("classes", findAllClasses());
+        model.addAttribute(GROUP, BloodGroup.values());
+        model.addAttribute(GENDER, Gender.values());
+        model.addAttribute(PARENTS, findAllParents());
+        model.addAttribute(CLASSES, findAllClasses());
         return "studentProfile";
     }
 
@@ -153,38 +166,38 @@ public class StudentController {
         StudentDto existingStudent = studentService.findByStudentId(studentId);
         model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
-        model.addAttribute("bloodGroups", BloodGroup.values());
-        model.addAttribute("genders", Gender.values());
-        model.addAttribute("parents", findAllParents());
-        model.addAttribute("classes", findAllClasses());
+        model.addAttribute(GROUP, BloodGroup.values());
+        model.addAttribute(GENDER, Gender.values());
+        model.addAttribute(PARENTS, findAllParents());
+        model.addAttribute(CLASSES, findAllClasses());
         if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getName())) {
-            model.addAttribute("nameSize", "Symbols can't be more than 50");
+            model.addAttribute(NAME_SIZE, SYMBOLS_ERROR_MSG);
         }
         if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getSurname())) {
-            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+            model.addAttribute(SURNAME_SIZE, SYMBOLS_ERROR_MSG);
         }
         if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getAddress())) {
-            model.addAttribute("addressSize", "Symbols can't be more than 50");
+            model.addAttribute(ADDRESS_SIZE, SYMBOLS_ERROR_MSG);
         }
         if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getEmail())) {
-            model.addAttribute("emailSize", "Symbols can't be more than 50");
+            model.addAttribute(EMAIL_SIZE, SYMBOLS_ERROR_MSG);
         }
-        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+        if (!result.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
             if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
                 userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
             }
             if (UserDataValidation.validateEmail(updatableStudent.getEmail())) {
-                model.addAttribute("invalidEmail", "Email is invalid");
+                model.addAttribute(INVALID_EMAIL, "Email is invalid");
             }
         }
 
-        if (result.hasErrors() || model.containsAttribute("invalidEmail") || model.containsAttribute("duplicated")
-                || model.containsAttribute("emailSize") || model.containsAttribute("emailSize")
-                || model.containsAttribute("nameSize") || model.containsAttribute("surnameSize")) {
+        if (result.hasErrors() || model.containsAttribute(INVALID_EMAIL) || model.containsAttribute("duplicated")
+                || model.containsAttribute(EMAIL_SIZE) || model.containsAttribute(NAME_SIZE)
+                || model.containsAttribute(SURNAME_SIZE)) {
             return "studentProfile";
         }
         studentService.updateFields(updatableStudent);
-        return "redirect:/students/" + updatableStudent.getId() + "/profile";
+        return REDIRECT + updatableStudent.getId() + PROFILE;
     }
 
     @PostMapping("/{id}/image/add")
@@ -194,7 +207,7 @@ public class StudentController {
         StudentDto studentById = studentService.findByStudentId(id);
         User userByEmail = userService.findByEmail(studentById.getEmail());
         studentService.addProfilePicture(StudentMapper.toStudent(studentById, userByEmail), multipartFile);
-        return "redirect:/students/" + id + "/profile";
+        return REDIRECT + id + PROFILE;
     }
 
     @GetMapping("/{id}/image/delete")
@@ -203,7 +216,7 @@ public class StudentController {
         StudentDto studentById = studentService.findByStudentId(id);
         imageService.deleteImage(studentById.getPicUrl());
         studentService.deletePic(studentById.getId());
-        return "redirect:/students/" + id + "/profile";
+        return REDIRECT + id + PROFILE;
     }
 
     private List<StudentDto> findAllStudents() {

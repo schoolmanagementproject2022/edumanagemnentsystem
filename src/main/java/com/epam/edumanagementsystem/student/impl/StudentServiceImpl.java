@@ -56,15 +56,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public Student create(StudentDto studentDto, UserService userService) {
-        if (studentDto == null) {
-            throw new ObjectIsNull();
-        }
-        return studentRepository.save(StudentMapper.toStudent(studentDto, userService));
-    }
-
-    @Override
-    @Transactional
     public StudentDto updateFields(StudentDto studentDto) {
         if (studentDto == null) {
             throw new ObjectIsNull();
@@ -144,8 +135,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> findStudentsWithoutParent() {
-        return StudentMapper.toStudentList(findAll().stream().filter(student->student.getParent()==null).collect(Collectors.toList()));
+    public List<StudentDto> findStudentsWithoutParent() {
+        return findAll().stream().filter(student->student.getParent()==null).collect(Collectors.toList());
     }
 
     @Override

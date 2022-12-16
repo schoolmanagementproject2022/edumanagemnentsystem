@@ -2,17 +2,13 @@ package com.epam.edumanagementsystem.student.rest.service;
 
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
-import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface StudentService {
 
     Student create(StudentDto studentDto);
-
-    Student create(StudentDto studentDto, UserService userService);
 
     StudentDto updateFields(StudentDto studentDto);
 
@@ -26,7 +22,7 @@ public interface StudentService {
 
     StudentDto findByStudentId(Long studentId);
 
-    List<Student> findStudentsWithoutParent();
+    List<StudentDto> findStudentsWithoutParent();
 
     List<StudentDto> findStudentsByParentId(Long parentId);
 

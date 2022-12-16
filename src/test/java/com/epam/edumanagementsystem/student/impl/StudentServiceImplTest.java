@@ -152,7 +152,7 @@ class StudentServiceImplTest {
 
     @Test
     void testCreateNegativeCaseWhenParamsIsNull() {
-        assertThrows(ObjectIsNull.class, () -> studentService.create(StudentMapper.toStudentDto(null), userService));
+        assertThrows(ObjectIsNull.class, () -> studentService.create(null));
     }
 
     @Test
@@ -205,12 +205,13 @@ class StudentServiceImplTest {
         assertEquals(StudentMapper.toStudentDtoList(studentList), studentService.findStudentsByParentId(2L));
         verify(studentRepository).findAllByParentId(any());
     }
+    //@ToDo need to improvement
     @Test
     @DisplayName("Check the usage of the findStudentsWithoutParent method in the service Positive Case")
     void testFindStudentsWithoutParentPositiveCase(){
         studentList.add(secondStudent);
-        when(studentService.findStudentsWithoutParent()).thenReturn(studentList);
-        assertEquals(0, studentService.findStudentsWithoutParent().size());
+        when(studentService.findStudentsWithoutParent()).thenReturn(StudentMapper.toStudentDtoList(studentList));
+        assertTrue(studentService.findStudentsWithoutParent().isEmpty());
     }
     @Test
     void testUpdateFieldsPositiveCase() {
