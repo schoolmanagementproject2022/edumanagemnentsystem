@@ -16,6 +16,7 @@ import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -49,8 +50,8 @@ class StudentServiceImplTest {
     @BeforeEach
     void setUp() {
         userStudent = new User(null, "email@gmail.com", "STUDENT");
-        User secondStudentUser = new User(4L, "secondUser@gmail.com", "STUDNET");
-        studentDtoUser = new User(5L, "studentDtoUser@gmail.com", "STUDNET");
+        User secondStudentUser = new User(4L, "secondUser@gmail.com", "STUDENT");
+        studentDtoUser = new User(5L, "studentDtoUser@gmail.com", "STUDENT");
         User userParent = new User(2L, "parent@gmail.com", "PARENT");
         User userTeacher = new User(3L, "teacher@gmail.com", "TEACHER");
         Parent parent = new Parent(2L, "Parent", "Parentyan", userParent, "6uP&6jV$2qP%");
@@ -94,6 +95,7 @@ class StudentServiceImplTest {
                 BloodGroup.A_PLUS,
                 parent,
                 academicClass);
+
         datesToBeUpdated = new StudentDto(4L,
                 "Student1",
                 "Studentyan",
@@ -196,7 +198,20 @@ class StudentServiceImplTest {
     void testFindByParentIdStudentsNegativeCase() {
         Assertions.assertThrows(UserNotFoundException.class, () -> studentService.findStudentsByParentId(null));
     }
-
+    @Test
+    @DisplayName("Check the usage of the findStudentsByParentId method in the service Positive Case")
+    void testFindStudentsByParentIdPositiveCase(){
+        when(studentRepository.findAllByParentId(any())).thenReturn(studentList);
+        assertEquals(StudentMapper.toStudentDtoList(studentList), studentService.findStudentsByParentId(2L));
+        verify(studentRepository).findAllByParentId(any());
+    }
+    @Test
+    @DisplayName("Check the usage of the findStudentsWithoutParent method in the service Positive Case")
+    void testFindStudentsWithoutParentPositiveCase(){
+        studentList.add(secondStudent);
+        when(studentService.findStudentsWithoutParent()).thenReturn(studentList);
+        assertEquals(0, studentService.findStudentsWithoutParent().size());
+    }
     @Test
     void testUpdateFieldsPositiveCase() {
         Student student = StudentMapper.toStudent(datesToBeUpdated, studentDtoUser);

@@ -281,62 +281,13 @@ input[type="checkbox"] {
 .close-btn:hover {
     color: red;
 }
-
-.animated {
-    position: relative;
-    white-space: nowrap;
-    max-width: 400px;
-    overflow: hidden;
-    background-color: #F2F2F2;
-    display: inline-block;
-    width: fit-content;
-    position: relative;
-}
-
-.text-animated {
-    animation: backAndForth 10s linear infinite;
-    display: inline-block;
-    position: relative;
+h1 {
+    text-align: left;
     color: #007EB4;
-    animation-play-state: paused;
-}
-
-.text-animated:hover {
-    animation-play-state: running;
-}
-
-@keyframes backAndForth {
-    0% {
-        transform: translateX(0);
-    left(0);
-    }
-    10% {
-        transform: translateX(0);
-        left: 0;
-    }
-    45% {
-        transform: translateX(calc(-100%));
-        left: 100%;
-    }
-    55% {
-        transform: translateX(calc(-100%));
-        left: 100%;
-    }
-    90% {
-        transform: translateX(0);
-        left: 0;
-    }
-    100% {
-        transform: translateX(0);
-        left: 0;
-    }
-}
-
-.popup-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+    margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .halves {
@@ -737,7 +688,7 @@ input[type="checkbox"] {
     outline: none;
     position: relative;
     min-width: 75px;
-    max-width: 255px;
+    max-width: 435px;
 }
 
 .tooltip .tooltiptext {
@@ -745,7 +696,7 @@ input[type="checkbox"] {
     visibility: hidden;
     position: absolute;
     font-size: 14px;
-    padding: 7px;
+    padding: 4px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -762,6 +713,11 @@ input[type="checkbox"] {
     opacity: 1;
 }
 
+.popup-wrapper {
+    padding: 10px;
+    margin-top: 30px;
+}
+
 .userNameSurname {
     text-align: left;
     color: #007EB4;
@@ -770,6 +726,49 @@ input[type="checkbox"] {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.list-items {
+    width: 100%;
+}
+
+.list {
+    width: 100%;
+    background-color: #555555;
+    height: 60vh;
+    overflow-y: scroll;
+    margin-top: 8%;
+}
+
+.list-items a {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 1.3em;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+.list-items a:hover {
+    background-color: #333333;
+    color: #01A7F0;
+}
+
+.list-items p {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 1.3em;
+}
+
+.list-items p:hover {
+    background-color: #333333;
+    color: #01A7F0;
+    cursor: pointer;
 }
 
 

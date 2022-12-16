@@ -148,6 +148,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Student> findStudentsWithoutParent() {
+        return StudentMapper.toStudentList(findAll().stream().filter(student->student.getParent()==null).collect(Collectors.toList()));
+    }
+
+    @Override
     public void addProfilePicture(Student student, MultipartFile multipartFile) {
         student.setPicUrl(imageService.saveImage(multipartFile));
         studentRepository.save(student);

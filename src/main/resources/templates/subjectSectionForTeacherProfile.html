@@ -22,24 +22,26 @@
                    th:text="${teacher.getNameSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Subjects'}"></a>
             </div>
-
-            <div class="list">
-                <div class="list-items" th:each="subject : ${subjects}">
-                    <p class="item" th:text="${subject.getName()}">Subject</p>
+            <div class="list" th:if="${!subjects.isEmpty()}" >
+                <div class="list-items" th:each="subject: ${subjects}">
+                    <a class="item" th:text="${subject.getName()}" th:href="@{'/subjects/' + ${subject.getName()} + '/teachers'}"></a>
                 </div>
             </div>
+            <div th:if="${subjects.isEmpty()}">
+                <p class="student-show-top">This teacher isn't attached to a subject yet</p>
+                <a th:type="button" th:href="${'/subjects'}" class="vis-btn-each" id="vis-btn-each"><strong>Add subject</strong></a>
+            </div>
         </div>
-
         <div class="sidebar-img header">
             <div th:if="${teacher.getPicUrl() == null}">
                 <div class="image-upload">
                     <label width="150px" height="150px">
-                        <img style="max-width: 100%" src="/static/img/avatar.png"></label>
+                        <img style="max-width: 100%" src="/static/img/avatar.png" alt="Can't show the picture"></label>
                 </div>
             </div>
             <div th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
-                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}" alt="Can't show the picture">
                 </div>
             </div>
 

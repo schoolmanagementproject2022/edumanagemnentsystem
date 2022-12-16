@@ -21,16 +21,14 @@
                    th:text="${parent.getNameAndSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Linked students'}"></a>
             </div>
-            <div class="list-p-item">
-            <div th:if="${students.size() != 0}" th:each="student: ${students}">
-                <a class="item" th:text="${student.getNameAndSurname()}"
-                   th:href="@{'/students/' + ${student.getId()} + '/profile'}"></a>
+            <div class="list" th:if="${!students.isEmpty()}">
+            <div class="list-items" th:each="student: ${students}">
+                <a class="item" th:text="${student.getNameAndSurname()}" th:href="@{'/students/' + ${student.getId()} + '/profile'}"></a>
             </div>
             </div>
-            <div th:if="${students.size() == 0}">
-                <p class="student-show-top">This parent isn't yet attached to a student </p>
-                <a th:type="button" th:href="${'/students'}" class="vis-btn-each" id="vis-btn-each"><b>Add
-                    student</b></a>
+            <div th:if="${students.isEmpty()}">
+                <p class="student-show-top">This parent isn't attached to a student yet</p>
+                <a th:type="button" th:href="${'/students/without/parent'}" class="vis-btn-each" id="vis-btn-each"><strong>Add student</strong></a>
             </div>
         </div>
     </div>

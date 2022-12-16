@@ -58,7 +58,8 @@
                 <div class="selectTeacher">
                     <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px" multiple>
                         <option th:each="select : ${teachersToSelect}"
-                                th:value="${select.id}" th:text="${select.getNameSurname()}"></option>
+                                th:value="${select.id}" th:title="${select.getNameSurname()}"
+                                th:text="${select.getNameSurname()}"></option>
                     </select>
                     <div th:if="${blank}!= null" class="error">
                         <p th:text="${blank}"></p>

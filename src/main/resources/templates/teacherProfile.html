@@ -79,7 +79,8 @@
                         <input type="hidden" name="_method" value="delete"/>
                         <button type="submit" id="submitButton"></button>
                     </form>
-                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img" src="/static/img/x-mark-transparent-2.png">
+                    <img style="cursor: pointer" onclick="PopUpShowImageDelete()" class="delete-img"
+                         src="/static/img/x-mark-transparent-2.png">
                 </div>
             </div>
             <div class="sidebar2 header" id="sidebar2">
@@ -93,8 +94,9 @@
 <div class="create">
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
-        <div class="animated">
-            <h1 class="text-animated" th:text="${name_surname}">Teacher name</h1>
+        <div class="tooltip">
+            <h1 th:text="${name_surname}">Teacher name</h1>
+            <span class="tooltiptext" th:text="${name_surname}">Tooltip text</span>
         </div>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${teacher}">
             <script th:inline="javascript"
@@ -104,9 +106,9 @@
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title" for="name">Teacher name <span
+                    <label class="popup-label-title">Teacher name <span
                             style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}"/>
+                    <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
                     <div th:if="${nameSize}!= null" class="error">
@@ -188,6 +190,10 @@
 </div>
 
 <script>
+    showInputFieldsOnMouseover();
+</script>
+
+<script>
 
     filevalidation = () => {
         const fi = document.getElementById('file-input');
@@ -227,6 +233,5 @@
         document.getElementById("form-pic-edi").submit();
     }
 </script>
-
 </body>
 </html>

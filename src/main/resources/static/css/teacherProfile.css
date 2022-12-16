@@ -236,7 +236,7 @@ input[type="checkbox"] {
     outline: none;
     position: relative;
     min-width: 75px;
-    max-width: 255px;
+    max-width: 435px;
 }
 
 .tooltip .tooltiptext {
@@ -244,7 +244,7 @@ input[type="checkbox"] {
     visibility: hidden;
     position: absolute;
     font-size: 14px;
-    padding: 7px;
+    padding: 4px;
 }
 
 .tooltip:hover .tooltiptext {
@@ -265,6 +265,9 @@ h1 {
     text-align: left;
     color: #007EB4;
     margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .userNameSurname {
@@ -547,6 +550,14 @@ form {
     color: red;
 }
 
+input[title]:hover:after{
+    content: attr(title);
+    background-color: red;
+    position: absolute;
+    left: 5%;
+    top: 10%;
+}
+
 .form_input {
     margin-top: 4px;
     margin-bottom: 4px;
@@ -648,6 +659,7 @@ form {
     font-size: 1.2em;
     padding: 6px;
     margin-left: 3%;
+
 }
 
 list {
@@ -982,57 +994,6 @@ list {
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-
-.animated {
-    position: relative;
-    white-space: nowrap;
-    max-width: 400px;
-    overflow: hidden;
-    background-color: #F2F2F2;
-    display: inline-block;
-    width: fit-content;
-    position: relative;
-}
-
-.text-animated {
-    animation: backAndForth 10s linear infinite;
-    display: inline-block;
-    position: relative;
-    color: #007EB4;
-    animation-play-state: paused;
-}
-
-.text-animated:hover {
-    animation-play-state: running;
-}
-
-@keyframes backAndForth {
-    0% {
-        transform: translateX(0);
-    left(0);
-    }
-    10% {
-        transform: translateX(0);
-        left: 0;
-    }
-    45% {
-        transform: translateX(calc(-100%));
-        left: 100%;
-    }
-    55% {
-        transform: translateX(calc(-100%));
-        left: 100%;
-    }
-    90% {
-        transform: translateX(0);
-        left: 0;
-    }
-    100% {
-        transform: translateX(0);
-        left: 0;
-    }
-}
-
 .halves {
     width: 100%;
     display: flex;
@@ -1041,4 +1002,59 @@ list {
 
 .unit {
     margin-bottom: 10px;
+}
+
+.list-p-item{
+    width: 96%;
+    background-color: #555555;
+    margin-top: 6%;
+}
+
+.item {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
+    font-size: 19px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+
+.list-p-item a:hover{
+    color: #2b80a5;
+}
+
+.vis-btn-each {
+    margin-left: 28VW;
+    margin-top: 5VW;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    width: 100%;
+    text-align: center;
+    background-color: #777777;
+    border-radius: 6px;
+    border-color: #aaaaaa;
+    align-self: flex-end;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.vis-btn-each:hover{
+    color: #01A7F0;
+    background-color: #333333;
+}
+
+
+.student-show-top{
+    margin-top: 10VW;
+    margin-left: 20VW;
+    width: 392px;
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 19px;
+    font-family: "Montserrat", sans-serif;
 }

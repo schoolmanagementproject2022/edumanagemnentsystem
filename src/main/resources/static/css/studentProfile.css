@@ -471,6 +471,14 @@ form {
     border-radius: 1px;
     border-width: 1.5px;
 }
+.form_input_right {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: block;
+    width: 100%;
+    border-radius: 1px;
+    border-width: 1.5px;
+}
 
 .allTab {
     background-color: #333333;
@@ -843,55 +851,46 @@ list {
     margin-top: 4%;
 }
 
-.animated {
+
+.tooltip {
+    outline: none;
     position: relative;
-    white-space: nowrap;
-    max-width: 400px;
-    overflow: hidden;
-    background-color: #F2F2F2;
-    display: inline-block;
-    width: fit-content;
-    position: relative;
+    min-width: 75px;
+    max-width: 435px;
 }
 
-.text-animated {
-    animation: backAndForth 10s linear infinite;
-    display: inline-block;
-    position: relative;
+.tooltip .tooltiptext {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 7px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 1px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
+}
+
+h1 {
+    text-align: left;
     color: #007EB4;
-    animation-play-state: paused;
+    margin-top: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.text-animated:hover {
-    animation-play-state: running;
-}
 
-@keyframes backAndForth {
-    0% {
-        transform: translateX(0);
-    left(0);
-    }
-    10% {
-        transform: translateX(0);
-        left: 0;
-    }
-    45% {
-        transform: translateX(calc(-100%));
-        left: 100%;
-    }
-    55% {
-        transform: translateX(calc(-100%));
-        left: 100%;
-    }
-    90% {
-        transform: translateX(0);
-        left: 0;
-    }
-    100% {
-        transform: translateX(0);
-        left: 0;
-    }
-}
 
 .halves {
     width: 100%;

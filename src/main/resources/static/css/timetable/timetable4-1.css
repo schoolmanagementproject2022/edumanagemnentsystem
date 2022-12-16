@@ -99,7 +99,7 @@ body {
 }
 
 /*Main down containing dates,create timetable and lessons style*/
-.main-down{
+.main-down {
     margin-left: 2%;
     background-color: #AAAAAA;
     font-size: 1.3em;
@@ -178,15 +178,15 @@ body {
     padding: 2px;
 }
 
-.week{
+.week {
     width: 100%;
     margin: 0;
     padding: 0px;
     display: flex;
-  }
+}
 
 .dayOfWeek {
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     border: solid 0.5px #007EB4;
     overflow: hidden;
     display: flex;
@@ -194,7 +194,7 @@ body {
     width: 100%;
 }
 
-.dayHeader{
+.dayHeader {
     margin: 0;
     padding: 5px;
     background-color: #7F7F7F;
@@ -204,31 +204,32 @@ body {
     font-weight: 600;
 }
 
-.dayHeader a{
+.dayHeader a {
     text-align: center;
     color: #FFFFFF;
     background-color: #7F7F7F;
 }
 
-.add{
-    background-color:#D7D7D7;
+.add {
+    background-color: #D7D7D7;
     margin-bottom: 11px;
     display: flex;
 }
 
-.plus{
+.plus {
     width: 30%;
     margin: 0px 37px 0px 50px;
     font-size: 23px;
     text-align: center;
-    color:#007EB4;
+    color: #007EB4;
     cursor: pointer;
 }
+
 /*Lessons section styles*/
 .lessons {
     margin-left: 2.5%;
     width: 95%;
-    background-color:#D7D7D7;
+    background-color: #D7D7D7;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -241,12 +242,12 @@ body {
     width: 0px;
 }
 
-.single_lesson_wrapper{
+.single_lesson_wrapper {
     background-color: #D7D7D7;
     flex-direction: column;
 }
 
-.single_item{
+.single_item {
     margin: 0;
     padding: 30px 23px;
     background-color: #AAAAAA;
@@ -255,7 +256,7 @@ body {
     flex-direction: column;
     display: flex;
     border-radius: 10px;
-    border: solid 0.5px#007EB4;
+    border: solid 0.5px #007EB4;
 }
 
 .single_item .btn {
@@ -263,7 +264,7 @@ body {
     width: 0;
     margin: 0;
     padding: 0px;
-    background-color:#AAAAAA;
+    background-color: #AAAAAA;
     margin-top: -30px;
     margin-left: 107%;
 }
@@ -283,19 +284,48 @@ body {
     cursor: pointer;
     margin: 0;
     padding: 0;
-    color:#7F7F7F;;
+    color: #7F7F7F;;
 }
-
-.single_item a {
-    text-decoration: none;
-
-}
-
-.title{
+.title {
     text-align: center;
     color: #007EB4;
     font-weight: bold;
     font-size: 0.7em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 28px;
+    max-width: 90px;
+}
+
+.tooltip .tooltiptext {
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 10px;
+    padding: 3px;
+    width: 155%;
+    margin-left: -20px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 4px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 0px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
 }
 
 .activeTab {
@@ -375,7 +405,7 @@ h1 {
 }
 
 .half {
-    width: 50%;
+    width: 56%;
     padding: 0px;
     margin-left: 0px;
     height: 253px;
@@ -470,6 +500,7 @@ h1 {
 .show-btn:hover {
     border-color: #01A7F0;
 }
+
 .form_input {
     margin-top: 6px;
     display: block;

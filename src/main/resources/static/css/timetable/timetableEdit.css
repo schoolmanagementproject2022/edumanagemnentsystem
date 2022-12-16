@@ -301,18 +301,46 @@ body {
     padding: 0;
     color:#7F7F7F;;
 }
-
-.single_item a {
-    text-decoration: none;
-}
-
 .title {
-    width: 100%;
     text-align: center;
     color: #007EB4;
     font-weight: bold;
-    font-size: 0.8em;
-    margin-bottom: 3px;
+    font-size: 0.7em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 28px;
+    max-width: 90px;
+}
+
+.tooltip .tooltiptext {
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 10px;
+    padding: 3px;
+    width: 155%;
+    margin-left: -20px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 4px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 0px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
 }
 
 .activeTab {
@@ -429,7 +457,7 @@ h1 {
 }
 
 .half {
-    width: 50%;
+    width: 56%;
     padding: 0px;
     margin-left: 0px;
     height: 253px;

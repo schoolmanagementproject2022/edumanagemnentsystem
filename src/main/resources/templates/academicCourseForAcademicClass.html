@@ -54,7 +54,7 @@
                         <option th:if="*{academicCourseSet  == null or academicCourseSet.size()==0}" th:value="null"
                                 th:text="'Select course'"></option>
                         <option th:each="select : ${coursesForSelect}"
-                                th:value="${select.id}" th:text="${select.getName()}"></option>
+                                th:value="${select.id}" th:title="${select.getName()}" th:text="${select.getName()}"></option>
                     </select>
                     <div th:if="${blankClass}!= null" class="error">
                         <p th:text="${blankClass}"></p>

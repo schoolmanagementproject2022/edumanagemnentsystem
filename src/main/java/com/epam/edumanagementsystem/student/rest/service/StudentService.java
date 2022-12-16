@@ -26,6 +26,8 @@ public interface StudentService {
 
     StudentDto findByStudentId(Long studentId);
 
+    List<Student> findStudentsWithoutParent();
+
     List<StudentDto> findStudentsByParentId(Long parentId);
 
     void addProfilePicture(Student student, MultipartFile multipartFile);

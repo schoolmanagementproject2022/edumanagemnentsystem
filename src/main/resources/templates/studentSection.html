@@ -60,7 +60,8 @@
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" onclick="PopUpHide()">×</button>
         <h1>New Student</h1>
-        <form id="form" class="form" th:method="POST" enctype="multipart/form-data" th:action="@{/students}" th:object="${student}" onsubmit="return filevalidation()">
+        <form id="form" class="form" th:method="POST" enctype="multipart/form-data" th:action="@{/students}"
+              th:object="${student}" onsubmit="return filevalidation()">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${emailSize}
             or ${surnameSize} or ${nameSize} or ${addressSize} or ${invalidEmail} or ${invalidPassword}
             or ${formatValidationMessage}or ${size}!=null">
@@ -139,7 +140,7 @@
                          th:errors="*{date}"></div>
 
                     <label class="popup-label-title">Linked Class</label>
-                    <select class="form_input" th:name="academicClass" th:id="academicClass"
+                    <select class="form_input_right" th:name="academicClass" th:id="academicClass"
                             th:field="*{academicClass}">
                         <option th:text="' Select academic class'" class="short" data-limit="23"
                                 th:value="null"></option>
@@ -150,7 +151,7 @@
 
                 <div class="half2">
                     <label class="popup-label-title">Password <span style="color:#A30014">*</span></label>
-                    <input type="text" class="form_input" placeholder="Create Password" id="password"
+                    <input type="text" class="form_input_right" placeholder="Create Password" id="password"
                            th:name="password" readonly
                            th:value="${#object.password}">
                     <div th:if="${blank}!= null" class="error">
@@ -168,13 +169,13 @@
                                th:name="picture"/>
                         <div class="error">
                             <p id="errorPic" th:text="${formatValidationMessage}"></p>
-                            <p  th:text="${size}"></p>
+                            <p th:text="${size}"></p>
                         </div>
                     </div>
                     <div class="halfSection" style="margin-top: 2%">
                         <label class="popup-label-title">Student blood group <span
                                 style="color:#A30014">*</span></label>
-                        <select class="form_input" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
+                        <select class="form_input_right" th:name="bloodGroup" th:id="bloodGroup" th:field="*{bloodGroup}">
                             <option th:if="*{bloodGroup == null}" th:text="'Blood Group'" class="short" data-limit="23"
                                     th:value="null"></option>
                             <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
@@ -185,7 +186,7 @@
                              th:errors="*{bloodGroup}"></div>
 
                         <label class="popup-label-title">Gender <span style="color:#A30014">*</span></label>
-                        <select class="form_input" th:name="gender" th:id="gender" th:field="*{gender}">
+                        <select class="form_input_right" th:name="gender" th:id="gender" th:field="*{gender}">
                             <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
                                     th:value="null"></option>
                             <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
@@ -194,14 +195,15 @@
                         <div class="error" th:if="${#fields.hasErrors('gender')}"
                              th:errors="*{gender}"></div>
 
-                        <label class="popup-label-title">Linked Parent</label> <select class="form_input"
-                                                                                       th:name="parent" th:id="parent"
-                                                                                       th:field="*{parent}">
-                        <option th:text="' Select parent'" class="short" data-limit="23"
-                                th:value="null"></option>
-                        <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
-                                th:text="${parent.getNameAndSurname}"></option>
-                    </select>
+                        <label class="popup-label-title">Linked Parent</label>
+                        <select class="form_input_right"
+                                th:name="parent" th:id="parent"
+                                th:field="*{parent}">
+                            <option th:text="' Select parent'" class="short" data-limit="23"
+                                    th:value="null"></option>
+                            <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
+                                    th:text="${parent.getNameAndSurname}"></option>
+                        </select>
                     </div>
                 </div>
                 <div name="btn-div">
@@ -254,16 +256,20 @@
 <script>
     filevalidation = () => {
         const fi = document.getElementById('picture');
-        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)){
+        if (!fi.files[0].name.match(/\.(jpeg|png|jpg)$/i)) {
             return;
         }
 
-        if (fi.files[0].size> 2*1024*1024) {
+        if (fi.files[0].size > 2 * 1024 * 1024) {
             document.getElementById("status").value = "validationFail"
             fi.value = '';
             return;
         }
     }
+</script>
+
+<script>
+    showInputFieldsOnMouseover();
 </script>
 
 </html>
