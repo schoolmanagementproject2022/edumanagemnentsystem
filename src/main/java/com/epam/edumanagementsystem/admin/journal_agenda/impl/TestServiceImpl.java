@@ -29,8 +29,13 @@ public class TestServiceImpl implements TestService {
         test.setTest(saveAgendaDto.getTest());
         test.setDateOfTest(LocalDate.parse(saveAgendaDto.getDate()));
         test.setAcademicClass(academicClassRepository.findById(saveAgendaDto.getClassId()).get());
-        test.setCourseOfTest(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
+        test.setAcademicCourse(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return testRepository.save(test);
+    }
+
+    @Override
+    public Test getTestOfCourse(LocalDate date, Long classId, Long courseId) {
+        return testRepository.findByDateOfTestAndAcademicClassIdAndAcademicCourseId(date, classId, courseId);
     }
 
 }

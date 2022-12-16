@@ -95,7 +95,7 @@
                         <td th:if="${friday.contains(course.getName) && Friday}"><span
                                 th:text="${FRIDAY.getDayOfMonth()}">123</span><br/><span>Friday</span></td>
                         <td th:if="${saturday.contains(course.getName) && Saturday}"><span
-                                th:text="${SATURDAY}.getDayOfMonth()">123</span><br/><span>Saturday</span></td>
+                                th:text="${SATURDAY.getDayOfMonth()}">123</span><br/><span>Saturday</span></td>
                         <td th:if="${sunday.contains(course.getName) && Sunday}"><span
                                 th:text="${SUNDAY.getDayOfMonth()}">123</span><br/><span>Sunday</span></td>
                     </tr>
@@ -168,17 +168,18 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-monday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-monday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-monday"></textarea>
+
                     <input type="hidden" id="date-monday" name="date"/>
-                    <input type="hidden" name="classId" th:value="${class.id}"/>
-                    <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
+                    <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" name="concreteDay" th:value="'MONDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
@@ -209,14 +210,14 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-tuesday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-tuesday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-tuesday"></textarea>
                     <input type="hidden" id="date-tuesday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -250,14 +251,14 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-wednesday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-wednesday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-wednesday"></textarea>
                     <input type="hidden" id="date-wednesday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -291,14 +292,14 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-thursday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-thursday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-thursday"></textarea>
                     <input type="hidden" id="date-thursday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -332,14 +333,14 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-friday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-friday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-friday"></textarea>
                     <input type="hidden" id="date-friday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -373,14 +374,14 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-saturday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-saturday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-saturday"></textarea>
                     <input type="hidden" id="date-saturday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>
@@ -414,14 +415,14 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              th:id="classwork"></textarea>
+                              id="classwork-sunday"></textarea>
                     <label class="popup-label-title">Test</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="test"
-                              th:id="test"></textarea>
+                              id="test-sunday"></textarea>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea rows="3" cols="50" type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                              th:id="homework"></textarea>
+                              id="homework-sunday"></textarea>
                     <input type="hidden" id="date-sunday" name="date"/>
                     <input type="hidden" name="classId" th:value="${class.id}"/>
                     <input type="hidden" name="courseId" th:value="${course.id}"/>

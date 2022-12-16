@@ -65,11 +65,11 @@ public class Test {
         this.dateOfTest = dateOfTest;
     }
 
-    public AcademicCourse getCourseOfTest() {
+    public AcademicCourse getAcademicCourse() {
         return academicCourse;
     }
 
-    public void setCourseOfTest(AcademicCourse academicCourse) {
+    public void setAcademicCourse(AcademicCourse academicCourse) {
         this.academicCourse = academicCourse;
     }
 

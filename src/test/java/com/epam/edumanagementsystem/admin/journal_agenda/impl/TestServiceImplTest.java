@@ -79,6 +79,6 @@ class TestServiceImplTest {
         saveAgendaDto.setDate(date.toString());
         Test actualTest = testService.save(saveAgendaDto);
         assertThat(actualTest.getAcademicClass().getId()).isNotNull();
-        assertThat(actualTest.getCourseOfTest().getId()).isNotNull();
+        assertThat(actualTest.getAcademicCourse().getId()).isNotNull();
     }
 }

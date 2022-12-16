@@ -33,4 +33,9 @@ public class ClassworkServiceImpl implements ClassworkService {
         classwork.setAcademicCourse(academicCourseRepository.findById(saveAgendaDto.getCourseId()).get());
         return classworkRepository.save(classwork);
     }
+
+    @Override
+    public Classwork getClassWorkOfCourse(LocalDate date, Long classId, Long courseId) {
+        return classworkRepository.findByDateOfClassworkAndAcademicClassIdAndAcademicCourseId(date, classId, courseId);
+    }
 }
