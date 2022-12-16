@@ -34,8 +34,16 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    public Homework update(SaveAgendaDto saveAgendaDto) {
+        Homework homeworkOfCourse = getHomeworkOfCourse(LocalDate.parse(saveAgendaDto.getDate()), saveAgendaDto.getClassId(), saveAgendaDto.getCourseId());
+        if (saveAgendaDto.getHomework() != null) {
+            homeworkOfCourse.setHomework(saveAgendaDto.getHomework());
+        }
+        return homeworkRepository.save(homeworkOfCourse);
+    }
+
+    @Override
     public Homework getHomeworkOfCourse(LocalDate date, Long classId, Long courseId) {
         return homeworkRepository.findByDateOfHomeworkAndAcademicClassIdAndAcademicCourseId(date, classId, courseId);
     }
-
 }

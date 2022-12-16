@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/agenda")
 @Tag(name = "Agenda")
@@ -43,14 +45,23 @@ public class AgendaOfJournalController {
             redirectAttributes.addAttribute("concreteDay", concreteDay);
             return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
         }
-        if (!agendaDto.getClasswork().isBlank()) {
+
+        if (classworkService.getClassWorkOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
+            classworkService.update(agendaDto);
+        } else if (!agendaDto.getClasswork().isBlank()) {
             classworkService.save(agendaDto);
         }
-        if (!agendaDto.getHomework().isBlank()) {
-            homeworkService.save(agendaDto);
-        }
-        if (!agendaDto.getTest().isBlank()) {
+
+        if (testService.getTestOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
+            testService.update(agendaDto);
+        } else if (!agendaDto.getTest().isBlank()) {
             testService.save(agendaDto);
+        }
+
+        if (homeworkService.getHomeworkOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
+            homeworkService.update(agendaDto);
+        } else if (!agendaDto.getHomework().isBlank()) {
+            homeworkService.save(agendaDto);
         }
         return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
     }

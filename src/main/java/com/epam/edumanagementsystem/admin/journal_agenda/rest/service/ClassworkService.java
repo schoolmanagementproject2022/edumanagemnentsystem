@@ -9,6 +9,8 @@ public interface ClassworkService {
 
     Classwork save(SaveAgendaDto saveAgendaDto);
 
+    Classwork update(SaveAgendaDto saveAgendaDto);
+
     Classwork getClassWorkOfCourse(LocalDate date, Long classId, Long courseId);
 
 }

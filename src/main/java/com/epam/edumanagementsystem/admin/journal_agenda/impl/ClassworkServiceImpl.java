@@ -35,6 +35,15 @@ public class ClassworkServiceImpl implements ClassworkService {
     }
 
     @Override
+    public Classwork update(SaveAgendaDto saveAgendaDto) {
+        Classwork classWorkOfCourse = getClassWorkOfCourse(LocalDate.parse(saveAgendaDto.getDate()), saveAgendaDto.getClassId(), saveAgendaDto.getCourseId());
+        if (saveAgendaDto.getClasswork() != null) {
+            classWorkOfCourse.setClasswork(saveAgendaDto.getClasswork());
+        }
+        return classworkRepository.save(classWorkOfCourse);
+    }
+
+    @Override
     public Classwork getClassWorkOfCourse(LocalDate date, Long classId, Long courseId) {
         return classworkRepository.findByDateOfClassworkAndAcademicClassIdAndAcademicCourseId(date, classId, courseId);
     }

@@ -9,6 +9,7 @@ public interface HomeworkService {
 
     Homework save(SaveAgendaDto saveAgendaDto);
 
-    Homework getHomeworkOfCourse(LocalDate date, Long classId, Long courseId);
+    Homework update(SaveAgendaDto saveAgendaDto);
 
+    Homework getHomeworkOfCourse(LocalDate date, Long classId, Long courseId);
 }

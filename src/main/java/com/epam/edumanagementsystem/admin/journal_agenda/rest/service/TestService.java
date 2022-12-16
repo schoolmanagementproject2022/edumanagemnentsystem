@@ -9,6 +9,8 @@ public interface TestService {
 
     Test save(SaveAgendaDto saveAgendaDto);
 
+    Test update(SaveAgendaDto saveAgendaDto);
+
     Test getTestOfCourse(LocalDate date, Long classId, Long courseId);
 
 }
