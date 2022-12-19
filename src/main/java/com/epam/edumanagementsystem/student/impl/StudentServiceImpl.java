@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -149,7 +149,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> findStudentsWithoutParent() {
-        return StudentMapper.toStudentList(findAll().stream().filter(student->student.getParent()==null).collect(Collectors.toList()));
+        return StudentMapper.toStudentList(findAll().stream().filter(student -> student.getParent() == null).collect(Collectors.toList()));
     }
 
     @Override
@@ -180,9 +180,9 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findStudentsByClassName(String name) {
         List<StudentDto> studentsOfConcreteName = new ArrayList<>();
         for (StudentDto studentDto : findAll()) {
-           if(studentDto.getAcademicClass().getClassNumber().equals(name)){
-               studentsOfConcreteName.add(studentDto);
-           }
+            if (studentDto.getAcademicClass().getClassNumber().equals(name)) {
+                studentsOfConcreteName.add(studentDto);
+            }
         }
         return studentsOfConcreteName;
     }
