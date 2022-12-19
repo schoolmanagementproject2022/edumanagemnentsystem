@@ -22,28 +22,28 @@
                    th:text="${teacher.getNameSurname()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Classes'}"></a>
             </div>
-            <div class="list"  th:if="${teachersClasses.size() != 0}">
+            <div class="list"  th:if="${!teachersClasses.isEmpty()}">
                 <div class="list-items" th:each="class: ${teachersClasses}">
-                    <a class="item" th:text="${class.getClassNumber()}" th:href="@{'/classes/' + ${class.getClassNumber()} + '/courses'}"></a>
+                    <p class="p-item-list" th:text="${class.getClassNumber()}"></p>
                 </div>
             </div>
-            <div th:if="${teachersClasses.size() == 0}">
+            <div th:if="${teachersClasses.isEmpty()}">
                 <p class="student-show-top">This teacher isn't attached to a class yet</p>
-                <a th:type="button" th:href="${'/classes'}" class="vis-btn-each" id="vis-btn-each"><b>Add class</b></a>
+                <a th:type="button" th:href="${'/classes'}" class="vis-btn-each" id="vis-btn-each"><strong>Add class</strong></a>
             </div>
         </div>
         <div class="sidebar-img header">
             <div th:if="${teacher.getPicUrl() == null}">
                 <div class="image-upload">
                     <label width="150px" height="150px">
-                        <img style="max-width: 100%;" src="/static/img/avatar.png">
+                        <img style="max-width: 100%;" src="/static/img/avatar.png" alt="This User haven't got a ProfPic">
                     </label>
                 </div>
             </div>
 
             <div th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
-                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}" alt="This User haven't got a ProfPic">
                 </div>
             </div>
 

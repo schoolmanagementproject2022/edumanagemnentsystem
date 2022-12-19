@@ -24,7 +24,7 @@
             </div>
             <div class="list" th:if="${!subjects.isEmpty()}" >
                 <div class="list-items" th:each="subject: ${subjects}">
-                    <a class="item" th:text="${subject.getName()}" th:href="@{'/subjects/' + ${subject.getName()} + '/teachers'}"></a>
+                    <p class="p-item-list" th:text="${subject.getName()}"></p>
                 </div>
             </div>
             <div th:if="${subjects.isEmpty()}">

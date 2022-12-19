@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.student.rest.repository;
 
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,4 +20,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     void updateStudentPicUrl(Long id);
 
     List<Student> findAllByParentId(Long parentId);
+
 }

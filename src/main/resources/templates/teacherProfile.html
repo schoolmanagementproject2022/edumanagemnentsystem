@@ -108,7 +108,7 @@
                 <div class="half">
                     <label class="popup-label-title">Teacher name <span
                             style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
+                    <input class="form_input" type="text" id="name" th:name="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
                     <div th:if="${nameSize}!= null" class="error">
@@ -166,7 +166,7 @@
         </div>
         <div>
             <form th:action="@{'/teachers/' + ${teacher.id} + '/image/delete'}" method="get">
-                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b>
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Confirm</b>
                 </button>
             </form>
         </div>

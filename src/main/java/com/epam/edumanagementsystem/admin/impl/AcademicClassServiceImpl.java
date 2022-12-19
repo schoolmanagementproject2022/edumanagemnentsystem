@@ -130,70 +130,73 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public String journal(Model model, String date, String startDate,String name) {
+    public void openJournal(String date, String startDate, String name, Model model) {
         if (date != null) {
             startDate = date;
         }
         AcademicClass academicClassByName = findByName(name);
 
-        if (null != timetableService.findTimetableByAcademicClassName(name)) {
-            LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
-            LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
-            model.addAttribute("startDateInput", timetableStartDate);
-            model.addAttribute("endDateInput", timetableEndDate);
-            LocalDate journalStartDate = null;
+        LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
+        LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
+        model.addAttribute("startDateInput", timetableStartDate);
+        model.addAttribute("endDateInput", timetableEndDate);
+        LocalDate journalStartDate = null;
 
-            if (startDate != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate localdate = LocalDate.parse(startDate, formatter);
-                if (!localdate.isAfter(timetableEndDate) && !localdate.isBefore(timetableStartDate)) {
-                    journalStartDate = localdate;
-                } else if (!localdate.isAfter(timetableStartDate)) {
-                    journalStartDate = timetableStartDate;
-                } else if (!localdate.isBefore(timetableEndDate)) {
-                    journalStartDate = timetableEndDate;
-                }
-            } else {
-                if (timetableStartDate.isAfter(LocalDate.now())) {
-                    journalStartDate = timetableStartDate;
-                } else {
-                    journalStartDate = LocalDate.now();
-                }
+        if (startDate != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localdate = LocalDate.parse(startDate, formatter);
+            if (!localdate.isAfter(timetableEndDate) && !localdate.isBefore(timetableStartDate)) {
+                journalStartDate = localdate;
+            } else if (!localdate.isAfter(timetableStartDate)) {
+                journalStartDate = timetableStartDate;
+            } else if (!localdate.isBefore(timetableEndDate)) {
+                journalStartDate = timetableEndDate;
             }
-            journalStartDate = recurs(journalStartDate);
-            List<AcademicCourse> academicCoursesInClass = findAllAcademicCourses(name);
-            model.addAttribute("allCoursesInAcademicClass", academicCoursesInClass);
-            boolean existDay = false;
+        } else {
+            if (timetableStartDate.isAfter(LocalDate.now())) {
+                journalStartDate = timetableStartDate;
+            } else {
+                journalStartDate = LocalDate.now();
+            }
+        }
+        journalStartDate = recurs(journalStartDate);
+        List<AcademicCourse> academicCoursesInClass = findAllAcademicCourses(name);
+        model.addAttribute("allCoursesInAcademicClass", academicCoursesInClass);
+        boolean existDay = false;
+        for (int i = 0; i < 7; i++) {
+            existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
+            journalStartDate = journalStartDate.plusDays(1);
+        }
+        if (!existDay) {
+            if (journalStartDate.isAfter(timetableEndDate)) {
+                journalStartDate = journalStartDate.minusDays(14);
+            }
             for (int i = 0; i < 7; i++) {
-                existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
+                getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
                 journalStartDate = journalStartDate.plusDays(1);
             }
-            if (!existDay) {
-                if (journalStartDate.isAfter(timetableEndDate)) {
-                    journalStartDate = journalStartDate.minusDays(14);
-                }
-                for (int i = 0; i < 7; i++) {
-                    getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
-                    journalStartDate = journalStartDate.plusDays(1);
-                }
-            }
-            String journalStartDateToString = journalStartDate.toString();
-            model.addAttribute("month", journalStartDate.getMonth());
-            model.addAttribute("year", journalStartDate.getYear());
-            model.addAttribute("startDate", journalStartDateToString);
-            return "JournalForAcademicClass";
-        } else {
-            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
-            model.addAttribute("creationStatus", false);
-            putLessons(model, academicClassByName.getId());
-            return "timetableFromJournal";
         }
+        String journalStartDateToString = journalStartDate.toString();
+        model.addAttribute("month", journalStartDate.getMonth());
+        model.addAttribute("year", journalStartDate.getYear());
+        model.addAttribute("startDate", journalStartDateToString);
     }
+
+    @Override
+    public void doNotOpenJournal_timetableIsNotExist(String date, String startDate, String className, Model model) {
+        if (date != null) {
+            startDate = date;
+        }
+        model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(className));
+        model.addAttribute("creationStatus", false);
+        putLessons(model, findByName(className).getId());
+    }
+
     private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClass academicClassByName,
                                          LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay) {
-        String dayOfMontString = Integer.valueOf(journalStartDate.getDayOfMonth()).toString();
+
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
-        model.addAttribute(deyOfWeek, dayOfMontString);
+        model.addAttribute(deyOfWeek, journalStartDate);
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
         List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                 .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByName.getId());

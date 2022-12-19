@@ -63,6 +63,10 @@ public class ControllerAdviceController {
     public String lastUrl(HttpServletRequest request) {
         if (request.getRequestURI().contains("/")) {
             String[] path = request.getRequestURI().split("/");
+            if (path.length == 3) {
+                String decoded = URLDecoder.decode(path[path.length - 1], StandardCharsets.UTF_8);
+                return decoded;
+            }
             if (path.length > 2) {
                 if (Arrays.stream(path).anyMatch(oneOfUrls -> oneOfUrls.equals(swaggerApiDocPath))) {
                     return URLDecoder.decode(request.getRequestURI(), StandardCharsets.UTF_8);

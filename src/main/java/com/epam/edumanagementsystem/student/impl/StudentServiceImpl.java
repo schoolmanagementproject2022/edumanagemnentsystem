@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.student.impl;
 
+import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -26,11 +27,14 @@ public class StudentServiceImpl implements StudentService {
     private final UserService userService;
     private final ImageService imageService;
 
+    private final AcademicClassService academicClassService;
+
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, UserService userService, ImageService imageService) {
+    public StudentServiceImpl(StudentRepository studentRepository, UserService userService, ImageService imageService, AcademicClassService academicClassService) {
         this.studentRepository = studentRepository;
         this.userService = userService;
         this.imageService = imageService;
+        this.academicClassService = academicClassService;
     }
 
     @Override
@@ -145,7 +149,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> findStudentsWithoutParent() {
-        return StudentMapper.toStudentList(findAll().stream().filter(student->student.getParent()==null).collect(Collectors.toList()));
+        return StudentMapper.toStudentList(findAll().stream().filter(student -> student.getParent() == null).collect(Collectors.toList()));
     }
 
     @Override
@@ -171,4 +175,16 @@ public class StudentServiceImpl implements StudentService {
         }
         return studentsWithoutClass;
     }
+
+    @Override
+    public List<StudentDto> findStudentsByClassName(String name) {
+        List<StudentDto> studentsOfConcreteName = new ArrayList<>();
+        for (StudentDto studentDto : findAll()) {
+            if (studentDto.getAcademicClass().getClassNumber().equals(name)) {
+                studentsOfConcreteName.add(studentDto);
+            }
+        }
+        return studentsOfConcreteName;
+    }
+
 }

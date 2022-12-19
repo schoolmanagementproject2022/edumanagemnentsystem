@@ -7,8 +7,8 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
-import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -37,15 +37,13 @@ public class AcademicClassController {
     private final AcademicCourseService academicCourseService;
     private final StudentService studentService;
     private final TimetableService timetableService;
-    private final CoursesForTimetableService coursesForTimetableService;
 
     @Autowired
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TimetableService timetableService, CoursesForTimetableService coursesForTimetableService) {
+    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TimetableService timetableService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.studentService = studentService;
         this.timetableService = timetableService;
-        this.coursesForTimetableService = coursesForTimetableService;
     }
 
     @GetMapping
@@ -60,8 +58,7 @@ public class AcademicClassController {
 
     @PostMapping
     @Operation(summary = "Saves the created academic class")
-    public String create(@ModelAttribute("academicClass") @Valid AcademicClass academicClass,
-                         BindingResult result, Model model) {
+    public String create(@ModelAttribute("academicClass") @Valid AcademicClass academicClass, BindingResult result, Model model) {
 
         List<AcademicClassDto> academicClassDtoList = academicClassService.findAll();
         List<AcademicClass> academicClassList = AcademicClassMapper.academicClassessList(academicClassDtoList);
@@ -71,8 +68,7 @@ public class AcademicClassController {
             if (InputFieldsValidation.validateInputFieldSize(academicClass.getClassNumber())) {
                 model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
-            if (InputFieldsValidation.checkingForIllegalCharacters(academicClass
-                    .getClassNumber(), model)) {
+            if (InputFieldsValidation.checkingForIllegalCharacters(academicClass.getClassNumber(), model)) {
                 model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
             }
         }
@@ -132,8 +128,7 @@ public class AcademicClassController {
 
     @PostMapping("{name}/courses")
     @Operation(summary = "Adds new academic courses and teachers for selected academic class")
-    public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClass academicClass,
-                                                 @PathVariable("name") String name, Model model) {
+    public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClass academicClass, @PathVariable("name") String name, Model model) {
         List<AcademicCourse> coursesForSelection = new ArrayList<>();
         Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
         List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
@@ -141,8 +136,7 @@ public class AcademicClassController {
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         for (AcademicCourse course : allCourses) {
             if (!academicCoursesInClass.contains(course)) {
-                if (course.getTeacher().size() > 0)
-                    coursesForSelection.add(course);
+                if (course.getTeacher().size() > 0) coursesForSelection.add(course);
             }
         }
         model.addAttribute("coursesForSelect", coursesForSelection);
@@ -193,9 +187,7 @@ public class AcademicClassController {
 
     @PostMapping("{name}/classroom")
     @Operation(summary = "Adds a classroom teacher for selected academic class")
-    public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClass academicClass,
-                                                     @PathVariable("name") String name,
-                                                     Model model) {
+    public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClass academicClass, @PathVariable("name") String name, Model model) {
         AcademicClass academicClassFindByName = academicClassService.findByName(name);
         model.addAttribute("teachers", academicClassFindByName.getTeacher());
         model.addAttribute("existingClass", new AcademicClass());
@@ -204,8 +196,7 @@ public class AcademicClassController {
             return "classroomTeacherSection";
         }
         for (AcademicClassDto academicClassDto : academicClassService.findAll()) {
-            if (academicClass.getClassroomTeacher()
-                    .equals(academicClassDto.getClassroomTeacher())) {
+            if (academicClass.getClassroomTeacher().equals(academicClassDto.getClassroomTeacher())) {
                 model.addAttribute("duplicate", "This Teacher is already classroom teacher");
                 return "classroomTeacherSection";
             }
@@ -226,14 +217,12 @@ public class AcademicClassController {
     }
 
     @PostMapping("{name}/students")
-    public String addNewTeacher(@ModelAttribute("existingAcademicClass") AcademicClass academicClass,
-                                @PathVariable("name") String name, Model model) {
+    public String addNewTeacher(@ModelAttribute("existingAcademicClass") AcademicClass academicClass, @PathVariable("name") String name, Model model) {
         Set<Student> students = academicClass.getStudent();
         AcademicClass academicClassByName = academicClassService.findByName(name);
         if (academicClass.getStudent() == null) {
             model.addAttribute("blank", "There is no new selection.");
-            model.addAttribute("studentsInAcademicClass", studentService
-                    .findByAcademicClassId(academicClassService.findByName(name).getId()));
+            model.addAttribute("studentsInAcademicClass", studentService.findByAcademicClassId(academicClassService.findByName(name).getId()));
             model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
             return "academicClassSectionForStudents";
         }
@@ -256,9 +245,46 @@ public class AcademicClassController {
     }
 
     @GetMapping("/{name}/journal")
-    public Object journal(Model model, @PathVariable("name") String name,
-                          @RequestParam(name = "date", required = false) String date,
+    public String journal(Model model, @PathVariable("name") String name, @RequestParam(name = "date", required = false) String date,
                           @RequestParam(name = "startDate", required = false) String startDate) {
-       return academicClassService.journal(model, date,startDate,name);
+        if (null != timetableService.findTimetableByAcademicClassName(name)) {
+            academicClassService.openJournal(date, startDate, name, model);
+            return "journal";
+        } else {
+            academicClassService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
+            return "createTimetableMsgFromJournal";
+        }
+    }
+
+    @GetMapping("/{name}/journal/{courseId}")
+    public String journalWithCourseInfo(@PathVariable("name") String name, @PathVariable("courseId") Long courseId,
+                                        @RequestParam(name = "date", required = false) String date,
+                                        @RequestParam(name = "startDate", required = false) String startDate,
+                                        @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
+                                        @RequestParam(value = "concreteDay", required = false) String concreteDay,
+                                        Model model) {
+        if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
+            model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
+            model.addAttribute("concreteDay", concreteDay);
+        }
+
+        if (null != timetableService.findTimetableByAcademicClassName(name)) {
+            model.addAttribute("course", academicCourseService.findByID(courseId));
+            model.addAttribute("class", academicClassService.findByName(name));
+            List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
+            model.addAttribute("allStudentsInAcademicClass", studentsInClass);
+            if (studentsInClass.isEmpty()) {
+                return "journalWithCourseInfo";
+            }
+
+            academicClassService.openJournal(date, startDate, name, model);
+            return "journalWithCourseInfo";
+        } else {
+            academicClassService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
+            model.addAttribute("class", academicClassService.findByName(name));
+            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
+            model.addAttribute("creationStatus", false);
+            return "createTimetableMsgFromJournal";
+        }
     }
 }
