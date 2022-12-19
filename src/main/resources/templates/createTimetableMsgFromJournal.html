@@ -38,10 +38,10 @@
         <div class="middle">
             <div th:if="${timetable == null}">
 
-                <p class="msg">First create a timetable to be able to use the journal</p>
+                <p class="msg">At first create a timetable to be able to use the journal</p>
 
                 <a class="create-btn" th:href="@{'/classes/' + ${middleUrl} + '/timetable' + '/creation'}"
-                   id="create-btn"><b>Create Timetable</b></a>
+                   id="create-btn"><b>Create timetable</b></a>
             </div>
             <div class="timetable" th:if="${timetable != null}">
                 <form th:method="POST" action="#" th:object="${timetable}">

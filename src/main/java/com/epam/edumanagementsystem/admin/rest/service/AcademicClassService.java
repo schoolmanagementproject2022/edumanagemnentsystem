@@ -32,6 +32,8 @@ public interface AcademicClassService {
 
     LocalDate recurs(LocalDate localDate);
 
-    String journal(Model model, String date, String startDate,String name);
+    void openJournal(String date, String startDate, String name, Model model);
+
+    void doNotOpenJournal_timetableIsNotExist(String date, String startDate, String className, Model model);
 
 }
