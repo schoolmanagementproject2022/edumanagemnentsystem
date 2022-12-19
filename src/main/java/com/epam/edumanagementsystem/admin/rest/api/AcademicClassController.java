@@ -245,11 +245,11 @@ public class AcademicClassController {
     }
 
     @GetMapping("/{name}/journal")
-    public Object journal(Model model, @PathVariable("name") String name, @RequestParam(name = "date", required = false) String date,
+    public String journal(Model model, @PathVariable("name") String name, @RequestParam(name = "date", required = false) String date,
                           @RequestParam(name = "startDate", required = false) String startDate) {
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             academicClassService.openJournal(date, startDate, name, model);
-            return "journalForAcademicClass";
+            return "journal";
         } else {
             academicClassService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
             return "createTimetableMsgFromJournal";
