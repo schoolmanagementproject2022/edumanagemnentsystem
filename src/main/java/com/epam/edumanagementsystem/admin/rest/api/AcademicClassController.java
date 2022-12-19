@@ -221,7 +221,7 @@ public class AcademicClassController {
     public String showAcademicClassStudents(@PathVariable("name") String name, Model model) {
         Long id = academicClassService.findByName(name).getId();
         model.addAttribute("studentsInAcademicClass", studentService.findByAcademicClassId(id));
-        model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
+        model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
         return "academicClassSectionForStudents";
     }
 
@@ -234,7 +234,7 @@ public class AcademicClassController {
             model.addAttribute("blank", "There is no new selection.");
             model.addAttribute("studentsInAcademicClass", studentService
                     .findByAcademicClassId(academicClassService.findByName(name).getId()));
-            model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
+            model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
             return "academicClassSectionForStudents";
         }
         if (null != students) {

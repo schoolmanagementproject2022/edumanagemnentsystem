@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     void updateStudentPicUrl(Long id);
 
     List<Student> findAllByParentId(Long parentId);
+
+    //@ToDo example change the update field method in just query
+    @Modifying
+    @Query(value = "UPDATE Student SET name = :name, surname = :surname,  WHERE s.id = :id",nativeQuery = true)
+    void updateField(@Param(value = "id") long id, @Param(value = "name") String name, @Param(value = "surname") String surname);
+
 }

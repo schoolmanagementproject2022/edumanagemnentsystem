@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,20 +44,21 @@ public class StudentServiceImpl implements StudentService {
         if (studentDto == null) {
             throw new ObjectIsNull();
         }
-
-        User user = new User();
-        user.setEmail(studentDto.getEmail());
-        user.setRole(studentDto.getRole());
-        User savedUser = userService.save(user);
-
-        return studentRepository.save(StudentMapper.toStudent(studentDto, savedUser));
+        return studentRepository.save(
+                StudentMapper.toStudent(
+                        studentDto,
+                        userService.save(
+                                new User(studentDto.getEmail(), studentDto.getRole())
+                        )
+                )
+        );
     }
 
     @Override
     @Transactional
     public StudentDto updateFields(StudentDto studentDto) {
         if (studentDto == null) {
-            throw new ObjectIsNull();
+            throw new IllegalArgumentException("@Todo");
         }
         StudentDto updatableStudentDto = findByStudentId(studentDto.getId());
         User userOfStudent = userService.findByEmail(updatableStudentDto.getEmail());
@@ -100,7 +100,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudentsClass(Student student) {
         if (student == null) {
-            throw new ObjectIsNull();
+            throw new IllegalArgumentException("@Todo");
         }
         return studentRepository.save(student);
     }
@@ -108,7 +108,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student findByUserId(Long id) {
         if (id == null) {
-            throw new UserNotFoundException();
+            throw new IllegalArgumentException("@Todo");
         }
         return studentRepository.findByUserId(id);
     }
@@ -116,31 +116,33 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> findByAcademicClassId(Long id) {
         if (id == null) {
-            throw new UserNotFoundException();
+            throw new IllegalArgumentException("@Todo");
         }
         return studentRepository.findByAcademicClassId(id);
     }
 
     @Override
-    public StudentDto findByStudentId(Long studentId) {
-        Student student = studentRepository.findById(studentId).orElseThrow(UserNotFoundException::new);
-        return StudentMapper.toStudentDto(student);
+    public StudentDto findByStudentId(Long id) {
+        return StudentMapper.toStudentDto(studentRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
 
-    public List<StudentDto> findStudentsByParentId(Long parentId) {
-        if (parentId != null) {
-            return StudentMapper.toStudentDtoList(studentRepository.findAllByParentId(parentId));
+    public List<StudentDto> findStudentsByParentId(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("@Todo");
         }
-        throw new UserNotFoundException();
+        return StudentMapper.toStudentDtoList(studentRepository.findAllByParentId(id));
     }
 
     @Override
     public List<StudentDto> findStudentsWithoutParent() {
-        return findAll().stream().filter(student->student.getParent()==null).collect(Collectors.toList());
+        return findAll().stream().filter(studentDto -> studentDto.getParent() == null).collect(Collectors.toList());
     }
 
     @Override
     public void addProfilePicture(Student student, MultipartFile multipartFile) {
+        if (student == null || multipartFile == null) {
+            throw new IllegalArgumentException("@Todo");
+        }
         student.setPicUrl(imageService.saveImage(multipartFile));
         studentRepository.save(student);
     }
@@ -148,18 +150,14 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void deletePic(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("@Todo");
+        }
         studentRepository.updateStudentPicUrl(id);
     }
 
     @Override
-    public List<StudentDto> studentsWithoutConnectionWithClass() {
-        List<StudentDto> studentsWithoutClass = new ArrayList<>();
-        List<StudentDto> allStudents = findAll();
-        for (StudentDto student : allStudents) {
-            if (null == student.getAcademicClass()) {
-                studentsWithoutClass.add(student);
-            }
-        }
-        return studentsWithoutClass;
+    public List<StudentDto> findStudentsWithoutConnectionWithClass() {
+        return findAll().stream().filter(studentDto -> studentDto.getAcademicClass() == null).collect(Collectors.toList());
     }
 }
