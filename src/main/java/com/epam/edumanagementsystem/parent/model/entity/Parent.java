@@ -1,10 +1,8 @@
 package com.epam.edumanagementsystem.parent.model.entity;
 
 import com.epam.edumanagementsystem.util.entity.User;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -13,35 +11,12 @@ public class Parent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
-
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
-
     @OneToOne
     private User user;
-
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
-
     private String picUrl;
-
-    public Parent(Long id, User user) {
-        this.id = id;
-        this.user = user;
-    }
-
-    public Parent(Long id, String name, String surname, User user, String password) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.user = user;
-        this.password = password;
-    }
 
     public Parent() {
     }
@@ -77,6 +52,7 @@ public class Parent {
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getPicUrl() {
         return picUrl;
     }
@@ -103,7 +79,9 @@ public class Parent {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Parent parent = (Parent) o;
-        return Objects.equals(id, parent.id) && Objects.equals(name, parent.name) && Objects.equals(surname, parent.surname) && Objects.equals(password, parent.password);
+        return Objects.equals(id, parent.id) && Objects.equals(name, parent.name)
+                && Objects.equals(surname, parent.surname) &&
+                Objects.equals(password, parent.password);
     }
 
     @Override

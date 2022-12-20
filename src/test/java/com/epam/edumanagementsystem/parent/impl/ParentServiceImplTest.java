@@ -26,13 +26,10 @@ class ParentServiceImplTest {
 
     @Mock
     private ParentRepository parentRepository;
-
     @Mock
     private UserService userService;
-
     @InjectMocks
     private ParentServiceImpl parentService;
-
     private Parent parent;
     private ParentDto parentDto;
     private User user;
@@ -40,7 +37,14 @@ class ParentServiceImplTest {
     @BeforeEach
     private void setUp() {
         user = new User("parent@mail.com", "PARENT");
-        parent = new Parent(1L, "Parent", "Parentyan", user, "password");
+
+        parent= new Parent();
+        parent.setId(1L);
+        parent.setName("Parent");
+        parent.setSurname("Parentyan");
+        parent.setUser(user);
+        parent.setPassword("password");
+
         parentDto = new ParentDto("Parent", "Parentyan", "test-parent@mail.ru", "PARENT", "password");
     }
 
@@ -63,11 +67,6 @@ class ParentServiceImplTest {
         lenient().when(parentRepository.findById(1L)).thenReturn(Optional.empty());
     }
 
-    @Test
-    void saveWithNullFieldDto() {
-        Assertions.assertThrows(NullPointerException.class, () -> parentService.save(ParentMapper.toParentDto(new Parent(null,
-                null))));
-    }
 
     @Test
     void savePositiveAndEmailCheck() {
