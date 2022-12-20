@@ -125,38 +125,6 @@ class AcademicClassServiceImplTest {
         assertEquals(academicClass.getClassNumber(), academicClass1.getClassNumber());
     }
 
-    @DisplayName("Find all academic courses by academic class name or classNumber - positive case")
-    @Test
-    void testFindAllAcademicCoursesPositive() {
-        Mockito.when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
-        List<AcademicCourse> course = academicClassServiceImpl.findAllAcademicCourses(academicClass.getClassNumber());
-        course.add(academicCourse);
-        assertNotNull(academicClass);
-        assertEquals(academicCourse.getName(), course.get(1).getName());
-    }
-
-    @DisplayName("Find all teachers by academic class name or classNumber - positive case")
-    @Test
-    void testFindAllTeachersPositive() {
-        when(academicClassServiceImpl.findByName(academicClass.getClassNumber())).thenReturn(academicClass);
-        Set<Teacher> teachers = academicClassServiceImpl.findAllTeachers(academicClass.getClassNumber());
-        teachers.add(teacher);
-        verify(academicClassRepository, times(1)).findByClassNumber(academicClass.getClassNumber());
-        assertEquals(1, teachers.size());
-    }
-
-    @DisplayName("Find all teachers by List<AcademicClass> findAll() - positive case")
-    @Test
-    void testFindAllTeacher() {
-        Set<Teacher> teachersByAcademicClass = new HashSet<>();
-        Set<Teacher> result = academicClass.getTeacher();
-        teachersByAcademicClass.addAll(result);
-        when(academicClassRepository.findAll()).thenReturn(List.of(academicClass));
-        teachersByAcademicClass = academicClassServiceImpl.findAllTeacher();
-        assertNotNull(academicClass);
-        assertEquals(academicClass.getTeacher().size(), teachersByAcademicClass.size());
-    }
-
     @DisplayName("Find all academic class dto - positive case")
     @Test
     void testFindAllPositive() {
@@ -172,7 +140,7 @@ class AcademicClassServiceImplTest {
         Set<AcademicClass> classSet = new HashSet<>();
         classSet.add(academicClass);
         when(academicClassRepository.findAcademicClassByTeacherId(any())).thenReturn(classSet);
-        Set<AcademicClass> classes = academicClassServiceImpl.findAcademicClassByTeacherId(teacher.getId());
+        Set<AcademicClass> classes = academicClassServiceImpl.findByTeacherId(teacher.getId());
         assertNotNull(classSet);
         assertTrue(classes.containsAll(classSet));
     }

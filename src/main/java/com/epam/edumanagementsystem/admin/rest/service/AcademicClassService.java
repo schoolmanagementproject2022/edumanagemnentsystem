@@ -20,18 +20,11 @@ public interface AcademicClassService {
 
     AcademicClass findByName(String name);
 
+    AcademicClass removeByTeacherName(String teacherName);
+
     AcademicClass update(AcademicClass academicClass);
 
-    List<AcademicCourse> findAllAcademicCourses(String name);
+    Set<AcademicClass> findByTeacherId(Long id);
 
-    Set<Teacher> findAllTeachers(String name);
-
-    Set<Teacher> findAllTeacher();
-
-    Set<AcademicClass> findAcademicClassByTeacherId(Long id);
-
-    LocalDate recurs(LocalDate localDate);
-
-    String journal(Model model, String date, String startDate,String name);
 
 }

@@ -182,7 +182,7 @@ public class TeacherController {
     @GetMapping("/{id}/classes")
     public String classesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute("teacher", teacherService.findById(id));
-        model.addAttribute("teachersClasses", academicClassService.findAcademicClassByTeacherId(id));
+        model.addAttribute("teachersClasses", academicClassService.findByTeacherId(id));
         return "classesInTeacherProfile";
     }
 
