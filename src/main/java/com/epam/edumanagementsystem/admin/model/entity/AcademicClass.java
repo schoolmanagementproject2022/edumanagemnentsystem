@@ -7,10 +7,8 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -20,9 +18,7 @@ public class AcademicClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
     @JsonIgnore
 
@@ -52,7 +48,7 @@ public class AcademicClass {
     public AcademicClass() {
     }
 
-    public AcademicClass(Long id, @Size(max = 50, message = "Symbols can't be more than 50") String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
         this.id = id;
         this.classNumber = classNumber;
         this.teacher = teacher;
@@ -62,7 +58,7 @@ public class AcademicClass {
         this.student = student;
     }
 
-    public AcademicClass(@Size(max = 50, message = "Symbols can't be more than 50") String classNumber) {
+    public AcademicClass(String classNumber) {
         this.classNumber = classNumber;
     }
 

@@ -3,12 +3,14 @@ package com.epam.edumanagementsystem.admin.timetable.rest.api;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.mapper.CoursesForTimetableMapper;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
+import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
@@ -32,14 +34,18 @@ public class TimetableController {
     private final CoursesForTimetableService coursesService;
 
     private final AcademicClassService academicClassService;
+    private final AcademicCourseService academicCourseService;
 
     private final TimetableService timetableService;
+    private final TeacherService teacherService;
 
     public TimetableController(CoursesForTimetableService coursesService, AcademicClassService academicClassService,
-                               TimetableService timetableService) {
+                               AcademicCourseService academicCourseService, TimetableService timetableService, TeacherService teacherService) {
         this.coursesService = coursesService;
         this.academicClassService = academicClassService;
+        this.academicCourseService = academicCourseService;
         this.timetableService = timetableService;
+        this.teacherService = teacherService;
     }
 
     @GetMapping("{academicClassName}/timetable")
@@ -100,7 +106,7 @@ public class TimetableController {
                                                @RequestParam(value = "cancelStatus", required = false, defaultValue = "notCancel") String status,
                                                Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
         Timetable timetableByAcademicClassId = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
 
@@ -141,7 +147,7 @@ public class TimetableController {
     @GetMapping("{academicClassName}/timetable/course")
     public String getAddLessonsPopup(@PathVariable("academicClassName") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
 
         newTimetable_academicClassName(model, academicClassName);
         allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
@@ -200,7 +206,7 @@ public class TimetableController {
     @GetMapping("{academicClassName}/timetable/editCourse")
     public String openingPopupEdit(@PathVariable("academicClassName") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
 
         newTimetable_academicClassName(model, academicClassName);
         allAcademicCourses_newCourseForTimetable_academicClass(model, allAcademicCourses, academicClass);
@@ -215,7 +221,7 @@ public class TimetableController {
 
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         Timetable currentTimetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
         List<CoursesForTimetable> activeStatus = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
         List<CoursesForTimetable> editStatus = coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId());
         List<CoursesForTimetable> notActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
@@ -289,7 +295,7 @@ public class TimetableController {
         Timetable newTimetable = new Timetable();
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
         Timetable timetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
         putLessons(model, academicClass.getId());
 
         if (coursesService.getCoursesWithEditStatusByAcademicCourseId(academicClass.getId()).size() != 0 &&
@@ -366,7 +372,7 @@ public class TimetableController {
         LocalDate startDate = timetable.getStartDate();
         LocalDate endDate = timetable.getEndDate();
         String invalidMsg = "Please, select right dates";
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 
         if (result.hasErrors()) {
@@ -427,7 +433,7 @@ public class TimetableController {
     public String addingLessonsIntoTimetable(@ModelAttribute("courseForTable") @Valid CoursesForTimetableDto coursesForTimetableDto,
                                              BindingResult result, @PathVariable("academicClassName") String academicClassName, Model model) {
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
 
         if (result.hasErrors()) {
             model.addAttribute("timetable", new Timetable());
@@ -454,7 +460,7 @@ public class TimetableController {
         LocalDate startDate = timetable.getStartDate();
         LocalDate endDate = timetable.getEndDate();
         String invalidMsg = "Please, select right dates";
-        List<AcademicCourse> allAcademicCourses = academicClassService.findAllAcademicCourses(academicClassName);
+        List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCourses(academicClassName);
         CoursesForTimetableDto newCoursesForTimetable = new CoursesForTimetableDto();
         AcademicClass academicClass = academicClassService.findByName(academicClassName);
 

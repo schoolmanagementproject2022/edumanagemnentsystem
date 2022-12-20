@@ -3,12 +3,23 @@ package com.epam.edumanagementsystem.admin.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+
 public class AcademicClassDto {
     private Long id;
+
+    @NotBlank(message = EMPTY_FIELD)
+    @Size(max = 50, message = "Symbols can't be more than 50")
     private String classNumber;
 
     private Set<AcademicCourse> academicCourse;

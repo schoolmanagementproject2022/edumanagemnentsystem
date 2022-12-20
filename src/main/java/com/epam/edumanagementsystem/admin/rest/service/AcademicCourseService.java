@@ -28,4 +28,6 @@ public interface AcademicCourseService {
     Set<Teacher> findAllTeachersByAcademicCourseName(String name);
 
     Set<AcademicCourseDto> findAcademicCoursesByTeacherId(Long id);
+
+    List<AcademicCourse> findAllAcademicCourses(String name);
 }

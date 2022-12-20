@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface AcademicClassService {
@@ -20,20 +21,10 @@ public interface AcademicClassService {
 
     AcademicClass findByName(String name);
 
+    AcademicClass removeByTeacherName(String teacherName);
+
     AcademicClass update(AcademicClass academicClass);
 
-    List<AcademicCourse> findAllAcademicCourses(String name);
-
-    Set<Teacher> findAllTeachers(String name);
-
-    Set<Teacher> findAllTeacher();
-
-    Set<AcademicClass> findAcademicClassByTeacherId(Long id);
-
-    LocalDate recurs(LocalDate localDate);
-
-    void openJournal(String date, String startDate, String name, Model model);
-
-    void doNotOpenJournal_timetableIsNotExist(String date, String startDate, String className, Model model);
+    Set<AcademicClass> findByTeacherId(Long id);
 
 }
