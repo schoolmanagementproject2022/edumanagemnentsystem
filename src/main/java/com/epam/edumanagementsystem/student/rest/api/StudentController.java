@@ -148,7 +148,7 @@ public class StudentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected student's profile")
     public String openStudentProfile(@PathVariable("id") Long studentId, Model model) {
-        StudentDto existingStudent = studentService.findByStudentId(studentId);
+        StudentDto existingStudent = studentService.findById(studentId);
         model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
         model.addAttribute("existingStudent", existingStudent);
@@ -163,7 +163,7 @@ public class StudentController {
     @Operation(summary = "Edits selected student's profile")
     public String editStudentPersonalInformation(@ModelAttribute("existingStudent") @Valid StudentDto updatableStudent,
                                                  BindingResult result, @PathVariable("id") Long studentId, Model model) {
-        StudentDto existingStudent = studentService.findByStudentId(studentId);
+        StudentDto existingStudent = studentService.findById(studentId);
         model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
         model.addAttribute(GROUP, BloodGroup.values());
@@ -204,7 +204,7 @@ public class StudentController {
     @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        StudentDto studentById = studentService.findByStudentId(id);
+        StudentDto studentById = studentService.findById(id);
         User userByEmail = userService.findByEmail(studentById.getEmail());
         studentService.addProfilePicture(StudentMapper.toStudent(studentById, userByEmail), multipartFile);
         return REDIRECT + id + PROFILE;
@@ -213,7 +213,7 @@ public class StudentController {
     @GetMapping("/{id}/image/delete")
     @Operation(summary = "Deletes image to selected student's profile")
     public String deletePic(@PathVariable("id") Long id) {
-        StudentDto studentById = studentService.findByStudentId(id);
+        StudentDto studentById = studentService.findById(id);
         imageService.deleteImage(studentById.getPicUrl());
         studentService.deletePic(studentById.getId());
         return REDIRECT + id + PROFILE;

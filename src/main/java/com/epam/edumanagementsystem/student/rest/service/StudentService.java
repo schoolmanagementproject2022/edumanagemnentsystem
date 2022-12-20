@@ -20,7 +20,7 @@ public interface StudentService {
 
     List<Student> findByAcademicClassId(Long id);
 
-    StudentDto findByStudentId(Long studentId);
+    StudentDto findById(Long studentId);
 
     List<StudentDto> findStudentsWithoutParent();
 
