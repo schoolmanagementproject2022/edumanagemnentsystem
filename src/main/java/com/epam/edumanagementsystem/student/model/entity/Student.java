@@ -3,12 +3,9 @@ package com.epam.edumanagementsystem.student.model.entity;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.util.entity.User;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,23 +15,17 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "surname")
+
     private String surname;
     @OneToOne
     private User user;
-    @Column(name = "address")
     private String address;
-    @Column(name = "date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Column(name = "password")
     private String password;
-    @Column(name = "blood_group")
     @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
     @OneToOne(fetch = FetchType.LAZY)
@@ -45,7 +36,12 @@ public class Student {
     private AcademicClass academicClass;
 
     private String picUrl;
+
     public Student() {
+
+    }
+    public Student(Long id) {
+        this.id=id;
     }
 
     public Long getId() {

@@ -12,6 +12,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -22,18 +23,23 @@ public class StudentDto {
     private Long id;
 
     @NotBlank(message = REQUIRED_FIELDS)
+    @Size(max=50, message="Symbols can't be more than 50")
     private String name;
 
     @NotBlank(message = REQUIRED_FIELDS)
+    @Size(max=50, message="Symbols can't be more than 50")
     private String surname;
 
     @NotBlank(message = REQUIRED_FIELDS)
+    @Size(max=50, message="Symbols can't be more than 50")
     private String email;
 
     @NotBlank
     private String role = "STUDENT";
 
     @NotBlank(message = REQUIRED_FIELDS)
+    @Size(max=50, message="Symbols can't be more than 50")
+
     private String address;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -58,33 +64,15 @@ public class StudentDto {
 
     private String picUrl;
 //@ToDo Constructor should not have too many params!!!
-    public StudentDto(Long id,
-                      String name,
-                      String surname,
-                      String email,
-                      String address,
-                      LocalDate date,
-                      BloodGroup bloodGroup,
-                      Gender gender,
-                      String password,
-                      Parent parent,
-                      AcademicClass academicClass) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.address = address;
-        this.date = date;
-        this.bloodGroup = bloodGroup;
-        this.gender = gender;
-        this.password = password;
-        this.parent = parent;
-        this.academicClass = academicClass;
-    }
 
     public StudentDto() {
-    }
+        this.id=id;
 
+    }
+    public StudentDto(Long id) {
+        this.id=id;
+
+    }
     public Long getId() {
         return id;
     }

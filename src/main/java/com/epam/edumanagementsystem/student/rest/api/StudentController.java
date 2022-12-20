@@ -1,9 +1,6 @@
 package com.epam.edumanagementsystem.student.rest.api;
 
-import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
-import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
@@ -11,7 +8,6 @@ import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
-import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
@@ -28,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/students")
@@ -48,12 +43,8 @@ public class StudentController {
     private static final String GENDER = "genders";
     private static final String PARENTS = "parents";
     private static final String CLASSES = "classes";
-    private static final String NAME_SIZE = "nameSize";
-    private static final String SURNAME_SIZE = "surnameSize";
-    private static final String ADDRESS_SIZE = "addressSize";
-    private static final String EMAIL_SIZE = "emailSize";
+
     private static final String INVALID_EMAIL = "invalidEmail";
-    private static final String SYMBOLS_ERROR_MSG = "Symbols can't be more than 50";
     private static final String REDIRECT = "redirect:/students/";
     private static final String PROFILE = "/profile";
 
@@ -74,11 +65,11 @@ public class StudentController {
     @Operation(summary = "Gets the list of students and shows on admin's dashboard")
     public String openStudentSection(Model model) {
         model.addAttribute("student", new StudentDto());
-        model.addAttribute(STUDENTS, findAllStudents());
+        model.addAttribute(STUDENTS, studentService.findAll());
         model.addAttribute(GROUP, BloodGroup.values());
         model.addAttribute(GENDER, Gender.values());
-        model.addAttribute(PARENTS, findAllParents());
-        model.addAttribute(CLASSES, findAllClasses());
+        model.addAttribute(PARENTS, parentService.findAll());
+        model.addAttribute(CLASSES, academicClassService.findAll());
         return STUDENT_HTML;
     }
 
@@ -102,24 +93,13 @@ public class StudentController {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
 
-        model.addAttribute(STUDENTS, findAllStudents());
+        model.addAttribute(STUDENTS, studentService.findAll());
         model.addAttribute(GROUP, BloodGroup.values());
         model.addAttribute(GENDER, Gender.values());
-        model.addAttribute(PARENTS, ParentMapper.toParentListWithoutSaveUser(findAllParents()));
-        model.addAttribute(CLASSES, findAllClasses());
-        if (InputFieldsValidation.validateInputFieldSize(studentDto.getName())) {
-            model.addAttribute(NAME_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(studentDto.getSurname())) {
-            model.addAttribute(SURNAME_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(studentDto.getAddress())) {
-            model.addAttribute(ADDRESS_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(studentDto.getEmail())) {
-            model.addAttribute(EMAIL_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (!result.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
+        model.addAttribute(PARENTS, parentService.findAll());
+        model.addAttribute(CLASSES, academicClassService.findAll());
+
+        if (!result.hasFieldErrors("email")) {
             userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
             if (UserDataValidation.validateEmail(studentDto.getEmail())) {
                 model.addAttribute(INVALID_EMAIL, "Email is invalid");
@@ -131,9 +111,8 @@ public class StudentController {
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute(INVALID_EMAIL)
                 || model.containsAttribute("duplicated")
-                || model.containsAttribute(EMAIL_SIZE) || model.containsAttribute(NAME_SIZE)
-                || model.containsAttribute(SURNAME_SIZE) || model.containsAttribute(ADDRESS_SIZE)
-                || model.containsAttribute("size") || model.containsAttribute("formatValidationMessage")) {
+                || model.containsAttribute("size")
+                || model.containsAttribute("formatValidationMessage")) {
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
@@ -154,8 +133,9 @@ public class StudentController {
         model.addAttribute("existingStudent", existingStudent);
         model.addAttribute(GROUP, BloodGroup.values());
         model.addAttribute(GENDER, Gender.values());
-        model.addAttribute(PARENTS, findAllParents());
-        model.addAttribute(CLASSES, findAllClasses());
+
+        model.addAttribute(PARENTS, parentService.findAll());
+        model.addAttribute(CLASSES, academicClassService.findAll());
         return "studentProfile";
     }
 
@@ -168,21 +148,10 @@ public class StudentController {
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
         model.addAttribute(GROUP, BloodGroup.values());
         model.addAttribute(GENDER, Gender.values());
-        model.addAttribute(PARENTS, findAllParents());
-        model.addAttribute(CLASSES, findAllClasses());
-        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getName())) {
-            model.addAttribute(NAME_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getSurname())) {
-            model.addAttribute(SURNAME_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getAddress())) {
-            model.addAttribute(ADDRESS_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(updatableStudent.getEmail())) {
-            model.addAttribute(EMAIL_SIZE, SYMBOLS_ERROR_MSG);
-        }
-        if (!result.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
+        model.addAttribute(PARENTS, parentService.findAll());
+        model.addAttribute(CLASSES, academicClassService.findAll());
+
+        if (!result.hasFieldErrors("email") ) {
             if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
                 userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
             }
@@ -192,8 +161,7 @@ public class StudentController {
         }
 
         if (result.hasErrors() || model.containsAttribute(INVALID_EMAIL) || model.containsAttribute("duplicated")
-                || model.containsAttribute(EMAIL_SIZE) || model.containsAttribute(NAME_SIZE)
-                || model.containsAttribute(SURNAME_SIZE)) {
+        ) {
             return "studentProfile";
         }
         studentService.updateFields(updatableStudent);
@@ -219,15 +187,5 @@ public class StudentController {
         return REDIRECT + id + PROFILE;
     }
 
-    private List<StudentDto> findAllStudents() {
-        return studentService.findAll();
-    }
 
-    private List<ParentDto> findAllParents() {
-        return ParentMapper.toParentDtoList(parentService.findAll());
-    }
-
-    private List<AcademicClassDto> findAllClasses() {
-        return academicClassService.findAll();
-    }
 }
