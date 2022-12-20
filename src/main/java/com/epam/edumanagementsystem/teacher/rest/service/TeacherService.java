@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TeacherService {
 
@@ -17,6 +18,14 @@ public interface TeacherService {
     List<TeacherDto> findAll();
 
     Teacher findByUserId(Long id);
+
+    Set<Teacher> findAllTeachersInClass(String name);
+
+    Set<Teacher> findAllTeachersByCourseName(String name);
+
+    Set<Teacher> findAllTeachersInAllClasses();
+
+    Set<Teacher> findAllTeachersInAllCourses();
 
     void addProfilePicture(Teacher teacher, MultipartFile multipartFile);
 

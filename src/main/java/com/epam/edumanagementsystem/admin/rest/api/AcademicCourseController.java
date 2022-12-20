@@ -10,6 +10,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,15 +31,17 @@ import java.util.Set;
 @RequestMapping("/courses")
 @Tag(name = "Academic course")
 public class AcademicCourseController {
+
     private final AcademicCourseService academicCourseService;
     private final AcademicClassService academicClassService;
     private final SubjectService subjectService;
+    private final TeacherService teacherService;
 
-    @Autowired
-    public AcademicCourseController(AcademicCourseService academicCourseService, AcademicClassService academicClassService, SubjectService subjectService) {
+    public AcademicCourseController(AcademicCourseService academicCourseService, AcademicClassService academicClassService, SubjectService subjectService, TeacherService teacherService) {
         this.academicCourseService = academicCourseService;
         this.academicClassService = academicClassService;
         this.subjectService = subjectService;
+        this.teacherService = teacherService;
     }
 
     @GetMapping
@@ -101,7 +104,7 @@ public class AcademicCourseController {
     @GetMapping("/{name}/teachers")
     @Operation(summary = "Gets all teachers who teach the selected course and shows them")
     public String openAcademicCourseForTeacherCreation(@PathVariable("name") String name, Model model) {
-        AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseName(name);
+        AcademicCourse academicCourse = academicCourseService.findByName(name);
         Set<Teacher> result = new HashSet<>();
         Set<Teacher> teachersInSubject = academicCourse.getSubject().getTeacherSet();
         Set<Teacher> teachersInAcademicCourse = academicCourse.getTeacher();
@@ -119,7 +122,7 @@ public class AcademicCourseController {
     @Operation(summary = "Gets all classes who take the selected course and shows them")
     public String openAcademicCourseForAcademicClasses(@PathVariable("name") String name, Model model) {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
-        AcademicCourse findAcademicCourseByName = academicCourseService.findAcademicCourseByAcademicCourseName(name);
+        AcademicCourse findAcademicCourseByName = academicCourseService.findByName(name);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
         Set<Teacher> allTeachersByAcademicCourseName = findAcademicCourseByName.getTeacher();
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
@@ -152,9 +155,9 @@ public class AcademicCourseController {
 
 
         Set<Teacher> result = new HashSet<>();
-        Set<Teacher> allTeacherSet = academicCourseService.findAcademicCourseByAcademicCourseName(name)
+        Set<Teacher> allTeacherSet = academicCourseService.findByName(name)
                 .getSubject().getTeacherSet();
-        Set<Teacher> allTeachersInAcademicCourse = academicCourseService.findAllTeachersByAcademicCourseName(name);
+        Set<Teacher> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(name);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
 
         if (academicCourse.getTeacher() == null) {
@@ -181,7 +184,7 @@ public class AcademicCourseController {
                              @PathVariable("name") String name, Model model) {
         Set<AcademicCourse> academicCourseSet = new HashSet<>();
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
-        AcademicCourse findAcademicCourseByName = academicCourseService.findAcademicCourseByAcademicCourseName(name);
+        AcademicCourse findAcademicCourseByName = academicCourseService.findByName(name);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
         Set<Teacher> teachersInAcademicCourse = findAcademicCourseByName.getTeacher();
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
@@ -213,7 +216,7 @@ public class AcademicCourseController {
             return "academicCourseSectionForClasses";
         }
 
-        AcademicCourse academicCourseByAcademicCourseName = academicCourseService.findAcademicCourseByAcademicCourseName(name);
+        AcademicCourse academicCourseByAcademicCourseName = academicCourseService.findByName(name);
 
         AcademicClass academicClassFindByName = academicClassService.findByName(academicClass.getClassNumber());
 

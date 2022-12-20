@@ -2,11 +2,8 @@ package com.epam.edumanagementsystem.admin.model.entity;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,13 +16,12 @@ public class AcademicCourse {
     private Long id;
 
     @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "subject_id")
-    @NotNull(message = "Please, fill the required fields")
     private Subject subject;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})

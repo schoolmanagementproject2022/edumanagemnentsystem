@@ -1,5 +1,10 @@
 package com.epam.edumanagementsystem.teacher.impl;
 
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseRepository;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -15,7 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -23,12 +30,18 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherRepository teacherRepository;
 
     private final UserService userService;
+    private final AcademicClassService academicClassService;
+    private final AcademicCourseRepository academicCourseRepository;
+    private final AcademicCourseService academicCourseService;
     private final ImageService imageService;
 
     @Autowired
-    public TeacherServiceImpl(TeacherRepository teacherRepository, UserService userService, ImageService imageService) {
+    public TeacherServiceImpl(TeacherRepository teacherRepository, UserService userService, AcademicClassService academicClassService, AcademicCourseRepository academicCourseRepository, AcademicCourseService academicCourseService, ImageService imageService) {
         this.teacherRepository = teacherRepository;
         this.userService = userService;
+        this.academicClassService = academicClassService;
+        this.academicCourseRepository = academicCourseRepository;
+        this.academicCourseService = academicCourseService;
         this.imageService = imageService;
     }
 
@@ -94,6 +107,36 @@ public class TeacherServiceImpl implements TeacherService {
             throw new UserNotFoundException("The Id was null");
         }
         return teacherRepository.findByUserId(id);
+    }
+
+    @Override
+    public Set<Teacher> findAllTeachersInClass(String name) {
+        return academicClassService.findByName(name).getTeacher();
+    }
+
+    @Override
+    public Set<Teacher> findAllTeachersByCourseName(String name) {
+        return academicCourseService.findByName(name).getTeacher();
+    }
+
+    @Override
+    public Set<Teacher> findAllTeachersInAllClasses() {
+        Set<Teacher> teachersByAcademicClass = new HashSet<>();
+        List<AcademicClassDto> academicClasses = academicClassService.findAll();
+        for (AcademicClassDto academicClass : academicClasses) {
+            Set<Teacher> result = academicClass.getTeacherSet();
+            teachersByAcademicClass.addAll(result);
+        }
+        return teachersByAcademicClass;
+    }
+
+    @Override
+    public Set<Teacher> findAllTeachersInAllCourses() {
+        Set<Teacher> teachersByAcademicCourse = new HashSet<>();
+        for (AcademicCourse academicCourse : academicCourseRepository.findAll()) {
+            teachersByAcademicCourse.addAll(academicCourse.getTeacher());
+        }
+        return teachersByAcademicCourse;
     }
 
     @Override

@@ -7,11 +7,12 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
-import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,15 +38,15 @@ public class AcademicClassController {
     private final AcademicCourseService academicCourseService;
     private final StudentService studentService;
     private final TimetableService timetableService;
-    private final CoursesForTimetableService coursesForTimetableService;
+    private final TeacherService teacherService;
 
     @Autowired
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TimetableService timetableService, CoursesForTimetableService coursesForTimetableService) {
+    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TimetableService timetableService, TeacherService teacherService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.studentService = studentService;
         this.timetableService = timetableService;
-        this.coursesForTimetableService = coursesForTimetableService;
+        this.teacherService = teacherService;
     }
 
     @GetMapping
@@ -101,8 +102,8 @@ public class AcademicClassController {
     @Operation(summary = "Shows academic courses in academic class section")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
         List<AcademicCourse> coursesForSelection = new ArrayList<>();
-        List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
-        Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
+        List<AcademicCourse> academicCoursesInClass = academicCourseService.findAllAcademicCourses(name);
+        Set<Teacher> allTeachersByAcademicCourse = teacherService.findAllTeachersInAllCourses();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
@@ -135,8 +136,8 @@ public class AcademicClassController {
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClass academicClass,
                                                  @PathVariable("name") String name, Model model) {
         List<AcademicCourse> coursesForSelection = new ArrayList<>();
-        Set<Teacher> allTeachersByAcademicCourse = academicCourseService.findAllTeacher();
-        List<AcademicCourse> academicCoursesInClass = academicClassService.findAllAcademicCourses(name);
+        Set<Teacher> allTeachersByAcademicCourse = teacherService.findAllTeachersInAllCourses();
+        List<AcademicCourse> academicCoursesInClass = academicCourseService.findAllAcademicCourses(name);
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         for (AcademicCourse course : allCourses) {
@@ -250,7 +251,7 @@ public class AcademicClassController {
     @Operation(summary = "Gets the list of the teachers for the academic class")
     public String teachersForAcademicClass(Model model, @PathVariable("name") String name) {
         model.addAttribute("teachers", academicClassService.findByName(name).getTeacher());
-        model.addAttribute("allTeacherByAcademicClass", academicClassService.findAllTeacher());
+        model.addAttribute("allTeacherByAcademicClass", teacherService.findAllTeachersInAllClasses());
 
         return "teachersForAcademicClass";
     }
@@ -259,6 +260,44 @@ public class AcademicClassController {
     public Object journal(Model model, @PathVariable("name") String name,
                           @RequestParam(name = "date", required = false) String date,
                           @RequestParam(name = "startDate", required = false) String startDate) {
-       return academicClassService.journal(model, date,startDate,name);
+        if (null != timetableService.findTimetableByAcademicClassName(name)) {
+            academicCourseService.openJournal(date, startDate, name, model);
+            return "journal";
+        } else {
+            academicClassService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
+            return "createTimetableMsgFromJournal";
+        }
+    }
+
+    @GetMapping("/{name}/journal/{courseId}")
+    public String journalWithCourseInfo(@PathVariable("name") String name, @PathVariable("courseId") Long courseId,
+                                        @RequestParam(name = "date", required = false) String date,
+                                        @RequestParam(name = "startDate", required = false) String startDate,
+                                        @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
+                                        @RequestParam(value = "concreteDay", required = false) String concreteDay,
+                                        Model model) {
+        if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
+            model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
+            model.addAttribute("concreteDay", concreteDay);
+        }
+
+        if (null != timetableService.findTimetableByAcademicClassName(name)) {
+            model.addAttribute("course", academicCourseService.findByID(courseId));
+            model.addAttribute("class", academicClassService.findByName(name));
+            List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
+            model.addAttribute("allStudentsInAcademicClass", studentsInClass);
+            if (studentsInClass.isEmpty()) {
+                return "journalWithCourseInfo";
+            }
+
+            academicClassService.openJournal(date, startDate, name, model);
+            return "journalWithCourseInfo";
+        } else {
+            academicClassService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
+            model.addAttribute("class", academicClassService.findByName(name));
+            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
+            model.addAttribute("creationStatus", false);
+            return "createTimetableMsgFromJournal";
+        }
     }
 }

@@ -3,25 +3,23 @@ package com.epam.edumanagementsystem.admin.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
 public class AcademicCourseDto {
+
     private Long id;
+    @NotBlank(message = "Please, fill the required fields")
     private String name;
+    @NotNull(message = "Please, fill the required fields")
     private Subject subject;
     private Set<Teacher> teacher;
     private Set<AcademicClass> academicClassSet;
 
     public AcademicCourseDto() {
-    }
-
-    public AcademicCourseDto(Long id, String name, Subject subject, Set<Teacher> teacher) {
-        this.id = id;
-        this.name = name;
-        this.subject = subject;
-        this.teacher = teacher;
     }
 
     public Long getId() {

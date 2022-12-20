@@ -25,7 +25,7 @@ public class CoursesForTimetableMapper {
 
     public static CoursesForTimetableDto toCoursesForTimetableDto(CoursesForTimetable coursesForTimetable) {
         CoursesForTimetableDto coursesForTimetableDto = new CoursesForTimetableDto();
-        AcademicCourse academicCourse = academicCourseService.findAcademicCourseByAcademicCourseName(coursesForTimetable.getAcademicCourse());
+        AcademicCourse academicCourse = academicCourseService.findByName(coursesForTimetable.getAcademicCourse());
 
         coursesForTimetableDto.setId(coursesForTimetable.getId());
         coursesForTimetableDto.setAcademicCourse(academicCourse);

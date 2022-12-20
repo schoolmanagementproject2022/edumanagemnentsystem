@@ -40,8 +40,6 @@ class AcademicCourseServiceImplTest {
     @BeforeEach
     void init() {
         User user = new User(null, "gm@gmail.com", "TEACHER");
-        Teacher teacher = new Teacher(1L, "Teacher", "Teacheryan", user,
-                "password", coursesSet, new HashSet(), new HashSet());
         Set<Teacher> teacherSet = new HashSet<>();
         Set<AcademicClass> academicClasses = new HashSet<>();
         academicCourse = new AcademicCourse(1L, "firstAcademicCourse",
@@ -57,7 +55,7 @@ class AcademicCourseServiceImplTest {
         String name = "firstAcademicCourse";
         when(academicCourseRepository.findAcademicCourseByName(name)).thenReturn(academicCourse);
         AcademicCourse academicCourseByAcademicCourseName =
-                academicCourseService.findAcademicCourseByAcademicCourseName(name);
+                academicCourseService.findByName(name);
         assertEquals(academicCourse, academicCourseByAcademicCourseName);
     }
 
@@ -66,24 +64,14 @@ class AcademicCourseServiceImplTest {
     void testFindAcademicCourseByAcademicCourseNameFail() {
         String name = "wrongName";
         assertThrows(RuntimeException.class, () -> academicCourseService
-                .findAcademicCourseByAcademicCourseName(name));
+                .findByName(name));
     }
 
     @Test
     @DisplayName("should throw NulPointerException")
     void testFindAcademicCourseByNullFail() {
         assertThrows(NullPointerException.class, () -> academicCourseService
-                .findAcademicCourseByAcademicCourseName(null));
-    }
-
-    @Test
-    @DisplayName("should find all academic courses")
-    void testFindAllCourse() {
-        List<AcademicCourse> academicCourses = new ArrayList<>();
-        academicCourses.add(academicCourse);
-        when(academicCourseRepository.findAll()).thenReturn(academicCourses);
-        List<AcademicCourse> allCourse = academicCourseService.findAllCourse();
-        assertEquals(academicCourses, allCourse);
+                .findByName(null));
     }
 
     @Test
@@ -121,29 +109,6 @@ class AcademicCourseServiceImplTest {
     @DisplayName("should throw NullPointerException")
     void testCreateFail() {
         assertThrows(NullPointerException.class, () -> academicCourseService.create(null));
-    }
-
-    @Test
-    @DisplayName("should find academic course by given Id")
-    void testGetById() {
-        long id = 1L;
-        when(academicCourseRepository.findById(id)).thenReturn(Optional.ofNullable(academicCourse));
-        AcademicCourseDto academicCourseDto = AcademicCourseMapper.toDto(academicCourse);
-        AcademicCourseDto academicCourseDtoById = academicCourseService.getById(id);
-        assertEquals(academicCourseDto, academicCourseDtoById);
-    }
-
-    @Test
-    @DisplayName("should throw RuntimeException when given wrong Id")
-    void testGetByIdFail() {
-        long id = 8L;
-        assertThrows(RuntimeException.class, () -> academicCourseService.getById(id));
-    }
-
-    @Test
-    @DisplayName("should throw NullPointerException when given wrong null Id")
-    void testGetByNullIdFail() {
-        assertThrows(NullPointerException.class, () -> academicCourseService.getById(null));
     }
 
     @Test
