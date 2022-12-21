@@ -81,7 +81,7 @@ public class ParentController {
 
         model.addAttribute("parents", parentService.findAll());
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute("NAME_SIZE", INPUT_LENGTH_MESSAGE);
+            model.addAttribute(NAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
             model.addAttribute(SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
