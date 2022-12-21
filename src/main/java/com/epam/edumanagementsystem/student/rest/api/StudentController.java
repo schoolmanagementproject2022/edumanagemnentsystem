@@ -28,7 +28,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/students")
 @Tag(name = "Students")
-public class StudentController {
+public class StudentController extends StudentControllerHelper{
 
     private final PasswordEncoder bcryptPasswordEncoder;
     private final StudentService studentService;
@@ -36,17 +36,7 @@ public class StudentController {
     private final ParentService parentService;
     private final ImageService imageService;
     private final AcademicClassService academicClassService;
-    private static final String STUDENT_HTML = "studentSection";
-    private static final String FILTERED_STUDENTS = "filteredStudentSection";
-    private static final String STUDENTS = "students";
-    private static final String GROUP = "bloodGroups";
-    private static final String GENDER = "genders";
-    private static final String PARENTS = "parents";
-    private static final String CLASSES = "classes";
 
-    private static final String INVALID_EMAIL = "invalidEmail";
-    private static final String REDIRECT = "redirect:/students/";
-    private static final String PROFILE = "/profile";
 
     @Autowired
     public StudentController(PasswordEncoder bcryptPasswordEncoder, StudentService studentService,
@@ -65,7 +55,7 @@ public class StudentController {
     @Operation(summary = "Gets the list of students and shows on admin's dashboard")
     public String openStudentSection(Model model) {
         model.addAttribute("student", new StudentDto());
-        model.addAttribute(STUDENTS, studentService.findAll());
+        model.addAttribute(StudentControllerHelper.STUDENTS, studentService.findAll());
         model.addAttribute(GROUP, BloodGroup.values());
         model.addAttribute(GENDER, Gender.values());
         model.addAttribute(PARENTS, parentService.findAll());
