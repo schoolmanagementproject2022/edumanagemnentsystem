@@ -4,25 +4,23 @@ import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public interface ParentService {
 
-    Optional<Parent> findById(Long id);
+    Parent findById(Long id);
 
-    Parent save(ParentDto parent);
+    Parent save(ParentDto parentDto);
 
     List<Parent> findAll();
 
-    Parent findByUserId(Long id);
+    Parent findByUserId(Long userId);
 
-    void deleteById(Long id);
+    Parent remove(Long id);
 
-    void updateParent(ParentDto parentDto);
+    Parent update(ParentDto parentDto);
 
-    void addProfilePicture(Parent parent, MultipartFile multipartFile);
+    void addImage(Parent parent, MultipartFile multipartFile);
 
-    void deletePic(Long id);
+    void removeImage(Long id);
 }

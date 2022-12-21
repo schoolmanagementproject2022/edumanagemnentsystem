@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.parent.impl;
 
+import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
@@ -13,41 +14,31 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class ParentServiceImpl implements ParentService {
 
     private final ParentRepository parentRepository;
     private final UserService userService;
     private final ImageService imageService;
 
-    public ParentServiceImpl(ParentRepository parentRepository, UserService userService, ImageService imageService) {
+    public ParentServiceImpl(ParentRepository parentRepository, UserService userService,
+                             ImageService imageService) {
         this.parentRepository = parentRepository;
         this.userService = userService;
         this.imageService = imageService;
     }
 
     @Override
-    public Optional<Parent> findById(Long id) {
-        if (id == null) {
-            throw new NullPointerException("The given id must not be null!");
-        }
-        return parentRepository.findById(id);
+    public Parent findById(Long id) {
+        return parentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Parent save(ParentDto parentDto) {
-        if (parentDto == null) {
-            throw new NullPointerException("The given parent must not be null!");
-        }
-
-        User user = new User();
-        user.setEmail(parentDto.getEmail());
-        user.setRole(parentDto.getRole());
-        User savedUser = userService.save(user);
         Parent parent = ParentMapper.toParent(parentDto);
-        parent.setUser(savedUser);
+        parent.setUser(userService.save(new User(parentDto.getEmail(), parentDto.getRole())));
         return parentRepository.save(parent);
     }
 
@@ -57,54 +48,36 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent findByUserId(Long id) {
-        if (id == null) {
-            throw new NullPointerException("The given id must not be null!");
-        }
-        return parentRepository.findByUserId(id);
+    public Parent findByUserId(Long userId) {
+        return parentRepository.findByUserId(userId);
     }
 
-    @Transactional
     @Override
-    public void deleteById(Long id) {
-        if (id == null) {
-            throw new NullPointerException("The given id must not be null!");
-        }
+    public Parent remove(Long id) {
+        Parent parent = parentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         parentRepository.deleteById(id);
-    }
-
-    @Transactional
-    @Override
-    public void updateParent(ParentDto parentForUpdate) {
-        if (parentForUpdate == null) {
-            throw new NullPointerException("The given parent must not be null!");
-        }
-        Parent parent = parentRepository.findById(parentForUpdate.getId()).get();
-
-        if (parentForUpdate.getName() != null) {
-            parent.setName(parentForUpdate.getName());
-        }
-
-        if (parentForUpdate.getSurname() != null) {
-            parent.setSurname(parentForUpdate.getSurname());
-        }
-
-        if (parentForUpdate.getEmail() != null) {
-            parent.getUser().setEmail(parentForUpdate.getEmail());
-        }
-        parentRepository.save(parent);
+        return parent;
     }
 
     @Override
-    public void addProfilePicture(Parent parent, MultipartFile multipartFile) {
+    public Parent update(ParentDto parentDto) {
+        Parent parent = parentRepository.findById(parentDto.getId()).orElseThrow(EntityNotFoundException::new);
+        parent.setName(parentDto.getName());
+        parent.setSurname(parentDto.getSurname());
+        parent.getUser().setEmail(parentDto.getEmail());
+        return parentRepository.save(parent);
+    }
+
+
+    @Override
+    public void addImage(Parent parent, MultipartFile multipartFile) {
         parent.setPicUrl(imageService.saveImage(multipartFile));
         parentRepository.save(parent);
     }
 
-    @Transactional
     @Override
-    public void deletePic(Long id) {
-        parentRepository.updateParentPicUrl(id);
+    public void removeImage(Long id) {
+        parentRepository.updateImageUrl(id);
     }
 
 }

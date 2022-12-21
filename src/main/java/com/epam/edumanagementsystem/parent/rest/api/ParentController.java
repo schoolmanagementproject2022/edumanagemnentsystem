@@ -4,7 +4,6 @@ import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import com.epam.edumanagementsystem.util.UserDataValidation;
@@ -24,20 +23,28 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/parents")
 @MultipartConfig(maxFileSize = 2 * 2048 * 2048, maxRequestSize = 2 * 2048 * 2048)
 @ControllerAdvice
 public class ParentController {
+    private static final String INPUT_LENGTH_MESSAGE = "Symbols can't be more than 50";
+    private static final String INVALID_EMAIL = "invalidEmail";
+    private static final String NAME_SIZE = "nameSize";
+    private static final String SURNAME_SIZE = "surnameSize";
+    private static final String EMAIL_SIZE = "emailSize";
+    private static final String REDIRECT_URL = "redirect:/parents/";
+
+    private static final String PROFILE_URL = "/profile";
+
 
     private final PasswordEncoder bcryptPasswordEncoder;
     private final ParentService parentService;
     private final UserService userService;
     private final ImageService imageService;
-
     private final StudentService studentService;
+
 
     @Autowired
     public ParentController(PasswordEncoder bcryptPasswordEncoder, ParentService parentService,
@@ -74,28 +81,28 @@ public class ParentController {
 
         model.addAttribute("parents", parentService.findAll());
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute("nameSize", "Symbols can't be more than 50");
+            model.addAttribute("NAME_SIZE", INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+            model.addAttribute(SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute("emailSize", "Symbols can't be more than 50");
+            model.addAttribute(EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
         }
 
-        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
+        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute("invalidEmail", "Email is invalid");
+                model.addAttribute(INVALID_EMAIL, "Email is invalid");
             }
         }
         UserDataValidation.validatePassword(parentDto.getPassword(), model);
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated") || model.containsAttribute("emailSize")
-                || model.containsAttribute("nameSize")
-                || model.containsAttribute("surnameSize")
+                || model.containsAttribute(INVALID_EMAIL)
+                || model.containsAttribute("duplicated") || model.containsAttribute(EMAIL_SIZE)
+                || model.containsAttribute(NAME_SIZE)
+                || model.containsAttribute(SURNAME_SIZE)
                 || model.containsAttribute("size")
                 || model.containsAttribute("formatValidationMessage")) {
 
@@ -105,7 +112,7 @@ public class ParentController {
         Parent parent = parentService.save(parentDto);
 
         if (!multipartFile.isEmpty()) {
-            parentService.addProfilePicture(parent, multipartFile);
+            parentService.addImage(parent, multipartFile);
         }
         return "redirect:/parents";
     }
@@ -113,17 +120,16 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        Parent parent = parentService.findById(id).get();
-        model.addAttribute("parentDto", ParentMapper.toParentDto(parent));
-        model.addAttribute("parentData", parent.getNameAndSurname());
+        model.addAttribute("parentDto", ParentMapper.toParentDto(parentService.findById(id)));
+        model.addAttribute("parentData", parentService.findById(id).getNameAndSurname());
         return "parentProfile";
     }
 
     @GetMapping("/{id}/students")
-    public String openParentOfStudent(@PathVariable("id") Long id, Model model) {
-        List<StudentDto> studentsByParentId = studentService.findStudentsByParentId(id);
-        model.addAttribute("students", studentsByParentId);
-        model.addAttribute("parent", parentService.findById(id).get());
+    @Operation(summary = "Shows linked students of selected parent")
+    public String openLinkedStudentForParent(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("students", studentService.findStudentsByParentId(id));
+        model.addAttribute("parent", parentService.findById(id));
         return "parentSectionForStudents";
     }
 
@@ -132,52 +138,47 @@ public class ParentController {
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute("nameSize", "Symbols can't be more than 50");
+            model.addAttribute(NAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute("surnameSize", "Symbols can't be more than 50");
+            model.addAttribute(SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute("emailSize", "Symbols can't be more than 50");
+            model.addAttribute(EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
         }
 
-        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
-            if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
+        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
+            if (!parentDto.getEmail().equals(parentService.findById(id).getUser().getEmail())) {
                 userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             }
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute("invalidEmail", "Email is invalid");
+                model.addAttribute(INVALID_EMAIL, "Email is invalid");
             }
         }
 
-        if (bindingResult.hasErrors() || model.containsAttribute("invalidEmail")
-                || model.containsAttribute("duplicated")|| model.containsAttribute("emailSize")
-                || model.containsAttribute("nameSize") || model.containsAttribute("surnameSize")) {
-            model.addAttribute("parentData", parentService.findById(id).get().getNameAndSurname());
+        if (bindingResult.hasErrors() || model.containsAttribute(INVALID_EMAIL)
+                || model.containsAttribute("duplicated") || model.containsAttribute(EMAIL_SIZE)
+                || model.containsAttribute(NAME_SIZE) || model.containsAttribute(SURNAME_SIZE)) {
+            model.addAttribute("parentData", parentService.findById(id).getNameAndSurname());
             return "parentProfile";
         }
-        parentService.updateParent(parentDto);
-        return "redirect:/parents/" + id + "/profile";
+        parentService.update(parentDto);
+        return REDIRECT_URL + id + PROFILE_URL;
     }
 
     @PostMapping("/{id}/image/add")
     @Operation(summary = "Adds image to selected parent's profile")
-    public String addPic(@ModelAttribute("existingParent") Parent parent, @PathVariable("id") Long id,
-                         @RequestParam("picture") MultipartFile multipartFile) {
-        Parent parentById = parentService.findById(id).get();
-
-        parentService.addProfilePicture(parentById, multipartFile);
-        return "redirect:/parents/" + id + "/profile";
+    public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
+        parentService.addImage(parentService.findById(id), multipartFile);
+        return REDIRECT_URL + id + PROFILE_URL;
     }
 
     @GetMapping("/{id}/image/delete")
-    @Operation(summary = "Deletes image to selected parent's profile")
-    public String deletePic(@PathVariable("id") Long id) {
-        Parent parentById = parentService.findById(id).get();
-        String picUrl = parentById.getPicUrl();
-        imageService.deleteImage(picUrl);
-        parentService.deletePic(parentById.getId());
-        return "redirect:/parents/" + id + "/profile";
+    @Operation(summary = "Deletes image from selected parent's profile")
+    public String deleteImage(@PathVariable("id") Long id) {
+        imageService.deleteImage(parentService.findById(id).getPicUrl());
+        parentService.removeImage(id);
+        return REDIRECT_URL + id + PROFILE_URL;
     }
 
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ParentRepository extends JpaRepository<Parent, Long> {
 
-    Parent findByUserId(Long id);
+    Parent findByUserId(Long userId);
 
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE parent SET pic_url = NULL WHERE id =(?1);")
-    void updateParentPicUrl(Long id);
+    void updateImageUrl(Long id);
 
 }
