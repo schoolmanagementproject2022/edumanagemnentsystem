@@ -16,8 +16,6 @@ public interface ParentService {
 
     Parent findByUserId(Long userId);
 
-    Parent remove(Long id);
-
     Parent update(ParentDto parentDto);
 
     void addImage(Parent parent, MultipartFile multipartFile);

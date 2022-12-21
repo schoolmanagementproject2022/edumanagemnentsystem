@@ -53,13 +53,6 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent remove(Long id) {
-        Parent parent = parentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        parentRepository.deleteById(id);
-        return parent;
-    }
-
-    @Override
     public Parent update(ParentDto parentDto) {
         Parent parent = parentRepository.findById(parentDto.getId()).orElseThrow(EntityNotFoundException::new);
         parent.setName(parentDto.getName());
@@ -67,7 +60,6 @@ public class ParentServiceImpl implements ParentService {
         parent.getUser().setEmail(parentDto.getEmail());
         return parentRepository.save(parent);
     }
-
 
     @Override
     public void addImage(Parent parent, MultipartFile multipartFile) {
