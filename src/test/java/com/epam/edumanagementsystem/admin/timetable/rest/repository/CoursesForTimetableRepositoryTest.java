@@ -97,7 +97,7 @@ class CoursesForTimetableRepositoryTest {
         academicCourse = new AcademicCourse();
         academicCourse.setName("Test course");
         academicCourse.setSubject(subject);
-        academicCourse.setTeacher(Set.of(teacher));
+        academicCourse.setTeachers(Set.of(teacher));
         academicCourse.setAcademicClass(Set.of(academicClass1));
         entityManager.persist(academicCourse).getId();
 

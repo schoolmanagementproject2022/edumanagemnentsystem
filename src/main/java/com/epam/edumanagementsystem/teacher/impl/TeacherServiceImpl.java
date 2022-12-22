@@ -116,7 +116,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Set<Teacher> findAllTeachersByCourseName(String name) {
-        return academicCourseService.findByName(name).getTeacher();
+        return academicCourseService.findByName(name).getTeachers();
     }
 
     @Override
@@ -134,7 +134,7 @@ public class TeacherServiceImpl implements TeacherService {
     public Set<Teacher> findAllTeachersInAllCourses() {
         Set<Teacher> teachersByAcademicCourse = new HashSet<>();
         for (AcademicCourse academicCourse : academicCourseRepository.findAll()) {
-            teachersByAcademicCourse.addAll(academicCourse.getTeacher());
+            teachersByAcademicCourse.addAll(academicCourse.getTeachers());
         }
         return teachersByAcademicCourse;
     }

@@ -16,7 +16,7 @@ public class AcademicCourseDto {
     private String name;
     @NotNull(message = "Please, fill the required fields")
     private Subject subject;
-    private Set<Teacher> teacher;
+    private Set<Teacher> teachers;
     private Set<AcademicClass> academicClassSet;
 
     public AcademicCourseDto() {
@@ -45,12 +45,12 @@ public class AcademicCourseDto {
         this.subject = subject;
     }
 
-    public Set<Teacher> getTeacher() {
-        return teacher;
+    public Set<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacher(Set<Teacher> teacher) {
-        this.teacher = teacher;
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     public Set<AcademicClass> getAcademicClassSet() {
@@ -66,12 +66,12 @@ public class AcademicCourseDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourseDto that = (AcademicCourseDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher) && Objects.equals(academicClassSet, that.academicClassSet);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teachers, that.teachers) && Objects.equals(academicClassSet, that.academicClassSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, teacher, academicClassSet);
+        return Objects.hash(id, name, subject, teachers, academicClassSet);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class AcademicCourseDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
-                ", teacher=" + teacher +
+                ", teacher=" + teachers +
                 '}';
     }
 }

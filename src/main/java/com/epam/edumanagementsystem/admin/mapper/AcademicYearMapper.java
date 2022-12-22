@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AcademicYearMapper {
+
     public static AcademicYear toAcademicYear(AcademicYearDto academicYearDto) {
         AcademicYear academicYear = new AcademicYear();
         academicYear.setId(academicYearDto.getId());
@@ -38,4 +39,5 @@ public class AcademicYearMapper {
         }
         return academicYears;
     }
+
 }

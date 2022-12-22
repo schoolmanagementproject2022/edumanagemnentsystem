@@ -1,18 +1,22 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class AcademicYearDto {
-    private Long id;
-    private LocalDate startDate;
-    private LocalDate endDate;
 
-    public AcademicYearDto(Long id, LocalDate startDate, LocalDate endDate) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
+    private Long id;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "Please, fill the required fields")
+    private LocalDate startDate;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "Please, fill the required fields")
+    private LocalDate endDate;
 
     public AcademicYearDto() {
     }

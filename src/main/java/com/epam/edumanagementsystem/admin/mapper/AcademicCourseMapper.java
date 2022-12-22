@@ -2,7 +2,6 @@ package com.epam.edumanagementsystem.admin.mapper;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -11,18 +10,12 @@ import java.util.Set;
 
 public class AcademicCourseMapper {
 
-    private static AcademicCourseService academicCourseService;
-
-    public AcademicCourseMapper(AcademicCourseService academicCourseService) {
-        this.academicCourseService = academicCourseService;
-    }
-
     public static AcademicCourse toAcademicCourse(AcademicCourseDto academicCourseDto) {
         AcademicCourse academicCourse = new AcademicCourse();
         academicCourse.setId(academicCourseDto.getId());
         academicCourse.setName(academicCourseDto.getName());
         academicCourse.setSubject(academicCourseDto.getSubject());
-        academicCourse.setTeacher(academicCourseDto.getTeacher());
+        academicCourse.setTeachers(academicCourseDto.getTeachers());
         return academicCourse;
     }
 
@@ -31,7 +24,7 @@ public class AcademicCourseMapper {
         academicCourseDto.setId(academicCourse.getId());
         academicCourseDto.setName(academicCourse.getName());
         academicCourseDto.setSubject(academicCourse.getSubject());
-        academicCourseDto.setTeacher(academicCourse.getTeacher());
+        academicCourseDto.setTeachers(academicCourse.getTeachers());
         return academicCourseDto;
     }
 

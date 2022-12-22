@@ -41,7 +41,7 @@ public class AdminController {
     @Operation(summary = "Gets all admins and shows them on super admin's dashboard")
     public String getAll(ModelMap modelMap) {
         modelMap.addAttribute("admin", new AdminDto());
-        modelMap.addAttribute("admins", adminService.findAllAdmins());
+        modelMap.addAttribute("admins", adminService.findAll());
         return "adminSection";
     }
 
@@ -50,7 +50,7 @@ public class AdminController {
     public String addAdmin(@ModelAttribute("admin") @Valid AdminDto adminDto,
                            BindingResult result, Model model) {
 
-        model.addAttribute("admins", adminService.findAllAdmins());
+        model.addAttribute("admins", adminService.findAll());
         if (InputFieldsValidation.validateInputFieldSize(adminDto.getUsername())) {
             model.addAttribute("nameSize", "Symbols can't be more than 50");
         }
@@ -78,7 +78,7 @@ public class AdminController {
             return "adminSection";
         }
         adminDto.setPassword(bcryptPasswordEncoder.encode(adminDto.getPassword()));
-        adminService.addAdmin(adminDto);
+        adminService.save(adminDto);
         return "redirect:/admins";
     }
 }

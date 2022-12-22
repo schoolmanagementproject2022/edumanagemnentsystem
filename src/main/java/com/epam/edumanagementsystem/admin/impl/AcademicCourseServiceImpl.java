@@ -8,7 +8,7 @@ import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseReposito
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -25,7 +25,6 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     private final AcademicClassService academicClassService;
     private final CoursesForTimetableService coursesForTimetableService;
 
-
     public AcademicCourseServiceImpl(AcademicCourseRepository academicCourseRepository,
                                      AcademicClassService academicClassService,
                                      CoursesForTimetableService coursesForTimetableService) {
@@ -36,17 +35,17 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
 
     @Override
     public AcademicCourse findByName(String name) {
-        return academicCourseRepository.findAcademicCourseByName(name);
+        return academicCourseRepository.findByName(name).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public AcademicCourse findByID(Long id) {
-        return academicCourseRepository.findAcademicCourseById(id);
+        return academicCourseRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
-    public AcademicCourseDto create(AcademicCourse academicCourse) {
-        return AcademicCourseMapper.toDto(academicCourseRepository.save(academicCourse));
+    public AcademicCourseDto save(AcademicCourseDto academicCourse) {
+        return AcademicCourseMapper.toDto(academicCourseRepository.save(AcademicCourseMapper.toAcademicCourse(academicCourse)));
     }
 
     @Override
@@ -54,35 +53,26 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
         return AcademicCourseMapper.toListOfAcademicCourseDto(academicCourseRepository.findAll());
     }
 
-    //First Version
     @Override
-    public AcademicCourseDto update(AcademicCourse academicCourse) {
+    public AcademicCourseDto update(AcademicCourseDto academicCourse) {
         AcademicCourse academicCourseByName = findByName(academicCourse.getName());
-        for (Teacher teacher : academicCourse.getTeacher()) {
-            academicCourseByName.getTeacher().add(teacher);
-        }
-        return create(academicCourseByName);
-    }
-
-//    Second version
-//    @Override
-//    public AcademicCourseDto update(AcademicCourse academicCourse) {
-//        return create(academicCourse);
-//    }
-
-    @Override
-    public Set<AcademicCourseDto> findAcademicCoursesByTeacherId(Long id) {
-        return AcademicCourseMapper.toSetOfAcademicCourseDto(academicCourseRepository.findAcademicCoursesByTeacherId(id));
+        academicCourseByName.getTeachers().addAll(academicCourse.getTeachers());
+        return save(AcademicCourseMapper.toDto(academicCourseByName));
     }
 
     @Override
-    public List<AcademicCourse> findAllAcademicCourses(String name) {
+    public Set<AcademicCourseDto> findAllByTeachersId(Long id) {
+        return AcademicCourseMapper.toSetOfAcademicCourseDto(academicCourseRepository.findAllByTeachersId(id));
+    }
+
+    @Override
+    public List<AcademicCourse> findAllAcademicCoursesInClassByName(String name) {
         return new ArrayList<>(academicClassService.findByName(name).getAcademicCourseSet());
     }
 
     //todo
-    private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClass academicClassByName,
-                                         LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay) {
+    private boolean showCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClass academicClassByName,
+                                          LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay) {
 
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
@@ -99,4 +89,5 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
         }
         return existDay;
     }
+
 }

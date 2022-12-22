@@ -1,9 +1,9 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
+import com.epam.edumanagementsystem.admin.constants.GlobalConstants;
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
@@ -14,7 +14,6 @@ import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -45,19 +44,17 @@ public class AcademicCourseController {
     }
 
     @GetMapping
-    @Operation(summary = "Gets the list of the academic courses and shows on admin's dashboard")
+    @Operation(summary = "Gets the list of the academic courses and shows on admin`s dashboard")
     public String openAcademicCourseSection(ModelMap model) {
-        List<AcademicCourseDto> academicCourseDtos = academicCourseService.findAll();
-        List<SubjectDto> all = subjectService.findAll();
-        model.addAttribute("academicCourses", academicCourseDtos);
-        model.addAttribute("subjects", all);
+        model.addAttribute("academicCourses", academicCourseService.findAll());
+        model.addAttribute("subjects", subjectService.findAll());
         model.addAttribute("academicCourse", new AcademicCourseDto());
-        return "academicCourseSection";
+        return GlobalConstants.ACADEMIC_COURSE_SECTION;
     }
 
     @PostMapping
     @Operation(summary = "Saves the created academic course")
-    public String create(@ModelAttribute("academicCourse") @Valid AcademicCourse academicCourse,
+    public String create(@ModelAttribute("academicCourse") @Valid AcademicCourseDto academicCourse,
                          BindingResult result, Model model) {
 
         List<AcademicCourseDto> all = academicCourseService.findAll();
@@ -65,7 +62,7 @@ public class AcademicCourseController {
         model.addAttribute("subjects", subjectService.findAll());
 
         if (!result.hasFieldErrors("name")) {
-            if(InputFieldsValidation.validateInputFieldSize(academicCourse.getName())){
+            if(InputFieldsValidation.validateInputFieldSize(academicCourse.getName())) {
                 model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
             if (InputFieldsValidation.checkingForIllegalCharacters(academicCourse.getName(), model)) {
@@ -74,30 +71,30 @@ public class AcademicCourseController {
         }
 
         if(result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
-            return "academicCourseSection";
+            return GlobalConstants.ACADEMIC_COURSE_SECTION;
         }
 
         for (AcademicCourseDto aCourse : all) {
             if (aCourse.getName().equalsIgnoreCase(academicCourse.getName())) {
                 model.addAttribute("duplicated", "An Academic Course with the same name already exists");
-                return "academicCourseSection";
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
             }
         }
 
         if (result.hasErrors()) {
             if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
-                return "academicCourseSection";
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
             }
             if (result.hasFieldErrors("name")) {
                 return "academicCourseSection";
             } else if (result.hasFieldErrors("subject")) {
-                return "academicCourseSection";
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
             }
             if (result.hasFieldErrors("subject")) {
-                return "academicCourseSection";
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
             }
         }
-        academicCourseService.create(academicCourse);
+        academicCourseService.save(academicCourse);
         return "redirect:/courses";
     }
 
@@ -107,7 +104,7 @@ public class AcademicCourseController {
         AcademicCourse academicCourse = academicCourseService.findByName(name);
         Set<Teacher> result = new HashSet<>();
         Set<Teacher> teachersInSubject = academicCourse.getSubject().getTeacherSet();
-        Set<Teacher> teachersInAcademicCourse = academicCourse.getTeacher();
+        Set<Teacher> teachersInAcademicCourse = academicCourse.getTeachers();
         for (Teacher teacher : teachersInSubject) {
             if (!teachersInAcademicCourse.contains(teacher)) {
                 result.add(teacher);
@@ -124,7 +121,7 @@ public class AcademicCourseController {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
         AcademicCourse findAcademicCourseByName = academicCourseService.findByName(name);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
-        Set<Teacher> allTeachersByAcademicCourseName = findAcademicCourseByName.getTeacher();
+        Set<Teacher> allTeachersByAcademicCourseName = findAcademicCourseByName.getTeachers();
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
         model.addAttribute("teachersToSelect", allTeachersByAcademicCourseName);
         model.addAttribute("academicClasses", allAcademicClasses);
@@ -150,7 +147,7 @@ public class AcademicCourseController {
 
     @PostMapping("{name}/teachers")
     @Operation(summary = "Adds a teacher to the group of teachers who run the selected course")
-    public String addNewTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourse academicCourse,
+    public String addNewTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourseDto academicCourse,
                                 @PathVariable("name") String name, Model model) {
 
 
@@ -160,7 +157,7 @@ public class AcademicCourseController {
         Set<Teacher> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(name);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
 
-        if (academicCourse.getTeacher() == null) {
+        if (academicCourse.getTeachers() == null) {
             model.addAttribute("blank", "There is no new selection.");
             return "academicCourseSectionForTeachers";
         }
@@ -186,7 +183,7 @@ public class AcademicCourseController {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
         AcademicCourse findAcademicCourseByName = academicCourseService.findByName(name);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
-        Set<Teacher> teachersInAcademicCourse = findAcademicCourseByName.getTeacher();
+        Set<Teacher> teachersInAcademicCourse = findAcademicCourseByName.getTeachers();
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
         model.addAttribute("academicClasses", allAcademicClasses);
         model.addAttribute("teachersToSelect", teachersInAcademicCourse);

@@ -1,30 +1,23 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
 import com.epam.edumanagementsystem.util.entity.User;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
 @Table(name = "admin")
 
 public class Admin {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String username;
 
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     @OneToOne

@@ -190,7 +190,7 @@ public class TeacherController {
     @Operation(summary = "Gets the list of courses thw teacher has and shows them")
     public String coursesPageInTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute("teacher", teacherService.findById(id));
-        model.addAttribute("teachersCourses", academicCourseService.findAcademicCoursesByTeacherId(id));
+        model.addAttribute("teachersCourses", academicCourseService.findAllByTeachersId(id));
         return COURSES_FOR_TEACHER;
     }
 

@@ -2,7 +2,6 @@ package com.epam.edumanagementsystem.admin.model.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class AdminDto {
@@ -19,22 +18,12 @@ public class AdminDto {
     private String email;
 
     @NotBlank
-    private String role= "ADMIN";
+    private String role = "ADMIN";
 
     @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     public AdminDto() {
-    }
-
-    public AdminDto(Long id, String username, String surname, String email,
-                    String role, String password) {
-        this.id = id;
-        this.username = username;
-        this.surname = surname;
-        this.email = email;
-        this.role = role;
-        this.password = password;
     }
 
     public String getNameSurname() {

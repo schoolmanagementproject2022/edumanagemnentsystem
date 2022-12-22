@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 class AcademicYearServiceImplTest {
 
@@ -36,7 +35,8 @@ class AcademicYearServiceImplTest {
 
     @BeforeEach
     void init() {
-        academicYear = new AcademicYear(1L, LocalDate.of(2022, 12, 5), LocalDate.of(2023, 12, 5));
+        academicYear = new AcademicYear(1L, LocalDate.of(2022, 12, 5),
+                LocalDate.of(2023, 12, 5));
     }
 
     @Test
@@ -44,14 +44,14 @@ class AcademicYearServiceImplTest {
     void testCreateSuccess() {
         AcademicYearDto academicYearDto = AcademicYearMapper.toDto(academicYear);
         when(academicYearRepository.save(any(AcademicYear.class))).thenReturn(academicYear);
-        AcademicYearDto savedAcademicYearDto = academicYearService.create(academicYear);
+        AcademicYearDto savedAcademicYearDto = academicYearService.save(academicYear);
         assertEquals(academicYearDto, savedAcademicYearDto);
     }
 
     @Test
     @DisplayName("should throw NullPointerException when given null")
     void testCreateFail() {
-        assertThrows(NullPointerException.class, () -> academicYearService.create(null));
+        assertThrows(NullPointerException.class, () -> academicYearService.save(null));
     }
 
     @Test
@@ -70,7 +70,7 @@ class AcademicYearServiceImplTest {
     void testFindByIdSuccess() {
         long id = 1;
         when(academicYearRepository.findById(id)).thenReturn(Optional.ofNullable(academicYear));
-        AcademicYearDto academicYearDtoById = academicYearService.getById(id);
+        AcademicYearDto academicYearDtoById = academicYearService.findById(id);
         AcademicYear academicYearById = AcademicYearMapper.toAcademicYear(academicYearDtoById);
         assertEquals(academicYear, academicYearById);
     }
@@ -78,12 +78,12 @@ class AcademicYearServiceImplTest {
     @Test
     @DisplayName("should throw RuntimeException when can not find academic year by given id ")
     void testFindByIdFail() {
-        assertThrows(RuntimeException.class, () -> academicYearService.getById(2L));
+        assertThrows(RuntimeException.class, () -> academicYearService.findById(2L));
     }
 
     @Test
     @DisplayName("should throw NullPointerException when given id is null")
     void testFindByNullId() {
-        assertThrows(NullPointerException.class, () -> academicYearService.getById(null));
+        assertThrows(NullPointerException.class, () -> academicYearService.findById(null));
     }
 }

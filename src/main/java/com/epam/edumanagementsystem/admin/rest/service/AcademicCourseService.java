@@ -12,13 +12,14 @@ public interface AcademicCourseService {
 
     AcademicCourse findByID(Long id);
 
-    AcademicCourseDto create(AcademicCourse academicCourse);
+    AcademicCourseDto save(AcademicCourseDto academicCourse);
 
     List<AcademicCourseDto> findAll();
 
-    List<AcademicCourse> findAllAcademicCourses(String name);
+    List<AcademicCourse> findAllAcademicCoursesInClassByName(String name);
 
-    AcademicCourseDto update(AcademicCourse academicCourse);
+    AcademicCourseDto update(AcademicCourseDto academicCourse);
 
-    Set<AcademicCourseDto> findAcademicCoursesByTeacherId(Long id);
+    Set<AcademicCourseDto> findAllByTeachersId(Long id);
+
 }

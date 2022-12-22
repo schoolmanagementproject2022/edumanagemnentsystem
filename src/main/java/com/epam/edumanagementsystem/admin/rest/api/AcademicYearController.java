@@ -41,7 +41,7 @@ public class AcademicYearController {
 
     @PostMapping
     @Operation(summary = "Saves the created academic year")
-    public String create(@ModelAttribute("academicYear") @Valid AcademicYear academicYear,
+    public String create(@ModelAttribute("academicYear") @Valid AcademicYearDto academicYear,
                          BindingResult result, Model model) {
         LocalDate endDate = academicYear.getEndDate();
         LocalDate startDate = academicYear.getStartDate();
@@ -80,7 +80,7 @@ public class AcademicYearController {
             model.addAttribute("max", "Academic Year can’t be more than 10 year");
             return "academicYearSection";
         }
-        academicYearService.create(academicYear);
+        academicYearService.save(academicYear);
         return "redirect:/years";
     }
 }
