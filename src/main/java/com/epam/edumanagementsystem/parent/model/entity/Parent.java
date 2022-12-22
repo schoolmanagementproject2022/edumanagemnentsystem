@@ -61,7 +61,6 @@ public class Parent {
         this.picUrl = picUrl;
     }
 
-
     public User getUser() {
         return user;
     }
@@ -70,7 +69,7 @@ public class Parent {
         this.user = user;
     }
 
-    public String getNameAndSurname() {
+    public String getFullName() {
         return this.getName() + " " + this.getSurname();
     }
 

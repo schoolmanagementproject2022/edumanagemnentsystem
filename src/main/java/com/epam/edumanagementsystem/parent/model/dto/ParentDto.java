@@ -77,7 +77,7 @@ public class ParentDto {
         return name + " " + surname;
     }
 
-    public String getNameAndSurname() {
+    public String getFullName() {
         return this.name + " " + this.surname;
     }
 

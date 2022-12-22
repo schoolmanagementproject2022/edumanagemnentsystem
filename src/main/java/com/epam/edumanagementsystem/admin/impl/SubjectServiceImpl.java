@@ -37,7 +37,6 @@ public class SubjectServiceImpl implements SubjectService {
 
         } else {
             return subjectRepository.save(subject);
-
         }
     }
 

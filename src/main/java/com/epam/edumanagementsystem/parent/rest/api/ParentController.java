@@ -35,7 +35,6 @@ public class ParentController {
     private static final String SURNAME_SIZE = "surnameSize";
     private static final String EMAIL_SIZE = "emailSize";
     private static final String REDIRECT_URL = "redirect:/parents/";
-
     private static final String PROFILE_URL = "/profile";
 
 
@@ -120,8 +119,8 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("parentDto", ParentMapper.toParentDto(parentService.findById(id)));
-        model.addAttribute("parentData", parentService.findById(id).getNameAndSurname());
+        model.addAttribute("parentDto", ParentMapper.toParentDto(parentService.findById(id).get()));
+        model.addAttribute("parentData", parentService.findById(id).get().getFullName());
         return "parentProfile";
     }
 
@@ -148,7 +147,7 @@ public class ParentController {
         }
 
         if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
-            if (!parentDto.getEmail().equals(parentService.findById(id).getUser().getEmail())) {
+            if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
                 userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             }
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
@@ -159,7 +158,7 @@ public class ParentController {
         if (bindingResult.hasErrors() || model.containsAttribute(INVALID_EMAIL)
                 || model.containsAttribute("duplicated") || model.containsAttribute(EMAIL_SIZE)
                 || model.containsAttribute(NAME_SIZE) || model.containsAttribute(SURNAME_SIZE)) {
-            model.addAttribute("parentData", parentService.findById(id).getNameAndSurname());
+            model.addAttribute("parentData", parentService.findById(id).get().getFullName());
             return "parentProfile";
         }
         parentService.update(parentDto);
@@ -169,14 +168,14 @@ public class ParentController {
     @PostMapping("/{id}/image/add")
     @Operation(summary = "Adds image to selected parent's profile")
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
-        parentService.addImage(parentService.findById(id), multipartFile);
+        parentService.addImage(parentService.findById(id).get(), multipartFile);
         return REDIRECT_URL + id + PROFILE_URL;
     }
 
     @GetMapping("/{id}/image/delete")
     @Operation(summary = "Deletes image from selected parent's profile")
     public String deleteImage(@PathVariable("id") Long id) {
-        imageService.deleteImage(parentService.findById(id).getPicUrl());
+        imageService.deleteImage(parentService.findById(id).get().getPicUrl());
         parentService.removeImage(id);
         return REDIRECT_URL + id + PROFILE_URL;
     }

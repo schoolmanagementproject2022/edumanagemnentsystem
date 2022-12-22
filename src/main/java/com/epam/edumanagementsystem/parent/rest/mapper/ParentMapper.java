@@ -2,12 +2,10 @@ package com.epam.edumanagementsystem.parent.rest.mapper;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class ParentMapper {
 
     private ParentMapper() {
@@ -36,7 +34,7 @@ public class ParentMapper {
     }
 
 
-    public static List<Parent> toParentListWithoutSaveUser(List<ParentDto> parentDtoList) {
+    public static List<Parent> toParentList(List<ParentDto> parentDtoList) {
         return parentDtoList.stream()
                 .map(ParentMapper::toParent)
                 .collect(Collectors.toList());

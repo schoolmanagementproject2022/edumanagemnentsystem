@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.parent.impl;
+package com.epam.edumanagementsystem.parent.rest.service.impl;
 
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -31,8 +32,11 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent findById(Long id) {
-        return parentRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public Optional<Parent> findById(Long id) {
+        if (parentRepository.findById(id).isPresent()) {
+            return parentRepository.findById(id);
+        }
+        throw new EntityNotFoundException("Parent is not found by id: " + id);
     }
 
     @Override
@@ -48,13 +52,17 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent findByUserId(Long userId) {
-        return parentRepository.findByUserId(userId);
+    public Optional<Parent> findByUserId(Long userId) {
+        if (parentRepository.findByUserId(userId).isPresent()) {
+            return parentRepository.findByUserId(userId);
+        }
+        throw new EntityNotFoundException("Parent is not found by user id: " + userId);
     }
 
     @Override
     public Parent update(ParentDto parentDto) {
-        Parent parent = parentRepository.findById(parentDto.getId()).orElseThrow(EntityNotFoundException::new);
+        Parent parent = parentRepository.findById(parentDto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Parent is not found by id: " + parentDto.getId()));
         parent.setName(parentDto.getName());
         parent.setSurname(parentDto.getSurname());
         parent.getUser().setEmail(parentDto.getEmail());
