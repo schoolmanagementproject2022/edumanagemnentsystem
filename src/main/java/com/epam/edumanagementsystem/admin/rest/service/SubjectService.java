@@ -11,13 +11,13 @@ public interface SubjectService {
 
     List<SubjectDto> findAll();
 
-    Subject create(Subject subject);
+    SubjectDto save(SubjectDto subjectDto);
 
     Set<TeacherDto> findAllTeachers(String name);
 
-    SubjectDto findSubjectBySubjectName(String name);
+    Subject findByName(String name);
 
-    Subject update(Subject subject);
+    SubjectDto update(SubjectDto subjectDto);
 
-    Set<Subject> findSubjectsByTeacherSetId(Long teacherId);
+    Set<SubjectDto> findAllByTeacherId(Long teacherId);
 }

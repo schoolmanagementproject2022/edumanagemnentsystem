@@ -2,14 +2,15 @@ package com.epam.edumanagementsystem.admin.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.VacationMapper;
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
-import com.epam.edumanagementsystem.admin.model.entity.Vacation;
 import com.epam.edumanagementsystem.admin.rest.repository.VacationRepository;
 import com.epam.edumanagementsystem.admin.rest.service.VacationService;
+import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.VACATION_BY_ID;
 
 @Service
 public class VacationServiceImpl implements VacationService {
@@ -18,31 +19,23 @@ public class VacationServiceImpl implements VacationService {
 
     @Autowired
     public VacationServiceImpl(VacationRepository vacationRepository) {
-
         this.vacationRepository = vacationRepository;
     }
 
     @Override
-    public Vacation create(Vacation vacation) {
-        if(vacation == null){
-            throw new NullPointerException("Please, fill the required fields");
-        }
-       return vacationRepository.save(vacation);
+    public VacationDto save(VacationDto vacationDto) {
+        return VacationMapper.toDto(vacationRepository.save(VacationMapper.toVacation(vacationDto)));
     }
 
     @Override
     public List<VacationDto> findAll() {
-        List<Vacation> vacationList = vacationRepository.findAll();
-        return VacationMapper.toListOfVacationsDto(vacationList);
+        return VacationMapper.toListOfVacationsDto(vacationRepository.findAll());
     }
 
     @Override
-    public VacationDto getById(Long id) {
-        Optional<Vacation> classById = vacationRepository.findById(id);
-        if (classById.isPresent()) {
-            return VacationMapper.toDto(classById.get());
-        }
-        return new VacationDto();
+    public VacationDto findById(Long id) {
+        return VacationMapper.toDto(vacationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(VACATION_BY_ID)));
     }
 
 }

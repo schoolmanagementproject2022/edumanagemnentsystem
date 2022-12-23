@@ -3,8 +3,7 @@ package com.epam.edumanagementsystem.admin.mapper;
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SubjectMapper {
     public static Subject toSubject(SubjectDto subjectDto) {
@@ -38,4 +37,13 @@ public class SubjectMapper {
         }
         return subjects;
     }
+
+    public static Set<SubjectDto> toSetOfSubjectDto(Set<Subject> subjects){
+        Set<SubjectDto> subjectDtos = new LinkedHashSet<>();
+        for (Subject subject : subjects) {
+            subjectDtos.add(toDto(subject));
+        }
+        return subjectDtos;
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
-import com.epam.edumanagementsystem.admin.model.entity.Vacation;
 import com.epam.edumanagementsystem.admin.rest.service.VacationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,7 +40,7 @@ public class VacationController {
 
     @PostMapping
     @Operation(summary = "Saves the created vacation")
-    public String create(@ModelAttribute("vacation") @Valid Vacation vacation,
+    public String create(@ModelAttribute("vacation") @Valid VacationDto vacationDto,
                          BindingResult result, Model model) {
         List<VacationDto> vacationDtos = vacationService.findAll();
         model.addAttribute("vacations", vacationDtos);
@@ -55,14 +54,14 @@ public class VacationController {
             }
         }
 
-        if (vacation.getStartDate().isBefore(LocalDate.now())) {
+        if (vacationDto.getStartDate().isBefore(LocalDate.now())) {
             model.addAttribute("invalid", "Wrong selected dates");
             return "vacationSection";
-        } else if (vacation.getStartDate().isAfter(vacation.getEndDate())) {
+        } else if (vacationDto.getStartDate().isAfter(vacationDto.getEndDate())) {
             model.addAttribute("invalid", "Wrong selected dates");
             return "vacationSection";
         } else {
-            vacationService.create(vacation);
+            vacationService.save(vacationDto);
             return "redirect:/vacations";
         }
     }

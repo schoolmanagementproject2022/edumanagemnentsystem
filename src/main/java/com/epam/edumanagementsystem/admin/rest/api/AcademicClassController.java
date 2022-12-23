@@ -93,7 +93,7 @@ public class AcademicClassController {
         } else {
             String decoded = URLDecoder.decode(academicClass.getClassNumber(), StandardCharsets.UTF_8);
             academicClass.setClassNumber(decoded);
-            academicClassService.create(academicClass);
+            academicClassService.save(academicClass);
             return "redirect:/classes";
         }
     }
@@ -161,7 +161,7 @@ public class AcademicClassController {
             model.addAttribute("blank", "Please, select the required fields");
             return "academicCourseForAcademicClass";
         } else {
-            AcademicClass foundClass = academicClassService.findByName(name);
+            AcademicClass foundClass = academicClassService.findByClassNumber(name);
             foundClass.getAcademicCourseSet().addAll(academicClass.getAcademicCourseSet());
             foundClass.getTeacher().addAll(academicClass.getTeacher());
             academicClassService.update(foundClass);
@@ -172,7 +172,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/classroom")
     @Operation(summary = "Shows teachers who can be selected as a classroom teacher for selected academic class")
     public String classroomTeacherForAcademicClass(@PathVariable("name") String name, Model model) {
-        AcademicClass academicClassByName = academicClassService.findByName(name);
+        AcademicClass academicClassByName = academicClassService.findByClassNumber(name);
         Set<Teacher> allTeachersInClassName = academicClassByName.getTeacher();
         List<AcademicClassDto> allClasses = academicClassService.findAll();
 
@@ -197,7 +197,7 @@ public class AcademicClassController {
     public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClass academicClass,
                                                      @PathVariable("name") String name,
                                                      Model model) {
-        AcademicClass academicClassFindByName = academicClassService.findByName(name);
+        AcademicClass academicClassFindByName = academicClassService.findByClassNumber(name);
         model.addAttribute("teachers", academicClassFindByName.getTeacher());
         model.addAttribute("existingClass", new AcademicClass());
         if (academicClass.getClassroomTeacher() == null) {
@@ -220,7 +220,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/students")
     @Operation(summary = "Gets the list of the student for the academic class")
     public String showAcademicClassStudents(@PathVariable("name") String name, Model model) {
-        Long id = academicClassService.findByName(name).getId();
+        Long id = academicClassService.findByClassNumber(name).getId();
         model.addAttribute("studentsInAcademicClass", studentService.findByAcademicClassId(id));
         model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
         return "academicClassSectionForStudents";
@@ -230,11 +230,11 @@ public class AcademicClassController {
     public String addNewTeacher(@ModelAttribute("existingAcademicClass") AcademicClass academicClass,
                                 @PathVariable("name") String name, Model model) {
         Set<Student> students = academicClass.getStudent();
-        AcademicClass academicClassByName = academicClassService.findByName(name);
+        AcademicClass academicClassByName = academicClassService.findByClassNumber(name);
         if (academicClass.getStudent() == null) {
             model.addAttribute("blank", "There is no new selection.");
             model.addAttribute("studentsInAcademicClass", studentService
-                    .findByAcademicClassId(academicClassService.findByName(name).getId()));
+                    .findByAcademicClassId(academicClassService.findByClassNumber(name).getId()));
             model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
             return "academicClassSectionForStudents";
         }
@@ -250,7 +250,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/teachers")
     @Operation(summary = "Gets the list of the teachers for the academic class")
     public String teachersForAcademicClass(Model model, @PathVariable("name") String name) {
-        model.addAttribute("teachers", academicClassService.findByName(name).getTeacher());
+        model.addAttribute("teachers", academicClassService.findByClassNumber(name).getTeacher());
         model.addAttribute("allTeacherByAcademicClass", teacherService.findAllTeachersInAllClasses());
 
         return "teachersForAcademicClass";
@@ -283,7 +283,7 @@ public class AcademicClassController {
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             model.addAttribute("course", academicCourseService.findByID(courseId));
-            model.addAttribute("class", academicClassService.findByName(name));
+            model.addAttribute("class", academicClassService.findByClassNumber(name));
             List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
             model.addAttribute("allStudentsInAcademicClass", studentsInClass);
             if (studentsInClass.isEmpty()) {
@@ -294,7 +294,7 @@ public class AcademicClassController {
             return "journalWithCourseInfo";
         } else {
             academicClassService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
-            model.addAttribute("class", academicClassService.findByName(name));
+            model.addAttribute("class", academicClassService.findByClassNumber(name));
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
             model.addAttribute("creationStatus", false);
             return "createTimetableMsgFromJournal";

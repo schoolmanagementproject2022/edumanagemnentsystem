@@ -2,29 +2,25 @@ package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import org.springframework.ui.Model;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 public interface AcademicClassService {
 
-    AcademicClass create(AcademicClass academicClass);
+    AcademicClassDto save(AcademicClassDto academicClassDto);
 
     List<AcademicClassDto> findAll();
 
-    AcademicClassDto getById(Long id);
+    AcademicClass findById(Long id);
 
-    AcademicClass findByName(String name);
+    AcademicClass findByClassNumber(String name);
 
     AcademicClass removeByTeacherName(String teacherName);
 
-    AcademicClass update(AcademicClass academicClass);
+    AcademicClassDto update(AcademicClassDto academicClassDto);
 
-    Set<AcademicClass> findByTeacherId(Long id);
+    Set<AcademicClassDto> findByTeacherId(Long id);
 
 
 }

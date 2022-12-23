@@ -50,7 +50,7 @@ public class TimetableController {
     @Operation(summary = "Shows timetable page")
     public String openingTimetablePage(@PathVariable("academicClassName") String academicClassName, Model model) {
         boolean creationStatus = false;
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
             if (timetableService.findTimetableByAcademicClassId(academicClass.getId()).getStatus().equalsIgnoreCase("Edit") &&
@@ -90,7 +90,7 @@ public class TimetableController {
     @Operation(summary = "After successful creation of the timetable shows popup message")
     public String openingSuccessPopup(@PathVariable("academicClassName") String academicClassName, Model model) {
         boolean creationStatus = true;
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
         model.addAttribute("creationStatus", creationStatus);
         putLessons(model, academicClass.getId());
@@ -103,7 +103,7 @@ public class TimetableController {
                                                @RequestParam(value = "lessonId", required = false) Long lessonId,
                                                @RequestParam(value = "cancelStatus", required = false, defaultValue = "notCancel") String status,
                                                Model model) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         Timetable timetableByAcademicClassId = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClass.getId());
@@ -144,7 +144,7 @@ public class TimetableController {
 
     @GetMapping("{academicClassName}/timetable/course")
     public String getAddLessonsPopup(@PathVariable("academicClassName") String academicClassName, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
 
         newTimetable_academicClassName(model, academicClassName);
@@ -156,7 +156,7 @@ public class TimetableController {
     @GetMapping("course/delete/{id}/{class}")
     @Operation(summary = "Deletes selected lesson from timetable")
     public String deleteLessonFromTimetable(@PathVariable("id") Long lessonId, @PathVariable("class") String academicClassName) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (lessonId != null) {
             if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
@@ -193,7 +193,7 @@ public class TimetableController {
     @GetMapping("{academicClassName}/timetable/show")
     @Operation(summary = "Shows the timetable for the academic class if one exists")
     public String openTimetableIfExists(@PathVariable("academicClassName") String academicClassName, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
             return "redirect:/classes/" + academicClassName + "/timetable";
         }
@@ -203,7 +203,7 @@ public class TimetableController {
 
     @GetMapping("{academicClassName}/timetable/editCourse")
     public String openingPopupEdit(@PathVariable("academicClassName") String academicClassName, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
 
         newTimetable_academicClassName(model, academicClassName);
@@ -217,7 +217,7 @@ public class TimetableController {
     public String openingTimetableEdit(@PathVariable("academicClassName") String academicClassName,
                                        @RequestParam(value = "lessonId", required = false) Long lessonId, Model model) {
 
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         Timetable currentTimetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         List<CoursesForTimetable> activeStatus = coursesService.getCoursesWithActiveStatusByAcademicCourseId(academicClass.getId());
@@ -291,7 +291,7 @@ public class TimetableController {
                                     BindingResult result, @PathVariable("academicClassName") String academicClassName,
                                     Model model) {
         Timetable newTimetable = new Timetable();
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         Timetable timetable = timetableService.findTimetableByAcademicClassId(academicClass.getId());
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         putLessons(model, academicClass.getId());
@@ -371,7 +371,7 @@ public class TimetableController {
         LocalDate endDate = timetable.getEndDate();
         String invalidMsg = "Please, select right dates";
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
@@ -430,7 +430,7 @@ public class TimetableController {
     @Operation(summary = "Adds lessons to timetable")
     public String addingLessonsIntoTimetable(@ModelAttribute("courseForTable") @Valid CoursesForTimetableDto coursesForTimetableDto,
                                              BindingResult result, @PathVariable("academicClassName") String academicClassName, Model model) {
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
 
         if (result.hasErrors()) {
@@ -460,7 +460,7 @@ public class TimetableController {
         String invalidMsg = "Please, select right dates";
         List<AcademicCourse> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         CoursesForTimetableDto newCoursesForTimetable = new CoursesForTimetableDto();
-        AcademicClass academicClass = academicClassService.findByName(academicClassName);
+        AcademicClass academicClass = academicClassService.findByClassNumber(academicClassName);
 
 
         if (result.hasErrors()) {

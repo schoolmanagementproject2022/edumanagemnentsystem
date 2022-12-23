@@ -197,7 +197,7 @@ public class TeacherController {
     @GetMapping("/{id}/subjects")
     @Operation(summary = "Gets the list of subjects thw teacher has and shows them")
     public String openSubjectsForTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("subjects", subjectService.findSubjectsByTeacherSetId(id));
+        model.addAttribute("subjects", subjectService.findAllByTeacherId(id));
         model.addAttribute("teacher", teacherService.findById(id));
         return SUBJECTS_FOR_TEACHER;
     }

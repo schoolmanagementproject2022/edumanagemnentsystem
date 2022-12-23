@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public class AcademicClassMapper {
-    public static AcademicClass ToAcademicClass(AcademicClassDto academicClassDto) {
+    public static AcademicClass toAcademicClass(AcademicClassDto academicClassDto) {
         AcademicClass academicClass = new AcademicClass();
         academicClass.setId(academicClassDto.getId());
         academicClass.setClassNumber(academicClassDto.getClassNumber());
@@ -52,7 +52,7 @@ public class AcademicClassMapper {
     public static List<AcademicClass> academicClassessList(List<AcademicClassDto> academicClassDtos) {
         List<AcademicClass> academicClasses = new ArrayList<>();
         for (AcademicClassDto academicClassDto : academicClassDtos) {
-            academicClasses.add(ToAcademicClass(academicClassDto));
+            academicClasses.add(toAcademicClass(academicClassDto));
         }
         return academicClasses;
     }

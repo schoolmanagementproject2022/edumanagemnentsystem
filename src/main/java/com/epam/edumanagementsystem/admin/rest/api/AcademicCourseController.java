@@ -215,14 +215,14 @@ public class AcademicCourseController {
 
         AcademicCourse academicCourseByAcademicCourseName = academicCourseService.findByName(name);
 
-        AcademicClass academicClassFindByName = academicClassService.findByName(academicClass.getClassNumber());
+        AcademicClass academicClassFindByName = academicClassService.findByClassNumber(academicClass.getClassNumber());
 
         academicCourseSet.add(academicCourseByAcademicCourseName);
 
         academicClassFindByName.getTeacher().addAll(academicClass.getTeacher());
         academicClassFindByName.getAcademicCourseSet().addAll(academicCourseSet);
 
-        academicClassService.update(academicClassFindByName);
+//        academicClassService.update(academicClassFindByName);
         return "redirect:/courses/" + name + "/classes";
     }
 }

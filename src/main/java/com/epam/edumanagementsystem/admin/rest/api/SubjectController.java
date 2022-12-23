@@ -46,7 +46,7 @@ public class SubjectController {
 
     @PostMapping
     @Operation(summary = "Creates a new subject in popup and saves it in DB")
-    public String createSubject(@ModelAttribute("subject") @Valid Subject subject,
+    public String createSubject(@ModelAttribute("subject") @Valid SubjectDto subjectDto,
                                 BindingResult bindingResult, Model model) {
         List<SubjectDto> all = subjectService.findAll();
         model.addAttribute("subjects", all);
@@ -54,10 +54,10 @@ public class SubjectController {
         model.addAttribute("teachers", allTeacher);
 
         if (!bindingResult.hasFieldErrors("name")) {
-            if(InputFieldsValidation.validateInputFieldSize(subject.getName())){
+            if(InputFieldsValidation.validateInputFieldSize(subjectDto.getName())){
                 model.addAttribute("nameSize", "Symbols can't be more than 50");
             }
-            if (InputFieldsValidation.checkingForIllegalCharacters(subject.getName(), model)) {
+            if (InputFieldsValidation.checkingForIllegalCharacters(subjectDto.getName(), model)) {
                 model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
             }
         }
@@ -67,7 +67,7 @@ public class SubjectController {
         }
 
         for (SubjectDto subject1 : all) {
-            if (subject1.getName().equalsIgnoreCase(subject.getName())) {
+            if (subject1.getName().equalsIgnoreCase(subjectDto.getName())) {
                 model.addAttribute("duplicated", "A Subject with the same name already exists");
                 return "subjectSection";
             }
@@ -75,9 +75,9 @@ public class SubjectController {
         if (bindingResult.hasErrors()) {
             return "subjectSection";
         }
-        String decoded = URLDecoder.decode(subject.getName(), StandardCharsets.UTF_8);
-        subject.setName(decoded);
-        subjectService.create(subject);
+        String decoded = URLDecoder.decode(subjectDto.getName(), StandardCharsets.UTF_8);
+        subjectDto.setName(decoded);
+        subjectService.save(subjectDto);
         return "redirect:/subjects";
     }
 
@@ -89,7 +89,7 @@ public class SubjectController {
         Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachers(name);
         List<TeacherDto> allTeachers = teacherService.findAll();
         model.addAttribute("teachers", allTeachersInSubject);
-        model.addAttribute("existingSubject", subjectService.findSubjectBySubjectName(name));
+        model.addAttribute("existingSubject", subjectService.findByName(name));
 
         if (allTeachersInSubject.size() == 0) {
             teachersToSelect.addAll(allTeachers);
@@ -110,7 +110,7 @@ public class SubjectController {
 
     @PostMapping("{name}/teachers")
     @Operation(summary = "Updates the list of teachers for a concrete subject")
-    public String addNewTeacher(@ModelAttribute("existingSubject") Subject subject,
+    public String addNewTeacher(@ModelAttribute("existingSubject") SubjectDto subjectDto,
                                 @PathVariable("name") String name, Model model) {
 
         Set<TeacherDto> teachersToSelect = new LinkedHashSet<>();
@@ -118,7 +118,7 @@ public class SubjectController {
         model.addAttribute("teachers", allTeachersInSubject);
         List<TeacherDto> allTeachers = teacherService.findAll();
 
-        if (subject.getTeacherSet().size() == 0) {
+        if (subjectDto.getTeacherSet().size() == 0) {
             model.addAttribute("blank", "There is no new selection.");
             if (allTeachersInSubject.size() == 0) {
                 teachersToSelect.addAll(allTeachers);
@@ -136,7 +136,7 @@ public class SubjectController {
             model.addAttribute("teachersToSelect", teachersToSelect);
             return "subjectSectionForTeachers";
         }
-        subjectService.update(subject);
+        subjectService.update(subjectDto);
         return "redirect:/subjects/" + name + "/teachers";
     }
 }

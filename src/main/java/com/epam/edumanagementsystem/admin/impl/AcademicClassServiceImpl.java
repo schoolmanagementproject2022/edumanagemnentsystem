@@ -5,12 +5,14 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
+
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.ACADEMIC_CLASS_BY_ID;
 
 @Service
 public class AcademicClassServiceImpl implements AcademicClassService {
@@ -23,19 +25,18 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public AcademicClass create(AcademicClass academicClass) {
-        return academicClassRepository.save(academicClass);
+    public AcademicClassDto save(AcademicClassDto academicClassDto) {
+        return AcademicClassMapper.toDto(academicClassRepository.save(AcademicClassMapper.toAcademicClass(academicClassDto)));
     }
 
     @Override
-    public AcademicClassDto getById(Long id) {
-        Optional<AcademicClass> classById = academicClassRepository.findById(id);
-        return classById.map(AcademicClassMapper::toDto).orElseGet(AcademicClassDto::new);
+    public AcademicClass findById(Long id) {
+        return academicClassRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ACADEMIC_CLASS_BY_ID));
     }
 
     @Override
-    public AcademicClass findByName(String name) {
-        return academicClassRepository.findByClassNumber(name);
+    public AcademicClass findByClassNumber(String name) {
+        return academicClassRepository.findByClassNumber(name).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -44,19 +45,22 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public AcademicClass update(AcademicClass academicClass) {
-        return academicClassRepository.save(academicClass);
+    public AcademicClassDto update(AcademicClassDto academicClassDto) {
+        AcademicClass academicClassByName = findByClassNumber(academicClassDto.getClassNumber());
+        academicClassByName.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourse());
+        academicClassByName.getTeacher().addAll(academicClassDto.getTeacherSet());
+        academicClassByName.getClassroomTeacher().getNameSurname();
+        return save(AcademicClassMapper.toDto(academicClassByName));
     }
 
     @Override
     public List<AcademicClassDto> findAll() {
-        List<AcademicClass> academicClassList = academicClassRepository.findAll();
-        return AcademicClassMapper.academicClassDtoList(academicClassList);
+        return AcademicClassMapper.academicClassDtoList(academicClassRepository.findAll());
     }
 
     @Override
-    public Set<AcademicClass> findByTeacherId(Long id) {
-        return academicClassRepository.findAcademicClassByTeacherId(id);
+    public Set<AcademicClassDto> findByTeacherId(Long id) {
+        return AcademicClassMapper.academicClassDtoSet(academicClassRepository.findAcademicClassByTeacherId(id));
     }
 
 }

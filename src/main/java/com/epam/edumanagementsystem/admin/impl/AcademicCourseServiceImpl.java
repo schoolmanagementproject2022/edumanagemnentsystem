@@ -67,7 +67,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
 
     @Override
     public List<AcademicCourse> findAllAcademicCoursesInClassByName(String name) {
-        return new ArrayList<>(academicClassService.findByName(name).getAcademicCourseSet());
+        return new ArrayList<>(academicClassService.findByClassNumber(name).getAcademicCourseSet());
     }
 
     //todo

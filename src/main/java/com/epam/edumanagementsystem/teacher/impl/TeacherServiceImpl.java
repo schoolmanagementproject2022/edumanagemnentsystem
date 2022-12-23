@@ -111,7 +111,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Set<Teacher> findAllTeachersInClass(String name) {
-        return academicClassService.findByName(name).getTeacher();
+        return academicClassService.findByClassNumber(name).getTeacher();
     }
 
     @Override
