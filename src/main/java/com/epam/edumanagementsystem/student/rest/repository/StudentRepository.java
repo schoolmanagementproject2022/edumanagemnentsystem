@@ -32,13 +32,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     List<Student> findAllByParentIsNull();
 
-
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query(value = "UPDATE Student s SET s.name = :name, s.surname = :surname, s.user = :user, s.address = :address,s.date = :date, s.gender =  :gender, s.password = :password, s.bloodGroup = :bloodGroup, s.parent = :parent, s.academicClass = :academicClass WHERE s.id = :id", nativeQuery = true)
-    void updateField(@Param("name") String name, @Param("surname") String surname,
-                     @Param("user") User user, @Param("address") String address,
-                     @Param("date") LocalDate date, @Param("gender") Gender gender,
-                     @Param("password") String password, @Param("bloodGroup") BloodGroup bloodGroup, @Param("parent") Parent parent,
-                     @Param("academicClass") AcademicClass academicClass, @Param("id") Long id);
 }

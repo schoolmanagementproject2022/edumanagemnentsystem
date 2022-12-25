@@ -8,15 +8,14 @@ import java.util.List;
 
 public interface StudentService {
 
-    Student create(StudentDto studentDto);
+    StudentDto create(StudentDto studentDto);
 
     StudentDto updateFields(StudentDto studentDto);
 
-    Student updateStudentsClass(Student student);
 
     List<StudentDto> findAll();
 
-    Student findByUserId(Long id);
+    StudentDto findByUserId(Long id);
 
     List<Student> findByAcademicClassId(Long id);
 
@@ -26,7 +25,7 @@ public interface StudentService {
 
     List<StudentDto> findStudentsByParentId(Long parentId);
 
-    void addProfilePicture(Student student, MultipartFile multipartFile);
+    void addProfilePicture(StudentDto studentDto, MultipartFile multipartFile);
 
     void deletePic(Long id);
 

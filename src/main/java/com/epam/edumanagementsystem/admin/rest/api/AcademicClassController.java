@@ -9,6 +9,8 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
+import com.epam.edumanagementsystem.student.mapper.StudentMapper;
+import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -240,7 +242,7 @@ public class AcademicClassController {
         if (null != students) {
             for (Student student : students) {
                 student.setAcademicClass(academicClassByName);
-                studentService.updateStudentsClass(student);
+                studentService.updateFields(StudentMapper.toStudentDto(student));
             }
         }
         return "redirect:/classes/" + name + "/students";

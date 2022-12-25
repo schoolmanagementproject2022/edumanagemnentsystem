@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.student.impl;
 
+import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -37,31 +38,35 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student create(StudentDto studentDto) {
-        return studentRepository.save(StudentMapper.toStudent(studentDto, userService.save(
-                                new User(studentDto.getEmail(), studentDto.getRole())
-                        )
-                )
-        );
+    public StudentDto create(StudentDto studentDto) {
+        Student save = studentRepository.save(StudentMapper.toStudent(studentDto, userService.save(new User(studentDto.getEmail(), studentDto.getRole()))));
+        return StudentMapper.toStudentDto(save);
     }
 
     @Override
     public StudentDto updateFields(StudentDto studentDto) {
-        studentRepository.updateField(studentDto.getName(), studentDto.getSurname(),
-                userService.findByEmail(studentDto.getEmail()), studentDto.getAddress(), studentDto.getDate(),
-                studentDto.getGender(), studentDto.getPassword(), studentDto.getBloodGroup(),
-                studentDto.getParent(), studentDto.getAcademicClass(), studentDto.getId());
-        return findById(studentDto.getId());
+       studentRepository.findById(studentDto.getId()).orElseThrow(EntityNotFoundException::new);
+        StudentDto byName = findById(studentDto.getId());
+        User userOfStudent = userService.findByEmail(byName.getEmail());
+        Student updatableStudent = StudentMapper.toStudent(byName, userOfStudent);
+        userOfStudent.setEmail(studentDto.getEmail());
+        Student newStudent = StudentMapper.toStudent(studentDto, userOfStudent);
+        updatableStudent.setId(newStudent.getId());
+        updatableStudent.setName(newStudent.getName());
+        updatableStudent.setSurname(newStudent.getSurname());
+        updatableStudent.setPassword(newStudent.getPassword());
+        updatableStudent.setDate(newStudent.getDate());
+        updatableStudent.setGender(newStudent.getGender());
+        updatableStudent.setParent(newStudent.getParent());
+        updatableStudent.setAcademicClass(newStudent.getAcademicClass());
+
+        return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
     }
 
     @Override
-    public Student updateStudentsClass(Student student) {
-        return studentRepository.save(student);
-    }
-
-    @Override
-    public Student findByUserId(Long id) {
-        return studentRepository.findByUserId(id);
+    public StudentDto findByUserId(Long id) {
+        Student byUserId = studentRepository.findByUserId(id);
+        return StudentMapper.toStudentDto(byUserId);
     }
 
     @Override
@@ -84,9 +89,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addProfilePicture(Student student, MultipartFile multipartFile) {
-        student.setPicUrl(imageService.saveImage(multipartFile));
-        studentRepository.save(student);
+    public void addProfilePicture(StudentDto studentDto, MultipartFile multipartFile) {
+        studentDto.setPicUrl(imageService.saveImage(multipartFile));
+        create(studentDto);
     }
 
     @Override

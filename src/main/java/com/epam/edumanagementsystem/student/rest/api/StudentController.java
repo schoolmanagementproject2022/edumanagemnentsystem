@@ -106,7 +106,7 @@ public class StudentController extends StudentControllerHelper{
             return STUDENT_HTML;
         }
         studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
-        Student student = studentService.create(studentDto);
+        StudentDto student = studentService.create(studentDto);
 
         if (!multipartFile.isEmpty()) {
             studentService.addProfilePicture(student, multipartFile);
@@ -150,7 +150,8 @@ public class StudentController extends StudentControllerHelper{
             }
         }
 
-        if (result.hasErrors() || model.containsAttribute(INVALID_EMAIL) || model.containsAttribute("duplicated")
+        if (result.hasErrors() || model.containsAttribute(INVALID_EMAIL)
+                || model.containsAttribute("duplicated")
         ) {
             return "studentProfile";
         }
@@ -164,7 +165,7 @@ public class StudentController extends StudentControllerHelper{
                          @RequestParam("picture") MultipartFile multipartFile) {
         StudentDto studentById = studentService.findById(id);
         User userByEmail = userService.findByEmail(studentById.getEmail());
-        studentService.addProfilePicture(StudentMapper.toStudent(studentById, userByEmail), multipartFile);
+        studentService.addProfilePicture(studentById, multipartFile);
         return REDIRECT + id + PROFILE;
     }
 
