@@ -16,7 +16,6 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Please, fill the required fields")
     private String name;
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})

@@ -1,15 +1,19 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+
 public class SubjectDto {
 
     private Long id;
 
+    @NotBlank(message = EMPTY_FIELD)
     private String name;
 
     private Set<Teacher> teacherSet = new HashSet<>();

@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.admin.impl;
+package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicYearMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicYearDto;

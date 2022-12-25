@@ -1,11 +1,23 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER;
+
 public class VacationDto {
     private Long id;
+
+    @NotNull(message = EMPTY_FIELD)
+    @DateTimeFormat(pattern = DATE_FORMATTER)
     private LocalDate startDate;
+
+    @NotNull(message = EMPTY_FIELD)
+    @DateTimeFormat(pattern = DATE_FORMATTER)
     private LocalDate endDate;
 
     public VacationDto(Long id, LocalDate startDate, LocalDate endDate) {

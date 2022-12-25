@@ -6,16 +6,19 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER;
+
 public class AcademicYearDto {
 
     private Long id;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
+    @DateTimeFormat(pattern = DATE_FORMATTER)
+    @NotNull(message = EMPTY_FIELD)
     private LocalDate startDate;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
+    @DateTimeFormat(pattern = DATE_FORMATTER)
+    @NotNull(message = EMPTY_FIELD)
     private LocalDate endDate;
 
     public AcademicYearDto() {

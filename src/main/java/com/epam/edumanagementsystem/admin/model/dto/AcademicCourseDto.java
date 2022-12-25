@@ -9,12 +9,14 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+
 public class AcademicCourseDto {
 
     private Long id;
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = EMPTY_FIELD)
     private String name;
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = EMPTY_FIELD)
     private Subject subject;
     private Set<Teacher> teachers;
     private Set<AcademicClass> academicClassSet;

@@ -4,23 +4,25 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Objects;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+
 public class AdminDto {
 
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = EMPTY_FIELD)
     private String username;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = EMPTY_FIELD)
     private String surname;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = EMPTY_FIELD)
     private String email;
 
     @NotBlank
     private String role = "ADMIN";
 
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = EMPTY_FIELD)
     private String password;
 
     public AdminDto() {

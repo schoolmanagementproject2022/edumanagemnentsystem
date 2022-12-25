@@ -10,12 +10,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SYMBOL_LENGTH;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.FIELD_MAX_SIZE;
 
 public class AcademicClassDto {
     private Long id;
 
     @NotBlank(message = EMPTY_FIELD)
-    @Size(max = 50, message = "Symbols can't be more than 50")
+    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
     private String classNumber;
 
     private Set<AcademicCourse> academicCourse;
