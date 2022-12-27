@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.parent.model.dto;
 
+import com.epam.edumanagementsystem.util.AppConstants;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
@@ -7,17 +8,17 @@ import java.util.Objects;
 
 public class ParentDto {
     private Long id;
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
+    @NotBlank(message = "{EMPTY_FIELD}")
+    @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String name;
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
+    @NotBlank(message = "{EMPTY_FIELD}")
+    @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String surname;
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = "{EMPTY_FIELD}")
     private String email;
     @NotBlank
     private String role = "PARENT";
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = "{EMPTY_FIELD}")
     private String password;
     private String picUrl;
 

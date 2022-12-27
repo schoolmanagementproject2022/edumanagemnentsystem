@@ -5,21 +5,20 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ParentService {
 
-    Optional<Parent> findById(Long id);
+    ParentDto findById(Long id);
 
-    Parent save(ParentDto parentDto);
+    ParentDto save(ParentDto parentDto);
 
-    List<Parent> findAll();
+    List<ParentDto> findAll();
 
-    Optional<Parent> findByUserId(Long userId);
+    ParentDto findByUserId(Long userId);
 
     Parent update(ParentDto parentDto);
 
-    void addImage(Parent parent, MultipartFile multipartFile);
+    void addImage(ParentDto parentDto, MultipartFile multipartFile);
 
     void removeImage(Long parentId);
 }

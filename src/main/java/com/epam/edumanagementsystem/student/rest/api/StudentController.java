@@ -92,7 +92,7 @@ public class StudentController {
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
-        model.addAttribute("parents", ParentMapper.toParentListWithoutSaveUser(findAllParents()));
+        model.addAttribute("parents", ParentMapper.toParentList(findAllParents()));
         model.addAttribute("classes", findAllClasses());
         if (InputFieldsValidation.validateInputFieldSize(studentDto.getName())) {
             model.addAttribute("nameSize", "Symbols can't be more than 50");
@@ -211,7 +211,7 @@ public class StudentController {
     }
 
     private List<ParentDto> findAllParents() {
-        return ParentMapper.toParentDtoList(parentService.findAll());
+        return parentService.findAll();
     }
 
     private List<AcademicClassDto> findAllClasses() {

@@ -23,7 +23,7 @@
         <div class="content" id="middle">
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Parents'}"></a>
-                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${parentDto.getNameAndSurname()}"></a>
+                <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${parentDto.getFullName()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
@@ -35,7 +35,8 @@
         </div>
         <div class="sidebar_right">
             <div th:if="${parentDto.getPicUrl() == null}">
-                <form id="form-pic" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}" th:object="${existingParent}" enctype="multipart/form-data">
+                <form id="form-pic" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}"
+                      th:object="${existingParent}" enctype="multipart/form-data">
                     <div class="image-upload">
                         <label for="file-input" width="150px" height="150px">
                             <span id="boot-icon" class="bi bi-cloud-upload" style="cursor:pointer;font-size: 150px;
@@ -61,7 +62,8 @@
                             <div class="overlay"></div>
                             <div class="btn-img">
 
-                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}" th:object="${existingParent}" enctype="multipart/form-data">
+                                <form id="form-pic-edi" class="form" th:method="POST"  th:action="@{'/parents/' + ${parentDto.getId()} + '/image/add'}"
+                                      th:object="${existingParent}" enctype="multipart/form-data">
                                     <div class="image-upload">
                                         <input id="form-pic-edit" th:name="picture" multiple type="file" accept="image/png,image/jpeg" onchange="filevalidationEdit()">
                                     </div>

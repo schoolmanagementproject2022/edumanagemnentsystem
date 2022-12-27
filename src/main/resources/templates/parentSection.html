@@ -20,7 +20,7 @@
 
         <div class="list">
             <div class="list-items" th:each="parent: ${parents}">
-                <a class="item" th:text="${parent.getNameAndSurname()}"
+                <a class="item" th:text="${parent.getFullName()}"
                    th:href="@{'/parents/' + ${parent.getId()} + '/profile'}">Parent</a>
             </div>
         </div>

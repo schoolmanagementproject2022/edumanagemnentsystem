@@ -1,10 +1,9 @@
 package com.epam.edumanagementsystem.parent.rest.api;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
-import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
@@ -12,7 +11,6 @@ import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -26,19 +24,13 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/parents")
-@MultipartConfig(maxFileSize = 2 * 2048 * 2048, maxRequestSize = 2 * 2048 * 2048)
-@ControllerAdvice
+@MultipartConfig(maxFileSize = AppConstants.MAX_FILE_SIZE,
+        maxRequestSize = AppConstants.MAX_REQUEST_SIZE)
 public class ParentController {
-    private static final String INPUT_LENGTH_MESSAGE = "Symbols can't be more than 50";
-    private static final String INVALID_EMAIL = "invalidEmail";
-    private static final String NAME_SIZE = "nameSize";
-    private static final String SURNAME_SIZE = "surnameSize";
-    private static final String EMAIL_SIZE = "emailSize";
-    private static final String REDIRECT_URL = "redirect:/parents/";
+    private static final String INPUT_LENGTH_MESSAGE = "{SYMBOLS_MAX_LENGTH}";
+    private static final String REDIRECT_TO_PARENTS = "redirect:/parents/";
     private static final String PROFILE_URL = "/profile";
 
-
-    private final PasswordEncoder bcryptPasswordEncoder;
     private final ParentService parentService;
     private final UserService userService;
     private final ImageService imageService;
@@ -46,9 +38,8 @@ public class ParentController {
 
 
     @Autowired
-    public ParentController(PasswordEncoder bcryptPasswordEncoder, ParentService parentService,
-                            UserService userService, ImageService imageService, StudentService studentService) {
-        this.bcryptPasswordEncoder = bcryptPasswordEncoder;
+    public ParentController(ParentService parentService, UserService userService,
+                            ImageService imageService, StudentService studentService) {
         this.parentService = parentService;
         this.userService = userService;
         this.imageService = imageService;
@@ -80,38 +71,38 @@ public class ParentController {
 
         model.addAttribute("parents", parentService.findAll());
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute(NAME_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.NAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute(SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute(EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
         }
 
-        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
+        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(AppConstants.EMAIL_SIZE)) {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute(INVALID_EMAIL, "Email is invalid");
+                model.addAttribute(AppConstants.INVALID_EMAIL, "{INVALID_EMAIL}");
             }
         }
         UserDataValidation.validatePassword(parentDto.getPassword(), model);
         if (bindingResult.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
-                || model.containsAttribute(INVALID_EMAIL)
-                || model.containsAttribute("duplicated") || model.containsAttribute(EMAIL_SIZE)
-                || model.containsAttribute(NAME_SIZE)
-                || model.containsAttribute(SURNAME_SIZE)
+                || model.containsAttribute(AppConstants.INVALID_EMAIL)
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute(AppConstants.EMAIL_SIZE)
+                || model.containsAttribute(AppConstants.NAME_SIZE)
+                || model.containsAttribute(AppConstants.SURNAME_SIZE)
                 || model.containsAttribute("size")
                 || model.containsAttribute("formatValidationMessage")) {
 
             return "parentSection";
         }
-        parentDto.setPassword(bcryptPasswordEncoder.encode(parentDto.getPassword()));
-        Parent parent = parentService.save(parentDto);
+        ParentDto savedParentDto = parentService.save(parentDto);
 
         if (!multipartFile.isEmpty()) {
-            parentService.addImage(parent, multipartFile);
+            parentService.addImage(savedParentDto, multipartFile);
         }
         return "redirect:/parents";
     }
@@ -119,8 +110,8 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("parentDto", ParentMapper.toParentDto(parentService.findById(id).get()));
-        model.addAttribute("parentData", parentService.findById(id).get().getFullName());
+        model.addAttribute("parentDto", parentService.findById(id));
+        model.addAttribute("parentData", parentService.findById(id).getFullName());
         return "parentProfile";
     }
 
@@ -137,47 +128,49 @@ public class ParentController {
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute(NAME_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.NAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute(SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute(EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
         }
 
-        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(EMAIL_SIZE)) {
-            if (!parentDto.getEmail().equals(parentService.findById(id).get().getUser().getEmail())) {
+        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(AppConstants.EMAIL_SIZE)) {
+            if (!parentDto.getEmail().equals(parentService.findById(id).getEmail())) {
                 userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             }
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute(INVALID_EMAIL, "Email is invalid");
+                model.addAttribute(AppConstants.INVALID_EMAIL, "{INVALID_EMAIL}");
             }
         }
 
-        if (bindingResult.hasErrors() || model.containsAttribute(INVALID_EMAIL)
-                || model.containsAttribute("duplicated") || model.containsAttribute(EMAIL_SIZE)
-                || model.containsAttribute(NAME_SIZE) || model.containsAttribute(SURNAME_SIZE)) {
-            model.addAttribute("parentData", parentService.findById(id).get().getFullName());
+        if (bindingResult.hasErrors() || model.containsAttribute(AppConstants.INVALID_EMAIL)
+                || model.containsAttribute("duplicated")
+                || model.containsAttribute(AppConstants.EMAIL_SIZE)
+                || model.containsAttribute(AppConstants.NAME_SIZE)
+                || model.containsAttribute(AppConstants.SURNAME_SIZE)) {
+            model.addAttribute("parentData", parentService.findById(id).getFullName());
             return "parentProfile";
         }
         parentService.update(parentDto);
-        return REDIRECT_URL + id + PROFILE_URL;
+        return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }
 
     @PostMapping("/{id}/image/add")
     @Operation(summary = "Adds image to selected parent's profile")
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
-        parentService.addImage(parentService.findById(id).get(), multipartFile);
-        return REDIRECT_URL + id + PROFILE_URL;
+        parentService.addImage(parentService.findById(id), multipartFile);
+        return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }
 
     @GetMapping("/{id}/image/delete")
     @Operation(summary = "Deletes image from selected parent's profile")
     public String deleteImage(@PathVariable("id") Long id) {
-        imageService.deleteImage(parentService.findById(id).get().getPicUrl());
+        imageService.deleteImage(parentService.findById(id).getPicUrl());
         parentService.removeImage(id);
-        return REDIRECT_URL + id + PROFILE_URL;
+        return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }
 
 }

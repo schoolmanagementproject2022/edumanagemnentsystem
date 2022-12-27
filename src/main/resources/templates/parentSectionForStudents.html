@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/parentProfile.css" rel="stylesheet">
-    <title th:text="${parent.getNameAndSurname()}">Parent's Student</title>
+    <title th:text="${parent.getFullName()}">Parent's Student</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -18,7 +18,7 @@
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Parents'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${'/' + firstUrl + '/' + middleUrl + '/profile'}"
-                   th:text="${parent.getNameAndSurname()}"></a>
+                   th:text="${parent.getFullName()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Linked students'}"></a>
             </div>
             <div class="list" th:if="${!students.isEmpty()}">
@@ -46,7 +46,7 @@
                 <h1 class="userNameSurname" th:text="${parent.getName()}"></h1></div>
             <div class="name_surname_sectiion">
                 <h1 class="userNameSurname" th:text="${parent.getSurname()}"></h1></div>
-            <span class="tooltiptext" th:text="${parent.getNameAndSurname()}">Tooltip text</span>
+            <span class="tooltiptext" th:text="${parent.getFullName()}">Tooltip text</span>
         </div>
         <div class="sidebar_right_link">
             <a class="sidebar_right_links_item"
