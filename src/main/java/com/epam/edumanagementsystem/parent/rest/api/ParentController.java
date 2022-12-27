@@ -27,7 +27,7 @@ import java.io.IOException;
 @MultipartConfig(maxFileSize = AppConstants.MAX_FILE_SIZE,
         maxRequestSize = AppConstants.MAX_REQUEST_SIZE)
 public class ParentController {
-    private static final String INPUT_LENGTH_MESSAGE = "{SYMBOLS_MAX_LENGTH}";
+    //    private static final String INPUT_LENGTH_MESSAGE = SYMBOLS_MAX_LENGTH;
     private static final String REDIRECT_TO_PARENTS = "redirect:/parents/";
     private static final String PROFILE_URL = "/profile";
 
@@ -48,10 +48,10 @@ public class ParentController {
 
     @GetMapping()
     @Operation(summary = "Gets the list of parents and shows on admin's dashboard")
-    public String toParents(ModelMap modelMap) {
-        modelMap.addAttribute("parents", parentService.findAll());
-        modelMap.addAttribute("parent", new ParentDto());
-        modelMap.addAttribute("user", new User());
+    public String toParents(Model model) {
+        model.addAttribute("parents", parentService.findAll());
+        model.addAttribute("parent", new ParentDto());
+        model.addAttribute("user", new User());
         return "parentSection";
     }
 
@@ -62,6 +62,7 @@ public class ParentController {
                              @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                              @RequestParam(value = "status", required = false) String status,
                              Model model) throws IOException {
+
         if (!multipartFile.isEmpty()) {
             UserDataValidation.validateImage(multipartFile, model);
         }
@@ -71,19 +72,19 @@ public class ParentController {
 
         model.addAttribute("parents", parentService.findAll());
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute(AppConstants.NAME_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.NAME_SIZE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute(AppConstants.SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.SURNAME_SIZE);
         }
         if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute(AppConstants.EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
+            model.addAttribute(AppConstants.EMAIL_SIZE);
         }
 
         if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(AppConstants.EMAIL_SIZE)) {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute(AppConstants.INVALID_EMAIL, "{INVALID_EMAIL}");
+                model.addAttribute(AppConstants.INVALID_EMAIL);
             }
         }
         UserDataValidation.validatePassword(parentDto.getPassword(), model);
@@ -127,31 +128,18 @@ public class ParentController {
     @Operation(summary = "Edits selected parent's profile")
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
-        if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute(AppConstants.NAME_SIZE, INPUT_LENGTH_MESSAGE);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute(AppConstants.SURNAME_SIZE, INPUT_LENGTH_MESSAGE);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute(AppConstants.EMAIL_SIZE, INPUT_LENGTH_MESSAGE);
-        }
 
-        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(AppConstants.EMAIL_SIZE)) {
+        if (!bindingResult.hasFieldErrors("email")) {
             if (!parentDto.getEmail().equals(parentService.findById(id).getEmail())) {
                 userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             }
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute(AppConstants.INVALID_EMAIL, "{INVALID_EMAIL}");
+                model.addAttribute(AppConstants.INVALID_EMAIL);
             }
         }
 
         if (bindingResult.hasErrors() || model.containsAttribute(AppConstants.INVALID_EMAIL)
-                || model.containsAttribute("duplicated")
-                || model.containsAttribute(AppConstants.EMAIL_SIZE)
-                || model.containsAttribute(AppConstants.NAME_SIZE)
-                || model.containsAttribute(AppConstants.SURNAME_SIZE)) {
-            model.addAttribute("parentData", parentService.findById(id).getFullName());
+                || model.containsAttribute("duplicated")) {
             return "parentProfile";
         }
         parentService.update(parentDto);
