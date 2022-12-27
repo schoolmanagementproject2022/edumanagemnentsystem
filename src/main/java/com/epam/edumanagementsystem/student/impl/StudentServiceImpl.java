@@ -180,7 +180,7 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findStudentsByClassName(String name) {
         List<StudentDto> studentsOfConcreteName = new ArrayList<>();
         for (StudentDto studentDto : findAll()) {
-            if (studentDto.getAcademicClass().getClassNumber().equals(name)) {
+            if (studentDto.getAcademicClass() != null && studentDto.getAcademicClass().getClassNumber().equals(name)) {
                 studentsOfConcreteName.add(studentDto);
             }
         }
