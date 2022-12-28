@@ -129,18 +129,25 @@ public class ParentController {
     public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
 
-        if (!bindingResult.hasFieldErrors("email")) {
-            if (!parentDto.getEmail().equals(parentService.findById(id).getEmail())) {
-                userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
-            }
-            if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute(AppConstants.INVALID_EMAIL);
-            }
-        }
+        if (bindingResult.getFieldErrorCount() == 1) {
+            parentService.update(parentDto);
+            return REDIRECT_TO_PARENTS + id + PROFILE_URL;
+        } else {
 
-        if (bindingResult.hasErrors() || model.containsAttribute(AppConstants.INVALID_EMAIL)
-                || model.containsAttribute("duplicated")) {
-            return "parentProfile";
+
+            if (!bindingResult.hasFieldErrors("email")) {
+                if (!parentDto.getEmail().equals(parentService.findById(id).getEmail())) {
+                    userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
+                }
+                if (UserDataValidation.validateEmail(parentDto.getEmail())) {
+                    model.addAttribute(AppConstants.INVALID_EMAIL, "Email is invalid");
+                }
+            }
+
+            if (bindingResult.hasErrors() || model.containsAttribute(AppConstants.INVALID_EMAIL)
+                    || model.containsAttribute("duplicated")) {
+                return "parentProfile";
+            }
         }
         parentService.update(parentDto);
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;

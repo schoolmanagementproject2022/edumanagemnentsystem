@@ -64,8 +64,7 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public Parent update(ParentDto parentDto) {
-        Parent parent = parentRepository.findById(parentDto.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Parent is not found by id: " + parentDto.getId()));
+        Parent parent = parentRepository.findById(parentDto.getId()).get();
         parent.setName(parentDto.getName());
         parent.setSurname(parentDto.getSurname());
         parent.getUser().setEmail(parentDto.getEmail());

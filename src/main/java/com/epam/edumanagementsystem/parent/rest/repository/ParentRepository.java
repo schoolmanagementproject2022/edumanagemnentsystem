@@ -14,7 +14,7 @@ public interface ParentRepository extends JpaRepository<Parent, Long> {
     Optional<Parent> findByUserId(Long userId);
 
     @Modifying
-    @Query(value = "UPDATE Parent SET picUrl = NULL WHERE id =?1")
+    @Query(nativeQuery = true, value = "UPDATE parent SET pic_url = NULL WHERE id =(?1);")
     void updateImageUrl(Long parentId);
 
 }

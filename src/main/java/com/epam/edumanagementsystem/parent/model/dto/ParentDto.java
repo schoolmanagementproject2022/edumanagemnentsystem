@@ -18,7 +18,7 @@ public class ParentDto {
     private String email;
     @NotBlank
     private String role = "PARENT";
-    @NotBlank(message = "{EMPTY_FIELD}")
+//    @NotBlank(message = "{EMPTY_FIELD}")
     private String password;
     private String picUrl;
 
