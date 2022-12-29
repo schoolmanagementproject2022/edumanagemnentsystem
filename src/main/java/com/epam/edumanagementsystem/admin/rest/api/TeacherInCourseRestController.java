@@ -23,7 +23,7 @@ public class TeacherInCourseRestController {
     @Operation(summary = "Gets the list of the teachers for multi select after the selection of the course")
     public @ResponseBody
     Set<Teacher> findAllTeacherInCourseById(@RequestParam(value = "teachers", required = true) Long id) {
-        return academicCourseService.findByID(id).getTeachers();
+        return academicCourseService.findById(id).getTeachers();
     }
 
 }

@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 @RequestMapping("/years")
-@Tag(name="Academic year")
+@Tag(name = "Academic year")
 public class AcademicYearController {
+
     private final AcademicYearService academicYearService;
     private final String invalidMsg = "Wrong selected dates";
     private final String minRangeMsg = "Academic Year can’t be less than 30 days";
@@ -33,9 +33,7 @@ public class AcademicYearController {
     @GetMapping
     @Operation(summary = "Gets all academic years and shows them on admin's dashboard")
     public String openAcademicYearSection(Model model) {
-        List<AcademicYearDto> academicYears = academicYearService.findAll();
-        model.addAttribute("academicYears", academicYears);
-        model.addAttribute("academicYear", new AcademicYear());
+        setAttributesInYearSection(model);
         return "academicYearSection";
     }
 
@@ -45,8 +43,7 @@ public class AcademicYearController {
                          BindingResult result, Model model) {
         LocalDate endDate = academicYear.getEndDate();
         LocalDate startDate = academicYear.getStartDate();
-        List<AcademicYearDto> academicYears = academicYearService.findAll();
-        model.addAttribute("academicYears", academicYears);
+        model.addAttribute("academicYears", academicYearService.findAll());
 
         if (result.hasFieldErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
@@ -83,4 +80,10 @@ public class AcademicYearController {
         academicYearService.save(academicYear);
         return "redirect:/years";
     }
+
+    private void setAttributesInYearSection(Model model) {
+        model.addAttribute("academicYears", academicYearService.findAll());
+        model.addAttribute("academicYear", new AcademicYear());
+    }
+
 }

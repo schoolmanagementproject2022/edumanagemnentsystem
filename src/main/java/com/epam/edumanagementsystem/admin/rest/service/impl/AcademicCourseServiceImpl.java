@@ -39,7 +39,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public AcademicCourse findByID(Long id) {
+    public AcademicCourse findById(Long id) {
         return academicCourseRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 

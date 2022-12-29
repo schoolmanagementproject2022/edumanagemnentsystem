@@ -282,7 +282,7 @@ public class AcademicClassController {
         }
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
-            model.addAttribute("course", academicCourseService.findByID(courseId));
+            model.addAttribute("course", academicCourseService.findById(courseId));
             model.addAttribute("class", academicClassService.findByClassNumber(name));
             List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
             model.addAttribute("allStudentsInAcademicClass", studentsInClass);
