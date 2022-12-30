@@ -6,6 +6,7 @@ public final class ExceptionMessages {
     }
 
     public static final String EMPTY_FIELD = "Please, fill the required fields";
+    public static final String SELECT_FIELD = "Please, select the required fields";
     public static final String SYMBOL_LENGTH = "Symbols can't be more than 50";
     public static final String INVALID_EMAIL = "You entered invalid email";
     public static final String ID_NULL = "Given id is null";

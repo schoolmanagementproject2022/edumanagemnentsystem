@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.List;
+
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.VACATION_REDIRECT;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.VACATION_SECTION;
 
 @Controller
 @RequestMapping("/vacations")
-@Tag(name="Vacation")
+@Tag(name = "Vacation")
 public class VacationController {
-
     private final VacationService vacationService;
 
     @Autowired
@@ -32,38 +33,32 @@ public class VacationController {
     @GetMapping
     @Operation(summary = "Gets the vacations' list and shows them on admin's dashboard")
     public String openVacationSection(Model model) {
-        List<VacationDto> vacationDtoList = vacationService.findAll();
-        model.addAttribute("vacations", vacationDtoList);
-        model.addAttribute("vacation", new VacationDto());
-        return "vacationSection";
+        setAttributesInVacation(model);
+        return VACATION_SECTION;
     }
 
     @PostMapping
     @Operation(summary = "Saves the created vacation")
     public String create(@ModelAttribute("vacation") @Valid VacationDto vacationDto,
                          BindingResult result, Model model) {
-        List<VacationDto> vacationDtos = vacationService.findAll();
-        model.addAttribute("vacations", vacationDtos);
-
-        if (result.hasErrors()) {
-            if (result.hasFieldErrors("startDate")) {
-                return "vacationSection";
-            }
-            if (result.hasFieldErrors("endDate")) {
-                return "vacationSection";
-            }
-        }
+        model.addAttribute("vacations", vacationService.findAll());
 
         if (vacationDto.getStartDate().isBefore(LocalDate.now())) {
             model.addAttribute("invalid", "Wrong selected dates");
-            return "vacationSection";
+            return VACATION_SECTION;
         } else if (vacationDto.getStartDate().isAfter(vacationDto.getEndDate())) {
             model.addAttribute("invalid", "Wrong selected dates");
-            return "vacationSection";
+            return VACATION_SECTION;
         } else {
             vacationService.save(vacationDto);
-            return "redirect:/vacations";
+            return VACATION_REDIRECT;
         }
     }
+
+    private void setAttributesInVacation(Model model) {
+        model.addAttribute("vacations", vacationService.findAll());
+        model.addAttribute("vacation", new VacationDto());
+    }
+
 }
 
