@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.parent.rest.api;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
@@ -13,7 +14,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,8 +111,10 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("parentDto", parentService.findById(id));
+        model.addAttribute("parentDto", parentService.findParentEditById(id));
         model.addAttribute("parentData", parentService.findById(id).getFullName());
+        model.addAttribute("parentForEdit", new ParentEditDto());
+        model.addAttribute("user", new User());
         return "parentProfile";
     }
 
@@ -126,29 +128,14 @@ public class ParentController {
 
     @PostMapping("/{id}/profile")
     @Operation(summary = "Edits selected parent's profile")
-    public String editParent(@Valid @ModelAttribute("parentDto") ParentDto parentDto, BindingResult bindingResult,
+    public String editParent(@Valid @ModelAttribute("parentDto") ParentEditDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
 
-        if (bindingResult.getFieldErrorCount() == 1) {
-            parentService.update(parentDto);
-            return REDIRECT_TO_PARENTS + id + PROFILE_URL;
-        } else {
-
-
-            if (!bindingResult.hasFieldErrors("email")) {
-                if (!parentDto.getEmail().equals(parentService.findById(id).getEmail())) {
-                    userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
-                }
-                if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                    model.addAttribute(AppConstants.INVALID_EMAIL, "Email is invalid");
-                }
-            }
-
-            if (bindingResult.hasErrors() || model.containsAttribute(AppConstants.INVALID_EMAIL)
-                    || model.containsAttribute("duplicated")) {
-                return "parentProfile";
-            }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("parentData",parentDto.getFullName());
+            return "parentProfile";
         }
+
         parentService.update(parentDto);
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }

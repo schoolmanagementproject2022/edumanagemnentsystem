@@ -7,32 +7,31 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class ParentDto {
+public class ParentEditDto {
     private Long id;
     @NotBlank(message = "{EMPTY_FIELD}")
     @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String name;
+
     @NotBlank(message = "{EMPTY_FIELD}")
     @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String surname;
+
     @ValidEmail
     private String email;
-    @NotBlank
-    private String role = "PARENT";
-    @NotBlank(message = "{EMPTY_FIELD}")
-    private String password;
+
     private String picUrl;
 
-    public ParentDto() {
+    public ParentEditDto() {
+
     }
 
-    public ParentDto(String name, String surname, String email,
-                     String role, String password) {
+    public ParentEditDto(Long id, String name, String surname, String email, String picUrl) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.role = role;
-        this.password = password;
+        this.picUrl = picUrl;
     }
 
     public Long getId() {
@@ -59,36 +58,16 @@ public class ParentDto {
         this.surname = surname;
     }
 
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNameSurname() {
-        return name + " " + surname;
-    }
-
-    public String getFullName() {
-        return this.name + " " + this.surname;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getPicUrl() {
@@ -99,31 +78,27 @@ public class ParentDto {
         this.picUrl = picUrl;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ParentDto parentDto = (ParentDto) o;
-        return id.equals(parentDto.id) && name.equals(parentDto.name) &&
-                surname.equals(parentDto.surname) && email.equals(parentDto.email) &&
-                role.equals(parentDto.role) && password.equals(parentDto.password);
+        ParentEditDto that = (ParentEditDto) o;
+        return id.equals(that.id) && name.equals(that.name) && surname.equals(that.surname) && email.equals(that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, role, password);
+        return Objects.hash(id, name, surname, email);
     }
 
     @Override
     public String toString() {
-        return "ParentDto{" +
+        return "ParentEditDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }
+

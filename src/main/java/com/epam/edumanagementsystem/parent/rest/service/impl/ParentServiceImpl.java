@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.parent.rest.service.impl;
 
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
@@ -42,6 +43,14 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
+    public ParentEditDto findParentEditById(Long id) {
+        if (parentRepository.findById(id).isPresent()) {
+            return ParentMapper.mapToParentEditDto(parentRepository.findById(id).get());
+        }
+        throw new EntityNotFoundException("Parent is not found by id: " + id);
+    }
+
+    @Override
     public ParentDto save(ParentDto parentDto) {
         Parent parent = ParentMapper.toParent(parentDto);
         parent.setUser(userService.save(new User(parentDto.getEmail(), parentDto.getRole())));
@@ -63,7 +72,7 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent update(ParentDto parentDto) {
+    public Parent update(ParentEditDto parentDto) {
         Parent parent = parentRepository.findById(parentDto.getId()).get();
         parent.setName(parentDto.getName());
         parent.setSurname(parentDto.getSurname());
