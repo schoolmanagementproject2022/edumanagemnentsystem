@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
+import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
@@ -263,14 +264,45 @@ public class AcademicClassController {
                                         @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
+
         if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
             model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
             model.addAttribute("concreteDay", concreteDay);
         }
+        model.addAttribute("saveAgenda", new SaveAgendaDto());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             model.addAttribute("course", academicCourseService.findByID(courseId));
             model.addAttribute("class", academicClassService.findByName(name));
+            List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
+            model.addAttribute("allStudentsInAcademicClass", studentsInClass);
+            if (studentsInClass.isEmpty()) {
+                return "journalWithCourseInfo";
+            }
+
+            academicClassService.openJournal(date, startDate, name, model);
+            return "journalWithCourseInfo";
+        } else {
+            academicClassService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
+            model.addAttribute("class", academicClassService.findByName(name));
+            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(name));
+            model.addAttribute("creationStatus", false);
+            return "createTimetableMsgFromJournal";
+        }
+    }
+
+    @PostMapping("/{name}/journal/{courseId}")
+    public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto, BindingResult result,
+                                     @PathVariable("name") String name, @PathVariable("courseId") Long courseId,
+                                     @RequestParam(name = "date", required = false) String date,
+                                     @RequestParam(name = "startDate", required = false) String startDate,
+                                     @RequestParam(value = "concreteDay", required = false) String concreteDay,
+                                     Model model) {
+
+        if (null != timetableService.findTimetableByAcademicClassName(name) ) {
+            model.addAttribute("course", academicCourseService.findByID(courseId));
+            model.addAttribute("class", academicClassService.findByName(name));
+            model.addAttribute("concreteDay", concreteDay);
             List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
             model.addAttribute("allStudentsInAcademicClass", studentsInClass);
             if (studentsInClass.isEmpty()) {
