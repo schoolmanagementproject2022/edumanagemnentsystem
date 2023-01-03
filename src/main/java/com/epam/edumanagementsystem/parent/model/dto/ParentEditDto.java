@@ -8,7 +8,9 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ParentEditDto {
+
     private Long id;
+
     @NotBlank(message = "{EMPTY_FIELD}")
     @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String name;
@@ -56,10 +58,6 @@ public class ParentEditDto {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getFullName() {
-        return this.name + " " + this.surname;
     }
 
     public String getEmail() {

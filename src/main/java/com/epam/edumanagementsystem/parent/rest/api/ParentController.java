@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -84,7 +85,7 @@ public class ParentController {
         if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(AppConstants.EMAIL_SIZE)) {
             userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
             if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute(AppConstants.INVALID_EMAIL);
+                model.addAttribute("invalidEmail", "Email is invalid");
             }
         }
         UserDataValidation.validatePassword(parentDto.getPassword(), model);
@@ -113,17 +114,7 @@ public class ParentController {
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute("parentDto", parentService.findParentEditById(id));
         model.addAttribute("parentData", parentService.findById(id).getFullName());
-        model.addAttribute("parentForEdit", new ParentEditDto());
-        model.addAttribute("user", new User());
         return "parentProfile";
-    }
-
-    @GetMapping("/{id}/students")
-    @Operation(summary = "Shows linked students of selected parent")
-    public String openLinkedStudentForParent(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("students", studentService.findStudentsByParentId(id));
-        model.addAttribute("parent", parentService.findById(id));
-        return "parentSectionForStudents";
     }
 
     @PostMapping("/{id}/profile")
@@ -131,13 +122,21 @@ public class ParentController {
     public String editParent(@Valid @ModelAttribute("parentDto") ParentEditDto parentDto, BindingResult bindingResult,
                              @PathVariable("id") Long id, Model model) {
 
+        checkEmailForDuplication(parentDto, bindingResult, id, model);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("parentData",parentDto.getFullName());
+            model.addAttribute("parentData", parentService.findById(id).getFullName());
             return "parentProfile";
         }
-
         parentService.update(parentDto);
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
+    }
+
+    private void checkEmailForDuplication(ParentEditDto parentDto, BindingResult bindingResult, Long id, Model model) {
+        if (!parentDto.getEmail().equalsIgnoreCase(parentService.findById(id).getEmail()) &&
+                UserDataValidation.existsEmail(parentDto.getEmail())) {
+            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
+            model.addAttribute("duplicated", "A user with the specified email already exists");
+        }
     }
 
     @PostMapping("/{id}/image/add")
@@ -153,6 +152,14 @@ public class ParentController {
         imageService.deleteImage(parentService.findById(id).getPicUrl());
         parentService.removeImage(id);
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
+    }
+
+    @GetMapping("/{id}/students")
+    @Operation(summary = "Shows linked students of selected parent")
+    public String openLinkedStudentForParent(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("students", studentService.findStudentsByParentId(id));
+        model.addAttribute("parent", parentService.findById(id));
+        return "parentSectionForStudents";
     }
 
 }

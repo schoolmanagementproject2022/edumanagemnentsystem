@@ -1,12 +1,22 @@
 package com.epam.edumanagementsystem.util;
 
+import com.epam.edumanagementsystem.util.service.UserService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
 
+@Component
 public class UserDataValidation {
+    @Lazy
+    private static UserService userService;
+
+    public UserDataValidation(UserService userService) {
+        this.userService = userService;
+    }
 
     private static final String PASSWORD_PATTERN
             = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&])[A-Za-z\\\\d()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&]{9,50}";
@@ -30,6 +40,15 @@ public class UserDataValidation {
         }
         return false;
     }
+
+    public static boolean existsEmail(String email) {
+        if (Objects.nonNull(email)) {
+            return userService.findAll().stream()
+                    .anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email));
+        }
+        return false;
+    }
+
 
     public static void validateImage(MultipartFile multipartFile, Model model) throws IOException {
         if (multipartFile.getBytes().length > 2097152) {
