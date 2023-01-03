@@ -1,21 +1,18 @@
 package com.epam.edumanagementsystem.parent.rest.api;
 
-import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.AppConstants;
-import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
-import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,32 +25,34 @@ import java.io.IOException;
 @MultipartConfig(maxFileSize = AppConstants.MAX_FILE_SIZE,
         maxRequestSize = AppConstants.MAX_REQUEST_SIZE)
 public class ParentController {
-    //    private static final String INPUT_LENGTH_MESSAGE = SYMBOLS_MAX_LENGTH;
+
     private static final String REDIRECT_TO_PARENTS = "redirect:/parents/";
     private static final String PROFILE_URL = "/profile";
+    private static final String PARENT_PROFILE_HTML = "parentProfile";
+    private static final String PARENT_SECTION_HTML = "parentSection";
+    private static final String PARENT_SECTION_FOR_STUDENTS_HTML = "parentSectionForStudents";
+    private static final String PARENT_DTO = "parentDto";
 
     private final ParentService parentService;
-    private final UserService userService;
     private final ImageService imageService;
     private final StudentService studentService;
 
 
     @Autowired
-    public ParentController(ParentService parentService, UserService userService,
-                            ImageService imageService, StudentService studentService) {
+    public ParentController(ParentService parentService, ImageService imageService,
+                            StudentService studentService) {
         this.parentService = parentService;
-        this.userService = userService;
         this.imageService = imageService;
         this.studentService = studentService;
     }
 
     @GetMapping()
     @Operation(summary = "Gets the list of parents and shows on admin's dashboard")
-    public String toParents(Model model) {
+    public String openParentSection(Model model) {
         model.addAttribute("parents", parentService.findAll());
         model.addAttribute("parent", new ParentDto());
         model.addAttribute("user", new User());
-        return "parentSection";
+        return PARENT_SECTION_HTML;
     }
 
     @PostMapping()
@@ -64,79 +63,41 @@ public class ParentController {
                              @RequestParam(value = "status", required = false) String status,
                              Model model) throws IOException {
 
-        if (!multipartFile.isEmpty()) {
-            UserDataValidation.validateImage(multipartFile, model);
-        }
-        if (status.equals("validationFail")) {
-            model.addAttribute("size", "File size exceeds maximum 2mb limit");
-        }
-
         model.addAttribute("parents", parentService.findAll());
-        if (InputFieldsValidation.validateInputFieldSize(parentDto.getName())) {
-            model.addAttribute(AppConstants.NAME_SIZE);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(parentDto.getSurname())) {
-            model.addAttribute(AppConstants.SURNAME_SIZE);
-        }
-        if (InputFieldsValidation.validateInputFieldSize(parentDto.getEmail())) {
-            model.addAttribute(AppConstants.EMAIL_SIZE);
-        }
+        UserDataValidation.checkMultipartFile(multipartFile, status, model);
+        parentService.checkEmailForCreate(parentDto, bindingResult, model);
 
-        if (!bindingResult.hasFieldErrors("email") && !model.containsAttribute(AppConstants.EMAIL_SIZE)) {
-            userService.checkDuplicationOfEmail(parentDto.getEmail(), model);
-            if (UserDataValidation.validateEmail(parentDto.getEmail())) {
-                model.addAttribute("invalidEmail", "Email is invalid");
-            }
-        }
-        UserDataValidation.validatePassword(parentDto.getPassword(), model);
-        if (bindingResult.hasErrors() || model.containsAttribute("blank")
-                || model.containsAttribute("invalidPassword")
-                || model.containsAttribute(AppConstants.INVALID_EMAIL)
-                || model.containsAttribute("duplicated")
-                || model.containsAttribute(AppConstants.EMAIL_SIZE)
-                || model.containsAttribute(AppConstants.NAME_SIZE)
-                || model.containsAttribute(AppConstants.SURNAME_SIZE)
-                || model.containsAttribute("size")
-                || model.containsAttribute("formatValidationMessage")) {
-
-            return "parentSection";
+        if (bindingResult.hasErrors()) {
+            return PARENT_SECTION_HTML;
         }
         ParentDto savedParentDto = parentService.save(parentDto);
-
         if (!multipartFile.isEmpty()) {
             parentService.addImage(savedParentDto, multipartFile);
         }
-        return "redirect:/parents";
+        return REDIRECT_TO_PARENTS;
     }
 
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("parentDto", parentService.findParentEditById(id));
+        model.addAttribute(PARENT_DTO, parentService.findParentEditById(id));
         model.addAttribute("parentData", parentService.findById(id).getFullName());
-        return "parentProfile";
+        return PARENT_PROFILE_HTML;
     }
 
     @PostMapping("/{id}/profile")
     @Operation(summary = "Edits selected parent's profile")
-    public String editParent(@Valid @ModelAttribute("parentDto") ParentEditDto parentDto, BindingResult bindingResult,
-                             @PathVariable("id") Long id, Model model) {
+    public String editParent(@Valid @ModelAttribute("parentDto") ParentEditDto parentDto,
+                             BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 
-        checkEmailForDuplication(parentDto, bindingResult, id, model);
+        parentService.checkEmailForEdit(parentDto, bindingResult, id, model);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("parentData", parentService.findById(id).getFullName());
-            return "parentProfile";
+            return PARENT_PROFILE_HTML;
         }
         parentService.update(parentDto);
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
-    }
-
-    private void checkEmailForDuplication(ParentEditDto parentDto, BindingResult bindingResult, Long id, Model model) {
-        if (!parentDto.getEmail().equalsIgnoreCase(parentService.findById(id).getEmail()) &&
-                UserDataValidation.existsEmail(parentDto.getEmail())) {
-            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-        }
     }
 
     @PostMapping("/{id}/image/add")
@@ -159,7 +120,7 @@ public class ParentController {
     public String openLinkedStudentForParent(@PathVariable("id") Long id, Model model) {
         model.addAttribute("students", studentService.findStudentsByParentId(id));
         model.addAttribute("parent", parentService.findById(id));
-        return "parentSectionForStudents";
+        return PARENT_SECTION_FOR_STUDENTS_HTML;
     }
 
 }

@@ -2,25 +2,33 @@ package com.epam.edumanagementsystem.parent.model.dto;
 
 import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.validation.ValidEmail;
+import com.epam.edumanagementsystem.util.validation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ParentDto {
+
     private Long id;
+
     @NotBlank(message = "{EMPTY_FIELD}")
     @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String name;
+
     @NotBlank(message = "{EMPTY_FIELD}")
     @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
     private String surname;
+
     @ValidEmail
     private String email;
+
     @NotBlank
     private String role = "PARENT";
-    @NotBlank(message = "{EMPTY_FIELD}")
+
+    @ValidPassword
     private String password;
+
     private String picUrl;
 
     public ParentDto() {
@@ -73,10 +81,6 @@ public class ParentDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getNameSurname() {
-        return name + " " + surname;
     }
 
     public String getFullName() {

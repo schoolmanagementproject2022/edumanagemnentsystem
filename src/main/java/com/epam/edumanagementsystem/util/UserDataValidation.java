@@ -1,9 +1,12 @@
 package com.epam.edumanagementsystem.util;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -42,11 +45,21 @@ public class UserDataValidation {
     }
 
     public static boolean existsEmail(String email) {
-        if (Objects.nonNull(email)) {
+        if (!Objects.isNull(email)) {
             return userService.findAll().stream()
                     .anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email));
         }
         return false;
+    }
+
+    public static void checkMultipartFile(MultipartFile multipartFile, String status,
+                                    Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            UserDataValidation.validateImage(multipartFile, model);
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
     }
 
 

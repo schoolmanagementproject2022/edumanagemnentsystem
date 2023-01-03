@@ -22,7 +22,6 @@ public class ParentMapper {
         return parent;
     }
 
-
     public static ParentDto toParentDto(Parent parent) {
         ParentDto parentDto = new ParentDto();
         parentDto.setId(parent.getId());
@@ -35,26 +34,16 @@ public class ParentMapper {
         return parentDto;
     }
 
-    public static Parent mapToParent(ParentEditDto parentDto) {
-        Parent parent = new Parent();
-        parent.setId(parentDto.getId());
-        parent.setName(parentDto.getName());
-        parent.setSurname(parentDto.getSurname());
-        parent.setPicUrl(parentDto.getPicUrl());
-
-        return parent;
-    }
-
     public static ParentEditDto mapToParentEditDto(Parent parent) {
         ParentEditDto parentEditDto = new ParentEditDto();
         parentEditDto.setId(parent.getId());
         parentEditDto.setName(parent.getName());
         parentEditDto.setSurname(parent.getSurname());
         parentEditDto.setEmail(parent.getUser().getEmail());
+        parentEditDto.setPicUrl(parent.getPicUrl());
 
         return parentEditDto;
     }
-
 
     public static List<Parent> toParentList(List<ParentDto> parentDtoList) {
         return parentDtoList.stream()

@@ -60,6 +60,10 @@ public class ParentEditDto {
         this.surname = surname;
     }
 
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
+
     public String getEmail() {
         return email;
     }
