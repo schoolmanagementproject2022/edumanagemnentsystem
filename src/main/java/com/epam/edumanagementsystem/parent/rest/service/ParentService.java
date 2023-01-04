@@ -2,7 +2,6 @@ package com.epam.edumanagementsystem.parent.rest.service;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
-import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,15 +12,15 @@ public interface ParentService {
 
     ParentDto findById(Long id);
 
-    ParentEditDto findParentEditById(Long id);
+    ParentDto findByUserId(Long userId);
 
-    ParentDto save(ParentDto parentDto);
+    ParentEditDto findParentEditById(Long id);
 
     List<ParentDto> findAll();
 
-    ParentDto findByUserId(Long userId);
+    ParentDto save(ParentDto parentDto);
 
-    Parent update(ParentEditDto parentDto);
+    ParentDto update(ParentEditDto parentDto);
 
     void addImage(ParentDto parentDto, MultipartFile multipartFile);
 

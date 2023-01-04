@@ -95,13 +95,12 @@
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <div class="tooltip">
-            <h1 th:text="${name_surname}">Teacher name</h1>
-            <span class="tooltiptext" th:text="${name_surname}">Tooltip text</span>
+            <h1 th:text="${teacherData}">Teacher name</h1>
+            <span class="tooltiptext" th:text="${teacherData}">Tooltip text</span>
         </div>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${teacher}">
             <script th:inline="javascript"
-                    th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidEmail} or ${emailSize}
-            or ${surnameSize} or ${nameSize}">
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
@@ -111,17 +110,13 @@
                     <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
-                    <div th:if="${nameSize}!= null" class="error">
-                        <p th:text="${nameSize}"></p>
-                    </div>
+
 
                     <label class="popup-label-title" for="surname">Teacher surname <span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}"/>
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
-                    <div th:if="${surnameSize}!= null" class="error">
-                        <p th:text="${surnameSize}"></p>
-                    </div>
+
 
                     <label class="popup-label-title" for="email">Teacher email <span
                             style="color:#A30014">*</span></label>
@@ -132,12 +127,7 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalidEmail}!= null" class="error">
-                        <p th:text="${invalidEmail}"></p>
-                    </div>
-                    <div th:if="${emailSize}!= null" class="error">
-                        <p th:text="${emailSize}"></p>
-                    </div>
+
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">

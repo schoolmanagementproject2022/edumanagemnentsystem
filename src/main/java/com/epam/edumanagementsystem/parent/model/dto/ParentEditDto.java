@@ -60,10 +60,6 @@ public class ParentEditDto {
         this.surname = surname;
     }
 
-    public String getFullName() {
-        return this.name + " " + this.surname;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -85,7 +81,8 @@ public class ParentEditDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ParentEditDto that = (ParentEditDto) o;
-        return id.equals(that.id) && name.equals(that.name) && surname.equals(that.surname) && email.equals(that.email);
+        return id.equals(that.id) && name.equals(that.name) &&
+                surname.equals(that.surname) && email.equals(that.email);
     }
 
     @Override

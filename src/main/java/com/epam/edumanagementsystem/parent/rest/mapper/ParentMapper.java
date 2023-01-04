@@ -12,7 +12,7 @@ public class ParentMapper {
     private ParentMapper() {
     }
 
-    public static Parent toParent(ParentDto parentDto) {
+    public static Parent mapToParent(ParentDto parentDto) {
         Parent parent = new Parent();
         parent.setId(parentDto.getId());
         parent.setName(parentDto.getName());
@@ -22,7 +22,7 @@ public class ParentMapper {
         return parent;
     }
 
-    public static ParentDto toParentDto(Parent parent) {
+    public static ParentDto mapToParentDto(Parent parent) {
         ParentDto parentDto = new ParentDto();
         parentDto.setId(parent.getId());
         parentDto.setName(parent.getName());
@@ -41,19 +41,18 @@ public class ParentMapper {
         parentEditDto.setSurname(parent.getSurname());
         parentEditDto.setEmail(parent.getUser().getEmail());
         parentEditDto.setPicUrl(parent.getPicUrl());
-
         return parentEditDto;
     }
 
-    public static List<Parent> toParentList(List<ParentDto> parentDtoList) {
+    public static List<Parent> mapToParentList(List<ParentDto> parentDtoList) {
         return parentDtoList.stream()
-                .map(ParentMapper::toParent)
+                .map(ParentMapper::mapToParent)
                 .collect(Collectors.toList());
     }
 
-    public static List<ParentDto> toParentDtoList(List<Parent> parentList) {
+    public static List<ParentDto> mapToParentDtoList(List<Parent> parentList) {
         return parentList.stream()
-                .map(ParentMapper::toParentDto)
+                .map(ParentMapper::mapToParentDto)
                 .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.parent.rest.service.impl;
 
-import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
@@ -19,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -40,54 +40,49 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public ParentDto findById(Long id) {
-        if (parentRepository.findById(id).isPresent()) {
-            return ParentMapper.toParentDto(parentRepository.findById(id).get());
-        }
-        throw new EntityNotFoundException("Parent is not found by id: " + id);
-    }
-
-    @Override
-    public ParentEditDto findParentEditById(Long id) {
-        if (parentRepository.findById(id).isPresent()) {
-            return ParentMapper.mapToParentEditDto(parentRepository.findById(id).get());
-        }
-        throw new EntityNotFoundException("Parent is not found by id: " + id);
-    }
-
-    @Override
-    public ParentDto save(ParentDto parentDto) {
-        Parent parent = ParentMapper.toParent(parentDto);
-        parent.setUser(userService.save(new User(parentDto.getEmail(), parentDto.getRole())));
-        parent.setPassword(encoder.encode(parentDto.getPassword()));
-        return ParentMapper.toParentDto(parentRepository.save(parent));
-    }
-
-    @Override
-    public List<ParentDto> findAll() {
-        return ParentMapper.toParentDtoList(parentRepository.findAll());
+        return ParentMapper.mapToParentDto(parentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Parent not found by id: " + id)));
     }
 
     @Override
     public ParentDto findByUserId(Long userId) {
-        if (parentRepository.findByUserId(userId).isPresent()) {
-            return ParentMapper.toParentDto(parentRepository.findByUserId(userId).get());
-        }
-        throw new EntityNotFoundException("Parent is not found by user id: " + userId);
+        return ParentMapper.mapToParentDto(parentRepository.findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Parent not found by user id: " + userId)));
     }
 
     @Override
-    public Parent update(ParentEditDto parentDto) {
+    public ParentEditDto findParentEditById(Long id) {
+        return ParentMapper.mapToParentEditDto(parentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Parent not found by id: " + id)));
+    }
+
+    @Override
+    public List<ParentDto> findAll() {
+        return ParentMapper.mapToParentDtoList(parentRepository.findAll());
+    }
+
+    @Override
+    public ParentDto save(ParentDto parentDto) {
+        Parent parent = ParentMapper.mapToParent(parentDto);
+        parent.setUser(userService.save(new User(parentDto.getEmail(), parentDto.getRole())));
+        parent.setPassword(encoder.encode(parentDto.getPassword()));
+        return ParentMapper.mapToParentDto(parentRepository.save(parent));
+    }
+
+
+    @Override
+    public ParentDto update(ParentEditDto parentDto) {
         Parent parent = parentRepository.findById(parentDto.getId()).get();
         parent.setName(parentDto.getName());
         parent.setSurname(parentDto.getSurname());
         parent.getUser().setEmail(parentDto.getEmail());
-        return parentRepository.save(parent);
+        return ParentMapper.mapToParentDto(parentRepository.save(parent));
     }
 
     @Override
     public void addImage(ParentDto parentDto, MultipartFile multipartFile) {
         parentDto.setPicUrl(imageService.saveImage(multipartFile));
-        parentRepository.save(ParentMapper.toParent(parentDto));
+        parentRepository.save(ParentMapper.mapToParent(parentDto));
     }
 
     @Override

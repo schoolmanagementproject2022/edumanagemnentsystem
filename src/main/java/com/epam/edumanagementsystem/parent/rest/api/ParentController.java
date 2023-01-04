@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,15 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/parents")
+@Tag(name = "Parents")
 @MultipartConfig(maxFileSize = AppConstants.MAX_FILE_SIZE,
         maxRequestSize = AppConstants.MAX_REQUEST_SIZE)
 public class ParentController {
 
+    private static final String PARENT_SECTION_HTML = "parentSection";
+    private static final String PARENT_PROFILE_HTML = "parentProfile";
     private static final String REDIRECT_TO_PARENTS = "redirect:/parents/";
     private static final String PROFILE_URL = "/profile";
-    private static final String PARENT_PROFILE_HTML = "parentProfile";
-    private static final String PARENT_SECTION_HTML = "parentSection";
     private static final String PARENT_SECTION_FOR_STUDENTS_HTML = "parentSectionForStudents";
     private static final String PARENT_DTO = "parentDto";
 
@@ -51,7 +53,6 @@ public class ParentController {
     public String openParentSection(Model model) {
         model.addAttribute("parents", parentService.findAll());
         model.addAttribute("parent", new ParentDto());
-        model.addAttribute("user", new User());
         return PARENT_SECTION_HTML;
     }
 

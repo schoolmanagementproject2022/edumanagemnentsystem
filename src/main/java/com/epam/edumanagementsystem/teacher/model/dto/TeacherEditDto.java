@@ -2,15 +2,12 @@ package com.epam.edumanagementsystem.teacher.model.dto;
 
 import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.validation.ValidEmail;
-import com.epam.edumanagementsystem.util.validation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class TeacherDto {
+public class TeacherEditDto {
 
     private Long id;
 
@@ -25,24 +22,18 @@ public class TeacherDto {
     @ValidEmail
     private String email;
 
-    @NotBlank
-    private String role = "TEACHER";
-
-    @ValidPassword
-    private String password;
-
     private String picUrl;
 
-    public TeacherDto() {
+    public TeacherEditDto() {
+
     }
 
-    public TeacherDto(String name, String surname, String email,
-                      String role, String password) {
+    public TeacherEditDto(Long id, String name, String surname, String email, String picUrl) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.role = role;
-        this.password = password;
+        this.picUrl = picUrl;
     }
 
     public Long getId() {
@@ -69,32 +60,12 @@ public class TeacherDto {
         this.surname = surname;
     }
 
-    public String getFullName() {
-        return name + " " + surname;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getPicUrl() {
@@ -109,26 +80,23 @@ public class TeacherDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TeacherDto that = (TeacherDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
-                Objects.equals(surname, that.surname) && Objects.equals(email, that.email)
-                && Objects.equals(role, that.role) && Objects.equals(password, that.password);
+        TeacherEditDto that = (TeacherEditDto) o;
+        return id.equals(that.id) && name.equals(that.name) &&
+                surname.equals(that.surname) && email.equals(that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, role, password);
+        return Objects.hash(id, name, surname, email);
     }
 
     @Override
     public String toString() {
-        return "TeacherDto{" +
+        return "TeacherEditDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }

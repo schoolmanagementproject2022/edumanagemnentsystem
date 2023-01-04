@@ -92,7 +92,7 @@ public class StudentController {
         model.addAttribute("students", findAllStudents());
         model.addAttribute("bloodGroups", BloodGroup.values());
         model.addAttribute("genders", Gender.values());
-        model.addAttribute("parents", ParentMapper.toParentList(findAllParents()));
+        model.addAttribute("parents", ParentMapper.mapToParentList(findAllParents()));
         model.addAttribute("classes", findAllClasses());
         if (InputFieldsValidation.validateInputFieldSize(studentDto.getName())) {
             model.addAttribute("nameSize", "Symbols can't be more than 50");
