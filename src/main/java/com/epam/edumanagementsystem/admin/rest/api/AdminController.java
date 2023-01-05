@@ -47,7 +47,7 @@ public class AdminController {
                            BindingResult result, Model model) {
         validateFields(adminDto, model);
         validateEmailAndPassword(result, adminDto, model);
-        String checked = checkIfBlankIsPresent(result, model);
+        String checked = checkIfValidationIsFailed(result, model);
         if (!checked.isBlank()) {
             return checked;
         }
@@ -84,7 +84,7 @@ public class AdminController {
         model.addAttribute("admins", adminService.findAll());
     }
 
-    private String checkIfBlankIsPresent(BindingResult result, Model model) {
+    private String checkIfValidationIsFailed(BindingResult result, Model model) {
         if (result.hasErrors() || model.containsAttribute("blank")
                 || model.containsAttribute("invalidPassword")
                 || model.containsAttribute("invalidEmail")

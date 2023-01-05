@@ -41,10 +41,23 @@ public class AcademicYearController {
     @Operation(summary = "Saves the created academic year")
     public String create(@ModelAttribute("academicYear") @Valid AcademicYearDto academicYear,
                          BindingResult result, Model model) {
-        LocalDate endDate = academicYear.getEndDate();
-        LocalDate startDate = academicYear.getStartDate();
         model.addAttribute("academicYears", academicYearService.findAll());
 
+        String checkedValidationOfDates = validateStartAndEndDates(result, model, academicYear.getStartDate(),
+                academicYear.getEndDate());
+        if (checkedValidationOfDates.equals("academicYearSection")) {
+            return checkedValidationOfDates;
+        }
+        academicYearService.save(academicYear);
+        return "redirect:/years";
+    }
+
+    private void setAttributesInYearSection(Model model) {
+        model.addAttribute("academicYears", academicYearService.findAll());
+        model.addAttribute("academicYear", new AcademicYear());
+    }
+
+    private String validateStartAndEndDates(BindingResult result, Model model, LocalDate startDate, LocalDate endDate) {
         if (result.hasFieldErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 if (startDate.isBefore(now)) {
@@ -77,13 +90,8 @@ public class AcademicYearController {
             model.addAttribute("max", "Academic Year can’t be more than 10 year");
             return "academicYearSection";
         }
-        academicYearService.save(academicYear);
-        return "redirect:/years";
-    }
 
-    private void setAttributesInYearSection(Model model) {
-        model.addAttribute("academicYears", academicYearService.findAll());
-        model.addAttribute("academicYear", new AcademicYear());
+        return "Passed";
     }
 
 }

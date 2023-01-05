@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class AcademicCourseServiceImpl implements AcademicCourseService {
@@ -24,6 +25,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     private final AcademicCourseRepository academicCourseRepository;
     private final AcademicClassService academicClassService;
     private final CoursesForTimetableService coursesForTimetableService;
+    private Logger logger;
 
     public AcademicCourseServiceImpl(AcademicCourseRepository academicCourseRepository,
                                      AcademicClassService academicClassService,

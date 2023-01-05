@@ -55,33 +55,20 @@ public class AcademicCourseController {
     @Operation(summary = "Saves the created academic course")
     public String save(@ModelAttribute("academicCourse") @Valid AcademicCourseDto academicCourse,
                        BindingResult result, Model model) {
-        List<AcademicCourseDto> courseDtoList = getAllCoursesAndSetAttributes(model);
-        validateNameField(model, academicCourse, result);
-
+        validateName(model, academicCourse, result);
         if (result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")) {
             return GlobalConstants.ACADEMIC_COURSE_SECTION;
         }
 
-        for (AcademicCourseDto aCourse : courseDtoList) {
-            if (aCourse.getName().equalsIgnoreCase(academicCourse.getName())) {
-                model.addAttribute("duplicated", "An Academic Course with the same name already exists");
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
+        String checkDuplication = checkDuplicationOfCourses(academicCourse, model);
+        if (checkDuplication.equals(GlobalConstants.ACADEMIC_COURSE_SECTION)) {
+            return checkDuplication;
+        }
+        String checkedNameAndSubject = validateNameAndSubject(result);
+        if (checkedNameAndSubject.equals(GlobalConstants.ACADEMIC_COURSE_SECTION)) {
+            return checkedNameAndSubject;
         }
 
-        if (result.hasErrors()) {
-            if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-            if (result.hasFieldErrors("name")) {
-                return "academicCourseSection";
-            } else if (result.hasFieldErrors("subject")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-            if (result.hasFieldErrors("subject")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-        }
         academicCourseService.save(academicCourse);
         return "redirect:/courses";
     }
@@ -99,9 +86,8 @@ public class AcademicCourseController {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
         AcademicCourse findAcademicCourseByName = academicCourseService.findByName(courseName);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
-        Set<Teacher> allTeachersByAcademicCourseName = findAcademicCourseByName.getTeachers();
         Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
-        model.addAttribute("teachersToSelect", allTeachersByAcademicCourseName);
+        model.addAttribute("teachersToSelect", findAcademicCourseByName.getTeachers());
         model.addAttribute("academicClasses", allAcademicClasses);
         model.addAttribute("existingClasses", academicClassesInCourse);
         model.addAttribute("newClass", new AcademicClass());
@@ -113,7 +99,8 @@ public class AcademicCourseController {
             model.addAttribute("academicClasses", academicClassSet);
             return "academicCourseSectionForClasses";
         }
-        academicClassSet = allAcademicClasses.stream().filter(academicClass -> !academicClassesInCourse.contains(academicClass)).collect(Collectors.toList());
+        academicClassSet = academicClassService.findAll().stream().filter(academicClass -> !academicClassesInCourse
+                .contains(academicClass)).collect(Collectors.toList());
         model.addAttribute("academicClasses", academicClassSet);
         return "academicCourseSectionForClasses";
     }
@@ -133,9 +120,8 @@ public class AcademicCourseController {
         }
         if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
             return "academicCourseSectionForTeachers";
-        } else {
-            result = allTeacherSet.stream().filter(teacher -> !allTeachersInAcademicCourse.contains(teacher)).collect(Collectors.toSet());
         }
+        result = allTeacherSet.stream().filter(teacher -> !allTeachersInAcademicCourse.contains(teacher)).collect(Collectors.toSet());
         model.addAttribute("teachers", result);
         academicCourseService.update(academicCourse);
         return "redirect:/courses/" + courseName + "/teachers";
@@ -211,7 +197,7 @@ public class AcademicCourseController {
         return courseDtoList;
     }
 
-    private void validateNameField(Model model, AcademicCourseDto academicCourseDto, BindingResult result) {
+    private void validateName(Model model, AcademicCourseDto academicCourseDto, BindingResult result) {
         if (!result.hasFieldErrors("name")) {
             if (InputFieldsValidation.validateInputFieldSize(academicCourseDto.getName())) {
                 model.addAttribute("nameSize", "Symbols can't be more than 50");
@@ -226,6 +212,33 @@ public class AcademicCourseController {
         model.addAttribute("academicCourses", academicCourseService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
         model.addAttribute("academicCourse", new AcademicCourseDto());
+    }
+
+    private String checkDuplicationOfCourses(AcademicCourseDto academicCourseDto, Model model) {
+        for (AcademicCourseDto courseDto : getAllCoursesAndSetAttributes(model)) {
+            if (courseDto.getName().equalsIgnoreCase(academicCourseDto.getName())) {
+                model.addAttribute("duplicated", "An Academic Course with the same name already exists");
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
+            }
+        }
+        return "Passed";
+    }
+
+    private String validateNameAndSubject(BindingResult result) {
+        if (result.hasErrors()) {
+            if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
+            }
+            if (result.hasFieldErrors("name")) {
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
+            } else if (result.hasFieldErrors("subject")) {
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
+            }
+            if (result.hasFieldErrors("subject")) {
+                return GlobalConstants.ACADEMIC_COURSE_SECTION;
+            }
+        }
+        return "Passed";
     }
 
 }

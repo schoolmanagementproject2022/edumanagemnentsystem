@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
+import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicClassServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;

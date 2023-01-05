@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +18,6 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     private final AcademicClassRepository academicClassRepository;
 
-    @Autowired
     public AcademicClassServiceImpl(AcademicClassRepository academicClassRepository) {
         this.academicClassRepository = academicClassRepository;
     }
