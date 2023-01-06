@@ -3,12 +3,15 @@ package com.epam.edumanagementsystem.admin.mapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AcademicCourseMapper {
+
+    private AcademicCourseMapper() {
+        throw new IllegalStateException();
+    }
 
     public static AcademicCourse toAcademicCourse(AcademicCourseDto academicCourseDto) {
         AcademicCourse academicCourse = new AcademicCourse();
@@ -28,28 +31,22 @@ public class AcademicCourseMapper {
         return academicCourseDto;
     }
 
-    public static List<AcademicCourseDto> toListOfAcademicCourseDto(List<AcademicCourse> academicCourses) {
-        List<AcademicCourseDto> academicCourseDtos = new ArrayList<>();
-        for (AcademicCourse academicCourse : academicCourses) {
-            academicCourseDtos.add(toDto(academicCourse));
-        }
-        return academicCourseDtos;
+    public static List<AcademicCourseDto> toListOfAcademicCourseDto(List<AcademicCourse> academicCourseList) {
+        return academicCourseList.stream()
+                .map(AcademicCourseMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public static List<AcademicCourse> toListOfAcademicCourses(List<AcademicCourseDto> academicCourseDtos) {
-        List<AcademicCourse> academicCourses = new ArrayList<>();
-        for (AcademicCourseDto academicCourseDto : academicCourseDtos) {
-            academicCourses.add(toAcademicCourse(academicCourseDto));
-        }
-        return academicCourses;
+    public static List<AcademicCourse> toListOfAcademicCourses(List<AcademicCourseDto> academicCourseDtoList) {
+        return academicCourseDtoList.stream()
+                .map(AcademicCourseMapper::toAcademicCourse)
+                .collect(Collectors.toList());
     }
 
-    public static Set<AcademicCourseDto> toSetOfAcademicCourseDto(Set<AcademicCourse> academicCourses) {
-        Set<AcademicCourseDto> academicCourseDtos = new LinkedHashSet<>();
-        for (AcademicCourse academicCourse : academicCourses) {
-            academicCourseDtos.add(toDto(academicCourse));
-        }
-        return academicCourseDtos;
+    public static Set<AcademicCourseDto> toSetOfAcademicCourseDto(Set<AcademicCourse> academicCourseSet) {
+        return academicCourseSet.stream()
+                .map(AcademicCourseMapper::toDto)
+                .collect(Collectors.toSet());
     }
 
 }

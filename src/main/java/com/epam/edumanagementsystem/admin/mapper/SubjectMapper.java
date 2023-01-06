@@ -4,8 +4,14 @@ import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SubjectMapper {
+
+    private SubjectMapper() {
+        throw new IllegalStateException();
+    }
+
     public static Subject toSubject(SubjectDto subjectDto) {
         Subject subject = new Subject();
         subject.setId(subjectDto.getId());
@@ -22,28 +28,22 @@ public class SubjectMapper {
         return subjectDto;
     }
 
-    public static List<SubjectDto> toSubjectDtoList(List<Subject> subjects) {
-        List<SubjectDto> subjectDtoList = new ArrayList<>();
-        for (Subject subject : subjects) {
-            subjectDtoList.add(toDto(subject));
-        }
-        return subjectDtoList;
+    public static List<SubjectDto> toSubjectDtoList(List<Subject> subjectList) {
+        return subjectList.stream()
+                .map(SubjectMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public static List<Subject> toSubjectsList(List<SubjectDto> subjectDtos) {
-        List<Subject> subjects = new ArrayList<>();
-        for (SubjectDto subjectDto : subjectDtos) {
-            subjects.add(toSubject(subjectDto));
-        }
-        return subjects;
+    public static List<Subject> toSubjectsList(List<SubjectDto> subjectDtoList) {
+        return subjectDtoList.stream()
+                .map(SubjectMapper::toSubject)
+                .collect(Collectors.toList());
     }
 
-    public static Set<SubjectDto> toSetOfSubjectDto(Set<Subject> subjects){
-        Set<SubjectDto> subjectDtos = new LinkedHashSet<>();
-        for (Subject subject : subjects) {
-            subjectDtos.add(toDto(subject));
-        }
-        return subjectDtos;
+    public static Set<SubjectDto> toSetOfSubjectDto(Set<Subject> subjectSet){
+        return subjectSet.stream()
+                .map(SubjectMapper::toDto)
+                .collect(Collectors.toSet());
     }
 
 }

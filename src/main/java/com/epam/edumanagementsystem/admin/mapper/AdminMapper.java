@@ -3,10 +3,14 @@ package com.epam.edumanagementsystem.admin.mapper;
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdminMapper {
+
+    private AdminMapper() {
+        throw new IllegalStateException();
+    }
 
     public static AdminDto toDto(Admin admin) {
         AdminDto adminDtoDto = new AdminDto();
@@ -19,12 +23,10 @@ public class AdminMapper {
         return adminDtoDto;
     }
 
-    public static List<AdminDto> adminDTOConvert(List<Admin> admins) {
-        List<AdminDto> adminDto = new ArrayList<>();
-        for (Admin admin : admins) {
-            adminDto.add(toDto(admin));
-        }
-        return adminDto;
+    public static List<AdminDto> adminDTOConvert(List<Admin> adminList) {
+        return adminList.stream()
+                .map(AdminMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public static Admin toAdmin(AdminDto adminDto) {
