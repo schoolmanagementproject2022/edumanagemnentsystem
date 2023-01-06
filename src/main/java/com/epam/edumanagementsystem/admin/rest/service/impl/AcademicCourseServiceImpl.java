@@ -8,16 +8,20 @@ import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseReposito
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
+import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-import java.util.Set;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Logger;
+
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.NOT_PRESENT_COURSE_ID;
 
 @Service
 public class AcademicCourseServiceImpl implements AcademicCourseService {
@@ -41,8 +45,8 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public AcademicCourse findById(Long id) {
-        return academicCourseRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    public AcademicCourseDto findById(Long id) {
+        return AcademicCourseMapper.toDto(academicCourseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_PRESENT_COURSE_ID)));
     }
 
     @Override

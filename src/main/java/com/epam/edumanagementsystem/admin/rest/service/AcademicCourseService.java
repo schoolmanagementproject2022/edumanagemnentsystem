@@ -10,7 +10,7 @@ public interface AcademicCourseService {
 
     AcademicCourse findByName(String name);
 
-    AcademicCourse findById(Long id);
+    AcademicCourseDto findById(Long id);
 
     AcademicCourseDto save(AcademicCourseDto academicCourse);
 

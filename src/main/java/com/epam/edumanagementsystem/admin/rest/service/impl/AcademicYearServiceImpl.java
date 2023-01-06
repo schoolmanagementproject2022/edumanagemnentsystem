@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.ACADEMIC_YEAR_BY_ID;
+
 @Service
 public class AcademicYearServiceImpl implements AcademicYearService {
 
@@ -30,7 +32,7 @@ public class AcademicYearServiceImpl implements AcademicYearService {
     @Override
     public AcademicYearDto findById(Long id) {
         return AcademicYearMapper.toDto(academicYearRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Did not find academic year by given id")));
+                .orElseThrow(() -> new RuntimeException(ACADEMIC_YEAR_BY_ID)));
     }
 
 }

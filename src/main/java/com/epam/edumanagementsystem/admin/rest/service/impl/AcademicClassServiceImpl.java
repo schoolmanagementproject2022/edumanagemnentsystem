@@ -7,6 +7,9 @@ import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepositor
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Set;
@@ -28,8 +31,8 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public AcademicClass findById(Long id) {
-        return academicClassRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ACADEMIC_CLASS_BY_ID));
+    public AcademicClassDto findById(Long id) {
+        return AcademicClassMapper.toDto(academicClassRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ACADEMIC_CLASS_BY_ID)));
     }
 
     @Override
@@ -60,5 +63,14 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     public Set<AcademicClassDto> findByTeacherId(Long id) {
         return AcademicClassMapper.academicClassDtoSet(academicClassRepository.findAcademicClassByTeacherId(id));
     }
+
+    @Override
+    public void checkClassDuplication(AcademicClassDto academicClassDto, BindingResult bindingResult, Model model) {
+        if (findAll().stream().anyMatch(number -> number.getClassNumber().equalsIgnoreCase(academicClassDto.getClassNumber()))) {
+            bindingResult.addError(new ObjectError("classNumber", "Duplicate class number"));
+            model.addAttribute("duplicated", "Class already exists");
+        }
+    }
+
 
 }

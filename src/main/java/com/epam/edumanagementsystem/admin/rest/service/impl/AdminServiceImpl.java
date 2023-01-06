@@ -6,10 +6,10 @@ import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AdminService;
 import com.epam.edumanagementsystem.util.entity.User;
-import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -37,7 +37,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminDto findByUserId(Long userId) {
-        return AdminMapper.toDto(adminRepository.findByUserId(userId).orElseThrow(UserNotFoundException::new));
+        return AdminMapper.toDto(adminRepository.findByUserId(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Admin not found by user id: " + userId)));
     }
 
 }
