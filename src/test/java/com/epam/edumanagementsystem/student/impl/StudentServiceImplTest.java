@@ -23,7 +23,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -194,7 +193,7 @@ class StudentServiceImplTest {
     void testUpdate() {
         when(studentRepository.findById(2L)).thenReturn(Optional.of(student));
         when(studentRepository.save(any())).thenReturn(student);
-        when(userRepository.findByEmail(userStudent.getEmail())).thenReturn(Optional.ofNullable(userStudent));
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(userStudent));
         StudentDto studentDto = service.updateFields(datesToBeUpdated);
         Student student1 = StudentMapper.toStudent(studentDto, userStudent);
         assertEquals(student, student1);
