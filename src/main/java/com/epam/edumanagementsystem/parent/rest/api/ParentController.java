@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.UserDataValidation;
-import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +33,8 @@ public class ParentController {
     private static final String REDIRECT_TO_PARENTS = "redirect:/parents/";
     private static final String PROFILE_URL = "/profile";
     private static final String PARENT_SECTION_FOR_STUDENTS_HTML = "parentSectionForStudents";
-    private static final String PARENT_DTO = "parentDto";
+    private static final String PARENT = "parent";
+    private static final String PARENT_DATA = "parentData";
 
     private final ParentService parentService;
     private final ImageService imageService;
@@ -52,7 +53,7 @@ public class ParentController {
     @Operation(summary = "Gets the list of parents and shows on admin's dashboard")
     public String openParentSection(Model model) {
         model.addAttribute("parents", parentService.findAll());
-        model.addAttribute("parent", new ParentDto());
+        model.addAttribute(PARENT, new ParentDto());
         return PARENT_SECTION_HTML;
     }
 
@@ -66,7 +67,7 @@ public class ParentController {
 
         model.addAttribute("parents", parentService.findAll());
         UserDataValidation.checkMultipartFile(multipartFile, status, model);
-        parentService.checkEmailForCreate(parentDto, bindingResult, model);
+        checkEmailForCreate(parentDto, bindingResult, model);
 
         if (bindingResult.hasErrors()) {
             return PARENT_SECTION_HTML;
@@ -81,8 +82,8 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute(PARENT_DTO, parentService.findParentEditById(id));
-        model.addAttribute("parentData", parentService.findById(id).getFullName());
+        model.addAttribute("parentDto", parentService.findParentEditById(id));
+        model.addAttribute(PARENT_DATA, parentService.findById(id).getFullName());
         return PARENT_PROFILE_HTML;
     }
 
@@ -91,10 +92,10 @@ public class ParentController {
     public String editParent(@Valid @ModelAttribute("parentDto") ParentEditDto parentDto,
                              BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 
-        parentService.checkEmailForEdit(parentDto, bindingResult, id, model);
+        checkEmailForEdit(parentDto, bindingResult, id, model);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("parentData", parentService.findById(id).getFullName());
+            model.addAttribute(PARENT_DATA, parentService.findById(id).getFullName());
             return PARENT_PROFILE_HTML;
         }
         parentService.update(parentDto);
@@ -120,8 +121,24 @@ public class ParentController {
     @Operation(summary = "Shows linked students of selected parent")
     public String openLinkedStudentForParent(@PathVariable("id") Long id, Model model) {
         model.addAttribute("students", studentService.findStudentsByParentId(id));
-        model.addAttribute("parent", parentService.findById(id));
+        model.addAttribute(PARENT, parentService.findById(id));
         return PARENT_SECTION_FOR_STUDENTS_HTML;
+    }
+
+    private void checkEmailForCreate(ParentDto parentDto, BindingResult bindingResult, Model model) {
+        if (UserDataValidation.existsEmail(parentDto.getEmail())) {
+            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
+            model.addAttribute(AppConstants.DUPLICATED, "A user with the specified email already exists");
+        }
+    }
+
+    private void checkEmailForEdit(ParentEditDto parentDto, BindingResult bindingResult,
+                                  Long id, Model model) {
+        if (!parentDto.getEmail().equalsIgnoreCase(parentService.findById(id).getEmail()) &&
+                UserDataValidation.existsEmail(parentDto.getEmail())) {
+            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
+            model.addAttribute(AppConstants.DUPLICATED, "A user with the specified email already exists");
+        }
     }
 
 }

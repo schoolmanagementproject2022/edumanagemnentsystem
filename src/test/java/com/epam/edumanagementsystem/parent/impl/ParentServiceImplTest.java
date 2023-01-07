@@ -1,9 +1,11 @@
 package com.epam.edumanagementsystem.parent.impl;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
+import com.epam.edumanagementsystem.parent.rest.service.impl.ParentServiceImpl;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -13,11 +15,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -26,69 +32,105 @@ class ParentServiceImplTest {
 
     @Mock
     private ParentRepository parentRepository;
+
     @Mock
     private UserService userService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private ParentServiceImpl parentService;
-    private Parent parent;
-    private ParentDto parentDto;
+
     private User user;
+    private Parent parent;
+    private Parent updatedParent;
 
     @BeforeEach
-    private void setUp() {
+    void setUp() {
         user = new User("parent@mail.com", "PARENT");
 
-        parent= new Parent();
+        parent = new Parent();
         parent.setId(1L);
         parent.setName("Parent");
         parent.setSurname("Parentyan");
         parent.setUser(user);
         parent.setPassword("password");
 
-        parentDto = new ParentDto("Parent", "Parentyan", "test-parent@mail.ru", "PARENT", "password");
+        updatedParent = new Parent();
+        updatedParent.setId(1L);
+        updatedParent.setName("Parent");
+        updatedParent.setSurname("Parentyan");
+        updatedParent.setUser(user);
+        updatedParent.setPassword("password");
     }
 
     @Test
-    void findByIdIsPresent() {
-        when(parentRepository.findById(1L)).thenReturn(Optional.of(parent));
-        Optional<Parent> returnedParent = parentService.findById(1L);
+    void findByIdReturnsRightEntity() {
+        Long id = 1L;
+        Parent expectedParent = parent;
+        when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
 
-        Assertions.assertTrue(returnedParent.isPresent(), "Parent was not found");
-        Assertions.assertSame(returnedParent.get(), parent, "The returned parent was not the same as the mock");
+        ParentDto actualParent = parentService.findById(id);
+
+        assertThat(actualParent).isNotNull();
+        assertEquals(ParentMapper.mapToParentDto(expectedParent), actualParent);
+        assertThat(expectedParent.getUser().getEmail().equalsIgnoreCase(actualParent.getEmail()) &&
+                expectedParent.getUser().getRole().equalsIgnoreCase(actualParent.getRole()));
     }
 
     @Test
-    void findByIdWithNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> parentService.findById(null));
+    void findByIdThrowsEx() {
+        assertThrows(EntityNotFoundException.class, () -> parentService.findById(2L));
     }
 
     @Test
-    void findByIdNotFound() {
-        lenient().when(parentRepository.findById(1L)).thenReturn(Optional.empty());
+    void findByUserIdPositiveCase() {
+        Parent expectedParent = parent;
+        when(parentRepository.findByUserId(1L)).thenReturn(Optional.ofNullable(parent));
+        ParentDto actualParent = parentService.findByUserId(1L);
+
+        Assertions.assertNotNull(actualParent);
+        Assertions.assertEquals(ParentMapper.mapToParentDto(expectedParent), actualParent);
     }
 
+    @Test
+    void findByUserIdThrowsEx() {
+        assertThrows(EntityNotFoundException.class, () -> parentService.findByUserId(2L));
+    }
 
     @Test
-    void savePositiveAndEmailCheck() {
+    void findParentEditByIdPositiveCase() {
+        Parent expectedParent = parent;
+        when(parentRepository.findById(1L)).thenReturn(Optional.ofNullable(parent));
+        ParentEditDto actualParent = parentService.findParentEditById(1L);
+
+        Assertions.assertNotNull(actualParent);
+        Assertions.assertEquals(ParentMapper.mapToParentEditDto(expectedParent), actualParent);
+    }
+
+    @Test
+    void findParentEditByIdThrowsEx() {
+        assertThrows(EntityNotFoundException.class, () -> parentService.findParentEditById(2L));
+    }
+
+    @Test
+    void saveReturnsRightParent() {
+        String expectedEmail = "parent@mail.com";
         when(userService.save(any())).thenReturn(user);
         when(parentRepository.save(any())).thenReturn(parent);
 
-        Parent savedParent = parentService.save(ParentMapper.toParentDto(parent));
+        ParentDto savedParent = parentService.save(ParentMapper.mapToParentDto(parent));
 
-        Assertions.assertNotNull(savedParent, "The savedParent should not be null");
-        Assertions.assertEquals("parent@mail.com", savedParent.getUser().getEmail());
-    }
-
-    @Test
-    void saveWithNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> parentService.save(null));
+        Assertions.assertNotNull(savedParent);
+        assertEquals(expectedEmail, savedParent.getEmail());
     }
 
     @Test
     void findAllNotNullAndSizePositiveCase() {
         when(parentRepository.findAll()).thenReturn(List.of(parent));
 
-        List<Parent> all = parentService.findAll();
+        List<ParentDto> all = parentService.findAll();
 
         Assertions.assertNotNull(all);
         Assertions.assertEquals(1, all.size());
@@ -96,93 +138,53 @@ class ParentServiceImplTest {
 
     @Test
     void findAllEmptyCase() {
-        List<Parent> all = parentService.findAll();
+        List<ParentDto> all = parentService.findAll();
         Assertions.assertEquals(0, all.size());
     }
 
     @Test
-    void findByUserIdPositiveCase() {
-        when(parentRepository.findByUserId(1L)).thenReturn(parent);
-        Parent returnedParent = parentService.findByUserId(1L);
-
-        Assertions.assertNotNull(returnedParent, "Parent was null");
-        Assertions.assertSame(returnedParent, parent, "The returned parent was not the same as the mock");
-    }
-
-    @Test
-    void findByUserIdWithNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> parentService.findByUserId(null));
-    }
-
-    @Test
-    void findByUserIdNotFound() {
-        lenient().when(parentRepository.findByUserId(1L)).thenReturn(null);
-    }
-
-    @Test
-    void deleteByIdVerifyAndCheckIfDeleted() {
-        when(userService.save(any())).thenReturn(user);
-        when(parentRepository.save(any())).thenReturn(parent);
-        Parent savedParent = parentService.save(ParentMapper.toParentDto(parent));
-
-        parentService.deleteById(savedParent.getId());
-        verify(parentRepository, times(1)).deleteById(savedParent.getId());
-        Assertions.assertEquals(parentService.findById(savedParent.getId()), Optional.empty());
-    }
-
-    @Test
-    void deleteByIdWithNull() {
-        Assertions.assertThrows(NullPointerException.class, () -> parentService.deleteById(null));
-    }
-
-    @Test
-    void updateParentSetNewName() {
-        Long id = parent.getId();
+    void updateParentWhenNewName() {
+        Long id = 1L;
         String name = "testName";
-
+        updatedParent.setName(name);
         when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
+        when(parentRepository.save(any())).thenReturn(updatedParent);
+
         Parent parent = parentRepository.findById(id).get();
         parent.setName(name);
+        ParentDto updatedParentDto = parentService.update(ParentMapper.mapToParentEditDto(parent));
 
-        parentService.updateParent(ParentMapper.toParentDto(parent));
-
-        verify(parentRepository, times(1)).save(parent);
-        assertThat(parent.getName()).isEqualTo(name);
+        assertThat(updatedParentDto.getName()).isEqualTo(name);
     }
 
     @Test
-    void updateParentSetNewSurname() {
-        Long id = parent.getId();
+    void updateParentWhenNewSurname() {
+        Long id = 1L;
         String surname = "testSurname";
-
+        updatedParent.setSurname(surname);
         when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
+        when(parentRepository.save(any())).thenReturn(updatedParent);
+
         Parent parent = parentRepository.findById(id).get();
         parent.setSurname(surname);
+        ParentDto updatedParentDto = parentService.update(ParentMapper.mapToParentEditDto(parent));
 
-        parentService.updateParent(ParentMapper.toParentDto(parent));
-
-        verify(parentRepository, times(1)).save(parent);
-        assertThat(parent.getSurname()).isEqualTo(surname);
+        assertThat(updatedParentDto.getSurname()).isEqualTo(surname);
     }
 
     @Test
-    void updateParentSetNewEmail() {
-        Long id = parent.getId();
+    void updateParentWhenNewEmail() {
+        Long id = 1L;
         String email = "test-email@gmail.com";
-
+        updatedParent.getUser().setEmail(email);
         when(parentRepository.findById(id)).thenReturn(Optional.of(parent));
+        when(parentRepository.save(any())).thenReturn(updatedParent);
+
         Parent parent = parentRepository.findById(id).get();
         parent.getUser().setEmail(email);
 
-        parentService.updateParent(ParentMapper.toParentDto(parent));
+        ParentDto updatedParentDto = parentService.update(ParentMapper.mapToParentEditDto(parent));
 
-        verify(parentRepository, times(1)).save(parent);
-        assertThat(parent.getUser().getEmail()).isEqualTo(email);
+        assertThat(updatedParentDto.getEmail()).isEqualTo(email);
     }
-
-    @Test
-    void updateParentThrowsException() {
-        Assertions.assertThrows(NullPointerException.class, () -> parentService.updateParent(null));
-    }
-
 }

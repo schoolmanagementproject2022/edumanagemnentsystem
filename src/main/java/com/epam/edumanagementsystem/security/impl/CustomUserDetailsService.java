@@ -66,7 +66,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("TEACHER")) {
-                Teacher teacher = teacherRepository.findByUserId(foundUserId);
+                Teacher teacher = teacherRepository.findByUserId(foundUserId).get();
 
                 CurrentUser user = new CurrentUser();
                 user.setName(teacher.getName());

@@ -3,21 +3,17 @@ package com.epam.edumanagementsystem.teacher.rest.api;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
-import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherEditDto;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
-import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
-import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +32,7 @@ public class TeacherController {
     private static final String CLASSES_FOR_TEACHER_HTML = "classesInTeacherProfile";
     private static final String COURSES_FOR_TEACHER_HTML = "coursesInTeacherProfile";
     private static final String SUBJECTS_FOR_TEACHER_HTML = "subjectSectionForTeacherProfile";
+    private static final String TEACHER = "teacher";
 
     private final TeacherService teacherService;
     private final AcademicClassService academicClassService;
@@ -58,7 +55,7 @@ public class TeacherController {
     @Operation(summary = "Gets the list of teachers and shows on admin's dashboard")
     public String openTeacherSection(Model model) {
         model.addAttribute("teachers", teacherService.findAll());
-        model.addAttribute("teacher", new TeacherDto());
+        model.addAttribute(TEACHER, new TeacherDto());
         return TEACHER_SECTION_HTML;
     }
 
@@ -72,7 +69,7 @@ public class TeacherController {
 
         model.addAttribute("teachers", teacherService.findAll());
         UserDataValidation.checkMultipartFile(multipartFile, status, model);
-        teacherService.checkEmailForCreate(teacherDto, bindingResult, model);
+        checkEmailForCreate(teacherDto, bindingResult, model);
 
         if (bindingResult.hasErrors()) {
             return TEACHER_SECTION_HTML;
@@ -87,7 +84,7 @@ public class TeacherController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected teacher's profile")
     public String openTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute(TEACHER, teacherService.findTeacherEditById(id));
         model.addAttribute("name_surname", teacherService.findById(id).getFullName());
         return TEACHER_PROFILE_HTML;
     }
@@ -97,7 +94,7 @@ public class TeacherController {
     public String editTeacherProfile(@ModelAttribute("teacher") @Valid TeacherEditDto teacherDto,
                                      BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 
-        teacherService.checkEmailForEdit(teacherDto, bindingResult, id, model);
+        checkEmailForEdit(teacherDto, bindingResult, id, model);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("teacherData", teacherService.findById(id).getFullName());
@@ -124,7 +121,7 @@ public class TeacherController {
 
     @GetMapping("/{id}/classes")
     public String openClassesInTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute(TEACHER, teacherService.findById(id));
         model.addAttribute("teachersClasses", academicClassService.findAcademicClassByTeacherId(id));
         return CLASSES_FOR_TEACHER_HTML;
     }
@@ -132,7 +129,7 @@ public class TeacherController {
     @GetMapping("/{id}/courses")
     @Operation(summary = "Gets the list of courses thw teacher has and shows them")
     public String openCoursesInTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute(TEACHER, teacherService.findById(id));
         model.addAttribute("teachersCourses", academicCourseService.findAcademicCoursesByTeacherId(id));
         return COURSES_FOR_TEACHER_HTML;
     }
@@ -141,7 +138,22 @@ public class TeacherController {
     @Operation(summary = "Gets the list of subjects thw teacher has and shows them")
     public String openSubjectsInTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute("subjects", subjectService.findSubjectsByTeacherSetId(id));
-        model.addAttribute("teacher", teacherService.findById(id));
+        model.addAttribute(TEACHER, teacherService.findById(id));
         return SUBJECTS_FOR_TEACHER_HTML;
+    }
+
+    private void checkEmailForCreate(TeacherDto teacherDto, BindingResult bindingResult, Model model) {
+        if (UserDataValidation.existsEmail(teacherDto.getEmail())) {
+            bindingResult.addError(new ObjectError("teacher", "Duplicate email"));
+            model.addAttribute("duplicated", "A user with the specified email already exists");
+        }
+    }
+
+    private void checkEmailForEdit(TeacherEditDto teacherDto, BindingResult bindingResult, Long id, Model model) {
+        if (!teacherDto.getEmail().equalsIgnoreCase(teacherService.findById(id).getEmail()) &&
+                UserDataValidation.existsEmail(teacherDto.getEmail())) {
+            bindingResult.addError(new ObjectError("teacher", "Duplicate email"));
+            model.addAttribute("duplicated", "A user with the specified email already exists");
+        }
     }
 }

@@ -5,8 +5,6 @@ import com.epam.edumanagementsystem.util.validation.ValidEmail;
 import com.epam.edumanagementsystem.util.validation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 

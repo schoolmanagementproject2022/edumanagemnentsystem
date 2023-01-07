@@ -1,7 +1,5 @@
 package com.epam.edumanagementsystem.util.validation;
 
-import com.epam.edumanagementsystem.util.service.UserService;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;

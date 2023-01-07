@@ -5,24 +5,20 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
 public class Teacher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private String name;
-
 
     private String surname;
 
@@ -59,7 +55,9 @@ public class Teacher {
         this.password = password;
     }
 
-    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet, Set<AcademicClass> academicClass) {
+    public Teacher(Long id, String name, String surname, User user, String password,
+                   Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet,
+                   Set<AcademicClass> academicClass) {
         this.id = id;
         this.name = name;
         this.surname = surname;

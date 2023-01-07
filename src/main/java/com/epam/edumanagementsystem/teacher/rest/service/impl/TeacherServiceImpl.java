@@ -7,16 +7,12 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherEditDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
-import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
@@ -88,22 +84,5 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void removeImage(Long id) {
         teacherRepository.updateTeacherPicUrl(id);
-    }
-
-    @Override
-    public void checkEmailForCreate(TeacherDto teacherDto, BindingResult bindingResult, Model model) {
-        if (UserDataValidation.existsEmail(teacherDto.getEmail())) {
-            bindingResult.addError(new ObjectError("teacher", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-        }
-    }
-
-    @Override
-    public void checkEmailForEdit(TeacherEditDto teacherDto, BindingResult bindingResult, Long id, Model model) {
-        if (!teacherDto.getEmail().equalsIgnoreCase(findById(id).getEmail()) &&
-                UserDataValidation.existsEmail(teacherDto.getEmail())) {
-            bindingResult.addError(new ObjectError("teacher", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-        }
     }
 }

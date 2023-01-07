@@ -6,16 +6,12 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
-import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
@@ -69,7 +65,6 @@ public class ParentServiceImpl implements ParentService {
         return ParentMapper.mapToParentDto(parentRepository.save(parent));
     }
 
-
     @Override
     public ParentDto update(ParentEditDto parentDto) {
         Parent parent = parentRepository.findById(parentDto.getId()).get();
@@ -90,20 +85,4 @@ public class ParentServiceImpl implements ParentService {
         parentRepository.updateImageUrl(id);
     }
 
-    //Should have I left this in controller as a private method?
-    public void checkEmailForCreate(ParentDto parentDto, BindingResult bindingResult, Model model) {
-        if (UserDataValidation.existsEmail(parentDto.getEmail())) {
-            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-        }
-    }
-
-    public void checkEmailForEdit(ParentEditDto parentDto, BindingResult bindingResult,
-                                  Long id, Model model) {
-        if (!parentDto.getEmail().equalsIgnoreCase(findById(id).getEmail()) &&
-                UserDataValidation.existsEmail(parentDto.getEmail())) {
-            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
-        }
-    }
 }
