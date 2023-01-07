@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${parentData}+ ' Profile'">Parent</title>
+    <title th:text="${parentData} + ' Profile'"></title>
 </head>
 <body>
 <div class="header" id="header">
@@ -27,16 +27,14 @@
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
-
             <div class="personalInformation">
                 <p th:text="'Name: ' + ${parent.getName()}"></p>
                 <p th:text="'Surname: ' + ${parent.getSurname()}"></p>
                 <p th:text="'Email: ' + ${parent.getEmail()}"></p>
             </div>
-
         </div>
 
-        <div class="sidebar_right">
+        <div class="sidebar-img header">
             <div th:if="${parent.getPicUrl() == null}">
                 <form id="form-pic" class="form" th:method="POST"
                       th:action="@{'/parents/' + ${parent.getId()} + '/image/add'}" th:object="${existingParent}"
@@ -85,7 +83,6 @@
                          src="/static/img/x-mark-transparent-2.png">
                 </div>
             </div>
-
             <div class="sidebar2 header" id="sidebar2">
                 <div th:insert="fragments/fragments :: parentProfileSidebar"></div>
             </div>
@@ -93,7 +90,8 @@
 
     </div>
 </div>
-<div class="edit">
+
+<div class="create">
 
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
@@ -102,43 +100,34 @@
             <span class="tooltiptext" th:text="${parentData}">Tooltip text</span>
         </div>
 
-        <form id="form" class="form" th:method="POST" th:action="@{'/parents/' + ${parent.getId()} + '/profile'}"
-              th:object="${parent}">
-
+        <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${parent}">
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
             </script>
-
             <div class="popup-wrapper">
-                <div class="halves">
-                    <div class="half">
-                        <div class="unit">
-                            <label class="popup-label-title">Parent name <span style="color:#A30014">*</span></label>
-                            <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
-                            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                <div class="half">
+                    <label class="popup-label-title">Parent name <span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
+                    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
-                            <div class="unit">
-                                <label class="popup-label-title">Parent surname <span style="color:#A30014">*</span></label>
-                                <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}"/>
-                                <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
-                            </div>
 
-                            <div class="unit">
-                                <label class="popup-label-title">Parent email <span style="color:#A30014">*</span></label>
-                                <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
-                                <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-                                <div th:if="${duplicated}!= null" class="error"><p th:text="${duplicated}"></p></div>
+                    <label class="popup-label-title">Parent surname <span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}"/>
+                    <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
 
-                            </div>
-                        </div>
-                        <div class="half2"></div>
-                    </div>
-                    <div class="half_btn">
-                        <div name="btn-div">
-                            <button type="submit" class="button-save" id="submit"><b>Save</b></button>
-                        </div>
-                    </div>
+
+                    <label class="popup-label-title">Parent email <span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
+                    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    <div th:if="${duplicated}!= null" class="error"><p th:text="${duplicated}"></p></div>
+
                 </div>
+
+                <div class="half2"></div>
+                <div name="btn-div">
+                    <button type="submit" class="button-save" id="submit"><b>Save</b></button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
@@ -157,16 +146,16 @@
 <div class="popup-container-image" id="popup-container-image-delete">
     <div class="popup-wrapper" id="popup-wrapper">
         <div class="half">
-            <p style="margin-left: 17%; font-size: 109%" class="successText">Do you want to delete this image?</p>
+            <p style="margin-left: 19%; font-size: 109%" class="successText">Do you want to delete this image?</p>
         </div>
         <div>
             <form th:action="@{'/parents/' + ${parent.id} + '/image/delete'}" method="get">
-                <button type="submit" style="margin-left: 14%" class="button-save" id="submit-image"><b>Yes</b>
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b>
                 </button>
             </form>
         </div>
         <div>
-            <button type="button" class="button-save" style="margin-left: 49%" id="submit-image" onclick="PopUpHide()">
+            <button type="button" class="button-save" style="margin-left: 6%" id="submit-image" onclick="PopUpHide()">
                 <b>Cancel</b></button>
         </div>
     </div>
@@ -187,7 +176,9 @@
 <script>
     showInputFieldsOnMouseover();
 </script>
+
 <script>
+
     filevalidation = () => {
         const fi = document.getElementById('file-input');
         const acceptedImageTypes = ['image/jpeg', 'image/png'];
@@ -226,6 +217,5 @@
         document.getElementById("form-pic-edi").submit();
     }
 </script>
-
 </body>
 </html>

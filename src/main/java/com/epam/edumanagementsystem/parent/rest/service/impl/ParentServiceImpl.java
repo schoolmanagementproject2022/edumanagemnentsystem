@@ -76,8 +76,9 @@ public class ParentServiceImpl implements ParentService {
 
     @Override
     public void addImage(ParentDto parentDto, MultipartFile multipartFile) {
-        parentDto.setPicUrl(imageService.saveImage(multipartFile));
-        parentRepository.save(ParentMapper.mapToParent(parentDto));
+        Parent parent = parentRepository.findById(parentDto.getId()).get();
+        parent.setPicUrl(imageService.saveImage(multipartFile));
+        parentRepository.save(parent);
     }
 
     @Override

@@ -3,9 +3,11 @@ package com.epam.edumanagementsystem.teacher.rest.api;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.config.MessageByLang;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherEditDto;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
+import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +35,7 @@ public class TeacherController {
     private static final String COURSES_FOR_TEACHER_HTML = "coursesInTeacherProfile";
     private static final String SUBJECTS_FOR_TEACHER_HTML = "subjectSectionForTeacherProfile";
     private static final String TEACHER = "teacher";
+    private static final String TEACHER_DATA = "teacherData";
 
     private final TeacherService teacherService;
     private final AcademicClassService academicClassService;
@@ -85,7 +88,7 @@ public class TeacherController {
     @Operation(summary = "Shows selected teacher's profile")
     public String openTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute(TEACHER, teacherService.findTeacherEditById(id));
-        model.addAttribute("teacherData", teacherService.findById(id).getFullName());
+        model.addAttribute(TEACHER_DATA, teacherService.findById(id).getFullName());
         return TEACHER_PROFILE_HTML;
     }
 
@@ -97,7 +100,7 @@ public class TeacherController {
         checkEmailForEdit(teacherDto, bindingResult, id, model);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("teacherData", teacherService.findById(id).getFullName());
+            model.addAttribute(TEACHER_DATA, teacherService.findById(id).getFullName());
             return TEACHER_PROFILE_HTML;
         }
         teacherService.update(teacherDto);
@@ -144,16 +147,16 @@ public class TeacherController {
 
     private void checkEmailForCreate(TeacherDto teacherDto, BindingResult bindingResult, Model model) {
         if (UserDataValidation.existsEmail(teacherDto.getEmail())) {
-            bindingResult.addError(new ObjectError("teacher", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
+            bindingResult.addError(new ObjectError(TEACHER, "Duplicate email"));
+            model.addAttribute(AppConstants.DUPLICATED, MessageByLang.getMessage("USER_WITH_EMAIL_EXISTS"));
         }
     }
 
     private void checkEmailForEdit(TeacherEditDto teacherDto, BindingResult bindingResult, Long id, Model model) {
         if (!teacherDto.getEmail().equalsIgnoreCase(teacherService.findById(id).getEmail()) &&
                 UserDataValidation.existsEmail(teacherDto.getEmail())) {
-            bindingResult.addError(new ObjectError("teacher", "Duplicate email"));
-            model.addAttribute("duplicated", "A user with the specified email already exists");
+            bindingResult.addError(new ObjectError(TEACHER, "Duplicate email"));
+            model.addAttribute(AppConstants.DUPLICATED, MessageByLang.getMessage("USER_WITH_EMAIL_EXISTS"));
         }
     }
 }

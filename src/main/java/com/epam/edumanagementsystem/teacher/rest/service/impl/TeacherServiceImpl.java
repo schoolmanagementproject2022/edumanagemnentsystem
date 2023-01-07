@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -77,8 +78,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void addImage(TeacherDto teacherDto, MultipartFile multipartFile) {
-        teacherDto.setPicUrl(imageService.saveImage(multipartFile));
-        teacherRepository.save(TeacherMapper.mapToTeacher(teacherDto));
+        Teacher teacher = teacherRepository.findById(teacherDto.getId()).get();
+        teacher.setPicUrl(imageService.saveImage(multipartFile));
+        teacherRepository.save(teacher);
     }
 
     @Override

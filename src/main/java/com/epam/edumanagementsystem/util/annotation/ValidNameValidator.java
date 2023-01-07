@@ -1,17 +1,23 @@
 package com.epam.edumanagementsystem.util.annotation;
 
+import com.epam.edumanagementsystem.config.MessageByLang;
+import com.epam.edumanagementsystem.util.AppConstants;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class ValidNameValidator implements ConstraintValidator<ValidName, String> {
+
     @Override
     public boolean isValid(String name, ConstraintValidatorContext context) {
         String message = "";
+
         if (name.isBlank() || name.isEmpty()) {
-            message = "Please, fill the required fields";
-        } else if (name.length() > 50) {
-            message = "Symbols can't be more than 50";
+            message = MessageByLang.getMessage("FILL_INPUT_FIELD");
+        } else if (name.length() > AppConstants.FIELD_MAX_SIZE) {
+            message = MessageByLang.getMessage("SYMBOLS_MAX_LENGTH");
         }
+
         if (!message.isEmpty()) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(message).addConstraintViolation();

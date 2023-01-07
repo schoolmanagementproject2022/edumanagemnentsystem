@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.parent.rest.api;
 
+import com.epam.edumanagementsystem.config.MessageByLang;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
@@ -89,7 +90,7 @@ public class ParentController {
 
     @PostMapping("/{id}/profile")
     @Operation(summary = "Edits selected parent's profile")
-    public String editParent(@Valid @ModelAttribute("parentDto") ParentEditDto parentDto,
+    public String editParent(@ModelAttribute("parent") @Valid ParentEditDto parentDto,
                              BindingResult bindingResult, @PathVariable("id") Long id, Model model) {
 
         checkEmailForEdit(parentDto, bindingResult, id, model);
@@ -128,16 +129,16 @@ public class ParentController {
     private void checkEmailForCreate(ParentDto parentDto, BindingResult bindingResult, Model model) {
         if (UserDataValidation.existsEmail(parentDto.getEmail())) {
             bindingResult.addError(new ObjectError(PARENT, "Duplicate email"));
-            model.addAttribute(AppConstants.DUPLICATED, "A user with the specified email already exists");
+            model.addAttribute(AppConstants.DUPLICATED, MessageByLang.getMessage("USER_WITH_EMAIL_EXISTS"));
         }
     }
 
     private void checkEmailForEdit(ParentEditDto parentDto, BindingResult bindingResult,
-                                  Long id, Model model) {
+                                   Long id, Model model) {
         if (!parentDto.getEmail().equalsIgnoreCase(parentService.findById(id).getEmail()) &&
                 UserDataValidation.existsEmail(parentDto.getEmail())) {
             bindingResult.addError(new ObjectError(PARENT, "Duplicate email"));
-            model.addAttribute(AppConstants.DUPLICATED, "A user with the specified email already exists");
+            model.addAttribute(AppConstants.DUPLICATED, MessageByLang.getMessage("USER_WITH_EMAIL_EXISTS"));
         }
     }
 
