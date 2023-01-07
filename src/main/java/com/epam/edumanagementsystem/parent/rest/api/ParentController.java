@@ -82,7 +82,7 @@ public class ParentController {
     @GetMapping("/{id}/profile")
     @Operation(summary = "Shows selected parent's profile")
     public String openParentProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("parentDto", parentService.findParentEditById(id));
+        model.addAttribute(PARENT, parentService.findParentEditById(id));
         model.addAttribute(PARENT_DATA, parentService.findById(id).getFullName());
         return PARENT_PROFILE_HTML;
     }
@@ -127,7 +127,7 @@ public class ParentController {
 
     private void checkEmailForCreate(ParentDto parentDto, BindingResult bindingResult, Model model) {
         if (UserDataValidation.existsEmail(parentDto.getEmail())) {
-            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
+            bindingResult.addError(new ObjectError(PARENT, "Duplicate email"));
             model.addAttribute(AppConstants.DUPLICATED, "A user with the specified email already exists");
         }
     }
@@ -136,7 +136,7 @@ public class ParentController {
                                   Long id, Model model) {
         if (!parentDto.getEmail().equalsIgnoreCase(parentService.findById(id).getEmail()) &&
                 UserDataValidation.existsEmail(parentDto.getEmail())) {
-            bindingResult.addError(new ObjectError("parentDto", "Duplicate email"));
+            bindingResult.addError(new ObjectError(PARENT, "Duplicate email"));
             model.addAttribute(AppConstants.DUPLICATED, "A user with the specified email already exists");
         }
     }

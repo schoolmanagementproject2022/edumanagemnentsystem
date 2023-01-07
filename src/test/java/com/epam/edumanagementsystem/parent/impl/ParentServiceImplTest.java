@@ -76,7 +76,7 @@ class ParentServiceImplTest {
         assertThat(actualParent).isNotNull();
         assertEquals(ParentMapper.mapToParentDto(expectedParent), actualParent);
         assertThat(expectedParent.getUser().getEmail().equalsIgnoreCase(actualParent.getEmail()) &&
-                expectedParent.getUser().getRole().equalsIgnoreCase(actualParent.getRole()));
+                expectedParent.getUser().getRole().equalsIgnoreCase(actualParent.getRole())).isTrue();
     }
 
     @Test

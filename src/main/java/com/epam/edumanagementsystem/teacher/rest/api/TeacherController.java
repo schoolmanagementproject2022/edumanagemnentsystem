@@ -85,7 +85,7 @@ public class TeacherController {
     @Operation(summary = "Shows selected teacher's profile")
     public String openTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute(TEACHER, teacherService.findTeacherEditById(id));
-        model.addAttribute("name_surname", teacherService.findById(id).getFullName());
+        model.addAttribute("teacherData", teacherService.findById(id).getFullName());
         return TEACHER_PROFILE_HTML;
     }
 

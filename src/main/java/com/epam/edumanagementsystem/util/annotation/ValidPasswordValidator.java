@@ -1,21 +1,21 @@
-package com.epam.edumanagementsystem.util.validation;
+package com.epam.edumanagementsystem.util.annotation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
-public class ValidEmailValidator implements ConstraintValidator<ValidEmail, String> {
+public class ValidPasswordValidator implements ConstraintValidator<ValidPassword, String> {
 
     private static final Pattern PATTERN =
-            Pattern.compile("^([^! #$%&*+\\-/=?^_`{|\\.](?!.*[!#$%&*+-/=?^_`{|]{2})[a-zA-Z0-9!#$%&*+-/=?^_`{|]{0,50}[^! #$%&*+\\-/=?^_`{|\\.@]+)@([a-zA-Z0-9\\-]{1,50})\\.([a-z]{2,50})$");
+            Pattern.compile("(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&])[A-Za-z\\\\d()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&]{9,50}");
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext context) {
+    public boolean isValid(String password, ConstraintValidatorContext context) {
         String message = "";
-        if (email.isBlank()) {
+        if (password.isBlank()) {
             message = "Please, fill the required fields";
-        } else if (!PATTERN.matcher(email).matches()) {
-            message = "Email is invalid";
+        } else if (!PATTERN.matcher(password).matches()) {
+            message = "Password is invalid";
         }
         if (!message.isEmpty()) {
             context.disableDefaultConstraintViolation();
@@ -23,7 +23,6 @@ public class ValidEmailValidator implements ConstraintValidator<ValidEmail, Stri
         } else {
             return true;
         }
-
         return false;
     }
 }

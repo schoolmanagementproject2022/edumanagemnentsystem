@@ -1,10 +1,12 @@
 package com.epam.edumanagementsystem.teacher.model.dto;
 
 import com.epam.edumanagementsystem.util.AppConstants;
-import com.epam.edumanagementsystem.util.validation.ValidEmail;
-import com.epam.edumanagementsystem.util.validation.ValidPassword;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
+import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -12,12 +14,10 @@ public class TeacherDto {
 
     private Long id;
 
-    @NotBlank(message = "{EMPTY_FIELD}")
-    @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
+    @ValidName
     private String name;
 
-    @NotBlank(message = "{EMPTY_FIELD}")
-    @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
+    @ValidName
     private String surname;
 
     @ValidEmail

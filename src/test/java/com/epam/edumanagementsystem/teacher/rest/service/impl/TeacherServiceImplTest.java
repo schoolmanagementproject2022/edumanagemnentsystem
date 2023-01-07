@@ -68,7 +68,7 @@ class TeacherServiceImplTest {
         assertThat(actualTeacher).isNotNull();
         assertEquals(TeacherMapper.mapToTeacherDto(expectedTeacher), actualTeacher);
         assertThat(expectedTeacher.getUser().getEmail().equalsIgnoreCase(actualTeacher.getEmail()) &&
-                expectedTeacher.getUser().getRole().equalsIgnoreCase(actualTeacher.getRole()));
+                expectedTeacher.getUser().getRole().equalsIgnoreCase(actualTeacher.getRole())).isTrue();
     }
 
     @Test

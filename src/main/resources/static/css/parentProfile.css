@@ -361,6 +361,8 @@ h1 {
     margin-right: 25px;
     margin-top: 50px;
     width: 15%;
+    text-align: left;
+    height: min-content;
 }
 
 .sidebar_right_photo {
@@ -372,7 +374,9 @@ h1 {
 }
 
 .sidebar_right_links {
-    margin-top: 50px;
+    margin-right: 25px;
+    margin-top: 20px;
+    width: 100%;
     background-color: #555555;
     cursor: pointer;
     text-align: left;
@@ -400,6 +404,11 @@ h1 {
 .sidebar_right a:hover {
     background-color: #333333;
     color: #01A7F0;
+}
+.form {
+    margin: 0px;
+    margin-left: 0px;
+    margin-right: 4px;
 }
 
 .content > * {

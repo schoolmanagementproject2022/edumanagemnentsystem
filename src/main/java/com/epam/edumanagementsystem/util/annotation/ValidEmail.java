@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.util.validation;
+package com.epam.edumanagementsystem.util.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

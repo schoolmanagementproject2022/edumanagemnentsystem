@@ -1,22 +1,18 @@
 package com.epam.edumanagementsystem.parent.model.dto;
 
-import com.epam.edumanagementsystem.util.AppConstants;
-import com.epam.edumanagementsystem.util.validation.ValidEmail;
-import org.hibernate.validator.constraints.NotBlank;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
 
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ParentEditDto {
 
     private Long id;
 
-    @NotBlank(message = "{EMPTY_FIELD}")
-    @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
+    @ValidName
     private String name;
 
-    @NotBlank(message = "{EMPTY_FIELD}")
-    @Size(max = AppConstants.FIELD_MAX_SIZE, message = "{SYMBOLS_MAX_LENGTH}")
+    @ValidName
     private String surname;
 
     @ValidEmail
@@ -58,6 +54,10 @@ public class ParentEditDto {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getFullName() {
+        return this.name + " " + this.surname;
     }
 
     public String getEmail() {

@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${name_surname} + ' Profile'"></title>
+    <title th:text="${teacherData} + ' Profile'"></title>
 </head>
 <body>
 <div class="header" id="header">
@@ -23,7 +23,7 @@
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Teachers'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
-                   th:text="${name_surname}"></a>
+                   th:text="${teacherData}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
