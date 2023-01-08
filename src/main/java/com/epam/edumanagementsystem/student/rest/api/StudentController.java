@@ -6,14 +6,14 @@ import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
-import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.UserDataValidation;
-import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -28,6 +28,7 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/students")
 @Tag(name = "Students")
+
 public class StudentController extends StudentControllerHelper{
 
     private final PasswordEncoder bcryptPasswordEncoder;
@@ -36,6 +37,7 @@ public class StudentController extends StudentControllerHelper{
     private final ParentService parentService;
     private final ImageService imageService;
     private final AcademicClassService academicClassService;
+    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
 
     @Autowired
@@ -60,12 +62,15 @@ public class StudentController extends StudentControllerHelper{
         model.addAttribute(GENDER, Gender.values());
         model.addAttribute(PARENTS, parentService.findAll());
         model.addAttribute(CLASSES, academicClassService.findAll());
+        logger.info("user opened students page . . . ");
         return STUDENT_HTML;
     }
 
     @GetMapping("/without/parent")
     public String openStudentsWithoutParent(Model model) {
         model.addAttribute(STUDENTS, studentService.findStudentsWithoutParent());
+        logger.info("user opened students page without parent . . . ");
+
         return FILTERED_STUDENTS;
     }
 
@@ -79,6 +84,7 @@ public class StudentController extends StudentControllerHelper{
         if (!multipartFile.isEmpty()) {
             UserDataValidation.validateImage(multipartFile, model);
         }
+        logger.debug(multipartFile.getName()+" "+studentDto.getNameAndSurname());
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
@@ -126,6 +132,7 @@ public class StudentController extends StudentControllerHelper{
 
         model.addAttribute(PARENTS, parentService.findAll());
         model.addAttribute(CLASSES, academicClassService.findAll());
+        logger.info("user opened parent profile page"+ existingStudent.getNameAndSurname());
         return "studentProfile";
     }
 
@@ -164,7 +171,7 @@ public class StudentController extends StudentControllerHelper{
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
         StudentDto studentById = studentService.findById(id);
-        User userByEmail = userService.findByEmail(studentById.getEmail());
+        logger.debug(multipartFile.getName()+" "+studentById);
         studentService.addProfilePicture(studentById, multipartFile);
         return REDIRECT + id + PROFILE;
     }
@@ -173,6 +180,7 @@ public class StudentController extends StudentControllerHelper{
     @Operation(summary = "Deletes image to selected student's profile")
     public String deletePic(@PathVariable("id") Long id) {
         StudentDto studentById = studentService.findById(id);
+        logger.info("user want delete omage"+" " +studentById);
         imageService.deleteImage(studentById.getPicUrl());
         studentService.deletePic(studentById.getId());
         return REDIRECT + id + PROFILE;

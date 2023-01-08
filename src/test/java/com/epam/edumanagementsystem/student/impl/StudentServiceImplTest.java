@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
+import com.epam.edumanagementsystem.student.rest.service.impl.StudentServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
@@ -207,7 +208,7 @@ class StudentServiceImplTest {
 
     @Test
     void findByUserId() {
-        when(studentRepository.findByUserId(any())).thenReturn(student);
+        when(studentRepository.findByUserId(any())).thenReturn(Optional.of(student));
         StudentDto byUserId = service.findByUserId(1L);
         Student student1 = StudentMapper.toStudent(byUserId, userStudent);
         assertEquals(student, student1);

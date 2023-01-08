@@ -1,15 +1,18 @@
-package com.epam.edumanagementsystem.student.impl;
+package com.epam.edumanagementsystem.student.rest.service.impl;
 
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
+import com.epam.edumanagementsystem.student.rest.api.StudentController;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final UserService userService;
     private final ImageService imageService;
+    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     public StudentServiceImpl(StudentRepository studentRepository, UserService userService, ImageService imageService) {
@@ -45,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto updateFields(StudentDto studentDto) {
-       studentRepository.findById(studentDto.getId()).orElseThrow(EntityNotFoundException::new);
+        studentRepository.findById(studentDto.getId()).orElseThrow(EntityNotFoundException::new);
         StudentDto byName = findById(studentDto.getId());
         User userOfStudent = userService.findByEmail(byName.getEmail());
         Student updatableStudent = StudentMapper.toStudent(byName, userOfStudent);
@@ -59,14 +63,14 @@ public class StudentServiceImpl implements StudentService {
         updatableStudent.setGender(newStudent.getGender());
         updatableStudent.setParent(newStudent.getParent());
         updatableStudent.setAcademicClass(newStudent.getAcademicClass());
-
+        updatableStudent.setPicUrl(newStudent.getPicUrl());
+        logger.debug(updatableStudent.getName());
         return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
     }
 
     @Override
     public StudentDto findByUserId(Long id) {
-        Student byUserId = studentRepository.findByUserId(id);
-        return StudentMapper.toStudentDto(byUserId);
+        return StudentMapper.toStudentDto(studentRepository.findByUserId(id).get());
     }
 
     @Override
@@ -91,7 +95,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addProfilePicture(StudentDto studentDto, MultipartFile multipartFile) {
         studentDto.setPicUrl(imageService.saveImage(multipartFile));
-        create(studentDto);
+        logger.debug(studentDto.getPicUrl());
+        updateFields(studentDto);
     }
 
     @Override
