@@ -47,7 +47,7 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testCreateIsOK() {
+    void testCreateIsOK() {
         String dayOfWeek = "MONDAY";
         String academicClassName = "English";
         Long academicClassId = 1L;
@@ -61,7 +61,7 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testDeleteByIdIsOK() {
+    void testDeleteByIdIsOK() {
         Long id = 1L;
 
         coursesForTimetableService.deleteCourseById(id);
@@ -71,7 +71,7 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testUpdateCourseStatusByIdChangesStatusToNotActive() {
+    void testUpdateCourseStatusByIdChangesStatusToNotActive() {
         Long id = 1L;
         doNothing().when(coursesRepository).updateCourseStatusById(id);
 
@@ -81,7 +81,7 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesByAcademicClassIdReturnsListOfCourses() {
+    void testGetCoursesByAcademicClassIdReturnsListOfCourses() {
         Long id = 1L;
 
         when(coursesRepository.findCoursesByAcademicClassId(id)).thenReturn(List.of(course));
@@ -92,7 +92,7 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesForDayAndAcademicClassIdReturnsMondayCourses() {
+    void testGetCoursesForDayAndAcademicClassIdReturnsMondayCourses() {
         String dayOfWeek = "MONDAY";
         Long academicClassId = 1L;
         when(coursesRepository.findCoursesByDayOfWeekAndAcademicClassId(dayOfWeek, academicClassId))
@@ -107,13 +107,13 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesWithEditStatusByAcademicCourseIdReturnsEditedCourses() {
+    void testGetCoursesWithEditStatusByAcademicCourseIdReturnsEditedCourses() {
         String status = "EDIT";
         Long academicClassId = 2L;
-        when(coursesRepository.findCoursesWithEditStatusByAcademicCourseId(academicClassId))
+        when(coursesRepository.findCoursesWithEditStatusByAcademicClassId(academicClassId))
                 .thenReturn(List.of(editedCourse));
 
-        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesWithEditStatusByAcademicCourseId(academicClassId);
+        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesWithEditStatusByAcademicClassId(academicClassId);
 
         assertNotNull(listOfCourses);
         assertEquals(1, listOfCourses.size());
@@ -121,13 +121,13 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesWithActiveStatusByAcademicCourseIdReturnsActiveCourses() {
+    void testGetCoursesWithActiveStatusByAcademicCourseIdReturnsActiveCourses() {
         String status = "ACTIVE";
         Long academicClassId = 1L;
-        when(coursesRepository.findCoursesWithActiveStatusByAcademicCourseId(academicClassId))
+        when(coursesRepository.findCoursesWithActiveStatusByAcademicClassId(academicClassId))
                 .thenReturn(List.of(course));
 
-        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesWithActiveStatusByAcademicCourseId(academicClassId);
+        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesWithActiveStatusByAcademicClassId(academicClassId);
 
         assertNotNull(listOfCourses);
         assertEquals(1, listOfCourses.size());
@@ -135,13 +135,13 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesWithNotActiveStatusByAcademicCourseIdReturnsListOfNonActiveCourses() {
+    void testGetCoursesWithNotActiveStatusByAcademicCourseIdReturnsListOfNonActiveCourses() {
         String status = "NOT ACTIVE";
         Long academicClassId = 3L;
-        when(coursesRepository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClassId))
+        when(coursesRepository.findCoursesWithNotActiveStatusByAcademicClassId(academicClassId))
                 .thenReturn(List.of(nonActiveCourse));
 
-        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesWithNotActiveStatusByAcademicCourseId(academicClassId);
+        List<CoursesForTimetable> listOfCourses = coursesForTimetableService.getCoursesWithNotActiveStatusByAcademicClassId(academicClassId);
 
         assertNotNull(listOfCourses);
         assertEquals(1, listOfCourses.size());
@@ -149,7 +149,7 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testGetCoursesByDayOfWeekAndStatusAndAcademicClassId() {
+    void testGetCoursesByDayOfWeekAndStatusAndAcademicClassId() {
         String dayOfWeek = "MONDAY";
         String status = "ACTIVE";
         Long academicClassId = 1L;
@@ -167,14 +167,14 @@ class CoursesForTimetableServiceImplTest {
     }
 
     @Test
-    public void testIsPresentCoursesForClass() {
+    void testIsPresentCoursesForClass() {
         when(coursesRepository.existsCoursesForTimetableByAcademicClass_Id(course.getId())).thenReturn(true);
         boolean result = coursesForTimetableService.isPresentCoursesForClass(course.getId());
         assertTrue(result);
     }
 
     @Test
-    public void testUpdateCourseStatusByIdChangesStatusToActive() {
+    void testUpdateCourseStatusByIdChangesStatusToActive() {
         Long id = nonActiveCourse.getId();
         doNothing().when(coursesRepository).updateCourseStatusToActiveById(id);
 

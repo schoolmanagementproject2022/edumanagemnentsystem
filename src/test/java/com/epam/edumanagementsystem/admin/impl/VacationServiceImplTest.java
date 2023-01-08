@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.impl;
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
 import com.epam.edumanagementsystem.admin.model.entity.Vacation;
 import com.epam.edumanagementsystem.admin.rest.repository.VacationRepository;
+import com.epam.edumanagementsystem.admin.rest.service.impl.VacationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,20 +33,19 @@ class VacationServiceImplTest {
     @BeforeEach
     void setUp() {
     vacation = new Vacation(1L, LocalDate.now(), LocalDate.of(2022, 4, 17));
-
     }
 
     @Test
     void testCreatePositive() {
         when(vacationRepository.save(any(Vacation.class))).thenReturn(vacation);
-        Vacation actualVacation = vacationServiceImpl.create(vacation);
+        Vacation actualVacation = vacationServiceImpl.save(vacation);
         assertEquals(vacation, actualVacation);
         verify(vacationRepository, times(1)).save(vacation);
     }
 
     @Test
     void testCreateNegative() {
-        assertThrows(NullPointerException.class, () -> vacationServiceImpl.create(null));
+        assertThrows(NullPointerException.class, () -> vacationServiceImpl.save(null));
     }
 
     @Test
@@ -60,7 +60,7 @@ class VacationServiceImplTest {
     void getByIdPositive() {
         Long vocationId = 1L;
         when(vacationRepository.findById(vocationId)).thenReturn(Optional.of(vacation));
-        VacationDto vacationDto = vacationServiceImpl.getById(vocationId);
+        VacationDto vacationDto = vacationServiceImpl.findById(vocationId);
         assertEquals(vocationId, vacationDto.getId());
 
     }
@@ -69,7 +69,8 @@ class VacationServiceImplTest {
     void getByIdNegative() {
         Long vocationId = null;
         when(vacationRepository.findById(any())).thenReturn(Optional.empty());
-        VacationDto vacationDto = vacationServiceImpl.getById(vocationId);
+        VacationDto vacationDto = vacationServiceImpl.findById(vocationId);
         assertEquals(vocationId, vacationDto.getId());
     }
+
 }

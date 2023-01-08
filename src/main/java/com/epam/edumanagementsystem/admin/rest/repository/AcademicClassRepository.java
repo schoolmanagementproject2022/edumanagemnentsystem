@@ -10,7 +10,8 @@ import java.util.Set;
 
 @Repository
 public interface AcademicClassRepository extends JpaRepository<AcademicClass, Long> {
-    Optional<AcademicClass> findByClassNumber(String name);
+
+    Optional<AcademicClass> findByClassNumber(String classNumber);
 
     Set<AcademicClass> findAcademicClassByTeacherId(Long id);
 

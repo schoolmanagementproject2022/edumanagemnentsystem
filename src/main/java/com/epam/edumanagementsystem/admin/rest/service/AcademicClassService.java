@@ -25,4 +25,5 @@ public interface AcademicClassService {
     Set<AcademicClassDto> findByTeacherId(Long id);
 
     void checkClassDuplication(AcademicClassDto academicClassDto, BindingResult bindingResult, Model model);
+
 }

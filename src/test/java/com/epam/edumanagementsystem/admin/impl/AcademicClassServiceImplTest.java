@@ -27,9 +27,11 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AcademicClassServiceImplTest {
+
     private AcademicClass academicClass;
     private AcademicCourse academicCourse;
     private Teacher teacher;
+
     @Mock
     private AcademicClassRepository academicClassRepository;
 
@@ -69,7 +71,7 @@ class AcademicClassServiceImplTest {
     @Test
     void testCreatePositive() {
         when(academicClassRepository.save(any(AcademicClass.class))).thenReturn(academicClass);
-        AcademicClass actualAcademicClass = academicClassServiceImpl.create(academicClass);
+        AcademicClass actualAcademicClass = academicClassServiceImpl.save(academicClass);
         assertEquals(academicClass, actualAcademicClass);
         verify(academicClassRepository, times(1)).save(actualAcademicClass);
     }
@@ -77,14 +79,14 @@ class AcademicClassServiceImplTest {
     @DisplayName("Create academic class - null case")
     @Test
     void testCreateNull() {
-        assertThrows(NullPointerException.class, () -> academicClassServiceImpl.create(null));
+        assertThrows(NullPointerException.class, () -> academicClassServiceImpl.save(null));
     }
 
     @DisplayName("Get academic class by id - positive case")
     @Test
     void testGetByIdPositive() {
         when(academicClassRepository.findById(1L)).thenReturn(Optional.of(academicClass));
-        AcademicClassDto academicClassDto = academicClassServiceImpl.getById(1L);
+        AcademicClassDto academicClassDto = academicClassServiceImpl.findById(1L);
         assertEquals(1L, academicClassDto.getId());
     }
 
@@ -93,7 +95,7 @@ class AcademicClassServiceImplTest {
     void testGetByIdNull() {
         Long classId = null;
         when(academicClassRepository.findById(any())).thenReturn(Optional.empty());
-        AcademicClassDto academicClassDto = academicClassServiceImpl.getById(classId);
+        AcademicClassDto academicClassDto = academicClassServiceImpl.findById(classId);
         assertEquals(classId, academicClassDto.getId());
     }
 
@@ -101,7 +103,7 @@ class AcademicClassServiceImplTest {
     @Test
     void testFindByNamePositive() {
         when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
-        AcademicClass actualClass = academicClassServiceImpl.findByName(academicClass.getClassNumber());
+        AcademicClass actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
         assertEquals(academicClass.getClassNumber(), actualClass.getClassNumber());
     }
 
@@ -110,7 +112,7 @@ class AcademicClassServiceImplTest {
     void testFindByIncorrectName() {
         when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(academicClass);
         AcademicClass aClass = new AcademicClass(1L, "A3", null, null, null, null, null);
-        AcademicClass actualClass = academicClassServiceImpl.findByName(academicClass.getClassNumber());
+        AcademicClass actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
         assertNotEquals(actualClass.getClassNumber(), aClass.getClassNumber());
     }
 

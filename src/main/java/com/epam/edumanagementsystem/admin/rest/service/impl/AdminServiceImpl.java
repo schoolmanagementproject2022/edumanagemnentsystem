@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
     private final AdminRepository adminRepository;
     private final UserService userService;
+    private final Logger logger = Logger.getLogger(AdminServiceImpl.class.getName());
 
     public AdminServiceImpl(AdminRepository adminRepository, UserService userService) {
         this.adminRepository = adminRepository;
@@ -25,6 +27,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public AdminDto save(AdminDto adminDto) {
+        logger.info("Saving Admin");
         Admin admin = AdminMapper.toAdmin(adminDto);
         admin.setUser(userService.save(new User(adminDto.getEmail(), adminDto.getRole())));
         return AdminMapper.toDto(adminRepository.save(admin));
@@ -32,11 +35,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<AdminDto> findAll() {
+        logger.info("Finding All Admins");
         return AdminMapper.adminDTOConvert(adminRepository.findAll());
     }
 
     @Override
     public AdminDto findByUserId(Long userId) {
+        logger.info("Finding Admin by User Id");
         return AdminMapper.toDto(adminRepository.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Admin not found by user id: " + userId)));
     }

@@ -135,7 +135,7 @@ class CoursesForTimetableRepositoryTest {
 
     @Test
     void testDeleteCourseByIdReturnsEmptyOptionalCourse() {
-        repository.deleteCourseById(notActiveCourseId);
+        repository.deleteById(notActiveCourseId);
         Optional<CoursesForTimetable> deletedCourse = repository.findById(notActiveCourseId);
         assertThat(deletedCourse.isEmpty());
     }
@@ -176,7 +176,7 @@ class CoursesForTimetableRepositoryTest {
 
     @Test
     void testFindCoursesWithEditStatusByAcademicCourseIdReturnsCorrectList() {
-        List<CoursesForTimetable> listOfEditedCourses = repository.findCoursesWithEditStatusByAcademicCourseId(academicClass2Id);
+        List<CoursesForTimetable> listOfEditedCourses = repository.findCoursesWithEditStatusByAcademicClassId(academicClass2Id);
         assertThat(listOfEditedCourses).isNotNull();
         assertEquals(1, listOfEditedCourses.size());
     }
@@ -204,14 +204,14 @@ class CoursesForTimetableRepositoryTest {
 
     @Test
     void testFindCoursesWithActiveStatusByAcademicCourseIdReturnsCorrectList() {
-        List<CoursesForTimetable> listOfActiveCourses = repository.findCoursesWithActiveStatusByAcademicCourseId(academicClass1Id);
+        List<CoursesForTimetable> listOfActiveCourses = repository.findCoursesWithActiveStatusByAcademicClassId(academicClass1Id);
         assertThat(listOfActiveCourses).isNotNull();
         assertEquals(1, listOfActiveCourses.size());
     }
 
     @Test
     void testFindCoursesWithNotActiveStatusByAcademicCourseIdReturnsCorrectList() {
-        List<CoursesForTimetable> listOfNotActiveCourses = repository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClass3Id);
+        List<CoursesForTimetable> listOfNotActiveCourses = repository.findCoursesWithNotActiveStatusByAcademicClassId(academicClass3Id);
         assertThat(listOfNotActiveCourses).isNotNull();
         assertEquals(1, listOfNotActiveCourses.size());
     }

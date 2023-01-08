@@ -13,6 +13,7 @@ import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.ACADEMIC_CLASS_BY_ID;
 
@@ -20,6 +21,7 @@ import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.ACA
 public class AcademicClassServiceImpl implements AcademicClassService {
 
     private final AcademicClassRepository academicClassRepository;
+    private final Logger logger = Logger.getLogger(AcademicClassServiceImpl.class.getName());
 
     public AcademicClassServiceImpl(AcademicClassRepository academicClassRepository) {
         this.academicClassRepository = academicClassRepository;
@@ -27,26 +29,31 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public AcademicClassDto save(AcademicClassDto academicClassDto) {
+        logger.info("Saving Academic Class");
         return AcademicClassMapper.toDto(academicClassRepository.save(AcademicClassMapper.toAcademicClass(academicClassDto)));
     }
 
     @Override
     public AcademicClassDto findById(Long id) {
+        logger.info("Finding Academic Class by Id");
         return AcademicClassMapper.toDto(academicClassRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(ACADEMIC_CLASS_BY_ID)));
     }
 
     @Override
     public AcademicClass findByClassNumber(String name) {
+        logger.info("Finding Academic Class by Class Number");
         return academicClassRepository.findByClassNumber(name).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public AcademicClass removeByTeacherName(String teacherName) {
+        logger.info("Removing Academic Class by Teacher Name");
         return academicClassRepository.removeByTeacherName(teacherName);
     }
 
     @Override
     public AcademicClassDto update(AcademicClassDto academicClassDto) {
+        logger.info("Updating Academic Class");
         AcademicClass academicClassByName = findByClassNumber(academicClassDto.getClassNumber());
         academicClassByName.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourse());
         academicClassByName.getTeacher().addAll(academicClassDto.getTeacherSet());
@@ -56,16 +63,19 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public List<AcademicClassDto> findAll() {
-        return AcademicClassMapper.academicClassDtoList(academicClassRepository.findAll());
+        logger.info("Finding All Academic Classes");
+        return AcademicClassMapper.toAcademicClassDtoList(academicClassRepository.findAll());
     }
 
     @Override
-    public Set<AcademicClassDto> findByTeacherId(Long id) {
-        return AcademicClassMapper.academicClassDtoSet(academicClassRepository.findAcademicClassByTeacherId(id));
+    public Set<AcademicClassDto> findByTeacherId(Long teacherId) {
+        logger.info("Finding Academic Class by Teacher Id");
+        return AcademicClassMapper.toAcademicClassDtoSet(academicClassRepository.findAcademicClassByTeacherId(teacherId));
     }
 
     @Override
     public void checkClassDuplication(AcademicClassDto academicClassDto, BindingResult bindingResult, Model model) {
+        logger.info("Checking Class Duplication");
         if (findAll().stream().anyMatch(number -> number.getClassNumber().equalsIgnoreCase(academicClassDto.getClassNumber()))) {
             bindingResult.addError(new ObjectError("academicClass", "Duplicate class number"));
             model.addAttribute("duplicated", "Class already exists");

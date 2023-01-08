@@ -1,16 +1,23 @@
 package com.epam.edumanagementsystem.admin.timetable.mapper;
 
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Component
 public class CoursesForTimetableMapper {
 
     private static AcademicCourseService academicCourseService;
+
+    @Autowired
+    public CoursesForTimetableMapper(AcademicCourseService academicCourseService) {
+        CoursesForTimetableMapper.academicCourseService = academicCourseService;
+    }
 
     public static CoursesForTimetable toCoursesForTimetable(CoursesForTimetableDto coursesForTimetableDto) {
         CoursesForTimetable coursesForTimetable = new CoursesForTimetable();
@@ -25,10 +32,9 @@ public class CoursesForTimetableMapper {
 
     public static CoursesForTimetableDto toCoursesForTimetableDto(CoursesForTimetable coursesForTimetable) {
         CoursesForTimetableDto coursesForTimetableDto = new CoursesForTimetableDto();
-        AcademicCourse academicCourse = academicCourseService.findByName(coursesForTimetable.getAcademicCourse());
 
         coursesForTimetableDto.setId(coursesForTimetable.getId());
-        coursesForTimetableDto.setAcademicCourse(academicCourse);
+        coursesForTimetableDto.setAcademicCourse(academicCourseService.findByName(coursesForTimetable.getAcademicCourse()));
         coursesForTimetableDto.setAcademicClass(coursesForTimetable.getAcademicClass().get(0));
         coursesForTimetableDto.setDayOfWeek(coursesForTimetable.getDayOfWeek());
         coursesForTimetableDto.setStatus(coursesForTimetable.getStatus());
@@ -36,11 +42,9 @@ public class CoursesForTimetableMapper {
     }
 
     public static List<CoursesForTimetable> toListOfCoursesForTimetable(List<CoursesForTimetableDto> listOfCoursesForTimetableDtos) {
-        List<CoursesForTimetable> coursesForTimetable = new ArrayList<>();
-
-        for (CoursesForTimetableDto coursesForTimetableDto : listOfCoursesForTimetableDtos) {
-            coursesForTimetable.add(toCoursesForTimetable(coursesForTimetableDto));
-        }
-        return coursesForTimetable;
+        return listOfCoursesForTimetableDtos.stream()
+                .map(CoursesForTimetableMapper::toCoursesForTimetable)
+                .collect(Collectors.toList());
     }
+
 }

@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.mapper.AcademicYearMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicYearDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicYearRepository;
+import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicYearServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
