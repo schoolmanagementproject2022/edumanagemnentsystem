@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.VACATION_REDIRECT;
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.VACATION_SECTION;
@@ -33,7 +34,9 @@ public class VacationController {
     @GetMapping
     @Operation(summary = "Gets the vacations' list and shows them on admin's dashboard")
     public String openVacationSection(Model model) {
-        setAttributesInVacation(model);
+        List<VacationDto> vacationDtoList = vacationService.findAll();
+        model.addAttribute("vacations", vacationDtoList);
+        model.addAttribute("vacation", new VacationDto());
         return VACATION_SECTION;
     }
 
@@ -42,11 +45,15 @@ public class VacationController {
     public String create(@ModelAttribute("vacation") @Valid VacationDto vacationDto,
                          BindingResult result, Model model) {
         model.addAttribute("vacations", vacationService.findAll());
-
-        if (vacationDto.getStartDate().isBefore(LocalDate.now())) {
-            model.addAttribute("invalid", "Wrong selected dates");
-            return VACATION_SECTION;
-        } else if (vacationDto.getStartDate().isAfter(vacationDto.getEndDate())) {
+        if (result.hasErrors()) {
+            if (result.hasFieldErrors("startDate")) {
+                return VACATION_SECTION;
+            }
+            if (result.hasFieldErrors("endDate")) {
+                return VACATION_SECTION;
+            }
+        }
+        if (vacationDto.getStartDate().isBefore(LocalDate.now()) || vacationDto.getStartDate().isAfter(vacationDto.getEndDate())) {
             model.addAttribute("invalid", "Wrong selected dates");
             return VACATION_SECTION;
         } else {
@@ -54,11 +61,5 @@ public class VacationController {
             return VACATION_REDIRECT;
         }
     }
-
-    private void setAttributesInVacation(Model model) {
-        model.addAttribute("vacations", vacationService.findAll());
-        model.addAttribute("vacation", new VacationDto());
-    }
-
 }
 

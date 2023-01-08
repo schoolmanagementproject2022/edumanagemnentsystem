@@ -11,7 +11,6 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
-import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SELECT_FIELD;
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.*;
@@ -49,7 +49,8 @@ public class AcademicClassController {
     @GetMapping
     @Operation(summary = "Shows academic class section on admin's dashboard with existing courses")
     public String openAcademicClassSection(Model model) {
-        setAttributesInClassesSection(model);
+        model.addAttribute("academicClasses", academicClassService.findAll());
+        model.addAttribute("academicClass", new AcademicClassDto());
         return ACADEMIC_CLASSES_SECTION;
     }
 
@@ -57,19 +58,9 @@ public class AcademicClassController {
     @Operation(summary = "Saves the created academic class")
     public String save(@ModelAttribute("academicClass") @Valid AcademicClassDto academicClassDto,
                        BindingResult result, Model model) {
-
-        List<AcademicClassDto> academicClassDtoList = getAllClassesAndSetAttributes(model);
-        validateNameField(model, academicClassDto, result);
-        if (result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")) {
-            return ACADEMIC_CLASSES_SECTION;
-        }
-
-        for (AcademicClassDto aClass : academicClassDtoList) {
-            if (aClass.getClassNumber().equals(academicClassDto.getClassNumber())) {
-                model.addAttribute("duplicated", CLASS_EXISTS);
-                return ACADEMIC_CLASSES_SECTION;
-            }
-        }
+        List<AcademicClassDto> academicClassDtoList = academicClassService.findAll();
+        model.addAttribute("academicClasses", academicClassDtoList);
+        academicClassService.checkClassDuplication(academicClassDto, result, model);
         if (result.hasErrors()) {
             return ACADEMIC_CLASSES_SECTION;
         } else {
@@ -81,34 +72,31 @@ public class AcademicClassController {
     @GetMapping("/{name}/courses")
     @Operation(summary = "Shows academic courses in academic class section")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
-        List<AcademicCourse> coursesForSelection = new ArrayList<>();
+        List<Set<Teacher>> coursesForSelection;
         List<AcademicCourse> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
         Set<Teacher> allTeachersByAcademicCourse = teacherService.findAllTeachersInAllCourses();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         model.addAttribute("existingClass", new AcademicClass());
-        if (academicCoursesInClass.isEmpty()) {
-            for (AcademicCourse course : allCourses) {
-                if (!course.getTeachers().isEmpty()) {
-                    coursesForSelection.add(course);
-                }
+
+            if (academicCoursesInClass.isEmpty()) {
+                coursesForSelection = allCourses.stream()
+                        .map(AcademicCourse::getTeachers)
+                        .filter(Set::isEmpty)
+                        .collect(Collectors.toList());
+                model.addAttribute("coursesForSelect", coursesForSelection);
+                return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
+            } else if (academicCoursesInClass.size() == allCourses.size()) {
+                return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
+            } else {
+                coursesForSelection = allCourses.stream()
+                        .map(AcademicCourse::getTeachers)
+                        .filter(teachers -> !teachers.isEmpty())
+                        .collect(Collectors.toList());
             }
             model.addAttribute("coursesForSelect", coursesForSelection);
             return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
-        } else if (academicCoursesInClass.size() == allCourses.size()) {
-            return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
-        } else {
-            for (AcademicCourse course : allCourses) {
-                if (!academicCoursesInClass.contains(course)) {
-                    if (!course.getTeachers().isEmpty()) {
-                        coursesForSelection.add(course);
-                    }
-                }
-            }
-        }
-        model.addAttribute("coursesForSelect", coursesForSelection);
-        return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
     }
 
     @PostMapping("{name}/courses")
@@ -122,8 +110,7 @@ public class AcademicClassController {
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
         for (AcademicCourse course : allCourses) {
             if (!academicCoursesInClass.contains(course)) {
-                if (!course.getTeachers().isEmpty())
-                    coursesForSelection.add(course);
+                if (!course.getTeachers().isEmpty()) coursesForSelection.add(course);
             }
         }
         model.addAttribute("coursesForSelect", coursesForSelection);
@@ -229,28 +216,6 @@ public class AcademicClassController {
         model.addAttribute("teachers", academicClassService.findByClassNumber(name).getTeacher());
         model.addAttribute("allTeacherByAcademicClass", teacherService.findAllTeachersInAllClasses());
         return TEACHERS_FOR_ACADEMIC_CLASSES;
-    }
-
-    private List<AcademicClassDto> getAllClassesAndSetAttributes(Model model) {
-        List<AcademicClassDto> classDtoList = academicClassService.findAll();
-        model.addAttribute("academicClasses", classDtoList);
-        return classDtoList;
-    }
-
-    private void validateNameField(Model model, AcademicClassDto academicClassDto, BindingResult result) {
-        if (!result.hasFieldErrors("classNumber")) {
-            if (InputFieldsValidation.validateInputFieldSize(academicClassDto.getClassNumber())) {
-                model.addAttribute("nameSize", "Symbols can't be more than 50");
-            }
-            if (InputFieldsValidation.checkingForIllegalCharacters(academicClassDto.getClassNumber(), model)) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-            }
-        }
-    }
-
-    private void setAttributesInClassesSection(Model model) {
-        model.addAttribute("academicClasses", academicClassService.findAll());
-        model.addAttribute("academicClass", new AcademicClassDto());
     }
 
 }

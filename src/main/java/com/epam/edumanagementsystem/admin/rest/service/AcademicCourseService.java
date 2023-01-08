@@ -2,6 +2,8 @@ package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Set;
@@ -22,4 +24,5 @@ public interface AcademicCourseService {
 
     Set<AcademicCourseDto> findAllByTeachersId(Long id);
 
+    void checkCourseDuplication(AcademicCourseDto academicCourseDto, BindingResult bindingResult, Model model);
 }

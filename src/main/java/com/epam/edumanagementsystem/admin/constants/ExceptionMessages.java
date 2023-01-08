@@ -1,7 +1,8 @@
 package com.epam.edumanagementsystem.admin.constants;
 
 public final class ExceptionMessages {
-    public ExceptionMessages() {
+
+    private ExceptionMessages() {
         throw new IllegalStateException();
     }
 

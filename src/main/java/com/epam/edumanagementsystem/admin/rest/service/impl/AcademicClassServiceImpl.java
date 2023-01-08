@@ -67,10 +67,9 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     @Override
     public void checkClassDuplication(AcademicClassDto academicClassDto, BindingResult bindingResult, Model model) {
         if (findAll().stream().anyMatch(number -> number.getClassNumber().equalsIgnoreCase(academicClassDto.getClassNumber()))) {
-            bindingResult.addError(new ObjectError("classNumber", "Duplicate class number"));
+            bindingResult.addError(new ObjectError("academicClass", "Duplicate class number"));
             model.addAttribute("duplicated", "Class already exists");
         }
     }
-
 
 }

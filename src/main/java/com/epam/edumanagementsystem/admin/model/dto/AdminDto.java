@@ -1,28 +1,38 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
+import com.epam.edumanagementsystem.util.validation.ValidEmail;
+import com.epam.edumanagementsystem.util.validation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SYMBOL_LENGTH;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.FIELD_MAX_SIZE;
 
 public class AdminDto {
 
     private Long id;
 
     @NotBlank(message = EMPTY_FIELD)
+    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
     private String username;
 
     @NotBlank(message = EMPTY_FIELD)
+    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
     private String surname;
 
     @NotBlank(message = EMPTY_FIELD)
+    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
+    @ValidEmail()
     private String email;
 
     @NotBlank
     private String role = "ADMIN";
 
     @NotBlank(message = EMPTY_FIELD)
+    @ValidPassword
     private String password;
 
     public AdminDto() {

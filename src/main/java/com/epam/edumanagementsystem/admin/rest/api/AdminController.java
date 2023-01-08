@@ -45,8 +45,6 @@ public class AdminController {
     @Operation(summary = "Creates a new admin in popup")
     public String addAdmin(@ModelAttribute("admin") @Valid AdminDto adminDto,
                            BindingResult result, Model model) {
-        validateFields(adminDto, model);
-        validateEmailAndPassword(result, adminDto, model);
         String checked = checkIfValidationIsFailed(result, model);
         if (!checked.isBlank()) {
             return checked;
@@ -54,29 +52,6 @@ public class AdminController {
         adminDto.setPassword(bcryptPasswordEncoder.encode(adminDto.getPassword()));
         adminService.save(adminDto);
         return "redirect:/admins";
-    }
-
-    private void validateFields(AdminDto adminDto, Model model) {
-        model.addAttribute("admins", adminService.findAll());
-        if (InputFieldsValidation.validateInputFieldSize(adminDto.getUsername())) {
-            model.addAttribute("nameSize", "Symbols can't be more than 50");
-        }
-        if (InputFieldsValidation.validateInputFieldSize(adminDto.getSurname())) {
-            model.addAttribute("surnameSize", "Symbols can't be more than 50");
-        }
-        if (InputFieldsValidation.validateInputFieldSize(adminDto.getEmail())) {
-            model.addAttribute("emailSize", "Symbols can't be more than 50");
-        }
-    }
-
-    private void validateEmailAndPassword(BindingResult result, AdminDto adminDto, Model model) {
-        if (!result.hasFieldErrors("email") && !model.containsAttribute("emailSize")) {
-            userService.checkDuplicationOfEmail(adminDto.getEmail(), model);
-            if (UserDataValidation.validateEmail(adminDto.getEmail())) {
-                model.addAttribute("invalidEmail", "Email is invalid");
-            }
-        }
-        UserDataValidation.validatePassword(adminDto.getPassword(), model);
     }
 
     private void setAttributesOfAdminSection(Model model) {

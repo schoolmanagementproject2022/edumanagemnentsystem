@@ -9,6 +9,9 @@ import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Set;
@@ -50,11 +53,17 @@ public class SubjectServiceImpl implements SubjectService {
         return save(SubjectMapper.toDto(subjectBySubjectName));
     }
 
-
-
     @Override
     public Set<SubjectDto> findAllByTeacherId(Long teacherId) {
         return SubjectMapper.toSetOfSubjectDto(subjectRepository.findSubjectsByTeacherSetId(teacherId));
+    }
+
+    @Override
+    public void checkSubjectDuplication(SubjectDto subjectDto, BindingResult bindingResult, Model model) {
+        if (findAll().stream().anyMatch(name -> name.getName().equalsIgnoreCase(subjectDto.getName()))) {
+            bindingResult.addError(new ObjectError("subject", "Duplicate subject name"));
+            model.addAttribute("duplicated", "A Subject with the same name already exists");
+        }
     }
 }
 

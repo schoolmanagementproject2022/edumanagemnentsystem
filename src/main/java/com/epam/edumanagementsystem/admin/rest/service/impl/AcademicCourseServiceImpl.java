@@ -13,6 +13,8 @@ import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,6 +76,14 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     @Override
     public List<AcademicCourse> findAllAcademicCoursesInClassByName(String name) {
         return new ArrayList<>(academicClassService.findByClassNumber(name).getAcademicCourseSet());
+    }
+
+    @Override
+    public void checkCourseDuplication(AcademicCourseDto academicCourseDto, BindingResult bindingResult, Model model) {
+        if (findAll().stream().anyMatch(name -> name.getName().equalsIgnoreCase(academicCourseDto.getName()))) {
+            bindingResult.addError(new ObjectError("academicCourse", "Duplicate course name"));
+            model.addAttribute("duplicated", "An Academic Course with the same name already exists");
+        }
     }
 
     //todo

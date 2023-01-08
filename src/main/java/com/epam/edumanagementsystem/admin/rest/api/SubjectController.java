@@ -46,24 +46,16 @@ public class SubjectController {
     public String createSubject(@ModelAttribute("subject") @Valid SubjectDto subjectDto,
                                 BindingResult result, Model model) {
         setAttributesOfSubjectSection(model);
-        validateName(result, subjectDto, model);
 
         if(result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
             return "subjectSection";
         }
 
-        for (SubjectDto subject : subjectService.findAll()) {
-            if (subject.getName().equalsIgnoreCase(subjectDto.getName())) {
-                model.addAttribute("duplicated", "A Subject with the same name already exists");
-                return "subjectSection";
-            }
-        }
+        subjectService.checkSubjectDuplication(subjectDto, result, model);
 
         if (result.hasErrors()) {
             return "subjectSection";
         }
-
-        subjectDto.setName(URLDecoder.decode(subjectDto.getName(), StandardCharsets.UTF_8));
         subjectService.save(subjectDto);
         return "redirect:/subjects";
     }
@@ -78,7 +70,7 @@ public class SubjectController {
         model.addAttribute("teachers", allTeachersInSubject);
         model.addAttribute("existingSubject", subjectService.findByName(subjectName));
 
-        if (allTeachersInSubject.size() == 0) {
+        if (allTeachersInSubject.isEmpty()) {
             teachersToSelect = new LinkedHashSet<>(allTeachers);
             model.addAttribute("teachersToSelect", teachersToSelect);
             return "subjectSectionForTeachers";
@@ -102,9 +94,9 @@ public class SubjectController {
         model.addAttribute("teachers", allTeachersInSubject);
         List<TeacherDto> allTeachers = teacherService.findAll();
 
-        if (subjectDto.getTeacherSet().size() == 0) {
+        if (subjectDto.getTeacherSet().isEmpty()) {
             model.addAttribute("blank", "There is no new selection.");
-            if (allTeachersInSubject.size() == 0) {
+            if (allTeachersInSubject.isEmpty()) {
                 teachersToSelect = new LinkedHashSet<>(allTeachers);
                 model.addAttribute("teachersToSelect", teachersToSelect);
                 return "subjectSectionForTeachers";
@@ -127,15 +119,5 @@ public class SubjectController {
         model.addAttribute("subject", new Subject());
     }
 
-    private void validateName(BindingResult result, SubjectDto subjectDto, Model model) {
-        if (!result.hasFieldErrors("name")) {
-            if(InputFieldsValidation.validateInputFieldSize(subjectDto.getName())){
-                model.addAttribute("nameSize", "Symbols can't be more than 50");
-            }
-            if (InputFieldsValidation.checkingForIllegalCharacters(subjectDto.getName(), model)) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-            }
-        }
-    }
 
 }

@@ -59,11 +59,8 @@ public class AcademicCourseController {
         if (result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")) {
             return GlobalConstants.ACADEMIC_COURSE_SECTION;
         }
+        academicCourseService.checkCourseDuplication(academicCourse, result, model);
 
-        String checkDuplication = checkDuplicationOfCourses(academicCourse, model);
-        if (checkDuplication.equals(GlobalConstants.ACADEMIC_COURSE_SECTION)) {
-            return checkDuplication;
-        }
         String checkedNameAndSubject = validateNameAndSubject(result);
         if (checkedNameAndSubject.equals(GlobalConstants.ACADEMIC_COURSE_SECTION)) {
             return checkedNameAndSubject;
@@ -214,24 +211,12 @@ public class AcademicCourseController {
         model.addAttribute("academicCourse", new AcademicCourseDto());
     }
 
-    private String checkDuplicationOfCourses(AcademicCourseDto academicCourseDto, Model model) {
-        for (AcademicCourseDto courseDto : getAllCoursesAndSetAttributes(model)) {
-            if (courseDto.getName().equalsIgnoreCase(academicCourseDto.getName())) {
-                model.addAttribute("duplicated", "An Academic Course with the same name already exists");
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-        }
-        return "Passed";
-    }
-
     private String validateNameAndSubject(BindingResult result) {
         if (result.hasErrors()) {
             if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
                 return GlobalConstants.ACADEMIC_COURSE_SECTION;
             }
-            if (result.hasFieldErrors("name")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            } else if (result.hasFieldErrors("subject")) {
+            if (result.hasFieldErrors("name") || result.hasFieldErrors("subject")) {
                 return GlobalConstants.ACADEMIC_COURSE_SECTION;
             }
             if (result.hasFieldErrors("subject")) {
