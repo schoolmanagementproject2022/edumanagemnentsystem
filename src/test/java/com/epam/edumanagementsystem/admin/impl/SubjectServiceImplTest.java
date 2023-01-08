@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.TestHelper;
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.SubjectRepository;
+import com.epam.edumanagementsystem.admin.rest.service.impl.SubjectServiceImpl;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.junit.jupiter.api.AfterEach;
@@ -36,7 +37,6 @@ class SubjectServiceImplTest extends TestHelper {
     SubjectDto returned;
     Subject forUpdate;
 
-
     @BeforeEach
     void setUp() {
         input = createSubject();
@@ -52,7 +52,6 @@ class SubjectServiceImplTest extends TestHelper {
     void findAll() {
         when(subjectRepository.findAll()).thenReturn(List.of(new Subject(), new Subject()));
 
-        // test method
         List<SubjectDto> all = service.findAll();
         assertEquals(2, all.size());
 
@@ -63,13 +62,10 @@ class SubjectServiceImplTest extends TestHelper {
 
     @Test
     void create() {
-
         when(subjectRepository.save(any())).thenReturn(input);
-
         assumeTrue(input.getName().equals(input.getName()));
 
-        Subject subject = service.create(input);
-
+        Subject subject = service.save(input);
         assertEquals(subject, input);
         verify(subjectRepository, times(1)).save(any(Subject.class));
     }
@@ -77,75 +73,53 @@ class SubjectServiceImplTest extends TestHelper {
     @Test
     void createSubjectButSubjectNull() {
         input = null;
-        // Act & Assert
-        Assertions.assertThrows(NullPointerException.class, () -> service.create(input));
+        Assertions.assertThrows(NullPointerException.class, () -> service.save(input));
     }
 
     @Test
     void findSubjectBySubjectName() {
-        // mock your methods
-        when(subjectRepository.findSubjectByName(any())).thenReturn(input);
+        when(subjectRepository.findByName(any())).thenReturn(input);
+        SubjectDto subjectByName = service.findByName(input.getName());
 
-        // test method
-        SubjectDto subjectByName = service.findSubjectBySubjectName(input.getName());
-
-        // assertions
         assertEquals(subjectByName.getId(), input.getId());
         assertEquals(subjectByName.getName(), input.getName());
-
-        // verifies
-        verify(subjectRepository, times(1)).findSubjectByName(any(String.class));
+        verify(subjectRepository, times(1)).findByName(any(String.class));
     }
 
     @Test
     void find_by_name_throws_entity_not_found_exception() {
-        // Arrange
-        when(subjectRepository.findSubjectByName(anyString())).thenReturn(input);
-
-        // Act & Assert
-        Assertions.assertThrows(EntityNotFoundException.class, () -> service.findSubjectBySubjectName("hvhg"));
+        when(subjectRepository.findByName(anyString())).thenReturn(input);
+        Assertions.assertThrows(EntityNotFoundException.class, () -> service.findByName("hvhg"));
     }
 
     @Test
     void findAllTeachers() {
-        // mock your methods
-        when(subjectRepository.findSubjectByName(any())).thenReturn(input);
+        when(subjectRepository.findByName(any())).thenReturn(input);
+        Set<Teacher> teacherBySubjectName = service.findByName(input.getName()).getTeacherSet();
 
-        // test method
-        Set<Teacher> teacherBySubjectName = service.findSubjectBySubjectName(input.getName()).getTeacherSet();
-
-        // assertions
         assertEquals(teacherBySubjectName.size(), input.getTeacherSet().size());
-
-        // verifies
-        verify(subjectRepository, times(1)).findSubjectByName(any(String.class));
+        verify(subjectRepository, times(1)).findByName(any(String.class));
     }
 
     @Test
     void update() {
-        //stub the data
-        Mockito.when(subjectRepository.findSubjectByName(input.getName())).thenReturn(input);
+        Mockito.when(subjectRepository.findByName(input.getName())).thenReturn(input);
         Mockito.when(subjectRepository.save(input)).thenReturn(input);
 
-
         Subject result = service.update(forUpdate);
-
         assertEquals(forUpdate.getName(), result.getName());
-
     }
 
     @Test
     void negativeUpdate() {
         forUpdate = null;
         Assertions.assertThrows(NullPointerException.class, () -> service.update(forUpdate));
-
     }
 
     @Test
     void findSubjectsByTeacherSetId() {
         when(subjectRepository.findSubjectsByTeacherSetId(any())).thenReturn(Set.of(input));
-
-        Set<Subject> setOfSubjects = service.findSubjectsByTeacherSetId(input.getId());
+        Set<Subject> setOfSubjects = service.findAllByTeacherId(input.getId());
 
         assertThat(setOfSubjects).isNotNull();
         assertEquals(Set.of(input), setOfSubjects);

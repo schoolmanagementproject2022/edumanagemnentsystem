@@ -73,7 +73,7 @@ public class SubjectController {
     public String openSubjectForTeacherCreation(@PathVariable("name") String subjectName, Model model) {
 
         Set<TeacherDto> teachersToSelect;
-        Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachers(subjectName);
+        Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachersInSubjectByName(subjectName);
         List<TeacherDto> allTeachers = teacherService.findAll();
         model.addAttribute("teachers", allTeachersInSubject);
         model.addAttribute("existingSubject", subjectService.findByName(subjectName));
@@ -98,7 +98,7 @@ public class SubjectController {
                                 @PathVariable("name") String name, Model model) {
 
         Set<TeacherDto> teachersToSelect;
-        Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachers(name);
+        Set<TeacherDto> allTeachersInSubject = subjectService.findAllTeachersInSubjectByName(name);
         model.addAttribute("teachers", allTeachersInSubject);
         List<TeacherDto> allTeachers = teacherService.findAll();
 

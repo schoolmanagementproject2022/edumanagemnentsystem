@@ -86,12 +86,12 @@ public class AcademicCourseController {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
         AcademicCourse findAcademicCourseByName = academicCourseService.findByName(courseName);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
-        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
+        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.toAcademicClassDtoSet(findAcademicCourseByName.getAcademicClass());
         model.addAttribute("teachersToSelect", findAcademicCourseByName.getTeachers());
         model.addAttribute("academicClasses", allAcademicClasses);
         model.addAttribute("existingClasses", academicClassesInCourse);
         model.addAttribute("newClass", new AcademicClass());
-        if (academicClassesInCourse.size() == 0) {
+        if (academicClassesInCourse.isEmpty()) {
             academicClassSet.addAll(allAcademicClasses);
             model.addAttribute("academicClasses", academicClassSet);
             return "academicCourseSectionForClasses";
@@ -132,11 +132,11 @@ public class AcademicCourseController {
     public String addClasses(@ModelAttribute("newClass") @Valid AcademicClassDto academicClass, BindingResult result,
                              @PathVariable("name") String courseName, Model model) {
         setAttributes(model, courseName);
-        if (result.hasErrors() || academicClass.getTeacherSet().size() == 0) {
+        if (result.hasErrors() || academicClass.getTeacherSet().isEmpty()) {
             if (result.hasFieldErrors("classNumber")) {
                 model.addAttribute("blankClass", "Please, select the required fields");
             }
-            if (academicClass.getTeacherSet().size() == 0) {
+            if (academicClass.getTeacherSet().isEmpty()) {
                 model.addAttribute("blank", "Please, select the required fields");
             }
             return "academicCourseSectionForClasses";
@@ -151,9 +151,9 @@ public class AcademicCourseController {
         AcademicCourse findAcademicCourseByName = academicCourseService.findByName(courseName);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
         Set<Teacher> teachersInAcademicCourse = findAcademicCourseByName.getTeachers();
-        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.academicClassDtoSet(findAcademicCourseByName.getAcademicClass());
+        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.toAcademicClassDtoSet(findAcademicCourseByName.getAcademicClass());
 
-        if (academicClassesInCourse.size() == 0) {
+        if (academicClassesInCourse.isEmpty()) {
             academicClassSet.addAll(allAcademicClasses);
             model.addAttribute("academicClasses", academicClassSet);
         } else if (academicClassesInCourse.size() == allAcademicClasses.size()) {

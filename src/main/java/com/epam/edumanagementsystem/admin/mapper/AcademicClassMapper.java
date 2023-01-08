@@ -28,6 +28,7 @@ public class AcademicClassMapper {
 
         return academicClassDto;
     }
+
     public static AcademicClassDto toNormalDto(AcademicClass academicClass) {
         AcademicClassDto academicClassDto = new AcademicClassDto();
         academicClassDto.setId(academicClass.getId());
@@ -38,20 +39,22 @@ public class AcademicClassMapper {
         return academicClassDto;
     }
 
-    public static List<AcademicClassDto> academicClassDtoList(List<AcademicClass> academicClassList) {
+    public static List<AcademicClassDto> toAcademicClassDtoList(List<AcademicClass> academicClassList) {
         return academicClassList.stream()
                 .map(AcademicClassMapper::toNormalDto)
                 .collect(Collectors.toList());
     }
-    public static Set<AcademicClassDto> academicClassDtoSet(Set<AcademicClass> academicClassSet) {
+
+    public static Set<AcademicClassDto> toAcademicClassDtoSet(Set<AcademicClass> academicClassSet) {
         return academicClassSet.stream()
                 .map(AcademicClassMapper::toNormalDto)
                 .collect(Collectors.toSet());
     }
 
-    public static List<AcademicClass> academicClassessList(List<AcademicClassDto> academicClassDtoList) {
+    public static List<AcademicClass> toAcademicClassesList(List<AcademicClassDto> academicClassDtoList) {
         return academicClassDtoList.stream()
                 .map(AcademicClassMapper::toAcademicClass)
                 .collect(Collectors.toList());
     }
+
 }

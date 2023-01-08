@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseRepository;
+import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicCourseServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +80,7 @@ class AcademicCourseServiceImplTest {
     void testFindById() {
         long id = 1L;
         when(academicCourseRepository.findById(id)).thenReturn(academicCourse);
-        AcademicCourse academicCourseById = academicCourseService.findByID(id);
+        AcademicCourse academicCourseById = academicCourseService.findById(id);
         assertEquals(academicCourse, academicCourseById);
     }
 
@@ -87,13 +88,13 @@ class AcademicCourseServiceImplTest {
     @DisplayName("should not find academic course by given absent id")
     void testFindByIdFail() {
         long id = 8L;
-        assertThrows(RuntimeException.class, () -> academicCourseService.findByID(id));
+        assertThrows(RuntimeException.class, () -> academicCourseService.findById(id));
     }
 
     @Test
     @DisplayName("should not find academic course by null id")
     void testFindByNullIdFail() {
-        assertThrows(NullPointerException.class, () -> academicCourseService.findByID(null));
+        assertThrows(NullPointerException.class, () -> academicCourseService.findById(null));
     }
 
     @Test

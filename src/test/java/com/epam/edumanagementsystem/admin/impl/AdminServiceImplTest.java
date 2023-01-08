@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.TestHelper;
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
+import com.epam.edumanagementsystem.admin.rest.service.impl.AdminServiceImpl;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.repository.UserRepository;

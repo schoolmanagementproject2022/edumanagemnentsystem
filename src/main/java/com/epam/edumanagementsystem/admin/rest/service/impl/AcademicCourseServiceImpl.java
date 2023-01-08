@@ -29,7 +29,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     private final AcademicCourseRepository academicCourseRepository;
     private final AcademicClassService academicClassService;
     private final CoursesForTimetableService coursesForTimetableService;
-    private Logger logger;
+    private final Logger logger = Logger.getLogger(AcademicCourseServiceImpl.class.getName());
 
     public AcademicCourseServiceImpl(AcademicCourseRepository academicCourseRepository,
                                      AcademicClassService academicClassService,
@@ -41,26 +41,31 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
 
     @Override
     public AcademicCourse findByName(String name) {
+        logger.info("Finding Academic Course by Name");
         return academicCourseRepository.findByName(name).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
     public AcademicCourseDto findById(Long id) {
+        logger.info("Finding Academic Course by Id");
         return AcademicCourseMapper.toDto(academicCourseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(NOT_PRESENT_COURSE_ID)));
     }
 
     @Override
     public AcademicCourseDto save(AcademicCourseDto academicCourse) {
+        logger.info("Saving Academic Course");
         return AcademicCourseMapper.toDto(academicCourseRepository.save(AcademicCourseMapper.toAcademicCourse(academicCourse)));
     }
 
     @Override
     public List<AcademicCourseDto> findAll() {
+        logger.info("Finding All Academic Courses");
         return AcademicCourseMapper.toListOfAcademicCourseDto(academicCourseRepository.findAll());
     }
 
     @Override
     public AcademicCourseDto update(AcademicCourseDto academicCourse) {
+        logger.info("Updating Academic Course");
         AcademicCourse academicCourseByName = findByName(academicCourse.getName());
         academicCourseByName.getTeachers().addAll(academicCourse.getTeachers());
         return save(AcademicCourseMapper.toDto(academicCourseByName));
@@ -68,11 +73,13 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
 
     @Override
     public Set<AcademicCourseDto> findAllByTeachersId(Long id) {
+        logger.info("Saving Academic Course");
         return AcademicCourseMapper.toSetOfAcademicCourseDto(academicCourseRepository.findAllByTeachersId(id));
     }
 
     @Override
     public List<AcademicCourse> findAllAcademicCoursesInClassByName(String name) {
+        logger.info("Finding All Academic Courses in Class by Name");
         return new ArrayList<>(academicClassService.findByClassNumber(name).getAcademicCourseSet());
     }
 

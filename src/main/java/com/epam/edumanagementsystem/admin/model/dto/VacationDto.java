@@ -10,6 +10,7 @@ import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMP
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER;
 
 public class VacationDto {
+
     private Long id;
 
     @NotNull(message = EMPTY_FIELD)

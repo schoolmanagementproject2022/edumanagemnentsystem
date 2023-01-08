@@ -11,4 +11,5 @@ public interface VacationService {
     List<VacationDto> findAll();
 
     VacationDto findById(Long id);
+
 }
