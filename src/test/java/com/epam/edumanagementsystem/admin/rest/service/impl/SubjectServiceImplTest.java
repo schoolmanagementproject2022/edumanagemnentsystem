@@ -1,10 +1,10 @@
-package com.epam.edumanagementsystem.admin.impl;
+package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.TestHelper;
+import com.epam.edumanagementsystem.admin.mapper.SubjectMapper;
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.SubjectRepository;
-import com.epam.edumanagementsystem.admin.rest.service.impl.SubjectServiceImpl;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.junit.jupiter.api.AfterEach;
@@ -65,7 +65,7 @@ class SubjectServiceImplTest extends TestHelper {
         when(subjectRepository.save(any())).thenReturn(input);
         assumeTrue(input.getName().equals(input.getName()));
 
-        Subject subject = service.save(input);
+        SubjectDto subject = service.save(SubjectMapper.toDto(input));
         assertEquals(subject, input);
         verify(subjectRepository, times(1)).save(any(Subject.class));
     }
@@ -73,12 +73,12 @@ class SubjectServiceImplTest extends TestHelper {
     @Test
     void createSubjectButSubjectNull() {
         input = null;
-        Assertions.assertThrows(NullPointerException.class, () -> service.save(input));
+        Assertions.assertThrows(NullPointerException.class, () -> service.save(SubjectMapper.toDto(input)));
     }
 
     @Test
     void findSubjectBySubjectName() {
-        when(subjectRepository.findByName(any())).thenReturn(input);
+        when(subjectRepository.findByName(any())).thenReturn(SubjectMapper.toDto(input));
         SubjectDto subjectByName = service.findByName(input.getName());
 
         assertEquals(subjectByName.getId(), input.getId());

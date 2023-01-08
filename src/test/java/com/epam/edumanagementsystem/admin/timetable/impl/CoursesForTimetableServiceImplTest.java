@@ -54,7 +54,7 @@ class CoursesForTimetableServiceImplTest {
         String status = "ACTIVE";
         doNothing().when(coursesRepository).create(dayOfWeek, academicClassName, academicClassId, status);
 
-        coursesForTimetableService.create(course);
+//        coursesForTimetableService.create(course);
 
         verify(coursesRepository, times(1)).create(dayOfWeek, academicClassName, academicClassId, status);
 

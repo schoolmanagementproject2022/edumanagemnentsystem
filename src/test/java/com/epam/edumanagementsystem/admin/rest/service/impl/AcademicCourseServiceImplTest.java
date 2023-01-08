@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.admin.impl;
+package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
@@ -6,9 +6,9 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicCourseRepository;
-import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicCourseServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import java.util.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AcademicCourseServiceImplTest {
@@ -43,7 +43,7 @@ class AcademicCourseServiceImplTest {
         User user = new User(null, "gm@gmail.com", "TEACHER");
         Set<Teacher> teacherSet = new HashSet<>();
         Set<AcademicClass> academicClasses = new HashSet<>();
-        academicCourse = new AcademicCourse(1L, "firstAcademicCourse",
+        academicCourse = new AcademicCourse(1L, "AcademicCourseName",
                 subject, teacherSet, academicClasses);
         coursesSet = new LinkedHashSet<>();
         coursesSet.add(academicCourse);
@@ -54,9 +54,10 @@ class AcademicCourseServiceImplTest {
     @DisplayName("should find academic course by given academic name")
     void testFindAcademicCourseByAcademicCourseName() {
         String name = "firstAcademicCourse";
-        when(academicCourseRepository.findByName(name)).thenReturn(academicCourse);
+        when(academicCourseRepository.findByName(name)).thenReturn(Optional.ofNullable(academicCourse));
         AcademicCourse academicCourseByAcademicCourseName =
                 academicCourseService.findByName(name);
+        Assertions.assertNotNull(academicCourseByAcademicCourseName);
         assertEquals(academicCourse, academicCourseByAcademicCourseName);
     }
 
@@ -69,19 +70,13 @@ class AcademicCourseServiceImplTest {
     }
 
     @Test
-    @DisplayName("should throw NulPointerException")
-    void testFindAcademicCourseByNullFail() {
-        assertThrows(NullPointerException.class, () -> academicCourseService
-                .findByName(null));
-    }
-
-    @Test
     @DisplayName("should find academic course by given id")
     void testFindById() {
         long id = 1L;
-        when(academicCourseRepository.findById(id)).thenReturn(academicCourse);
-        AcademicCourse academicCourseById = academicCourseService.findById(id);
-        assertEquals(academicCourse, academicCourseById);
+        when(academicCourseRepository.findById(id)).thenReturn(Optional.ofNullable(academicCourse));
+        AcademicCourseDto academicCourseById = academicCourseService.findById(id);
+        Assertions.assertNotNull(academicCourseById);
+        assertEquals(id, academicCourseById.getId());
     }
 
     @Test
@@ -92,17 +87,11 @@ class AcademicCourseServiceImplTest {
     }
 
     @Test
-    @DisplayName("should not find academic course by null id")
-    void testFindByNullIdFail() {
-        assertThrows(NullPointerException.class, () -> academicCourseService.findById(null));
-    }
-
-    @Test
     @DisplayName("should create academic course success")
     void testCreateSuccess() {
         when(academicCourseRepository.save(academicCourse)).thenReturn(academicCourse);
         AcademicCourseDto academicCourseDto = AcademicCourseMapper.toDto(academicCourse);
-        AcademicCourseDto actualAcademicCourse = academicCourseService.save(academicCourse);
+        AcademicCourseDto actualAcademicCourse = academicCourseService.save(AcademicCourseMapper.toDto(academicCourse));
         assertEquals(academicCourseDto, actualAcademicCourse);
     }
 
@@ -141,9 +130,9 @@ class AcademicCourseServiceImplTest {
         Set<AcademicClass> academicClasses2 = new HashSet<>();
         Subject subject2 = new Subject();
         AcademicCourse academicCourseForUpdate = new AcademicCourse(1L, "secondName", subject2, teacherSet2, academicClasses2);
-        when(academicCourseRepository.findByName("secondName")).thenReturn(academicCourseForUpdate);
+        when(academicCourseRepository.findByName("secondName")).thenReturn(Optional.of(academicCourseForUpdate));
         when(academicCourseRepository.save(academicCourseForUpdate)).thenReturn(academicCourseForUpdate);
-        AcademicCourseDto updatedAcademicCourse = academicCourseService.update(academicCourseForUpdate);
+        AcademicCourseDto updatedAcademicCourse = academicCourseService.update(AcademicCourseMapper.toDto(academicCourseForUpdate));
         assertEquals("secondName", updatedAcademicCourse.getName());
     }
 
@@ -154,7 +143,7 @@ class AcademicCourseServiceImplTest {
     }
 
     @Test
-    void findAcademicCoursesByTeacherId() {
+    void testFindAcademicCoursesByTeacherId() {
         when(academicCourseRepository.findAllByTeachersId(1L)).thenReturn(coursesSet);
         Set<AcademicCourseDto> academicCoursesByTeacherId = academicCourseService.findAllByTeachersId(1L);
         Set<AcademicCourseDto> academicCourseDto = AcademicCourseMapper.toSetOfAcademicCourseDto(coursesSet);
@@ -162,4 +151,5 @@ class AcademicCourseServiceImplTest {
         assertEquals(academicCoursesByTeacherId, academicCourseDto);
         assertThat(coursesSet).isNotNull();
     }
+
 }

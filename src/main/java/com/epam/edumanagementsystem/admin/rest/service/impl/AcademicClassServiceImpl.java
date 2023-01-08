@@ -5,12 +5,12 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
-import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;

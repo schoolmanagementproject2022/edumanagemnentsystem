@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem;
 
+import com.epam.edumanagementsystem.admin.mapper.AdminMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.dto.SubjectDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
@@ -50,13 +51,13 @@ public class TestHelper {
         return teacherSet;
     }
 
-    protected Admin input() {
+    protected AdminDto input() {
         admin.setId(1L);
         admin.setUsername("admin");
         admin.setSurname("adminyan");
         admin.setPassword("admin");
         admin.setUser(user());
-        return admin;
+        return AdminMapper.toDto(admin);
 
     }
 

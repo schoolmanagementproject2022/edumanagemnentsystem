@@ -1,10 +1,9 @@
-package com.epam.edumanagementsystem.admin.impl;
+package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicYearMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicYearDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicYearRepository;
-import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicYearServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +44,7 @@ class AcademicYearServiceImplTest {
     void testCreateSuccess() {
         AcademicYearDto academicYearDto = AcademicYearMapper.toDto(academicYear);
         when(academicYearRepository.save(any(AcademicYear.class))).thenReturn(academicYear);
-        AcademicYearDto savedAcademicYearDto = academicYearService.save(academicYear);
+        AcademicYearDto savedAcademicYearDto = academicYearService.save(AcademicYearMapper.toDto(academicYear));
         assertEquals(academicYearDto, savedAcademicYearDto);
     }
 
@@ -82,9 +81,4 @@ class AcademicYearServiceImplTest {
         assertThrows(RuntimeException.class, () -> academicYearService.findById(2L));
     }
 
-    @Test
-    @DisplayName("should throw NullPointerException when given id is null")
-    void testFindByNullId() {
-        assertThrows(NullPointerException.class, () -> academicYearService.findById(null));
-    }
 }

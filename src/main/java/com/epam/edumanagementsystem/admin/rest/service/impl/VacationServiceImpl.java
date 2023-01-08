@@ -4,9 +4,9 @@ import com.epam.edumanagementsystem.admin.mapper.VacationMapper;
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
 import com.epam.edumanagementsystem.admin.rest.repository.VacationRepository;
 import com.epam.edumanagementsystem.admin.rest.service.VacationService;
-import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.logging.Logger;
 

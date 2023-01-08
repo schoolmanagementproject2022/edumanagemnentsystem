@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.admin.impl;
+package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.model.entity.SuperAdmin;
 import com.epam.edumanagementsystem.admin.rest.repository.SuperAdminRepository;

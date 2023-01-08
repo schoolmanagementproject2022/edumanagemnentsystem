@@ -1,6 +1,8 @@
 package com.epam.edumanagementsystem.admin.impl;
 
 import com.epam.edumanagementsystem.TestHelper;
+import com.epam.edumanagementsystem.admin.mapper.AcademicYearMapper;
+import com.epam.edumanagementsystem.admin.mapper.AdminMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
@@ -36,7 +38,7 @@ class AdminServiceImplTest extends TestHelper {
     @InjectMocks
     private AdminServiceImpl service;
 
-    Admin input;
+    AdminDto input;
     Admin returned;
     AdminDto createAdmin;
     User user;
@@ -58,7 +60,7 @@ class AdminServiceImplTest extends TestHelper {
         when(userRepository.save(any())).thenReturn(user);
         when(adminRepository.save(any())).thenReturn(input);
         assumeTrue(input.equals(returned));
-        Admin admin = service.save(createAdmin);
+        AdminDto admin = service.save(createAdmin);
         assertEquals(admin, input);
         verify(adminRepository, times(1)).save(any(Admin.class));
     }
@@ -71,7 +73,7 @@ class AdminServiceImplTest extends TestHelper {
 
     @Test
     void testFindAllAdmins() {
-        when(adminRepository.findAll()).thenReturn(List.of(input, returned));
+        when(adminRepository.findAll()).thenReturn(AdminMapper.toDto(List.of(input, returned)));
 
         List<AdminDto> all = service.findAll();
         assertEquals(2, all.size());
