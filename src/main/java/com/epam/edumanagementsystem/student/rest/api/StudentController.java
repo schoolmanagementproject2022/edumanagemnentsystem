@@ -170,19 +170,17 @@ public class StudentController extends StudentControllerHelper{
     @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        StudentDto studentById = studentService.findById(id);
-        logger.debug(multipartFile.getName()+" "+studentById);
-        studentService.addProfilePicture(studentById, multipartFile);
+        logger.debug(multipartFile.getName()+" "+studentService.findById(id));
+        studentService.addProfilePicture(studentService.findById(id), multipartFile);
         return REDIRECT + id + PROFILE;
     }
 
     @GetMapping("/{id}/image/delete")
     @Operation(summary = "Deletes image to selected student's profile")
     public String deletePic(@PathVariable("id") Long id) {
-        StudentDto studentById = studentService.findById(id);
-        logger.info("user want delete omage"+" " +studentById);
-        imageService.deleteImage(studentById.getPicUrl());
-        studentService.deletePic(studentById.getId());
+        logger.info("user want delete image"+" " +id);
+        imageService.deleteImage(studentService.findById(id).getPicUrl());
+        studentService.deletePic(studentService.findById(id).getId());
         return REDIRECT + id + PROFILE;
     }
 
