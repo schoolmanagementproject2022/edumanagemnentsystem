@@ -1,13 +1,17 @@
 package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
+import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
+import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.rest.api.AcademicClassController;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicClassServiceImpl;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.teacher.impl.TeacherServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
@@ -20,12 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
@@ -82,7 +81,7 @@ class AcademicClassServiceImplTest {
 
     @DisplayName("Save academic class")
     @Test
-    void saveAcademicClass() {
+    void testSaveAcademicClass() {
         when(academicClassRepository.save(any(AcademicClass.class))).thenReturn(academicClass);
         AcademicClassDto actualAcademicClass = academicClassServiceImpl.save(AcademicClassMapper.toDto(academicClass));
         Assertions.assertNotNull(actualAcademicClass);
@@ -91,7 +90,7 @@ class AcademicClassServiceImplTest {
 
     @DisplayName("Find academic class by id")
     @Test
-    void findByIdPositive() {
+    void testFindByIdPositive() {
         when(academicClassRepository.findById(1L)).thenReturn(Optional.of(academicClass));
         AcademicClassDto academicClassDto = academicClassServiceImpl.findById(1L);
         assertEquals(1L, academicClassDto.getId());
@@ -99,13 +98,13 @@ class AcademicClassServiceImplTest {
 
     @DisplayName("Not found academic class by given id")
     @Test
-    void findByIdNotFound() {
+    void testFindByIdNotFound() {
         assertThrows(EntityNotFoundException.class, () -> academicClassServiceImpl.findById(3L));
     }
 
     @DisplayName("Find academic class by name or classNumber")
     @Test
-    void findByClassNumberPositive() {
+    void testFindByClassNumberPositive() {
         when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(Optional.ofNullable(academicClass));
         AcademicClass actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
         assertEquals(academicClass.getClassNumber(), actualClass.getClassNumber());
@@ -113,7 +112,7 @@ class AcademicClassServiceImplTest {
 
     @DisplayName("Find academic class by incorrect name")
     @Test
-    void findByIncorrectClassNumber() {
+    void testFindByIncorrectClassNumber() {
         when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(Optional.ofNullable(academicClass));
         AcademicClass aClass = new AcademicClass(1L, "A3", null, null, null, null, null);
         AcademicClass actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
@@ -134,7 +133,7 @@ class AcademicClassServiceImplTest {
 
     @DisplayName("Find all academic class dto - positive case")
     @Test
-    void findAllPositive() {
+    void testFindAllPositive() {
         when(academicClassRepository.findAll()).thenReturn(List.of(new AcademicClass()));
         List<AcademicClassDto> academicClassDtoList = academicClassServiceImpl.findAll();
         assertNotNull(academicClassDtoList);
@@ -143,7 +142,7 @@ class AcademicClassServiceImplTest {
 
     @Test
     @DisplayName("Find all academic classes when linked to the classes in teacher profile")
-    public void testFindByTeacherId_found() {
+    public void testFindByTeacherIdFound() {
         when(academicClassRepository.findAcademicClassByTeacherId(1L)).thenReturn(Set.of(new AcademicClass("A1")));
 
         Set<AcademicClassDto> foundClasses = academicClassServiceImpl.findByTeacherId(1L);
@@ -152,16 +151,15 @@ class AcademicClassServiceImplTest {
     }
 
     @Test
-    public void testFindByTeacherId_notFound() {
+    public void testFindByTeacherIdNotFound() {
         when(academicClassRepository.findAcademicClassByTeacherId(1L)).thenReturn(Set.of());
-
         Set<AcademicClassDto> foundClasses = academicClassServiceImpl.findByTeacherId(1L);
         assertEquals(0, foundClasses.size());
     }
 
 
     @Test
-    public void testRemoveByTeacherName_classFound() {
+    public void testRemoveByTeacherNameClassFound() {
         when(academicClassRepository.removeByTeacherName("TeacherName")).thenReturn(academicClass);
         AcademicClass removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
         assertEquals("A1", removedClass.getClassNumber());
@@ -169,10 +167,10 @@ class AcademicClassServiceImplTest {
     }
 
     @Test
-    public void testRemoveByTeacherName_classNotFound() {
+    public void testRemoveByTeacherNameClassNotFound() {
         when(academicClassRepository.removeByTeacherName("TeacherName")).thenReturn(null);
         AcademicClass removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
-        assertEquals(null, removedClass);
+        assertNull(removedClass);
     }
 
 }
