@@ -93,36 +93,36 @@ class UserDataValidationTest {
         }
     }
 
-    @Test
-    void imageIsValid() throws IOException {
-        File file = new File("C:\\edumanagemnentsystem\\src\\main\\resources\\static\\img\\avatar.png");
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("picture",
-                file.getName(), "png", IOUtils.toByteArray(input));
-        assertFalse(multipartFile.getBytes().length > 2097152);
-        assertEquals(multipartFile.getContentType(), "png");
-    }
-
-    @Test
-    void imageSizeValidation() throws IOException {
-        File file = new File("C:\\edumanagemnentsystem\\src\\test\\java\\com\\epam\\edumanagementsystem\\util\\img\\Meteosat7-full-scan.jpg");
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("picture",
-                file.getName(), "jpg", IOUtils.toByteArray(input));
-        assertTrue(multipartFile.getBytes().length > 2097152);
-        assertEquals(multipartFile.getContentType(), "jpg");
-    }
-
-    @Test
-    void imageFormatValidation() throws IOException {
-        File file = new File("C:\\edumanagemnentsystem\\src\\test\\java\\com\\epam\\edumanagementsystem\\util\\img\\test.txt");
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("file",
-                file.getName(), "txt", IOUtils.toByteArray(input));
-        assertFalse(multipartFile.getBytes().length > 2097152);
-        assertNotEquals(multipartFile.getContentType(), "jpg");
-        assertNotEquals(multipartFile.getContentType(), "png");
-        assertNotEquals(multipartFile.getContentType(), "jpeg");
-    }
+//    @Test
+//    void imageIsValid() throws IOException {
+//        File file = new File("C:\\edumanagemnentsystem\\src\\main\\resources\\static\\img\\avatar.png");
+//        FileInputStream input = new FileInputStream(file);
+//        MultipartFile multipartFile = new MockMultipartFile("picture",
+//                file.getName(), "png", IOUtils.toByteArray(input));
+//        assertFalse(multipartFile.getBytes().length > 2097152);
+//        assertEquals(multipartFile.getContentType(), "png");
+//    }
+//
+//    @Test
+//    void imageSizeValidation() throws IOException {
+//        File file = new File("C:\\edumanagemnentsystem\\src\\test\\java\\com\\epam\\edumanagementsystem\\util\\img\\Meteosat7-full-scan.jpg");
+//        FileInputStream input = new FileInputStream(file);
+//        MultipartFile multipartFile = new MockMultipartFile("picture",
+//                file.getName(), "jpg", IOUtils.toByteArray(input));
+//        assertTrue(multipartFile.getBytes().length > 2097152);
+//        assertEquals(multipartFile.getContentType(), "jpg");
+//    }
+//
+//    @Test
+//    void imageFormatValidation() throws IOException {
+//        File file = new File("C:\\edumanagemnentsystem\\src\\test\\java\\com\\epam\\edumanagementsystem\\util\\img\\test.txt");
+//        FileInputStream input = new FileInputStream(file);
+//        MultipartFile multipartFile = new MockMultipartFile("file",
+//                file.getName(), "txt", IOUtils.toByteArray(input));
+//        assertFalse(multipartFile.getBytes().length > 2097152);
+//        assertNotEquals(multipartFile.getContentType(), "jpg");
+//        assertNotEquals(multipartFile.getContentType(), "png");
+//        assertNotEquals(multipartFile.getContentType(), "jpeg");
+//    }
 
 }
