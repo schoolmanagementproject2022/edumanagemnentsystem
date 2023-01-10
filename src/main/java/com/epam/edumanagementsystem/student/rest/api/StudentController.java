@@ -1,12 +1,16 @@
 package com.epam.edumanagementsystem.student.rest.api;
 
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.config.MessageByLang;
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import com.epam.edumanagementsystem.util.service.UserService;
@@ -19,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,7 +81,7 @@ public class StudentController extends StudentControllerHelper{
 
     @PostMapping
     @Operation(summary = "Creates a new student and saves in DB")
-    public String createStudentSection(@ModelAttribute("student") @Valid StudentDto studentDto,
+    public String saveStudent(@ModelAttribute("student") @Valid StudentDto studentDto,
                                        BindingResult result,
                                        @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                                        @RequestParam(value = "status", required = false) String status,
@@ -94,29 +99,22 @@ public class StudentController extends StudentControllerHelper{
         model.addAttribute(GENDER, Gender.values());
         model.addAttribute(PARENTS, parentService.findAll());
         model.addAttribute(CLASSES, academicClassService.findAll());
+        checkEmailForCreate(studentDto, result, model);
 
-        if (!result.hasFieldErrors("email")) {
-            userService.checkDuplicationOfEmail(studentDto.getEmail(), model);
-            if (UserDataValidation.validateEmail(studentDto.getEmail())) {
-                model.addAttribute(INVALID_EMAIL, "Email is invalid");
-            }
-        }
         UserDataValidation.validatePassword(studentDto.getPassword(), model);
 
-        if (result.hasErrors() || model.containsAttribute("blank")
-                || model.containsAttribute("invalidPassword")
-                || model.containsAttribute(INVALID_EMAIL)
-                || model.containsAttribute("duplicated")
-                || model.containsAttribute("size")
-                || model.containsAttribute("formatValidationMessage")) {
+
+        studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
+
+        if (result.hasErrors()) {
             return STUDENT_HTML;
         }
-        studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
         StudentDto student = studentService.create(studentDto);
 
         if (!multipartFile.isEmpty()) {
             studentService.addProfilePicture(student, multipartFile);
         }
+
         return REDIRECT;
     }
 
@@ -147,20 +145,11 @@ public class StudentController extends StudentControllerHelper{
         model.addAttribute(GENDER, Gender.values());
         model.addAttribute(PARENTS, parentService.findAll());
         model.addAttribute(CLASSES, academicClassService.findAll());
+        checkEmailForEdit(updatableStudent, result, studentId, model);
+        if (result.hasErrors()) {
+            model.addAttribute(STUDENT_DATA, studentService.findById(studentId).getNameAndSurname());
 
-        if (!result.hasFieldErrors("email") ) {
-            if (!updatableStudent.getEmail().equals(existingStudent.getEmail())) {
-                userService.checkDuplicationOfEmail(updatableStudent.getEmail(), model);
-            }
-            if (UserDataValidation.validateEmail(updatableStudent.getEmail())) {
-                model.addAttribute(INVALID_EMAIL, "Email is invalid");
-            }
-        }
-
-        if (result.hasErrors() || model.containsAttribute(INVALID_EMAIL)
-                || model.containsAttribute("duplicated")
-        ) {
-            return "studentProfile";
+            return STUDENT_PROFILE;
         }
         studentService.updateFields(updatableStudent);
         return REDIRECT + updatableStudent.getId() + PROFILE;
@@ -185,4 +174,19 @@ public class StudentController extends StudentControllerHelper{
     }
 
 
+    private void checkEmailForCreate(StudentDto studentDto, BindingResult bindingResult, Model model) {
+        if (UserDataValidation.existsEmail(studentDto.getEmail())) {
+            bindingResult.addError(new ObjectError(STUDENT, "Duplicate email"));
+            model.addAttribute(AppConstants.DUPLICATED, MessageByLang.getMessage("USER_WITH_EMAIL_EXISTS"));
+        }
+    }
+
+    private void checkEmailForEdit(StudentDto studentDto, BindingResult bindingResult,
+                                   Long id, Model model) {
+        if (!studentDto.getEmail().equalsIgnoreCase(studentService.findById(id).getEmail()) &&
+                UserDataValidation.existsEmail(studentDto.getEmail())) {
+            bindingResult.addError(new ObjectError(STUDENT, "Duplicate email"));
+            model.addAttribute(AppConstants.DUPLICATED, MessageByLang.getMessage("USER_WITH_EMAIL_EXISTS"));
+        }
+    }
 }

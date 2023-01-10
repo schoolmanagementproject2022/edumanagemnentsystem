@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,23 +23,20 @@ public class StudentDto {
 
     private Long id;
 
-    @NotBlank(message = REQUIRED_FIELDS)
-    @Size(max=50, message="Symbols can't be more than 50")
+    @ValidName
     private String name;
 
-    @NotBlank(message = REQUIRED_FIELDS)
-    @Size(max=50, message="Symbols can't be more than 50")
+    @ValidName
     private String surname;
 
-    @NotBlank(message = REQUIRED_FIELDS)
-    @Size(max=50, message="Symbols can't be more than 50")
+    @ValidName
+
     private String email;
 
     @NotBlank
     private String role = "STUDENT";
 
-    @NotBlank(message = REQUIRED_FIELDS)
-    @Size(max=50, message="Symbols can't be more than 50")
+    @ValidName
 
     private String address;
 
