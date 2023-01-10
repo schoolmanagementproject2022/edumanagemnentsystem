@@ -1,7 +1,7 @@
 name: CI/CD
 
 on: 
-  push:
+  merge_group:
     branches: 
       - 3Gteam
 jobs:
