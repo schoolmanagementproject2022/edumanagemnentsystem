@@ -25,7 +25,6 @@ public class AcademicClass {
     @NotBlank(message = "Please, fill the required fields")
     private String classNumber;
     @JsonIgnore
-
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicClass_teacher_mapping",
@@ -50,16 +49,6 @@ public class AcademicClass {
     private Set<Student> student;
 
     public AcademicClass() {
-    }
-
-    public AcademicClass(Long id, @Size(max = 50, message = "Symbols can't be more than 50") String classNumber, Set<Teacher> teacher, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
-        this.id = id;
-        this.classNumber = classNumber;
-        this.teacher = teacher;
-        this.academicCourseSet = academicCourseSet;
-        this.classroomTeacher = classroomTeacher;
-        this.coursesForTimetableList = coursesForTimetableList;
-        this.student = student;
     }
 
     public AcademicClass(@Size(max = 50, message = "Symbols can't be more than 50") String classNumber) {
