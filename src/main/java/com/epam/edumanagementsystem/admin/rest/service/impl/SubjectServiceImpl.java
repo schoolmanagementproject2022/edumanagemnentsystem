@@ -47,7 +47,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Set<TeacherDto> findAllTeachersInSubjectByName(String name) {
         logger.info("Finding All Teachers in Subject by Subject Name");
-        return TeacherMapper.toSetOfTeachersDto(findByName(name).getTeacherSet());
+        return TeacherMapper.mapToTeacherDtoSet(findByName(name).getTeacherSet());
     }
 
     @Override

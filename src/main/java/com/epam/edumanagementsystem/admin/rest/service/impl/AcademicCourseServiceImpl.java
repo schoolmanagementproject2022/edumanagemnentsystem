@@ -74,7 +74,7 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public Set<AcademicCourseDto> findAllByTeachersId(Long id) {
+    public Set<AcademicCourseDto> findAllByTeacherId(Long id) {
         logger.info("Saving Academic Course");
         return AcademicCourseMapper.toSetOfAcademicCourseDto(academicCourseRepository.findAllByTeachersId(id));
     }

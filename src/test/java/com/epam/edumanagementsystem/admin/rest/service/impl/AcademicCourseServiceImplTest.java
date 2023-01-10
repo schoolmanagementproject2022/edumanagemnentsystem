@@ -145,9 +145,9 @@ class AcademicCourseServiceImplTest {
     @Test
     void testFindAcademicCoursesByTeacherId() {
         when(academicCourseRepository.findAllByTeachersId(1L)).thenReturn(coursesSet);
-        Set<AcademicCourseDto> academicCoursesByTeacherId = academicCourseService.findAllByTeachersId(1L);
+        Set<AcademicCourseDto> academicCoursesByTeacherId = academicCourseService.findAllByTeacherId(1L);
         Set<AcademicCourseDto> academicCourseDto = AcademicCourseMapper.toSetOfAcademicCourseDto(coursesSet);
-        academicCourseService.findAllByTeachersId(1L);
+        academicCourseService.findAllByTeacherId(1L);
         assertEquals(academicCoursesByTeacherId, academicCourseDto);
         assertThat(coursesSet).isNotNull();
     }

@@ -60,7 +60,7 @@ class CoursesForTimetableRepositoryTest {
 
         academicClass = new AcademicClass();
         academicClass.setClassNumber("Test class");
-        academicClass.setTeacher(new HashSet<>());
+        academicClass.setTeachers(new HashSet<>());
         academicClass.setAcademicCourseSet(new HashSet<>());
         academicClass.setClassroomTeacher(teacher);
         academicClass.setCoursesForTimetableList(new ArrayList<>());
@@ -69,7 +69,7 @@ class CoursesForTimetableRepositoryTest {
 
         AcademicClass academicClass1 = new AcademicClass();
         academicClass1.setClassNumber("Test class1");
-        academicClass1.setTeacher(new HashSet<>());
+        academicClass1.setTeachers(new HashSet<>());
         academicClass1.setAcademicCourseSet(new HashSet<>());
         academicClass1.setClassroomTeacher(teacher);
         academicClass1.setCoursesForTimetableList(new ArrayList<>());
@@ -78,7 +78,7 @@ class CoursesForTimetableRepositoryTest {
 
         AcademicClass academicClass2 = new AcademicClass();
         academicClass2.setClassNumber("Test class2");
-        academicClass2.setTeacher(new HashSet<>());
+        academicClass2.setTeachers(new HashSet<>());
         academicClass2.setAcademicCourseSet(new HashSet<>());
         academicClass2.setClassroomTeacher(teacher);
         academicClass2.setCoursesForTimetableList(new ArrayList<>());
@@ -87,7 +87,7 @@ class CoursesForTimetableRepositoryTest {
 
         AcademicClass academicClass3 = new AcademicClass();
         academicClass3.setClassNumber("Test class3");
-        academicClass3.setTeacher(new HashSet<>());
+        academicClass3.setTeachers(new HashSet<>());
         academicClass3.setAcademicCourseSet(new HashSet<>());
         academicClass3.setClassroomTeacher(teacher);
         academicClass3.setCoursesForTimetableList(new ArrayList<>());

@@ -32,9 +32,7 @@ class SubjectServiceImplTest {
     @InjectMocks
     private SubjectServiceImpl service;
     private Subject subject;
-    private SubjectDto subjectDto;
     private Teacher teacher;
-
 
     @BeforeEach
     void setUp() {
@@ -53,7 +51,6 @@ class SubjectServiceImplTest {
         Set<Teacher> allTeacher = new HashSet<>();
         allTeacher.add(teacher);
         subject = new Subject(1L, "SubjectName", allTeacher);
-        subjectDto = new SubjectDto(1L, "SubjectName", allTeacher);
     }
 
     @Test

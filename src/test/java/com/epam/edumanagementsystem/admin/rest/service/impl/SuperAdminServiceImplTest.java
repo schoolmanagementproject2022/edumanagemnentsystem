@@ -2,7 +2,6 @@ package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.model.entity.SuperAdmin;
 import com.epam.edumanagementsystem.admin.rest.repository.SuperAdminRepository;
-import com.epam.edumanagementsystem.admin.rest.service.impl.SuperAdminServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

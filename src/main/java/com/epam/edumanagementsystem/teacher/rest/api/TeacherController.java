@@ -125,7 +125,7 @@ public class TeacherController {
     @GetMapping("/{id}/classes")
     public String openClassesInTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute(TEACHER, teacherService.findById(id));
-        model.addAttribute("teachersClasses", academicClassService.findAcademicClassByTeacherId(id));
+        model.addAttribute("teachersClasses", academicClassService.findByTeacherId(id));
         return CLASSES_FOR_TEACHER_HTML;
     }
 
@@ -133,14 +133,14 @@ public class TeacherController {
     @Operation(summary = "Gets the list of courses thw teacher has and shows them")
     public String openCoursesInTeacherProfile(@PathVariable("id") Long id, Model model) {
         model.addAttribute(TEACHER, teacherService.findById(id));
-        model.addAttribute("teachersCourses", academicCourseService.findAcademicCoursesByTeacherId(id));
+        model.addAttribute("teachersCourses", academicCourseService.findAllByTeacherId(id));
         return COURSES_FOR_TEACHER_HTML;
     }
 
     @GetMapping("/{id}/subjects")
     @Operation(summary = "Gets the list of subjects thw teacher has and shows them")
     public String openSubjectsInTeacherProfile(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("subjects", subjectService.findSubjectsByTeacherSetId(id));
+        model.addAttribute("subjects", subjectService.findAllByTeacherId(id));
         model.addAttribute(TEACHER, teacherService.findById(id));
         return SUBJECTS_FOR_TEACHER_HTML;
     }

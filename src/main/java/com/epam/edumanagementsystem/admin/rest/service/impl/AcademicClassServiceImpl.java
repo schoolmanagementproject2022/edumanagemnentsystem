@@ -56,8 +56,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         logger.info("Updating Academic Class");
         AcademicClass academicClassByName = findByClassNumber(academicClassDto.getClassNumber());
         academicClassByName.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourse());
-        academicClassByName.getTeacher().addAll(academicClassDto.getTeacherSet());
-        academicClassByName.getClassroomTeacher().getNameSurname();
+        academicClassByName.getTeachers().addAll(academicClassDto.getTeachers());
         return save(AcademicClassMapper.toDto(academicClassByName));
     }
 
@@ -70,7 +69,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     @Override
     public Set<AcademicClassDto> findByTeacherId(Long teacherId) {
         logger.info("Finding Academic Class by Teacher Id");
-        return AcademicClassMapper.toAcademicClassDtoSet(academicClassRepository.findAcademicClassByTeacherId(teacherId));
+        return AcademicClassMapper.toAcademicClassDtoSet(academicClassRepository.findAcademicClassByTeachersId(teacherId));
     }
 
     @Override

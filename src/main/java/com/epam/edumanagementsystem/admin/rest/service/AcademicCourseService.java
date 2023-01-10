@@ -22,7 +22,7 @@ public interface AcademicCourseService {
 
     AcademicCourseDto update(AcademicCourseDto academicCourse);
 
-    Set<AcademicCourseDto> findAllByTeachersId(Long id);
+    Set<AcademicCourseDto> findAllByTeacherId(Long id);
 
     void checkCourseDuplication(AcademicCourseDto academicCourseDto, BindingResult bindingResult, Model model);
 }

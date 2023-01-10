@@ -1,20 +1,10 @@
 package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
-import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
-import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.admin.model.entity.Subject;
-import com.epam.edumanagementsystem.admin.rest.api.AcademicClassController;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
-import com.epam.edumanagementsystem.admin.rest.service.impl.AcademicClassServiceImpl;
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
-import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
-import com.epam.edumanagementsystem.teacher.impl.TeacherServiceImpl;
-import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.Assertions;
@@ -35,7 +25,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AcademicClassServiceImplTest {
@@ -75,7 +65,7 @@ class AcademicClassServiceImplTest {
         academicClass.setAcademicCourseSet(academicCourseSet);
         Set<Teacher> allTeacher = new HashSet<>();
         allTeacher.add(teacher);
-        academicClass.setTeacher(allTeacher);
+        academicClass.setTeachers(allTeacher);
         academicClass.setClassroomTeacher(teacher);
     }
 
@@ -142,8 +132,8 @@ class AcademicClassServiceImplTest {
 
     @Test
     @DisplayName("Find all academic classes when linked to the classes in teacher profile")
-    public void testFindByTeacherIdFound() {
-        when(academicClassRepository.findAcademicClassByTeacherId(1L)).thenReturn(Set.of(new AcademicClass("A1")));
+    void testFindByTeacherIdFound() {
+        when(academicClassRepository.findAcademicClassByTeachersId(1L)).thenReturn(Set.of(new AcademicClass("A1")));
 
         Set<AcademicClassDto> foundClasses = academicClassServiceImpl.findByTeacherId(1L);
         assertEquals(1, foundClasses.size());
@@ -151,23 +141,23 @@ class AcademicClassServiceImplTest {
     }
 
     @Test
-    public void testFindByTeacherIdNotFound() {
-        when(academicClassRepository.findAcademicClassByTeacherId(1L)).thenReturn(Set.of());
+    void testFindByTeacherIdNotFound() {
+        when(academicClassRepository.findAcademicClassByTeachersId(1L)).thenReturn(Set.of());
         Set<AcademicClassDto> foundClasses = academicClassServiceImpl.findByTeacherId(1L);
         assertEquals(0, foundClasses.size());
     }
 
 
     @Test
-    public void testRemoveByTeacherNameClassFound() {
+    void testRemoveByTeacherNameClassFound() {
         when(academicClassRepository.removeByTeacherName("TeacherName")).thenReturn(academicClass);
         AcademicClass removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
         assertEquals("A1", removedClass.getClassNumber());
-        assertEquals(academicClass.getTeacher(), removedClass.getTeacher());
+        assertEquals(academicClass.getTeachers(), removedClass.getTeachers());
     }
 
     @Test
-    public void testRemoveByTeacherNameClassNotFound() {
+    void testRemoveByTeacherNameClassNotFound() {
         when(academicClassRepository.removeByTeacherName("TeacherName")).thenReturn(null);
         AcademicClass removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
         assertNull(removedClass);

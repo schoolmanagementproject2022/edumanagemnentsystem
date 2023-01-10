@@ -1,6 +1,5 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
-import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.JournalRepository;
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.service.JournalService;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
@@ -24,14 +23,13 @@ import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimet
 @Service
 public class JournalServiceImpl implements JournalService {
 
-    private final JournalRepository journalRepository;
     private final AcademicClassService academicClassService;
     private final AcademicCourseService academicCourseService;
     private final TimetableService timetableService;
     private final CoursesForTimetableService coursesForTimetableService;
 
-    public JournalServiceImpl(JournalRepository journalRepository, AcademicClassService academicClassService, AcademicCourseService academicCourseService, TimetableService timetableService, CoursesForTimetableService coursesForTimetableService) {
-        this.journalRepository = journalRepository;
+    public JournalServiceImpl(AcademicClassService academicClassService, AcademicCourseService academicCourseService,
+                              TimetableService timetableService, CoursesForTimetableService coursesForTimetableService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.timetableService = timetableService;

@@ -1,7 +1,7 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
-import com.epam.edumanagementsystem.util.validation.ValidEmail;
-import com.epam.edumanagementsystem.util.validation.ValidPassword;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;

@@ -9,6 +9,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import com.epam.edumanagementsystem.util.InputFieldsValidation;
@@ -108,7 +109,7 @@ public class AcademicCourseController {
                                 @PathVariable("name") String courseName, Model model) {
         Set<Teacher> result;
         Set<Teacher> allTeacherSet = academicCourseService.findByName(courseName).getSubject().getTeacherSet();
-        Set<Teacher> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(courseName);
+        Set<TeacherDto> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(courseName);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
 
         if (academicCourse.getTeachers() == null) {
@@ -126,20 +127,20 @@ public class AcademicCourseController {
 
     @PostMapping("{name}/classes")
     @Operation(summary = "Adds classes to the selected course")
-    public String addClasses(@ModelAttribute("newClass") @Valid AcademicClassDto academicClass, BindingResult result,
+    public String addClasses(@ModelAttribute("newClass") @Valid AcademicClassDto academicClassDto, BindingResult result,
                              @PathVariable("name") String courseName, Model model) {
         setAttributes(model, courseName);
-        if (result.hasErrors() || academicClass.getTeacherSet().isEmpty()) {
+        if (result.hasErrors() || academicClassDto.getTeachers().isEmpty()) {
             if (result.hasFieldErrors("classNumber")) {
                 model.addAttribute("blankClass", "Please, select the required fields");
             }
-            if (academicClass.getTeacherSet().isEmpty()) {
+            if (academicClassDto.getTeachers().isEmpty()) {
                 model.addAttribute("blank", "Please, select the required fields");
             }
             return "academicCourseSectionForClasses";
         }
 
-        academicClassService.update(AcademicClassMapper.toDto(addClassesToCourse(academicClass, courseName)));
+        academicClassService.update(AcademicClassMapper.toDto(addClassesToCourse(academicClassDto, courseName)));
         return "redirect:/courses/" + courseName + "/classes";
     }
 
@@ -172,7 +173,7 @@ public class AcademicCourseController {
         AcademicClass academicClassFindByName = academicClassService.findByClassNumber(academicClassDto.getClassNumber());
 
         academicCourseSet.add(academicCourseService.findByName(courseName));
-        academicClassFindByName.getTeacher().addAll(academicClassDto.getTeacherSet());
+        academicClassFindByName.getTeachers().addAll(academicClassDto.getTeachers());
         academicClassFindByName.getAcademicCourseSet().addAll(academicCourseSet);
         return academicClassFindByName;
     }

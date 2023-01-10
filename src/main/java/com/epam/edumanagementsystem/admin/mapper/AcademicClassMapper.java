@@ -17,6 +17,9 @@ public class AcademicClassMapper {
         AcademicClass academicClass = new AcademicClass();
         academicClass.setId(academicClassDto.getId());
         academicClass.setClassNumber(academicClassDto.getClassNumber());
+        academicClass.setTeachers(academicClassDto.getTeachers());
+        academicClass.setAcademicCourseSet(academicClassDto.getAcademicCourse());
+        academicClass.setStudent(academicClassDto.getStudents());
 
         return academicClass;
     }
@@ -24,16 +27,8 @@ public class AcademicClassMapper {
     public static AcademicClassDto toDto(AcademicClass academicClass) {
         AcademicClassDto academicClassDto = new AcademicClassDto();
         academicClassDto.setId(academicClass.getId());
-        academicClassDto.setClassNumber(academicClass.getClassNumber());
-
-        return academicClassDto;
-    }
-
-    public static AcademicClassDto toNormalDto(AcademicClass academicClass) {
-        AcademicClassDto academicClassDto = new AcademicClassDto();
-        academicClassDto.setId(academicClass.getId());
         academicClassDto.setAcademicCourse(academicClass.getAcademicCourseSet());
-        academicClassDto.setTeacherSet(academicClass.getTeacher());
+        academicClassDto.setTeachers(academicClass.getTeachers());
         academicClassDto.setClassNumber(academicClass.getClassNumber());
         academicClassDto.setClassroomTeacher(academicClass.getClassroomTeacher());
         return academicClassDto;
@@ -41,13 +36,13 @@ public class AcademicClassMapper {
 
     public static List<AcademicClassDto> toAcademicClassDtoList(List<AcademicClass> academicClassList) {
         return academicClassList.stream()
-                .map(AcademicClassMapper::toNormalDto)
+                .map(AcademicClassMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public static Set<AcademicClassDto> toAcademicClassDtoSet(Set<AcademicClass> academicClassSet) {
         return academicClassSet.stream()
-                .map(AcademicClassMapper::toNormalDto)
+                .map(AcademicClassMapper::toDto)
                 .collect(Collectors.toSet());
     }
 

@@ -5,7 +5,6 @@ import com.epam.edumanagementsystem.admin.model.dto.AdminDto;
 import com.epam.edumanagementsystem.admin.model.entity.Admin;
 import com.epam.edumanagementsystem.admin.rest.repository.AdminRepository;
 import com.epam.edumanagementsystem.util.entity.User;
-import com.epam.edumanagementsystem.util.repository.UserRepository;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,9 +27,6 @@ class AdminServiceImplTest {
 
     @Mock
     private AdminRepository adminRepository;
-
-    @Mock
-    private UserRepository userRepository;
 
     @Mock
     private UserService userService;

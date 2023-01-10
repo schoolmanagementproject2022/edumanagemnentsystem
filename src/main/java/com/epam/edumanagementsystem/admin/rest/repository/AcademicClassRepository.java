@@ -13,7 +13,7 @@ public interface AcademicClassRepository extends JpaRepository<AcademicClass, Lo
 
     Optional<AcademicClass> findByClassNumber(String classNumber);
 
-    Set<AcademicClass> findAcademicClassByTeacherId(Long id);
+    Set<AcademicClass> findAcademicClassByTeachersId(Long id);
 
     @Query(value = "delete from AcademicClass where teacher_name=?",nativeQuery = true)
     AcademicClass removeByTeacherName(String teacherName);
