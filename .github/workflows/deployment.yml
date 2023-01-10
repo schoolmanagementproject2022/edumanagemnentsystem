@@ -1,9 +1,9 @@
 name: CI/CD
 
 on: 
-  pull_request:
+  push:
     branches: 
-      - CI, 3Gteam
+      - CI
 jobs:
   build:
     runs-on : ubuntu-latest
