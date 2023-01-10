@@ -13,6 +13,7 @@ import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.repository.TeacherRepository;
 import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -67,7 +68,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("TEACHER")) {
-                Teacher teacher = teacherRepository.findByUserId(foundUserId);
+                Teacher teacher = teacherRepository.findByUserId(foundUserId).get();
 
                 CurrentUser user = new CurrentUser();
                 user.setName(teacher.getName());
@@ -78,7 +79,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("PARENT")) {
-                Parent parent = parentRepository.findByUserId(foundUserId);
+                Parent parent = parentRepository.findByUserId(foundUserId).get();
 
                 CurrentUser user = new CurrentUser();
                 user.setName(parent.getName());

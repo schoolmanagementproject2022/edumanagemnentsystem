@@ -5,38 +5,30 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
 public class Teacher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
 
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String surname;
 
     @OneToOne
     private User user;
 
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "academicCourse_id"))
@@ -63,7 +55,9 @@ public class Teacher {
         this.password = password;
     }
 
-    public Teacher(Long id, String name, String surname, User user, String password, Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet, Set<AcademicClass> academicClass) {
+    public Teacher(Long id, String name, String surname, User user, String password,
+                   Set<AcademicCourse> academicCourseSet, Set<Subject> subjectSet,
+                   Set<AcademicClass> academicClass) {
         this.id = id;
         this.name = name;
         this.surname = surname;

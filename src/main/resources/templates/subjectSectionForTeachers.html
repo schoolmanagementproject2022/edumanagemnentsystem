@@ -32,7 +32,7 @@
 
         <div class="list">
             <div class="list-items" th:each="teacher : ${teachers}">
-                <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+                <p class="item" th:text="${teacher.getFullName()}"> Teacher </p>
             </div>
         </div>
     </div>
@@ -58,8 +58,8 @@
                 <div class="selectTeacher">
                     <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px" multiple>
                         <option th:each="select : ${teachersToSelect}"
-                                th:value="${select.id}" th:title="${select.getNameSurname()}"
-                                th:text="${select.getNameSurname()}"></option>
+                                th:value="${select.id}" th:title="${select.getFullName()}"
+                                th:text="${select.getFullName()}"></option>
                     </select>
                     <div th:if="${blank}!= null" class="error">
                         <p th:text="${blank}"></p>
