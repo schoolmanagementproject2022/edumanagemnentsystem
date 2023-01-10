@@ -51,9 +51,7 @@ public class AcademicClass {
     public AcademicClass() {
     }
 
-    public AcademicClass(@Size(max = 50, message = "Symbols can't be more than 50") String classNumber) {
-        this.classNumber = classNumber;
-    }
+
 
     public Long getId() {
         return id;
