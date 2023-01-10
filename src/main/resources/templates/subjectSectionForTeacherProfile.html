@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/teacherProfile.css" rel="stylesheet">
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${teacher.getNameSurname()} + ' Subjects'"></title>
+    <title th:text="${teacher.getFullName()} + ' Subjects'"></title>
 </head>
 <body>
 <div class="header" id="header">
@@ -19,7 +19,7 @@
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Teachers'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
-                   th:text="${teacher.getNameSurname()}"></a>
+                   th:text="${teacher.getFullName()}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Subjects'}"></a>
             </div>
             <div class="list" th:if="${!subjects.isEmpty()}" >
@@ -36,12 +36,12 @@
             <div th:if="${teacher.getPicUrl() == null}">
                 <div class="image-upload">
                     <label width="150px" height="150px">
-                        <img style="max-width: 100%" src="/static/img/avatar.png" alt="Can't show the picture"></label>
+                        <img style="max-width: 100%" src="/static/img/avatar.png" ></label>
                 </div>
             </div>
             <div th:if="${teacher.getPicUrl() != null}">
                 <div class="container-img">
-                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}" alt="Can't show the picture">
+                    <img style="height: 197px; width: 197px" th:src="@{/image(name=${teacher.picUrl})}">
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                     <h1 class="userNameSurname" th:text="${teacher.getName()}"></h1></div>
                 <div class="name_surname_sectiion">
                     <h1 class="userNameSurname" th:text="${teacher.getSurname()}"></h1></div>
-                <span class="tooltiptext" th:text="${teacher.getNameSurname()}">Tooltip text</span>
+                <span class="tooltiptext" th:text="${teacher.getFullName()}">Tooltip text</span>
             </div>
 
             <div class="sidebar2 header" id="sidebar2">

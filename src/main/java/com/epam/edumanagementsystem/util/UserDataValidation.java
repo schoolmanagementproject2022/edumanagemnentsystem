@@ -1,12 +1,25 @@
 package com.epam.edumanagementsystem.util;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.util.service.UserService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Objects;
 
+@Component
 public class UserDataValidation {
+    @Lazy
+    private static UserService userService;
+
+    public UserDataValidation(UserService userService) {
+        this.userService = userService;
+    }
 
     private static final String PASSWORD_PATTERN
             = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&])[A-Za-z\\\\d()`~@$?!\\\"'^#*:.,;<>%-_+=|/{}&]{9,50}";
@@ -30,6 +43,25 @@ public class UserDataValidation {
         }
         return false;
     }
+
+    public static boolean existsEmail(String email) {
+        if (!Objects.isNull(email)) {
+            return userService.findAll().stream()
+                    .anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email));
+        }
+        return false;
+    }
+
+    public static void checkMultipartFile(MultipartFile multipartFile, String status,
+                                    Model model) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            UserDataValidation.validateImage(multipartFile, model);
+        }
+        if (status.equals("validationFail")) {
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+        }
+    }
+
 
     public static void validateImage(MultipartFile multipartFile, Model model) throws IOException {
         if (multipartFile.getBytes().length > 2097152) {

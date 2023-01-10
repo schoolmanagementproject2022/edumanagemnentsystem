@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="container">
     <div class="container">
@@ -58,10 +58,19 @@
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/profile'}}">Profile</a>
         <a th:classappend="${lastUrl eq 'subjects' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'subjects'}}" class="item">Subjects</a>
-        <a class="sidebar_right_links_item"  th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+        <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Academic Courses</a>
         <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classes'}}">Classes</a>
+    </div>
+</th:block>
+
+<th:block th:fragment="parentProfileSidebar">
+    <div class="sidebar_right_links">
+        <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${allUrl}}">Profile</a>
+        <a class="sidebar_right_links_item" th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'students'}}">Linked students</a>
     </div>
 </th:block>
 
