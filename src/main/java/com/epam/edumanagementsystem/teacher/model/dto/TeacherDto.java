@@ -1,9 +1,12 @@
 package com.epam.edumanagementsystem.teacher.model.dto;
 
+import com.epam.edumanagementsystem.util.AppConstants;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
+import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
@@ -11,18 +14,19 @@ public class TeacherDto {
 
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
     private String name;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
     private String surname;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidEmail
     private String email;
 
     @NotBlank
     private String role = "TEACHER";
 
+    @ValidPassword
     private String password;
 
     private String picUrl;
@@ -30,8 +34,8 @@ public class TeacherDto {
     public TeacherDto() {
     }
 
-    public TeacherDto(Long id, String name, String surname, String email, String role, String password) {
-        this.id = id;
+    public TeacherDto(String name, String surname, String email,
+                      String role, String password) {
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -55,16 +59,16 @@ public class TeacherDto {
         this.name = name;
     }
 
-    public String getNameSurname() {
-        return name + " " + surname;
-    }
-
     public String getSurname() {
         return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getFullName() {
+        return name + " " + surname;
     }
 
     public String getEmail() {
@@ -104,7 +108,9 @@ public class TeacherDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TeacherDto that = (TeacherDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(email, that.email) && Objects.equals(role, that.role) && Objects.equals(password, that.password);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(surname, that.surname) && Objects.equals(email, that.email)
+                && Objects.equals(role, that.role) && Objects.equals(password, that.password);
     }
 
     @Override

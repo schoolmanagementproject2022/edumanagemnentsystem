@@ -1,24 +1,35 @@
-package com.epam.edumanagementsystem.parent.model.entity;
+package com.epam.edumanagementsystem.parent.model.dto;
 
-import com.epam.edumanagementsystem.util.entity.User;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
 
-import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-@Table(name = "parent")
-public class Parent {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ParentEditDto {
+
     private Long id;
+
+    @ValidName
     private String name;
+
+    @ValidName
     private String surname;
-    @OneToOne
-    private User user;
-    private String password;
+
+    @ValidEmail
+    private String email;
+
     private String picUrl;
 
-    public Parent() {
+    public ParentEditDto() {
+
+    }
+
+    public ParentEditDto(Long id, String name, String surname, String email, String picUrl) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.picUrl = picUrl;
     }
 
     public Long getId() {
@@ -45,12 +56,16 @@ public class Parent {
         this.surname = surname;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFullName() {
+        return this.name + " " + this.surname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPicUrl() {
@@ -61,40 +76,28 @@ public class Parent {
         this.picUrl = picUrl;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getFullName() {
-        return this.getName() + " " + this.getSurname();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Parent parent = (Parent) o;
-        return Objects.equals(id, parent.id) && Objects.equals(name, parent.name)
-                && Objects.equals(surname, parent.surname) &&
-                Objects.equals(password, parent.password);
+        ParentEditDto that = (ParentEditDto) o;
+        return id.equals(that.id) && name.equals(that.name) &&
+                surname.equals(that.surname) && email.equals(that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, password);
+        return Objects.hash(id, name, surname, email);
     }
 
     @Override
     public String toString() {
-        return "Parent{" +
+        return "ParentEditDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
+

@@ -9,7 +9,6 @@ import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +36,6 @@ public class SubjectServiceImpl implements SubjectService {
 
         } else {
             return subjectRepository.save(subject);
-
         }
     }
 
@@ -54,7 +52,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Set<TeacherDto> findAllTeachers(String name) {
-        return TeacherMapper.toSetOfTeachersDto(findSubjectBySubjectName(name).getTeacherSet());
+        return TeacherMapper.mapToTeacherDtoSet(findSubjectBySubjectName(name).getTeacherSet());
     }
 
     @Override
