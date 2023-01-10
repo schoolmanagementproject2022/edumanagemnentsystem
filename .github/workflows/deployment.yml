@@ -3,7 +3,7 @@ name: CI/CD
 on: 
   push:
     branches: 
-      - CI
+      - 3Gteam
 jobs:
   build:
     runs-on : ubuntu-latest
