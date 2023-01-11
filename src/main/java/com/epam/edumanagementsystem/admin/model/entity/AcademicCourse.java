@@ -91,7 +91,8 @@ public class AcademicCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse course = (AcademicCourse) o;
-        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(teachers, course.teachers);
+        return Objects.equals(id, course.id) && Objects.equals(name, course.name) &&
+                Objects.equals(teachers, course.teachers);
     }
 
     @Override

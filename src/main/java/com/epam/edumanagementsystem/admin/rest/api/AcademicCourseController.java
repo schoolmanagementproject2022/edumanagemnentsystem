@@ -49,6 +49,7 @@ public class AcademicCourseController {
     @Operation(summary = "Gets the list of the academic courses and shows on admin`s dashboard")
     public String openAcademicCourseSection(Model model) {
         setAttributesInCoursesSection(model);
+        model.addAttribute("academicCourse", new AcademicCourseDto());
         return GlobalConstants.ACADEMIC_COURSE_SECTION;
     }
 
@@ -56,15 +57,11 @@ public class AcademicCourseController {
     @Operation(summary = "Saves the created academic course")
     public String save(@ModelAttribute("academicCourse") @Valid AcademicCourseDto academicCourse,
                        BindingResult result, Model model) {
-        validateName(model, academicCourse, result);
-        if (result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")) {
-            return GlobalConstants.ACADEMIC_COURSE_SECTION;
-        }
-        academicCourseService.checkCourseDuplication(academicCourse, result, model);
 
-        String checkedNameAndSubject = validateNameAndSubject(result);
-        if (checkedNameAndSubject.equals(GlobalConstants.ACADEMIC_COURSE_SECTION)) {
-            return checkedNameAndSubject;
+        academicCourseService.checkCourseDuplication(academicCourse, result, model);
+        if (result.hasErrors()) {
+            setAttributesInCoursesSection(model);
+            return GlobalConstants.ACADEMIC_COURSE_SECTION;
         }
 
         academicCourseService.save(academicCourse);
@@ -97,7 +94,8 @@ public class AcademicCourseController {
             model.addAttribute("academicClasses", academicClassSet);
             return "academicCourseSectionForClasses";
         }
-        academicClassSet = academicClassService.findAll().stream().filter(academicClass -> !academicClassesInCourse
+        academicClassSet = academicClassService.findAll().stream()
+                .filter(academicClass -> !academicClassesInCourse
                 .contains(academicClass)).collect(Collectors.toList());
         model.addAttribute("academicClasses", academicClassSet);
         return "academicCourseSectionForClasses";
@@ -108,6 +106,7 @@ public class AcademicCourseController {
     public String saveTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourseDto academicCourse,
                                 @PathVariable("name") String courseName, Model model) {
         Set<Teacher> result;
+        //todo -> DTO
         Set<Teacher> allTeacherSet = academicCourseService.findByName(courseName).getSubject().getTeacherSet();
         Set<TeacherDto> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(courseName);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
@@ -119,7 +118,9 @@ public class AcademicCourseController {
         if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
             return "academicCourseSectionForTeachers";
         }
-        result = allTeacherSet.stream().filter(teacher -> !allTeachersInAcademicCourse.contains(teacher)).collect(Collectors.toSet());
+        result = allTeacherSet.stream()
+                .filter(teacher -> !allTeachersInAcademicCourse.contains(teacher))
+                .collect(Collectors.toSet());
         model.addAttribute("teachers", result);
         academicCourseService.update(academicCourse);
         return "redirect:/courses/" + courseName + "/teachers";
@@ -195,36 +196,11 @@ public class AcademicCourseController {
         return courseDtoList;
     }
 
-    private void validateName(Model model, AcademicCourseDto academicCourseDto, BindingResult result) {
-        if (!result.hasFieldErrors("name")) {
-            if (InputFieldsValidation.validateInputFieldSize(academicCourseDto.getName())) {
-                model.addAttribute("nameSize", "Symbols can't be more than 50");
-            }
-            if (InputFieldsValidation.checkingForIllegalCharacters(academicCourseDto.getName(), model)) {
-                model.addAttribute("invalidURL", "<>-_`*,:|() symbols can be used.");
-            }
-        }
-    }
 
     private void setAttributesInCoursesSection(Model model) {
         model.addAttribute("academicCourses", academicCourseService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
-        model.addAttribute("academicCourse", new AcademicCourseDto());
-    }
 
-    private String validateNameAndSubject(BindingResult result) {
-        if (result.hasErrors()) {
-            if (result.hasFieldErrors("name") && result.hasFieldErrors("subject")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-            if (result.hasFieldErrors("name") || result.hasFieldErrors("subject")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-            if (result.hasFieldErrors("subject")) {
-                return GlobalConstants.ACADEMIC_COURSE_SECTION;
-            }
-        }
-        return "Passed";
     }
 
 }

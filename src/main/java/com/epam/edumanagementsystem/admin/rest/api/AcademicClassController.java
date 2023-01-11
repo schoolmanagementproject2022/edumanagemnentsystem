@@ -38,7 +38,9 @@ public class AcademicClassController {
     private final StudentService studentService;
     private final TeacherService teacherService;
 
-    public AcademicClassController(AcademicClassService academicClassService, AcademicCourseService academicCourseService, StudentService studentService, TeacherService teacherService) {
+    public AcademicClassController(AcademicClassService academicClassService,
+                                   AcademicCourseService academicCourseService,
+                                   StudentService studentService, TeacherService teacherService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.studentService = studentService;
@@ -57,15 +59,15 @@ public class AcademicClassController {
     @Operation(summary = "Saves the created academic class")
     public String save(@ModelAttribute("academicClass") @Valid AcademicClassDto academicClassDto,
                        BindingResult result, Model model) {
-        List<AcademicClassDto> academicClassDtoList = academicClassService.findAll();
-        model.addAttribute("academicClasses", academicClassDtoList);
+
+        model.addAttribute("academicClasses", academicClassService.findAll());
         academicClassService.checkClassDuplication(academicClassDto, result, model);
+
         if (result.hasErrors()) {
             return ACADEMIC_CLASSES_SECTION;
-        } else {
-            academicClassService.save(academicClassDto);
-            return ACADEMIC_CLASSES_REDIRECT;
         }
+        academicClassService.save(academicClassDto);
+        return ACADEMIC_CLASSES_REDIRECT;
     }
 
     @GetMapping("/{name}/courses")

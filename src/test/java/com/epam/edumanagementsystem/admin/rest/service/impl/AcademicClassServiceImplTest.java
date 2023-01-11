@@ -54,15 +54,18 @@ class AcademicClassServiceImplTest {
         teacher.setPassword("password");
         teacher.setAcademicClass(new HashSet<>());
         teacher.setAcademicCourseSet(new HashSet<>());
+
         academicClass = new AcademicClass();
         academicClass.setId(1L);
         academicClass.setClassNumber("A1");
         academicClass.setClassroomTeacher(teacher);
         academicCourse = new AcademicCourse();
         academicCourse.setName("Course 1");
+
         Set<AcademicCourse> academicCourseSet = new HashSet<>();
         academicCourseSet.add(academicCourse);
         academicClass.setAcademicCourseSet(academicCourseSet);
+
         Set<Teacher> allTeacher = new HashSet<>();
         allTeacher.add(teacher);
         academicClass.setTeachers(allTeacher);

@@ -2,30 +2,29 @@ package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
+import com.epam.edumanagementsystem.config.MessageByLang;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import org.hibernate.validator.constraints.NotBlank;
+import com.epam.edumanagementsystem.util.AppConstants;
+import com.epam.edumanagementsystem.util.annotation.ValidProperty;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
-import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SYMBOL_LENGTH;
-import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.FIELD_MAX_SIZE;
-import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.USED_SYMBOLS;
 
 public class AcademicCourseDto {
 
     private Long id;
-    @NotBlank(message = EMPTY_FIELD)
-    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
-    @Pattern(regexp = "^[A-Za-z0-9-<>_`*,:|()]+$", message = USED_SYMBOLS)
+
+    @ValidProperty
     private String name;
-    @NotNull(message = EMPTY_FIELD)
+
+    @NotNull(message = "{SELECT_INPUT_FIELD}")
     private Subject subject;
+
     private Set<Teacher> teachers;
+
     private Set<AcademicClass> academicClassSet;
 
     public AcademicCourseDto() {
@@ -46,6 +45,7 @@ public class AcademicCourseDto {
     public void setName(String name) {
         this.name = name;
     }
+
     public Subject getSubject() {
         return subject;
     }
@@ -75,7 +75,10 @@ public class AcademicCourseDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourseDto that = (AcademicCourseDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teachers, that.teachers) && Objects.equals(academicClassSet, that.academicClassSet);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(subject, that.subject) &&
+                Objects.equals(teachers, that.teachers) &&
+                Objects.equals(academicClassSet, that.academicClassSet);
     }
 
     @Override
