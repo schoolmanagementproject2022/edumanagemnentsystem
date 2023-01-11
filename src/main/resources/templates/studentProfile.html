@@ -69,7 +69,7 @@
                 <p th:text="'Blood group: '+${existingStudent.getBloodGroup().getBlood()}"></p>
                 <p th:text="'Gender: '+${existingStudent.getGender().getGenderIdentity()}"></p>
                 <p th:if="*{existingStudent.getParent() != null}"
-                   th:text="'Parent: '+${existingStudent.getParent().getNameAndSurname()}"></p>
+                   th:text="'Parent: '+${existingStudent.getParent().getFullName()}"></p>
                 <p th:if="*{existingStudent.getParent() == null}">Parent: N/A </p>
                 <p th:if="*{existingStudent.getAcademicClass() != null}"
                    th:text="'Academic class: '+${existingStudent.getAcademicClass().getClassNumber()}"></p>
