@@ -19,4 +19,6 @@ public class AppConstants {
     public static final String EMAIL_PATTERN =
             "^([^! #$%&*+\\-/=?^_`{|\\.](?!.*[!#$%&*+-/=?^_`{|]{2})[a-zA-Z0-9!#$%&*+-/=?^_`{|]{0,50}[^! #$%&*+\\-/=?^_`{|\\.@]+)@([a-zA-Z0-9\\-]{1,50})\\.([a-z]{2,50})$";
 
+    public static final String PROPERTY_PATTERN =
+            "^[A-Za-z0-9-<>_`*,:|()]+$";
 }
