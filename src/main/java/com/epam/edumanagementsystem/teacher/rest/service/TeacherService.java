@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.teacher.model.dto.TeacherEditDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TeacherService {
 
@@ -20,6 +21,13 @@ public interface TeacherService {
 
     TeacherDto update(TeacherEditDto teacherDto);
 
+    Set<TeacherDto> findAllTeachersInAllCourses();
+
+    Set<TeacherDto> findAllTeachersInAllClasses();
+
+    Set<TeacherDto> findAllTeachersByClassName(String className);
+
+    Set<TeacherDto> findAllTeachersByCourseName(String courseName);
 
     void addImage(TeacherDto teacherDto, MultipartFile multipartFile);
 

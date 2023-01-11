@@ -1,7 +1,6 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
 import com.epam.edumanagementsystem.admin.model.dto.VacationDto;
-import com.epam.edumanagementsystem.admin.model.entity.Vacation;
 import com.epam.edumanagementsystem.admin.rest.service.VacationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,11 +17,13 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.VACATION_REDIRECT;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.VACATION_SECTION;
+
 @Controller
 @RequestMapping("/vacations")
-@Tag(name="Vacation")
+@Tag(name = "Vacation")
 public class VacationController {
-
     private final VacationService vacationService;
 
     @Autowired
@@ -36,34 +37,28 @@ public class VacationController {
         List<VacationDto> vacationDtoList = vacationService.findAll();
         model.addAttribute("vacations", vacationDtoList);
         model.addAttribute("vacation", new VacationDto());
-        return "vacationSection";
+        return VACATION_SECTION;
     }
 
     @PostMapping
     @Operation(summary = "Saves the created vacation")
-    public String create(@ModelAttribute("vacation") @Valid Vacation vacation,
+    public String create(@ModelAttribute("vacation") @Valid VacationDto vacationDto,
                          BindingResult result, Model model) {
-        List<VacationDto> vacationDtos = vacationService.findAll();
-        model.addAttribute("vacations", vacationDtos);
-
+        model.addAttribute("vacations", vacationService.findAll());
         if (result.hasErrors()) {
             if (result.hasFieldErrors("startDate")) {
-                return "vacationSection";
+                return VACATION_SECTION;
             }
             if (result.hasFieldErrors("endDate")) {
-                return "vacationSection";
+                return VACATION_SECTION;
             }
         }
-
-        if (vacation.getStartDate().isBefore(LocalDate.now())) {
+        if (vacationDto.getStartDate().isBefore(LocalDate.now()) || vacationDto.getStartDate().isAfter(vacationDto.getEndDate())) {
             model.addAttribute("invalid", "Wrong selected dates");
-            return "vacationSection";
-        } else if (vacation.getStartDate().isAfter(vacation.getEndDate())) {
-            model.addAttribute("invalid", "Wrong selected dates");
-            return "vacationSection";
+            return VACATION_SECTION;
         } else {
-            vacationService.create(vacation);
-            return "redirect:/vacations";
+            vacationService.save(vacationDto);
+            return VACATION_REDIRECT;
         }
     }
 }

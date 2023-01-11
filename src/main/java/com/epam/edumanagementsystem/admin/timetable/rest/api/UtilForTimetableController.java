@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.timetable.rest.api;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
+import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import org.springframework.stereotype.Component;
@@ -39,7 +40,7 @@ public class UtilForTimetableController {
         model.addAttribute("lessonsOfSunday", coursesService.getCoursesByDayOfWeekAndStatusAndAcademicClassId("Sunday", "Edit", academicClassId));
     }
 
-    public static void currentTimetable_LessonId(Model model, Timetable currentTimetable, Long lessonId) {
+    public static void currentTimetable_LessonId(Model model, TimetableDto currentTimetable, Long lessonId) {
         model.addAttribute("timetable", currentTimetable);
         model.addAttribute("lessonId", lessonId);
     }

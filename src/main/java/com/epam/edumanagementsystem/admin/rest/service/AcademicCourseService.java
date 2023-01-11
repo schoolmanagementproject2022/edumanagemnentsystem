@@ -2,30 +2,27 @@ package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Set;
 
 public interface AcademicCourseService {
 
-    AcademicCourse findAcademicCourseByAcademicCourseName(String name);
+    AcademicCourse findByName(String name);
 
-    List<AcademicCourse> findAllCourse();
+    AcademicCourseDto findById(Long id);
 
-    AcademicCourse findByID(Long id);
-
-    AcademicCourseDto create(AcademicCourse academicCourse);
-
-    AcademicCourseDto getById(Long id);
+    AcademicCourseDto save(AcademicCourseDto academicCourse);
 
     List<AcademicCourseDto> findAll();
 
-    AcademicCourseDto update(AcademicCourse academicCourse);
+    List<AcademicCourse> findAllAcademicCoursesInClassByName(String name);
 
-    Set<Teacher> findAllTeacher();
+    AcademicCourseDto update(AcademicCourseDto academicCourse);
 
-    Set<Teacher> findAllTeachersByAcademicCourseName(String name);
+    Set<AcademicCourseDto> findAllByTeacherId(Long id);
 
-    Set<AcademicCourseDto> findAcademicCoursesByTeacherId(Long id);
+    void checkCourseDuplication(AcademicCourseDto academicCourseDto, BindingResult bindingResult, Model model);
 }
