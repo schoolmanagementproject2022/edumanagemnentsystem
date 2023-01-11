@@ -134,7 +134,7 @@ public class AcademicClassController {
             }
         }
 
-        model.addAttribute("existingClassroomTeacher", new AcademicClass());
+        model.addAttribute("existingClassroomTeacher", new AcademicClassDto());
         model.addAttribute("teachers", allTeachersInClassName);
         if (academicClassByName.getClassroomTeacher() == null) {
             return CLASSROOM_TEACHER_SECTION;
@@ -151,7 +151,6 @@ public class AcademicClassController {
                                                      Model model) {
         AcademicClassDto academicClassFindByName = academicClassService.findByClassNumber(name);
         model.addAttribute("teachers", academicClassFindByName.getTeachers());
-        model.addAttribute("existingClass", new AcademicClass());
         if (academicClassDto.getClassroomTeacher() == null) {
             model.addAttribute("blank", SELECT_FIELD);
             return CLASSROOM_TEACHER_SECTION;
@@ -165,7 +164,7 @@ public class AcademicClassController {
         }
         academicClassFindByName.setClassroomTeacher(academicClassDto.getClassroomTeacher());
         academicClassService.update(academicClassFindByName);
-        return ACADEMIC_CLASSES_REDIRECT + name + CLASSROOM_URL;
+        return ACADEMIC_CLASSES_REDIRECT + "/" + name + CLASSROOM_URL;
     }
 
     @GetMapping("/{name}/students")

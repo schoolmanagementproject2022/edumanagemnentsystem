@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.admin.rest.api;
 
 import com.epam.edumanagementsystem.admin.constants.GlobalConstants;
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
+import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
@@ -9,6 +10,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
+import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
@@ -79,13 +81,14 @@ public class AcademicCourseController {
     @Operation(summary = "Gets all classes who take the selected course and shows them")
     public String openAcademicCourseForAcademicClasses(@PathVariable("name") String courseName, Model model) {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
-        AcademicCourse findAcademicCourseByName = academicCourseService.findByName(courseName);
+        AcademicCourseDto academicCourseDto = academicCourseService.findByName(courseName);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
-        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.toAcademicClassDtoSet(findAcademicCourseByName.getAcademicClass());
-        model.addAttribute("teachersToSelect", findAcademicCourseByName.getTeachers());
+        //streami mej ete null e gnum xndir e linum???
+        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.toAcademicClassDtoSet(academicCourseDto.getAcademicClassSet());
+        model.addAttribute("teachersToSelect", academicCourseDto.getTeachers());
         model.addAttribute("academicClasses", allAcademicClasses);
         model.addAttribute("existingClasses", academicClassesInCourse);
-        model.addAttribute("newClass", new AcademicClass());
+        model.addAttribute("newClass", new AcademicClassDto());
         if (academicClassesInCourse.isEmpty()) {
             academicClassSet.addAll(allAcademicClasses);
             model.addAttribute("academicClasses", academicClassSet);
@@ -105,23 +108,22 @@ public class AcademicCourseController {
     @Operation(summary = "Adds a teacher to the group of teachers who run the selected course")
     public String saveTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourseDto academicCourse,
                                 @PathVariable("name") String courseName, Model model) {
-        Set<Teacher> result;
-        //todo -> DTO
-        Set<Teacher> allTeacherSet = academicCourseService.findByName(courseName).getSubject().getTeacherSet();
+        Set<TeacherDto> teachers;
+        Set<TeacherDto> allTeacherSet = TeacherMapper.mapToTeacherDtoSet(academicCourseService.findByName(courseName).getSubject().getTeacherSet());
         Set<TeacherDto> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(courseName);
         model.addAttribute("teachersInAcademicCourse", allTeachersInAcademicCourse);
+        teachers = allTeacherSet.stream()
+                .filter(teacher -> !allTeachersInAcademicCourse.contains(teacher))
+                .collect(Collectors.toSet());
+        model.addAttribute("teachers", teachers);
 
-        if (academicCourse.getTeachers() == null) {
+        if (academicCourse.getTeachers().isEmpty()) {
             model.addAttribute("blank", "There is no new selection.");
             return "academicCourseSectionForTeachers";
         }
         if (allTeacherSet.size() == allTeachersInAcademicCourse.size()) {
             return "academicCourseSectionForTeachers";
         }
-        result = allTeacherSet.stream()
-                .filter(teacher -> !allTeachersInAcademicCourse.contains(teacher))
-                .collect(Collectors.toSet());
-        model.addAttribute("teachers", result);
         academicCourseService.update(academicCourse);
         return "redirect:/courses/" + courseName + "/teachers";
     }
@@ -141,16 +143,16 @@ public class AcademicCourseController {
             return "academicCourseSectionForClasses";
         }
 
-        academicClassService.update(AcademicClassMapper.toDto(addClassesToCourse(academicClassDto, courseName)));
+        academicClassService.update(addClassesToCourse(academicClassDto, courseName));
         return "redirect:/courses/" + courseName + "/classes";
     }
 
     private void setAttributes(Model model, String courseName) {
         List<AcademicClassDto> academicClassSet = new ArrayList<>();
-        AcademicCourse findAcademicCourseByName = academicCourseService.findByName(courseName);
+        AcademicCourseDto findAcademicCourseByName = academicCourseService.findByName(courseName);
         List<AcademicClassDto> allAcademicClasses = academicClassService.findAll();
         Set<Teacher> teachersInAcademicCourse = findAcademicCourseByName.getTeachers();
-        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.toAcademicClassDtoSet(findAcademicCourseByName.getAcademicClass());
+        Set<AcademicClassDto> academicClassesInCourse = AcademicClassMapper.toAcademicClassDtoSet(findAcademicCourseByName.getAcademicClassSet());
 
         if (academicClassesInCourse.isEmpty()) {
             academicClassSet.addAll(allAcademicClasses);
@@ -168,24 +170,25 @@ public class AcademicCourseController {
         model.addAttribute("academicClasses", academicClassSet);
     }
 
-    private AcademicClass addClassesToCourse(AcademicClassDto academicClassDto, String courseName) {
-        Set<AcademicCourse> academicCourseSet = new HashSet<>();
+    private AcademicClassDto addClassesToCourse(AcademicClassDto academicClassDto, String courseName) {
+        Set<AcademicCourseDto> academicCourseSet = new HashSet<>();
 
-        AcademicClass academicClassFindByName = academicClassService.findByClassNumber(academicClassDto.getClassNumber());
+        AcademicClassDto academicClassFindByName = academicClassService.findByClassNumber(academicClassDto.getClassNumber());
 
         academicCourseSet.add(academicCourseService.findByName(courseName));
         academicClassFindByName.getTeachers().addAll(academicClassDto.getTeachers());
-        academicClassFindByName.getAcademicCourseSet().addAll(academicCourseSet);
+        academicClassFindByName.getAcademicCourse().addAll(AcademicCourseMapper.toSetOfAcademicCourse(academicCourseSet));
         return academicClassFindByName;
     }
 
     private void setTeachersInCourse(String courseName, Model model) {
-        AcademicCourse academicCourse = academicCourseService.findByName(courseName);
-        Set<Teacher> result;
-        Set<Teacher> teachersInSubject = academicCourse.getSubject().getTeacherSet();
-        Set<Teacher> teachersInAcademicCourse = academicCourse.getTeachers();
-        result = teachersInSubject.stream().filter(teacher -> !teachersInAcademicCourse.contains(teacher)).collect(Collectors.toSet());
-        model.addAttribute("teachers", result);
+        AcademicCourseDto academicCourse = academicCourseService.findByName(courseName);
+        Set<TeacherDto> teacherSet;
+        Set<TeacherDto> teachersInSubject = TeacherMapper.mapToTeacherDtoSet(academicCourse.getSubject().getTeacherSet());
+        Set<TeacherDto> teachersInAcademicCourse = TeacherMapper.mapToTeacherDtoSet(academicCourse.getTeachers());
+        teacherSet = teachersInSubject.stream().filter(teacher -> !teachersInAcademicCourse.contains(teacher)).collect(Collectors.toSet());
+        model.addAttribute("teachers", teacherSet);
+        model.addAttribute("existingAcademicCourse", academicCourse);
         model.addAttribute("teachersInAcademicCourse", teachersInAcademicCourse);
     }
 
@@ -200,7 +203,6 @@ public class AcademicCourseController {
     private void setAttributesInCoursesSection(Model model) {
         model.addAttribute("academicCourses", academicCourseService.findAll());
         model.addAttribute("subjects", subjectService.findAll());
-
     }
 
 }

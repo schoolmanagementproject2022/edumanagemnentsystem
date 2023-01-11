@@ -58,6 +58,8 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         AcademicClassDto academicClassByNameDto = findByClassNumber(academicClassDto.getClassNumber());
         academicClassByNameDto.getAcademicCourse().addAll(academicClassDto.getAcademicCourse());
         academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
+        academicClassByNameDto.getStudents().addAll(academicClassDto.getStudents());
+        academicClassByNameDto.setClassroomTeacher(academicClassDto.getClassroomTeacher());
         return save(academicClassByNameDto);
     }
 

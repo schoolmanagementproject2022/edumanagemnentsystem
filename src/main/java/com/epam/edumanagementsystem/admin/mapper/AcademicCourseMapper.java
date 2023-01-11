@@ -19,6 +19,7 @@ public class AcademicCourseMapper {
         academicCourse.setName(academicCourseDto.getName());
         academicCourse.setSubject(academicCourseDto.getSubject());
         academicCourse.setTeachers(academicCourseDto.getTeachers());
+        academicCourse.setAcademicClass(academicCourseDto.getAcademicClassSet());
         return academicCourse;
     }
 
@@ -28,6 +29,7 @@ public class AcademicCourseMapper {
         academicCourseDto.setName(academicCourse.getName());
         academicCourseDto.setSubject(academicCourse.getSubject());
         academicCourseDto.setTeachers(academicCourse.getTeachers());
+        academicCourseDto.setAcademicClassSet(academicCourse.getAcademicClass());
         return academicCourseDto;
     }
 
@@ -46,6 +48,12 @@ public class AcademicCourseMapper {
     public static Set<AcademicCourseDto> toSetOfAcademicCourseDto(Set<AcademicCourse> academicCourseSet) {
         return academicCourseSet.stream()
                 .map(AcademicCourseMapper::toDto)
+                .collect(Collectors.toSet());
+    }
+
+    public static Set<AcademicCourse> toSetOfAcademicCourse(Set<AcademicCourseDto> academicCourseSet) {
+        return academicCourseSet.stream()
+                .map(AcademicCourseMapper::toAcademicCourse)
                 .collect(Collectors.toSet());
     }
 

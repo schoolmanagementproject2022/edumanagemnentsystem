@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.timetable.mapper;
 
+import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
@@ -34,7 +35,7 @@ public class CoursesForTimetableMapper {
         CoursesForTimetableDto coursesForTimetableDto = new CoursesForTimetableDto();
 
         coursesForTimetableDto.setId(coursesForTimetable.getId());
-        coursesForTimetableDto.setAcademicCourse(academicCourseService.findByName(coursesForTimetable.getAcademicCourse()));
+        coursesForTimetableDto.setAcademicCourse(AcademicCourseMapper.toAcademicCourse(academicCourseService.findByName(coursesForTimetable.getAcademicCourse())));
         coursesForTimetableDto.setAcademicClass(coursesForTimetable.getAcademicClass().get(0));
         coursesForTimetableDto.setDayOfWeek(coursesForTimetable.getDayOfWeek());
         coursesForTimetableDto.setStatus(coursesForTimetable.getStatus());
