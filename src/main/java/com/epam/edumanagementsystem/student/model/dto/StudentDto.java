@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.util.annotation.ValidName;
+import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -47,7 +48,7 @@ public class StudentDto {
     @Enumerated(EnumType.STRING)
     @NotNull(message = REQUIRED_FIELDS)
     private Gender gender;
-
+    @ValidPassword
     private String password;
 
     @Enumerated(EnumType.STRING)
