@@ -1,6 +1,8 @@
 package com.epam.edumanagementsystem.student.rest.service.impl;
 
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
+import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -14,6 +16,7 @@ import com.epam.edumanagementsystem.util.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,13 +30,16 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final UserService userService;
     private final ImageService imageService;
+    private final PasswordEncoder encoder;
+
     private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, UserService userService, ImageService imageService) {
+    public StudentServiceImpl(PasswordEncoder passwordEncoder,StudentRepository studentRepository, UserService userService, ImageService imageService) {
         this.studentRepository = studentRepository;
         this.userService = userService;
         this.imageService = imageService;
+        this.encoder = passwordEncoder;
     }
 
     @Override
@@ -43,8 +49,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto create(StudentDto studentDto) {
-        Student save = studentRepository.save(StudentMapper.toStudent(studentDto, userService.save(new User(studentDto.getEmail(), studentDto.getRole()))));
-        return StudentMapper.toStudentDto(save);
+        Student student = StudentMapper.mapToStudent(studentDto);
+        student.setUser(userService.save(new User(studentDto.getEmail(), studentDto.getRole())));
+        student.setPassword(encoder.encode(studentDto.getPassword()));
+        return StudentMapper.toStudentDto(studentRepository.save(student));
     }
 
     @Override

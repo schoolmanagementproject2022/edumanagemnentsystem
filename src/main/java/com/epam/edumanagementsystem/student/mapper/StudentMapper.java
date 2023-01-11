@@ -1,5 +1,7 @@
 package com.epam.edumanagementsystem.student.mapper;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.entity.User;
@@ -59,5 +61,20 @@ public class StudentMapper {
                 .map(StudentMapper::toStudentDto)
                 .collect(Collectors
                         .toList());
+    }
+    public static Student mapToStudent(StudentDto studentDto) {
+        Student student = new Student();
+        student.setId(studentDto.getId());
+        student.setName(studentDto.getName());
+        student.setSurname(studentDto.getSurname());
+        student.setDate(studentDto.getDate());
+        student.setAddress(studentDto.getAddress());
+        student.setBloodGroup(studentDto.getBloodGroup());
+        student.setGender(studentDto.getGender());
+        student.setPassword(studentDto.getPassword());
+        student.setParent(studentDto.getParent());
+        student.setAcademicClass(studentDto.getAcademicClass());
+        student.setPicUrl(studentDto.getPicUrl());
+        return student;
     }
 }
