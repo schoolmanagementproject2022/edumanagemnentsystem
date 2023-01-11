@@ -190,7 +190,7 @@ public class AcademicClassController {
         }
         for (Student student : students) {
             student.setAcademicClass(academicClassByName);
-            studentService.updateFields(StudentMapper.toStudentDto(student));
+            studentService.create(StudentMapper.toStudentDto(student));
         }
         return ACADEMIC_CLASSES_REDIRECT + name + STUDENTS_URL;
     }

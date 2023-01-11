@@ -1,8 +1,7 @@
 package com.epam.edumanagementsystem.student.mapper;
 
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
-import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
@@ -27,6 +26,25 @@ public class StudentMapper {
         student.setBloodGroup(studentDto.getBloodGroup());
         student.setGender(studentDto.getGender());
         student.setPassword(studentDto.getPassword());
+        student.setParent(studentDto.getParent());
+        student.setAcademicClass(studentDto.getAcademicClass());
+        student.setUser(user);
+        student.setPicUrl(studentDto.getPicUrl());
+        return student;
+    }
+
+    public static Student toStudentForEdit(StudentEditDto studentDto, User user) {
+        if (studentDto == null) {
+            throw new ObjectIsNull();
+        }
+        Student student = new Student();
+        student.setId(studentDto.getId());
+        student.setName(studentDto.getName());
+        student.setSurname(studentDto.getSurname());
+        student.setDate(studentDto.getDate());
+        student.setAddress(studentDto.getAddress());
+        student.setBloodGroup(studentDto.getBloodGroup());
+        student.setGender(studentDto.getGender());
         student.setParent(studentDto.getParent());
         student.setAcademicClass(studentDto.getAcademicClass());
         student.setUser(user);
@@ -62,6 +80,7 @@ public class StudentMapper {
                 .collect(Collectors
                         .toList());
     }
+
     public static Student mapToStudent(StudentDto studentDto) {
         Student student = new Student();
         student.setId(studentDto.getId());

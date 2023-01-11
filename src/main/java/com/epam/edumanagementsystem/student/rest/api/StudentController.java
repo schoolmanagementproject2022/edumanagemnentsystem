@@ -2,11 +2,10 @@ package com.epam.edumanagementsystem.student.rest.api;
 
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.config.MessageByLang;
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
-import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
@@ -34,7 +33,7 @@ import java.io.IOException;
 @RequestMapping("/students")
 @Tag(name = "Students")
 
-public class StudentController extends StudentControllerHelper{
+public class StudentController extends StudentControllerHelper {
 
     private final PasswordEncoder bcryptPasswordEncoder;
     private final StudentService studentService;
@@ -82,14 +81,14 @@ public class StudentController extends StudentControllerHelper{
     @PostMapping
     @Operation(summary = "Creates a new student and saves in DB")
     public String saveStudent(@ModelAttribute("student") @Valid StudentDto studentDto,
-                                       BindingResult result,
-                                       @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
-                                       @RequestParam(value = "status", required = false) String status,
-                                       Model model) throws IOException {
+                              BindingResult result,
+                              @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
+                              @RequestParam(value = "status", required = false) String status,
+                              Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
             UserDataValidation.validateImage(multipartFile, model);
         }
-        logger.debug(multipartFile.getName()+" "+studentDto.getNameAndSurname());
+        logger.debug(multipartFile.getName() + " " + studentDto.getNameAndSurname());
         if (status.equals("validationFail")) {
             model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
@@ -122,7 +121,7 @@ public class StudentController extends StudentControllerHelper{
     @Operation(summary = "Shows selected student's profile")
     public String openStudentProfile(@PathVariable("id") Long studentId, Model model) {
         StudentDto existingStudent = studentService.findById(studentId);
-        model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
+        model.addAttribute(STUDENT_DATA, StudentMapper.toStudent(existingStudent,
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
         model.addAttribute("existingStudent", existingStudent);
         model.addAttribute(GROUP, BloodGroup.values());
@@ -130,22 +129,25 @@ public class StudentController extends StudentControllerHelper{
 
         model.addAttribute(PARENTS, parentService.findAll());
         model.addAttribute(CLASSES, academicClassService.findAll());
-        logger.info("user opened parent profile page"+ existingStudent.getNameAndSurname());
+        logger.info("user opened parent profile page" + existingStudent.getNameAndSurname());
         return "studentProfile";
     }
 
     @PostMapping("/{id}/profile")
     @Operation(summary = "Edits selected student's profile")
-    public String editStudentPersonalInformation(@ModelAttribute("existingStudent") @Valid StudentDto updatableStudent,
+    public String editStudentPersonalInformation(@ModelAttribute("existingStudent") @Valid StudentEditDto updatableStudent,
                                                  BindingResult result, @PathVariable("id") Long studentId, Model model) {
+        checkEmailForEdit(updatableStudent, result, studentId, model);
+
         StudentDto existingStudent = studentService.findById(studentId);
-        model.addAttribute("name_surname", StudentMapper.toStudent(existingStudent,
+        model.addAttribute("studentData", StudentMapper.toStudent(existingStudent,
                 userService.findByEmail(existingStudent.getEmail())).getNameAndSurname());
+        model.addAttribute(STUDENT_DATA, studentService.findById(studentId).getNameAndSurname());
+
         model.addAttribute(GROUP, BloodGroup.values());
         model.addAttribute(GENDER, Gender.values());
         model.addAttribute(PARENTS, parentService.findAll());
         model.addAttribute(CLASSES, academicClassService.findAll());
-        checkEmailForEdit(updatableStudent, result, studentId, model);
         if (result.hasErrors()) {
             model.addAttribute(STUDENT_DATA, studentService.findById(studentId).getNameAndSurname());
 
@@ -159,7 +161,7 @@ public class StudentController extends StudentControllerHelper{
     @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        logger.debug(multipartFile.getName()+" "+studentService.findById(id));
+        logger.debug(multipartFile.getName() + " " + studentService.findById(id));
         studentService.addProfilePicture(studentService.findById(id), multipartFile);
         return REDIRECT + id + PROFILE;
     }
@@ -167,7 +169,7 @@ public class StudentController extends StudentControllerHelper{
     @GetMapping("/{id}/image/delete")
     @Operation(summary = "Deletes image to selected student's profile")
     public String deletePic(@PathVariable("id") Long id) {
-        logger.info("user want delete image"+" " +id);
+        logger.info("user want delete image" + " " + id);
         imageService.deleteImage(studentService.findById(id).getPicUrl());
         studentService.deletePic(studentService.findById(id).getId());
         return REDIRECT + id + PROFILE;
@@ -181,7 +183,7 @@ public class StudentController extends StudentControllerHelper{
         }
     }
 
-    private void checkEmailForEdit(StudentDto studentDto, BindingResult bindingResult,
+    private void checkEmailForEdit(StudentEditDto studentDto, BindingResult bindingResult,
                                    Long id, Model model) {
         if (!studentDto.getEmail().equalsIgnoreCase(studentService.findById(id).getEmail()) &&
                 UserDataValidation.existsEmail(studentDto.getEmail())) {

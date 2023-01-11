@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.student.rest.service;
 
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +11,7 @@ public interface StudentService {
 
     StudentDto create(StudentDto studentDto);
 
-    StudentDto updateFields(StudentDto studentDto);
+    StudentDto updateFields(StudentEditDto studentDto);
 
 
     List<StudentDto> findAll();
@@ -30,4 +31,6 @@ public interface StudentService {
     void deletePic(Long id);
 
     List<StudentDto> findStudentsWithoutConnectionWithClass();
+
+    StudentDto updateForPic(StudentDto studentDto);
 }
