@@ -10,14 +10,14 @@ public enum BloodGroup {
     AB_PLUS("AB+"),
     AB_MINUS("AB-");
 
-    private final String bloodGroup;
+    private final String blood;
 
-    BloodGroup(String bloodGroup) {
-        this.bloodGroup = bloodGroup;
+    BloodGroup(String blood) {
+        this.blood = blood;
     }
 
-    public String getBloodGroup() {
-        return bloodGroup;
+    public String getBlood() {
+        return blood;
     }
 
 }

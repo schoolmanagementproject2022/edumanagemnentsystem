@@ -3,12 +3,9 @@ package com.epam.edumanagementsystem.student.model.entity;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.util.entity.User;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,34 +15,18 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String name;
-    @Column(name = "surname")
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
+
     private String surname;
     @OneToOne
     private User user;
-    @Column(name = "address")
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
     private String address;
-    @Column(name = "date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
     private LocalDate date;
-    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Please, fill the required fields")
     private Gender gender;
-    @Column(name = "password")
-    @NotBlank(message = "Please, fill the required fields")
     private String password;
-    @Column(name = "blood_group")
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Please, fill the required fields")
     private BloodGroup bloodGroup;
     @OneToOne(fetch = FetchType.LAZY)
     private Parent parent;
@@ -56,43 +37,11 @@ public class Student {
 
     private String picUrl;
 
-    public Student(Long id,
-                   String name,
-                   String surname,
-                   String address,
-                   LocalDate date,
-                   Gender gender,
-                   String password,
-                   BloodGroup bloodGroup,
-                   Parent parent,
-                   AcademicClass academicClass) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.address = address;
-        this.date = date;
-        this.gender = gender;
-        this.password = password;
-        this.bloodGroup = bloodGroup;
-        this.parent = parent;
-        this.academicClass = academicClass;
-    }
-
-    public Student(Long id, String name, String surname, User user, String address, LocalDate date, Gender gender, String password, BloodGroup bloodGroup, Parent parent, AcademicClass academicClass) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.user = user;
-        this.address = address;
-        this.date = date;
-        this.gender = gender;
-        this.password = password;
-        this.bloodGroup = bloodGroup;
-        this.parent = parent;
-        this.academicClass = academicClass;
-    }
-
     public Student() {
+
+    }
+    public Student(Long id) {
+        this.id=id;
     }
 
     public Long getId() {

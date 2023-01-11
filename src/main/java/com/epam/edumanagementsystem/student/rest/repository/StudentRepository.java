@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    Student findByUserId(Long id);
+    Optional<Student> findByUserId(Long id);
 
     List<Student> findByAcademicClassId(Long id);
 
@@ -19,4 +20,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     void updateStudentPicUrl(Long id);
 
     List<Student> findAllByParentId(Long parentId);
+
+    List<Student> findAllByAcademicClassIsNull();
+
+    List<Student> findAllByParentIsNull();
+
 }

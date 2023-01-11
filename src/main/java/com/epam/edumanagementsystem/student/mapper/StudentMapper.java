@@ -1,24 +1,17 @@
 package com.epam.edumanagementsystem.student.mapper;
 
+import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
+import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
-import com.epam.edumanagementsystem.util.service.UserService;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class StudentMapper {
-
-    @Lazy
-    private static UserService userService;
-
-    public StudentMapper(UserService userService) {
-        this.userService = userService;
+    private StudentMapper() {
     }
 
     public static Student toStudent(StudentDto studentDto, User user) {
@@ -38,48 +31,6 @@ public class StudentMapper {
         student.setAcademicClass(studentDto.getAcademicClass());
         student.setUser(user);
         student.setPicUrl(studentDto.getPicUrl());
-        return student;
-    }
-
-    public static Student toStudent(StudentDto studentDto, UserService userService) {
-        if (studentDto == null) {
-            throw new ObjectIsNull();
-        }
-        Student student = new Student();
-        User user = new User();
-        student.setId(studentDto.getId());
-        student.setName(studentDto.getName());
-        student.setSurname(studentDto.getSurname());
-        student.setDate(studentDto.getDate());
-        student.setAddress(studentDto.getAddress());
-        student.setBloodGroup(studentDto.getBloodGroup());
-        student.setGender(studentDto.getGender());
-        student.setPassword(studentDto.getPassword());
-        student.setParent(studentDto.getParent());
-        student.setAcademicClass(studentDto.getAcademicClass());
-        user.setEmail(studentDto.getEmail());
-        user.setRole(studentDto.getRole());
-        User save = userService.save(user);
-        student.setUser(save);
-        return student;
-    }
-
-    public static Student toStudentWithoutSavingUser(StudentDto studentDto) {
-        if (studentDto == null) {
-            throw new ObjectIsNull();
-        }
-        Student student = new Student();
-        student.setId(studentDto.getId());
-        student.setName(studentDto.getName());
-        student.setSurname(studentDto.getSurname());
-        student.setDate(studentDto.getDate());
-        student.setAddress(studentDto.getAddress());
-        student.setBloodGroup(studentDto.getBloodGroup());
-        student.setGender(studentDto.getGender());
-        student.setPassword(studentDto.getPassword());
-        student.setParent(studentDto.getParent());
-        student.setAcademicClass(studentDto.getAcademicClass());
-        student.setUser(userService.findByEmail(studentDto.getEmail()));
         return student;
     }
 
@@ -104,19 +55,26 @@ public class StudentMapper {
         return studentDto;
     }
 
-    public static List<Student> toStudentList(List<StudentDto> studentDtos) {
-        return studentDtos
-                .stream()
-                .map(StudentMapper::toStudentWithoutSavingUser)
-                .collect(Collectors
-                        .toList());
-    }
-
     public static List<StudentDto> toStudentDtoList(List<Student> studentEntities) {
         return studentEntities
                 .stream()
                 .map(StudentMapper::toStudentDto)
                 .collect(Collectors
                         .toList());
+    }
+    public static Student mapToStudent(StudentDto studentDto) {
+        Student student = new Student();
+        student.setId(studentDto.getId());
+        student.setName(studentDto.getName());
+        student.setSurname(studentDto.getSurname());
+        student.setDate(studentDto.getDate());
+        student.setAddress(studentDto.getAddress());
+        student.setBloodGroup(studentDto.getBloodGroup());
+        student.setGender(studentDto.getGender());
+        student.setPassword(studentDto.getPassword());
+        student.setParent(studentDto.getParent());
+        student.setAcademicClass(studentDto.getAcademicClass());
+        student.setPicUrl(studentDto.getPicUrl());
+        return student;
     }
 }

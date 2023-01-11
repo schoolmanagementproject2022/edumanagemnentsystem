@@ -7,6 +7,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
@@ -83,7 +84,7 @@ public class AcademicClassController {
                 .filter(course -> !course.getTeachers().isEmpty())
                 .collect(Collectors.toList());
         model.addAttribute("coursesForSelect", coursesForSelection);
-        return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
+        return "academicCourseForAcademicClass";
     }
 
     @PostMapping("{name}/courses")
@@ -169,7 +170,7 @@ public class AcademicClassController {
     public String showAcademicClassStudents(@PathVariable("name") String name, Model model) {
         Long id = academicClassService.findByClassNumber(name).getId();
         model.addAttribute("studentsInAcademicClass", studentService.findByAcademicClassId(id));
-        model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
+        model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
         return ACADEMIC_CLASS_SECTION_FOR_STUDENTS;
     }
 
@@ -182,12 +183,12 @@ public class AcademicClassController {
             model.addAttribute("blank", "There is no new selection.");
             model.addAttribute("studentsInAcademicClass", studentService
                     .findByAcademicClassId(academicClassService.findByClassNumber(name).getId()));
-            model.addAttribute("students", studentService.studentsWithoutConnectionWithClass());
+            model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
             return ACADEMIC_CLASS_SECTION_FOR_STUDENTS;
         }
         for (Student student : students) {
             student.setAcademicClass(academicClassByName);
-            studentService.updateStudentsClass(student);
+            studentService.updateFields(StudentMapper.toStudentDto(student));
         }
         return ACADEMIC_CLASSES_REDIRECT + name + STUDENTS_URL;
     }
