@@ -10,6 +10,7 @@ import java.util.Set;
 
 public interface AcademicCourseService {
 
+    //todo
     AcademicCourse findByName(String name);
 
     AcademicCourseDto findById(Long id);
@@ -18,6 +19,7 @@ public interface AcademicCourseService {
 
     List<AcademicCourseDto> findAll();
 
+    //todo
     List<AcademicCourse> findAllAcademicCoursesInClassByName(String name);
 
     AcademicCourseDto update(AcademicCourseDto academicCourse);

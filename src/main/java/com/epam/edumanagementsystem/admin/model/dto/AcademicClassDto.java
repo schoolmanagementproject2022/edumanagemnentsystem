@@ -3,23 +3,15 @@ package com.epam.edumanagementsystem.admin.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
-import org.hibernate.validator.constraints.NotBlank;
+import com.epam.edumanagementsystem.util.annotation.ValidProperty;
 
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
-
-import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
-import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SYMBOL_LENGTH;
-import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.*;
 
 public class AcademicClassDto {
     private Long id;
 
-    @NotBlank(message = EMPTY_FIELD)
-    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
-    @Pattern(regexp = "^[A-Za-z0-9-<>_`*,:|()]+$", message = USED_SYMBOLS)
+    @ValidProperty
     private String classNumber;
 
     private Set<AcademicCourse> academicCourse;
@@ -31,15 +23,6 @@ public class AcademicClassDto {
     private Set<Student> students;
 
     public AcademicClassDto() {
-    }
-
-    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teachers, Teacher classroomTeacher, Set<Student> students) {
-        this.id = id;
-        this.classNumber = classNumber;
-        this.academicCourse = academicCourse;
-        this.teachers = teachers;
-        this.classroomTeacher = classroomTeacher;
-        this.students = students;
     }
 
     public Long getId() {

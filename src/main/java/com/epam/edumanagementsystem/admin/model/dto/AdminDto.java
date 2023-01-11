@@ -1,46 +1,34 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
 import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.Size;
 import java.util.Objects;
-
-import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
-import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SYMBOL_LENGTH;
-import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.FIELD_MAX_SIZE;
 
 public class AdminDto {
 
     private Long id;
 
-    @NotBlank(message = EMPTY_FIELD)
-    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
-    private String username;
+    @ValidName
+    private String name;
 
-    @NotBlank(message = EMPTY_FIELD)
-    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
+    @ValidName
     private String surname;
 
-    @NotBlank(message = EMPTY_FIELD)
-    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
     @ValidEmail()
     private String email;
 
     @NotBlank
     private String role = "ADMIN";
 
-    @NotBlank(message = EMPTY_FIELD)
     @ValidPassword
     private String password;
 
     public AdminDto() {
     }
 
-    public String getNameSurname() {
-        return username + " " + surname;
-    }
 
     public Long getId() {
         return id;
@@ -58,16 +46,20 @@ public class AdminDto {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSurname() {
         return surname;
+    }
+
+    public String getFullName() {
+        return this.name + " " + this.surname;
     }
 
     public void setSurname(String surname) {
@@ -95,21 +87,21 @@ public class AdminDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AdminDto adminDto = (AdminDto) o;
-        return id.equals(adminDto.id) && username.equals(adminDto.username) &&
+        return id.equals(adminDto.id) && name.equals(adminDto.name) &&
                 surname.equals(adminDto.surname) && email.equals(adminDto.email) &&
                 role.equals(adminDto.role) && password.equals(adminDto.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, surname, email, role, password);
+        return Objects.hash(id, name, surname, email, role, password);
     }
 
     @Override
     public String toString() {
         return "AdminDto{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +

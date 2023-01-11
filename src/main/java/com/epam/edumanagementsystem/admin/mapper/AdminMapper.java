@@ -15,7 +15,7 @@ public class AdminMapper {
     public static AdminDto toDto(Admin admin) {
         AdminDto adminDtoDto = new AdminDto();
         adminDtoDto.setId(admin.getId());
-        adminDtoDto.setUsername(admin.getUsername());
+        adminDtoDto.setName(admin.getName());
         adminDtoDto.setSurname(admin.getSurname());
         adminDtoDto.setEmail(admin.getUser().getEmail());
         adminDtoDto.setRole(admin.getUser().getRole());
@@ -32,7 +32,7 @@ public class AdminMapper {
     public static Admin toAdmin(AdminDto adminDto) {
         Admin admin = new Admin();
         admin.setId(adminDto.getId());
-        admin.setUsername(adminDto.getUsername());
+        admin.setName(adminDto.getName());
         admin.setSurname(adminDto.getSurname());
         admin.setPassword(adminDto.getPassword());
         return admin;

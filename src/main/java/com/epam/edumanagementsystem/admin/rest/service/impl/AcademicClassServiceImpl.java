@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
+import com.epam.edumanagementsystem.util.AppConstants;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -77,7 +78,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         logger.info("Checking Class Duplication");
         if (findAll().stream().anyMatch(number -> number.getClassNumber().equalsIgnoreCase(academicClassDto.getClassNumber()))) {
             bindingResult.addError(new ObjectError("academicClass", "Duplicate class number"));
-            model.addAttribute("duplicated", "Class already exists");
+            model.addAttribute(AppConstants.DUPLICATED, "Class already exists");
         }
     }
 

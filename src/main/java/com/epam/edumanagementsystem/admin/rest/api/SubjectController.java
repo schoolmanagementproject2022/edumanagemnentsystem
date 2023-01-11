@@ -38,6 +38,7 @@ public class SubjectController {
     @Operation(summary = "Gets the list of the subjects and shows them on admin`s dashboard")
     public String getAll(Model model) {
         setAttributesOfSubjectSection(model);
+        model.addAttribute("subject", new SubjectDto());
         return "subjectSection";
     }
 
@@ -46,11 +47,6 @@ public class SubjectController {
     public String createSubject(@ModelAttribute("subject") @Valid SubjectDto subjectDto,
                                 BindingResult result, Model model) {
         setAttributesOfSubjectSection(model);
-
-        if(result.hasErrors() || model.containsAttribute("nameSize") || model.containsAttribute("invalidURL")){
-            return "subjectSection";
-        }
-
         subjectService.checkSubjectDuplication(subjectDto, result, model);
 
         if (result.hasErrors()) {
@@ -116,7 +112,7 @@ public class SubjectController {
     private void setAttributesOfSubjectSection(Model model) {
         model.addAttribute("subjects", subjectService.findAll());
         model.addAttribute("teachers", teacherService.findAll());
-        model.addAttribute("subject", new Subject());
+
     }
 
 

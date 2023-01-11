@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.annotation.ValidProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
@@ -18,9 +19,7 @@ public class SubjectDto {
 
     private Long id;
 
-    @NotBlank(message = EMPTY_FIELD)
-    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
-    @Pattern(regexp = "^[A-Za-z0-9-<>_`*,:|()]+$", message = USED_SYMBOLS)
+    @ValidProperty
     private String name;
 
     private Set<Teacher> teacherSet = new HashSet<>();
@@ -63,7 +62,8 @@ public class SubjectDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubjectDto that = (SubjectDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(teacherSet, that.teacherSet);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(teacherSet, that.teacherSet);
     }
 
     @Override

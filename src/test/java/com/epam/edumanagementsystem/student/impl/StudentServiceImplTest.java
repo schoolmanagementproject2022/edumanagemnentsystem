@@ -64,7 +64,13 @@ class StudentServiceImplTest {
         studentDtoUser = new User(5L, "studentDtoUser@gmail.com", "STUDENT");
         User userParent = new User(2L, "parent@gmail.com", "PARENT");
         User userTeacher = new User(3L, "teacher@gmail.com", "TEACHER");
-        parent = new Parent(2L, "Parent", "Parentyan", userParent, "6uP&6jV$2qP%");
+        parent = new Parent();
+        parent.setId(2L);
+        parent.setName("Parent");
+        parent.setSurname("Parentyan");
+        parent.setUser(userParent);
+        parent.setPassword("6uP&6jV$2qP%");
+
         Set<Teacher> teacherSet = new LinkedHashSet<>();
         Teacher teacher = new Teacher(3L,
                 "Teacher",

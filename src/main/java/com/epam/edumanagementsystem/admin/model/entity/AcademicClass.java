@@ -51,7 +51,9 @@ public class AcademicClass {
     public AcademicClass() {
     }
 
-    public AcademicClass(Long id, String classNumber, Set<Teacher> teachers, Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher, List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
+    public AcademicClass(Long id, String classNumber, Set<Teacher> teachers,
+                         Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher,
+                         List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
         this.id = id;
         this.classNumber = classNumber;
         this.teachers = teachers;
@@ -126,7 +128,9 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(teachers, that.teachers);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) &&
+                Objects.equals(classroomTeacher, that.classroomTeacher) &&
+                Objects.equals(teachers, that.teachers);
     }
 
     @Override
