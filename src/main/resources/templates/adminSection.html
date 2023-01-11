@@ -34,7 +34,7 @@
 
         <div class="list">
             <div class="list-items" th:each="admin : ${admins}">
-                <p th:text="${admin.getNameSurname()}"></p>
+                <p th:text="${admin.getFullName()}"></p>
             </div>
         </div>
     </div>
@@ -57,9 +57,9 @@
                 <div class="half">
                     <div id="error"></div>
                     <label class="popup-label-title" for="name">Admin name <span style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="username" id="name" th:value="${#object.username}">
-                    <div class="error" th:if="${#fields.hasErrors('username')}"
-                         th:errors="*{username}"></div>
+                    <input class="form_input" type="text" th:name="name" id="name" th:value="${#object.name}">
+                    <div class="error" th:if="${#fields.hasErrors('name')}"
+                         th:errors="*{name}"></div>
                     <div th:if="${nameSize}!= null" class="error">
                         <p th:text="${nameSize}"></p>
                     </div>

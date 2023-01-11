@@ -14,7 +14,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
 
     private String surname;
 
@@ -26,16 +26,16 @@ public class Admin {
     public Admin() {
     }
 
-    public Admin(Long id, String username, String surname, User user, String password) {
+    public Admin(Long id, String name, String surname, User user, String password) {
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.surname = surname;
         this.password = password;
         this.user = user;
     }
 
     public String getNameSurname() {
-        return username + " " + surname;
+        return name + " " + surname;
     }
 
     public Long getId() {
@@ -46,12 +46,12 @@ public class Admin {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String username) {
+        this.name = username;
     }
 
     public String getSurname() {
@@ -83,19 +83,21 @@ public class Admin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Admin admin = (Admin) o;
-        return Objects.equals(id, admin.id) && Objects.equals(username, admin.username) && Objects.equals(surname, admin.surname) && Objects.equals(password, admin.password) && Objects.equals(user, admin.user);
+        return Objects.equals(id, admin.id) && Objects.equals(name, admin.name) &&
+                Objects.equals(surname, admin.surname) &&
+                Objects.equals(password, admin.password) && Objects.equals(user, admin.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, surname, password);
+        return Objects.hash(id, name, surname, password);
     }
 
     @Override
     public String toString() {
         return "Admin{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
                 ", user=" + user +
