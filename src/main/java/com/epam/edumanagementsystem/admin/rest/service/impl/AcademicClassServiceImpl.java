@@ -41,24 +41,24 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public AcademicClass findByClassNumber(String name) {
+    public AcademicClassDto findByClassNumber(String name) {
         logger.info("Finding Academic Class by Class Number");
-        return academicClassRepository.findByClassNumber(name).orElseThrow(EntityNotFoundException::new);
+        return AcademicClassMapper.toDto(academicClassRepository.findByClassNumber(name).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
-    public AcademicClass removeByTeacherName(String teacherName) {
+    public AcademicClassDto removeByTeacherName(String teacherName) {
         logger.info("Removing Academic Class by Teacher Name");
-        return academicClassRepository.removeByTeacherName(teacherName);
+        return AcademicClassMapper.toDto(academicClassRepository.removeByTeacherName(teacherName));
     }
 
     @Override
     public AcademicClassDto update(AcademicClassDto academicClassDto) {
         logger.info("Updating Academic Class");
-        AcademicClass academicClassByName = findByClassNumber(academicClassDto.getClassNumber());
-        academicClassByName.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourse());
-        academicClassByName.getTeachers().addAll(academicClassDto.getTeachers());
-        return save(AcademicClassMapper.toDto(academicClassByName));
+        AcademicClassDto academicClassByNameDto = findByClassNumber(academicClassDto.getClassNumber());
+        academicClassByNameDto.getAcademicCourse().addAll(academicClassDto.getAcademicCourse());
+        academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
+        return save(academicClassByNameDto);
     }
 
     @Override

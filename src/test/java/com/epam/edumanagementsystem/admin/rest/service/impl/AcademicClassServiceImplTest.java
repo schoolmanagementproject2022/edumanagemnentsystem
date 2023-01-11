@@ -99,7 +99,7 @@ class AcademicClassServiceImplTest {
     @Test
     void testFindByClassNumberPositive() {
         when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(Optional.ofNullable(academicClass));
-        AcademicClass actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
+        AcademicClassDto actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
         assertEquals(academicClass.getClassNumber(), actualClass.getClassNumber());
     }
 
@@ -108,7 +108,7 @@ class AcademicClassServiceImplTest {
     void testFindByIncorrectClassNumber() {
         when(academicClassRepository.findByClassNumber(academicClass.getClassNumber())).thenReturn(Optional.ofNullable(academicClass));
         AcademicClass aClass = new AcademicClass(1L, "A3", null, null, null, null, null);
-        AcademicClass actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
+        AcademicClassDto actualClass = academicClassServiceImpl.findByClassNumber(academicClass.getClassNumber());
         assertNotEquals(actualClass.getClassNumber(), aClass.getClassNumber());
     }
 
@@ -154,7 +154,7 @@ class AcademicClassServiceImplTest {
     @Test
     void testRemoveByTeacherNameClassFound() {
         when(academicClassRepository.removeByTeacherName("TeacherName")).thenReturn(academicClass);
-        AcademicClass removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
+        AcademicClassDto removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
         assertEquals("A1", removedClass.getClassNumber());
         assertEquals(academicClass.getTeachers(), removedClass.getTeachers());
     }
@@ -162,7 +162,7 @@ class AcademicClassServiceImplTest {
     @Test
     void testRemoveByTeacherNameClassNotFound() {
         when(academicClassRepository.removeByTeacherName("TeacherName")).thenReturn(null);
-        AcademicClass removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
+        AcademicClassDto removedClass = academicClassServiceImpl.removeByTeacherName("TeacherName");
         assertNull(removedClass);
     }
 

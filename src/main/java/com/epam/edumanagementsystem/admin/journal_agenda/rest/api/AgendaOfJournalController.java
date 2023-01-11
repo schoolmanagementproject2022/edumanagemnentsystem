@@ -105,13 +105,13 @@ public class AgendaOfJournalController {
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             model.addAttribute("course", academicCourseService.findById(courseId));
             model.addAttribute("class", academicClassService.findByClassNumber(name));
-            List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
-            model.addAttribute("allStudentsInAcademicClass", studentsInClass);
-            if (studentsInClass.isEmpty()) {
-                return "journalWithCourseInfo";
-            }
-
-            journalService.openJournal(date, startDate, name, model);
+//            List<StudentDto> studentsInClass = studentService.findStudentsByClassName(name);
+//            model.addAttribute("allStudentsInAcademicClass", studentsInClass);
+//            if (studentsInClass.isEmpty()) {
+//                return "journalWithCourseInfo";
+//            }
+//
+//            journalService.openJournal(date, startDate, name, model);
             return "journalWithCourseInfo";
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);

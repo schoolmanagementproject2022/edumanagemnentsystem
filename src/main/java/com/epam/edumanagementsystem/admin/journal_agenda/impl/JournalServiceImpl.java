@@ -1,6 +1,8 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
 import com.epam.edumanagementsystem.admin.journal_agenda.rest.service.JournalService;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
@@ -41,7 +43,7 @@ public class JournalServiceImpl implements JournalService {
         if (date != null) {
             startDate = date;
         }
-        AcademicClass academicClassByName = academicClassService.findByClassNumber(name);
+        AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
 
         LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
         LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
@@ -67,8 +69,8 @@ public class JournalServiceImpl implements JournalService {
             }
         }
         journalStartDate = DateUtil.recurs(journalStartDate);
-        List<AcademicCourse> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
-        model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClass);
+        List<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClassDto);
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
             existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
@@ -99,14 +101,14 @@ public class JournalServiceImpl implements JournalService {
         putLessons(model, academicClassService.findByClassNumber(className).getId());
     }
 
-    private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClass academicClassByName,
+    private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClassDto academicClassByNameDto,
                                          LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay) {
 
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
         List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
-                .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByName.getId());
+                .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByNameDto.getId());
         model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
         if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
                 !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
