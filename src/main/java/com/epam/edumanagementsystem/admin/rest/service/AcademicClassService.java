@@ -16,9 +16,9 @@ public interface AcademicClassService {
 
     AcademicClassDto findById(Long id);
 
-    AcademicClass findByClassNumber(String name);
+    AcademicClassDto findByClassNumber(String name);
 
-    AcademicClass removeByTeacherName(String teacherName);
+    AcademicClassDto removeByTeacherName(String teacherName);
 
     AcademicClassDto update(AcademicClassDto academicClassDto);
 

@@ -1,5 +1,7 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.api;
 
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
@@ -50,12 +52,12 @@ public class UtilForTimetableController {
         model.addAttribute("timetable", new Timetable());
     }
 
-    public static void allAcademicCourses_academicClass(Model model, List<AcademicCourse> allAcademicCourses, AcademicClass academicClass) {
+    public static void allAcademicCourses_academicClass(Model model, List<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("academicClass", academicClass);
         model.addAttribute("courses", allAcademicCourses);
     }
 
-    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, List<AcademicCourse> allAcademicCourses, AcademicClass academicClass) {
+    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, List<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         allAcademicCourses_academicClass(model, allAcademicCourses, academicClass);
     }

@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.rest.api;
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
@@ -73,7 +74,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/courses")
     @Operation(summary = "Shows academic courses in academic class section")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
-        List<AcademicCourse> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        List<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
         Set<TeacherDto> allTeachersByAcademicCourse = teacherService.findAllTeachersInAllCourses();
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
 
@@ -93,7 +94,7 @@ public class AcademicClassController {
     @Operation(summary = "Adds new academic courses and teachers for selected academic class")
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClassDto academicClassDto,
                                                  @PathVariable("name") String name, Model model) {
-        List<AcademicCourse> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        List<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
         List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("allTeacherByAcademicCourse", teacherService.findAllTeachersInAllCourses());
 
@@ -113,7 +114,7 @@ public class AcademicClassController {
             return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
         }
 
-        AcademicClassDto foundClass = AcademicClassMapper.toDto(academicClassService.findByClassNumber(name));
+        AcademicClassDto foundClass = academicClassService.findByClassNumber(name);
         foundClass.getAcademicCourse().addAll(academicClassDto.getAcademicCourse());
         foundClass.getTeachers().addAll(academicClassDto.getTeachers());
         academicClassService.update(foundClass);
@@ -123,7 +124,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/classroom")
     @Operation(summary = "Shows teachers who can be selected as a classroom teacher for selected academic class")
     public String classroomTeacherForAcademicClass(@PathVariable("name") String name, Model model) {
-        AcademicClass academicClassByName = academicClassService.findByClassNumber(name);
+        AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
         Set<Teacher> allTeachersInClassName = academicClassByName.getTeachers();
         List<AcademicClassDto> allClasses = academicClassService.findAll();
 
@@ -148,7 +149,7 @@ public class AcademicClassController {
     public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClassDto academicClassDto,
                                                      @PathVariable("name") String name,
                                                      Model model) {
-        AcademicClassDto academicClassFindByName = AcademicClassMapper.toDto(academicClassService.findByClassNumber(name));
+        AcademicClassDto academicClassFindByName = academicClassService.findByClassNumber(name);
         model.addAttribute("teachers", academicClassFindByName.getTeachers());
         model.addAttribute("existingClass", new AcademicClass());
         if (academicClassDto.getClassroomTeacher() == null) {
@@ -180,7 +181,7 @@ public class AcademicClassController {
     public String addNewTeacher(@ModelAttribute("existingAcademicClass") AcademicClassDto academicClassDto,
                                 @PathVariable("name") String name, Model model) {
         Set<Student> students = academicClassDto.getStudents();
-        AcademicClass academicClassByName = academicClassService.findByClassNumber(name);
+        AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
         if (academicClassDto.getStudents() == null) {
             model.addAttribute("blank", "There is no new selection.");
             model.addAttribute("studentsInAcademicClass", studentService
@@ -189,7 +190,7 @@ public class AcademicClassController {
             return ACADEMIC_CLASS_SECTION_FOR_STUDENTS;
         }
         for (Student student : students) {
-            student.setAcademicClass(academicClassByName);
+            student.setAcademicClass(AcademicClassMapper.toAcademicClass(academicClassByName));
             studentService.create(StudentMapper.toStudentDto(student));
         }
         return ACADEMIC_CLASSES_REDIRECT + name + STUDENTS_URL;

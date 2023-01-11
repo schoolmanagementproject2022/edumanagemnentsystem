@@ -42,9 +42,9 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public AcademicCourse findByName(String name) {
+    public AcademicCourseDto findByName(String name) {
         logger.info("Finding Academic Course by Name");
-        return academicCourseRepository.findByName(name).orElseThrow(UserNotFoundException::new);
+        return AcademicCourseMapper.toDto(academicCourseRepository.findByName(name).orElseThrow(UserNotFoundException::new));
     }
 
     @Override
@@ -68,9 +68,9 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     @Override
     public AcademicCourseDto update(AcademicCourseDto academicCourse) {
         logger.info("Updating Academic Course");
-        AcademicCourse academicCourseByName = findByName(academicCourse.getName());
-        academicCourseByName.getTeachers().addAll(academicCourse.getTeachers());
-        return save(AcademicCourseMapper.toDto(academicCourseByName));
+        AcademicCourseDto academicCourseByNameDto = findByName(academicCourse.getName());
+        academicCourseByNameDto.getTeachers().addAll(academicCourse.getTeachers());
+        return save(academicCourseByNameDto);
     }
 
     @Override
@@ -80,9 +80,9 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public List<AcademicCourse> findAllAcademicCoursesInClassByName(String name) {
+    public List<AcademicCourseDto> findAllAcademicCoursesInClassByName(String name) {
         logger.info("Finding All Academic Courses in Class by Name");
-        return new ArrayList<>(academicClassService.findByClassNumber(name).getAcademicCourseSet());
+        return new ArrayList<>(AcademicCourseMapper.toSetOfAcademicCourseDto(academicClassService.findByClassNumber(name).getAcademicCourse()));
     }
 
     @Override

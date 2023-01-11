@@ -55,7 +55,7 @@ class AcademicCourseServiceImplTest {
     void testFindAcademicCourseByAcademicCourseName() {
         String name = "firstAcademicCourse";
         when(academicCourseRepository.findByName(name)).thenReturn(Optional.ofNullable(academicCourse));
-        AcademicCourse academicCourseByAcademicCourseName =
+        AcademicCourseDto academicCourseByAcademicCourseName =
                 academicCourseService.findByName(name);
         Assertions.assertNotNull(academicCourseByAcademicCourseName);
         assertEquals(academicCourse, academicCourseByAcademicCourseName);
