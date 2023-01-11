@@ -2,36 +2,28 @@ package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 public interface AcademicClassService {
 
-    AcademicClass create(AcademicClass academicClass);
+    AcademicClassDto save(AcademicClassDto academicClassDto);
 
     List<AcademicClassDto> findAll();
 
-    AcademicClassDto getById(Long id);
+    AcademicClassDto findById(Long id);
 
-    AcademicClass findByName(String name);
+    AcademicClass findByClassNumber(String name);
 
-    AcademicClass update(AcademicClass academicClass);
+    AcademicClass removeByTeacherName(String teacherName);
 
-    List<AcademicCourse> findAllAcademicCourses(String name);
+    AcademicClassDto update(AcademicClassDto academicClassDto);
 
-    Set<Teacher> findAllTeachers(String name);
+    Set<AcademicClassDto> findByTeacherId(Long id);
 
-    Set<Teacher> findAllTeacher();
-
-    Set<AcademicClass> findAcademicClassByTeacherId(Long id);
-
-    LocalDate recurs(LocalDate localDate);
-
-    String journal(Model model, String date, String startDate,String name);
+    void checkClassDuplication(AcademicClassDto academicClassDto, BindingResult bindingResult, Model model);
 
 }

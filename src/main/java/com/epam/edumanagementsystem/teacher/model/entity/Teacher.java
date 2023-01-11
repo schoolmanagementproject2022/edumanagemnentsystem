@@ -39,7 +39,7 @@ public class Teacher {
     private Set<Subject> subjectSet;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
     private Set<AcademicClass> academicClass;
 
     private String picUrl;

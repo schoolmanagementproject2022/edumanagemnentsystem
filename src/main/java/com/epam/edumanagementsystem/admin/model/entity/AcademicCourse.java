@@ -2,11 +2,8 @@ package com.epam.edumanagementsystem.admin.model.entity;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,20 +16,19 @@ public class AcademicCourse {
     private Long id;
 
     @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "subject_id")
-    @NotNull(message = "Please, fill the required fields")
     private Subject subject;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "academicCourse_teacher_mapping",
             joinColumns = @JoinColumn(name = "academicCourse_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-    private Set<Teacher> teacher;
+    private Set<Teacher> teachers;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "academicCourseSet", fetch = FetchType.LAZY)
@@ -46,7 +42,7 @@ public class AcademicCourse {
         this.id = id;
         this.name = name;
         this.subject = subject;
-        this.teacher = teacher;
+        this.teachers = teacher;
         this.academicClass = academicClass;
     }
 
@@ -74,12 +70,12 @@ public class AcademicCourse {
         this.subject = subject;
     }
 
-    public Set<Teacher> getTeacher() {
-        return teacher;
+    public Set<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacher(Set<Teacher> teacher) {
-        this.teacher = teacher;
+    public void setTeachers(Set<Teacher> teacher) {
+        this.teachers = teacher;
     }
 
     public Set<AcademicClass> getAcademicClass() {
@@ -95,12 +91,12 @@ public class AcademicCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourse course = (AcademicCourse) o;
-        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(teacher, course.teacher);
+        return Objects.equals(id, course.id) && Objects.equals(name, course.name) && Objects.equals(teachers, course.teachers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, teacher);
+        return Objects.hash(id, name, teachers);
     }
 
     @Override
@@ -108,7 +104,7 @@ public class AcademicCourse {
         return "AcademicCourse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", teacher=" + teacher +
+                ", teachers=" + teachers +
                 '}';
     }
 }

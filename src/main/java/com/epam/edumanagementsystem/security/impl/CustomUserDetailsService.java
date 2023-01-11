@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -55,14 +57,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
             if (foundUserRole.equalsIgnoreCase("ADMIN")) {
-                Admin admin = adminRepository.findByUserId(foundUserId);
+                Optional<Admin> admin = adminRepository.findByUserId(foundUserId);
 
                 CurrentUser user = new CurrentUser();
-                user.setName(admin.getUsername());
-                user.setSurname(admin.getSurname());
-                user.setEmail(admin.getUser().getEmail());
-                user.setPassword(admin.getPassword());
-                user.setRole(admin.getUser().getRole());
+                user.setName(admin.get().getUsername());
+                user.setSurname(admin.get().getSurname());
+                user.setEmail(admin.get().getUser().getEmail());
+                user.setPassword(admin.get().getPassword());
+                user.setRole(admin.get().getUser().getRole());
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("TEACHER")) {
