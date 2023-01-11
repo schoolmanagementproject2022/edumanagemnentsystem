@@ -1,10 +1,9 @@
 package com.epam.edumanagementsystem.student.rest.service.impl;
 
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
-import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.api.StudentController;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
@@ -35,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
     private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    public StudentServiceImpl(PasswordEncoder passwordEncoder,StudentRepository studentRepository, UserService userService, ImageService imageService) {
+    public StudentServiceImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, UserService userService, ImageService imageService) {
         this.studentRepository = studentRepository;
         this.userService = userService;
         this.imageService = imageService;
@@ -56,7 +55,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentDto updateFields(StudentDto studentDto) {
+    public StudentDto updateFields(StudentEditDto studentDto) {
+        studentRepository.findById(studentDto.getId()).orElseThrow(EntityNotFoundException::new);
+        StudentDto byName = findById(studentDto.getId());
+        User userOfStudent = userService.findByEmail(byName.getEmail());
+        Student updatableStudent = StudentMapper.toStudent(byName, userOfStudent);
+        userOfStudent.setEmail(studentDto.getEmail());
+        Student newStudent = StudentMapper.toStudentForEdit(studentDto, userOfStudent);
+        updatableStudent.setId(newStudent.getId());
+        updatableStudent.setName(newStudent.getName());
+        updatableStudent.setSurname(newStudent.getSurname());
+        updatableStudent.setDate(newStudent.getDate());
+        updatableStudent.setGender(newStudent.getGender());
+        updatableStudent.setParent(newStudent.getParent());
+        updatableStudent.setAcademicClass(newStudent.getAcademicClass());
+        logger.debug(updatableStudent.getName());
+        return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
+    }
+
+    @Override
+    public StudentDto updateForPic(StudentDto studentDto) {
         studentRepository.findById(studentDto.getId()).orElseThrow(EntityNotFoundException::new);
         StudentDto byName = findById(studentDto.getId());
         User userOfStudent = userService.findByEmail(byName.getEmail());
@@ -66,7 +84,6 @@ public class StudentServiceImpl implements StudentService {
         updatableStudent.setId(newStudent.getId());
         updatableStudent.setName(newStudent.getName());
         updatableStudent.setSurname(newStudent.getSurname());
-        updatableStudent.setPassword(newStudent.getPassword());
         updatableStudent.setDate(newStudent.getDate());
         updatableStudent.setGender(newStudent.getGender());
         updatableStudent.setParent(newStudent.getParent());
@@ -104,7 +121,7 @@ public class StudentServiceImpl implements StudentService {
     public void addProfilePicture(StudentDto studentDto, MultipartFile multipartFile) {
         studentDto.setPicUrl(imageService.saveImage(multipartFile));
         logger.debug(studentDto.getPicUrl());
-        updateFields(studentDto);
+        updateForPic(studentDto);
     }
 
     @Override
