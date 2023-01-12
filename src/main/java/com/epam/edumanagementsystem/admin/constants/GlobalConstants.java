@@ -19,7 +19,7 @@ public final class GlobalConstants {
     public static final String CLASS_EXISTS = "Class already exists";
 
     //URLS
-    public static final String ACADEMIC_CLASSES_REDIRECT = "redirect:/classes";
+    public static final String ACADEMIC_CLASSES_REDIRECT = "redirect:/classes/";
     public static final String VACATION_REDIRECT = "redirect:/vacations";
     public static final String ACADEMIC_COURSES_URL = "/courses";
     public static final String STUDENTS_URL = "/students";
