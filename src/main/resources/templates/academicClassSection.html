@@ -34,8 +34,7 @@
 
         <form id="form" class="form" th:method="POST" th:action="@{/classes}" th:object="${academicClass}">
 
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidURL}
-             or ${nameSize}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
@@ -49,12 +48,7 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalidURL}!= null" class="error">
-                        <p th:text="${invalidURL}"></p>
-                    </div>
-                    <div th:if="${nameSize}!= null" class="error">
-                        <p th:text="${nameSize}"></p>
-                    </div>
+
                 </div>
                 <div class="half2"></div>
                 <div name="btn-div">

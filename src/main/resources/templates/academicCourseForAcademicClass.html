@@ -61,9 +61,9 @@
                     </div>
                     <label class="popup-label-title" for="teacher">Teachers<span
                             style="color:#A30014"> *</span></label>
-                    <select class="form_input" id="teacher" name="teacher" th:field="*{teacher}"
+                    <select class="form_input" id="teacher" name="teacher" th:field="*{teachers}"
                             style="width: 250px">
-                        <option th:if="*{teacher  == null or teacher.size()==0}" th:value="null"
+                        <option th:if="*{teachers  == null or teachers.size()==0}" th:value="null"
                                 th:text="'Select teacher'">
                         </option>
                     </select>

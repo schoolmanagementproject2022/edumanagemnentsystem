@@ -67,16 +67,16 @@
                         <p th:text="${blankClass}"></p>
                     </div>
                     <label class="popup-label-title">Teacher<span style="color:#A30014"> *</span></label>
-                    <select class="form_input" th:name="teacher" th:id="teacher" th:field="*{teacher}">
-                        <option th:if="*{teacher == null or teacher.size()==0}" th:text="'Teacher'" class="short" data-limit="23"
+                    <select class="form_input" th:name="teacher" th:id="teacher" th:field="*{teachers}">
+                        <option th:if="*{teachers == null or teachers.size()==0}" th:text="'Teacher'" class="short" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="select : ${teachersToSelect}"
                                 th:value="${select.id}"
                                 th:title="${select.getNameSurname()}"
                                 th:text="${select.getNameSurname()}"></option>
                     </select>
-                    <div class="error" th:if="${#fields.hasErrors('teacher')}"
-                         th:errors="*{teacher}"></div>
+                    <div class="error" th:if="${#fields.hasErrors('teachers')}"
+                         th:errors="*{teachers}"></div>
 
                     <div th:if="${blank}!= null" class="error">
                         <p th:text="${blank}"></p>

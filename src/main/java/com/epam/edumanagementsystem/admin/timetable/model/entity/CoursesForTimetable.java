@@ -1,7 +1,6 @@
 package com.epam.edumanagementsystem.admin.timetable.model.entity;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +15,6 @@ public class CoursesForTimetable {
     private Long id;
 
     @Column(name = "academic_course_name")
-    @NotBlank
     private String academicCourse;
 
     @ManyToMany
@@ -24,7 +22,6 @@ public class CoursesForTimetable {
             inverseJoinColumns = @JoinColumn(name = "academic_class_id"))
     private List<AcademicClass> academicClass;
 
-    @NotBlank
     private String dayOfWeek;
 
     private String status;
@@ -32,17 +29,7 @@ public class CoursesForTimetable {
     public CoursesForTimetable() {
     }
 
-    public CoursesForTimetable(String academicCourse, List<AcademicClass> academicClass,
-                               String dayOfWeek, String status) {
-
-        this.academicCourse = academicCourse;
-        this.academicClass = academicClass;
-        this.dayOfWeek = dayOfWeek;
-        this.status = status;
-    }
-
-    public CoursesForTimetable(Long id, String academicCourse, List<AcademicClass> academicClass,
-                               String dayOfWeek, String status) {
+    public CoursesForTimetable(Long id, String academicCourse, List<AcademicClass> academicClass, String dayOfWeek, String status) {
         this.id = id;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;

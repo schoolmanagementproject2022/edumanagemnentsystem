@@ -4,7 +4,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,15 +17,12 @@ public class Timetable {
 
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, select the date")
     private LocalDate startDate;
 
     @Column(name = "end_date")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, select the date")
     private LocalDate endDate;
 
-    @NotNull
     private String status;
 
     @OneToOne

@@ -3,32 +3,27 @@ package com.epam.edumanagementsystem.admin.model.dto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.annotation.ValidProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Objects;
 import java.util.Set;
 
 public class AcademicClassDto {
     private Long id;
+
+    @ValidProperty
     private String classNumber;
 
-    private Set<AcademicCourse> academicCourse;
+    private Set<AcademicCourse> academicCourseSet;
 
-    private Set<Teacher> teacherSet;
+    private Set<Teacher> teachers;
 
     private Teacher classroomTeacher;
 
     private Set<Student> students;
 
     public AcademicClassDto() {
-    }
-
-    public AcademicClassDto(Long id, String classNumber, Set<AcademicCourse> academicCourse, Set<Teacher> teacherSet, Teacher classroomTeacher, Set<Student> students) {
-        this.id = id;
-        this.classNumber = classNumber;
-        this.academicCourse = academicCourse;
-        this.teacherSet = teacherSet;
-        this.classroomTeacher = classroomTeacher;
-        this.students = students;
     }
 
     public Long getId() {
@@ -47,20 +42,20 @@ public class AcademicClassDto {
         this.classNumber = classNumber;
     }
 
-    public Set<AcademicCourse> getAcademicCourse() {
-        return academicCourse;
+    public Set<AcademicCourse> getAcademicCourseSet() {
+        return academicCourseSet;
     }
 
-    public void setAcademicCourse(Set<AcademicCourse> academicCourse) {
-        this.academicCourse = academicCourse;
+    public void setAcademicCourseSet(Set<AcademicCourse> academicCourseSet) {
+        this.academicCourseSet = academicCourseSet;
     }
 
-    public Set<Teacher> getTeacherSet() {
-        return teacherSet;
+    public Set<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacherSet(Set<Teacher> teacherSet) {
-        this.teacherSet = teacherSet;
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     public Teacher getClassroomTeacher() {
@@ -84,12 +79,12 @@ public class AcademicClassDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClassDto that = (AcademicClassDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourse, that.academicCourse) && Objects.equals(teacherSet, that.teacherSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(students, that.students);
+        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(teachers, that.teachers) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(students, that.students);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, academicCourse, teacherSet, classroomTeacher, students);
+        return Objects.hash(id, classNumber, academicCourseSet, teachers, classroomTeacher, students);
     }
 
     @Override
@@ -97,8 +92,8 @@ public class AcademicClassDto {
         return "AcademicClassDto{" +
                 "id=" + id +
                 ", classNumber='" + classNumber + '\'' +
-                ", academicCourse=" + academicCourse +
-                ", teacherSet=" + teacherSet +
+                ", academicCourseSet=" + academicCourseSet +
+                ", teacherSet=" + teachers +
                 ", classroomTeacher=" + classroomTeacher +
                 ", students=" + students +
                 '}';

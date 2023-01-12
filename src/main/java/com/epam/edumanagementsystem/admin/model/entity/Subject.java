@@ -16,7 +16,6 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Please, fill the required fields")
     private String name;
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
@@ -63,7 +62,8 @@ public class Subject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Subject subject = (Subject) o;
-        return Objects.equals(id, subject.id) && Objects.equals(name, subject.name) && Objects.equals(teacherSet, subject.teacherSet);
+        return Objects.equals(id, subject.id) && Objects.equals(name, subject.name) &&
+                Objects.equals(teacherSet, subject.teacherSet);
     }
 
     @Override

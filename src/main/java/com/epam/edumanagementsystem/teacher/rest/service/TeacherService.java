@@ -1,25 +1,36 @@
 package com.epam.edumanagementsystem.teacher.rest.service;
 
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
-import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherEditDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public interface TeacherService {
 
-    Teacher create(TeacherDto teacherDto);
-
-    TeacherDto updateFields(TeacherDto teacherDto);
-
     TeacherDto findById(Long id);
+
+    TeacherDto findByUserId(Long id);
+
+    TeacherEditDto findTeacherEditById(Long id);
 
     List<TeacherDto> findAll();
 
-    Teacher findByUserId(Long id);
+    TeacherDto save(TeacherDto teacherDto);
 
-    void addProfilePicture(Teacher teacher, MultipartFile multipartFile);
+    TeacherDto update(TeacherEditDto teacherDto);
 
-    void deletePic(Long id);
+    Set<TeacherDto> findAllTeachersInAllCourses();
+
+    Set<TeacherDto> findAllTeachersInAllClasses();
+
+    Set<TeacherDto> findAllTeachersByClassName(String className);
+
+    Set<TeacherDto> findAllTeachersByCourseName(String courseName);
+
+    void addImage(TeacherDto teacherDto, MultipartFile multipartFile);
+
+    void removeImage(Long id);
 
 }

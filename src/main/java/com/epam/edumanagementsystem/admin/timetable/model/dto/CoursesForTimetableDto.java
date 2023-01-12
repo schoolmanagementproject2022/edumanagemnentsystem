@@ -24,17 +24,6 @@ public class CoursesForTimetableDto {
 
     private String status;
 
-    public CoursesForTimetableDto() {
-    }
-
-    public CoursesForTimetableDto(Long id, AcademicCourse academicCourse, AcademicClass academicClass, String dayOfWeek, String status) {
-        this.id = id;
-        this.academicCourse = academicCourse;
-        this.academicClass = academicClass;
-        this.dayOfWeek = dayOfWeek;
-        this.status = status;
-    }
-
     public Long getId() {
         return id;
     }

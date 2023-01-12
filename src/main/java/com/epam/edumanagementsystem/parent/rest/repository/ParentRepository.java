@@ -6,13 +6,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ParentRepository extends JpaRepository<Parent, Long> {
 
-    Parent findByUserId(Long id);
+    Optional<Parent> findByUserId(Long userId);
 
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE parent SET pic_url = NULL WHERE id =(?1);")
-    void updateParentPicUrl(Long id);
+    void updateImageUrl(Long parentId);
 
 }

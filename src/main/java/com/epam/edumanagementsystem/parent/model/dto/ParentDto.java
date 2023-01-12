@@ -1,34 +1,37 @@
 package com.epam.edumanagementsystem.parent.model.dto;
 
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
+import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class ParentDto {
+
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
     private String name;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
     private String surname;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidEmail
     private String email;
 
     @NotBlank
     private String role = "PARENT";
 
+    @ValidPassword
     private String password;
 
     private String picUrl;
 
-    public ParentDto() {}
+    public ParentDto() {
+    }
 
-    public ParentDto(@Size(max = 50, message = "Symbols can't be more than 50") String name,
-                     @Size(max = 50, message = "Symbols can't be more than 50") String surname,
-                     @Size(max = 50, message = "Symbols can't be more than 50") String email,
+    public ParentDto(String name, String surname, String email,
                      String role, String password) {
         this.name = name;
         this.surname = surname;
@@ -77,11 +80,7 @@ public class ParentDto {
         this.password = password;
     }
 
-    public String getNameSurname() {
-        return name + " " + surname;
-    }
-
-    public String getNameAndSurname() {
+    public String getFullName() {
         return this.name + " " + this.surname;
     }
 
@@ -92,6 +91,7 @@ public class ParentDto {
     public void setRole(String role) {
         this.role = role;
     }
+
     public String getPicUrl() {
         return picUrl;
     }
@@ -127,5 +127,4 @@ public class ParentDto {
                 ", password='" + password + '\'' +
                 '}';
     }
-
 }

@@ -2,12 +2,10 @@ package com.epam.edumanagementsystem.admin.timetable.mapper;
 
 import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Component
 public class TimetableMapper {
 
     public static Timetable toTimetable(TimetableDto timetableDto) {
@@ -17,6 +15,7 @@ public class TimetableMapper {
         timetable.setStartDate(timetableDto.getStartDate());
         timetable.setEndDate(timetableDto.getEndDate());
         timetable.setAcademicClass(timetableDto.getAcademicClass());
+        timetable.setStatus(timetableDto.getStatus());
         return timetable;
     }
 
@@ -27,24 +26,20 @@ public class TimetableMapper {
         timetableDto.setStartDate(timetable.getStartDate());
         timetableDto.setEndDate(timetable.getEndDate());
         timetableDto.setAcademicClass(timetable.getAcademicClass());
+        timetableDto.setStatus(timetable.getStatus());
         return timetableDto;
     }
 
     public static List<TimetableDto> toListOfTimetablesDto(List<Timetable> timetables) {
-        List<TimetableDto> timetableDtoList = new ArrayList<>();
-
-        for (Timetable timetable : timetables) {
-            timetableDtoList.add(toDto(timetable));
-        }
-        return timetableDtoList;
+        return timetables.stream()
+                .map(TimetableMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public static List<Timetable> toListOfTimetables(List<TimetableDto> timetableDtoList) {
-        List<Timetable> timetables = new ArrayList<>();
-
-        for (TimetableDto timetableDto : timetableDtoList) {
-            timetables.add(toTimetable(timetableDto));
-        }
-        return timetables;
+        return timetableDtoList.stream()
+                .map(TimetableMapper::toTimetable)
+                .collect(Collectors.toList());
     }
+
 }

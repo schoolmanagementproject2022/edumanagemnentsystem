@@ -1,25 +1,21 @@
 package com.epam.edumanagementsystem.admin.model.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table
 public class AcademicYear {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "start_date")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
     private LocalDate startDate;
+
     @Column(name = "end_date")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
     private LocalDate endDate;
 
     public AcademicYear() {

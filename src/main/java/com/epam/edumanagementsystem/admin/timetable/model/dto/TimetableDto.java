@@ -19,6 +19,7 @@ public class TimetableDto {
     @NotNull(message = "Please, select the date")
     private LocalDate endDate;
 
+    @NotNull
     private String status;
 
     private AcademicClass academicClass;
@@ -26,7 +27,9 @@ public class TimetableDto {
     public TimetableDto() {
     }
 
-    public TimetableDto(Long id, LocalDate startDate, LocalDate endDate, String status, AcademicClass academicClass) {
+    public TimetableDto(Long id, @NotNull(message = "Please, select the date") LocalDate startDate,
+                        @NotNull(message = "Please, select the date") LocalDate endDate,
+                        @NotNull String status, AcademicClass academicClass) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;

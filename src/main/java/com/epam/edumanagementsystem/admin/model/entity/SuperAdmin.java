@@ -6,6 +6,10 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.*;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.FIELD_MAX_SIZE;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.REGEXP;
+
 @Entity
 @Table(name = "super_admin")
 public class SuperAdmin {
@@ -13,11 +17,11 @@ public class SuperAdmin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true)
-    @NotBlank(message = "Please, fill the required fields")
-    @Size(max = 50, message = "Symbols can't be more than 50")
-    @Email(regexp = "[^@]+@[^@]+\\.[a-zA-Z]{2,3}$", message = "You entered invalid email")
+    @NotBlank(message = EMPTY_FIELD)
+    @Size(max = FIELD_MAX_SIZE, message = SYMBOL_LENGTH)
+    @Email(regexp = REGEXP, message = INVALID_EMAIL)
     private String email;
-    @NotBlank(message = "Please, fill the required fields")
+    @NotBlank(message = EMPTY_FIELD)
     private String password;
 
     public SuperAdmin() {
