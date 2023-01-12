@@ -104,7 +104,6 @@ public class JournalServiceImpl implements JournalService {
         if (date != null) {
             startDate = date;
         }
-        model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(className));
         model.addAttribute("creationStatus", false);
         putLessons(model, academicClassService.findByClassNumber(className).getId());
     }

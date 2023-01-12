@@ -43,7 +43,7 @@ public class JournalController {
     @Operation(summary = "Shows journal page")
     public String journal(Model model, @PathVariable("name") String name, @RequestParam(name = "date", required = false) String date,
                           @RequestParam(name = "startDate", required = false) String startDate) {
-        if (null != timetableService.findTimetableByAcademicClassName(name)) {
+        if (timetableService.existTimetableByClassId(academicClassService.findByClassNumber(name).getId())) {
             journalService.openJournal(date, startDate, name, model);
             return JOURNAL_HTML;
         } else {
