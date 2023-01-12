@@ -15,6 +15,7 @@ public class TimetableMapper {
         timetable.setStartDate(timetableDto.getStartDate());
         timetable.setEndDate(timetableDto.getEndDate());
         timetable.setAcademicClass(timetableDto.getAcademicClass());
+        timetable.setStatus(timetableDto.getStatus());
         return timetable;
     }
 
@@ -25,6 +26,7 @@ public class TimetableMapper {
         timetableDto.setStartDate(timetable.getStartDate());
         timetableDto.setEndDate(timetable.getEndDate());
         timetableDto.setAcademicClass(timetable.getAcademicClass());
+        timetableDto.setStatus(timetable.getStatus());
         return timetableDto;
     }
 

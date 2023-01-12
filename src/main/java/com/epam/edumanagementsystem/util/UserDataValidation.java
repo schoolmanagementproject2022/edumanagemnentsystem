@@ -1,12 +1,9 @@
 package com.epam.edumanagementsystem.util;
 
-import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
