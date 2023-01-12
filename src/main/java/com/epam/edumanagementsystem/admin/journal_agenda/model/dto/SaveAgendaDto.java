@@ -1,9 +1,14 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.model.dto;
 
+import javax.validation.constraints.Size;
+
 public class SaveAgendaDto {
 
+    @Size(max = 255, message = "Symbols can't be more than 255")
     private String classwork;
+    @Size(max = 255, message = "Symbols can't be more than 255")
     private String homework;
+    @Size(max = 255, message = "Symbols can't be more than 255")
     private String test;
     private String date;
     private Long classId;

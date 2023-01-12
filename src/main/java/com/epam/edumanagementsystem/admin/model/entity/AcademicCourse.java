@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 

@@ -7,6 +7,7 @@ import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.ObjectIsNull;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class StudentMapper {
@@ -95,5 +96,13 @@ public class StudentMapper {
         student.setAcademicClass(studentDto.getAcademicClass());
         student.setPicUrl(studentDto.getPicUrl());
         return student;
+    }
+
+    public static Set<StudentDto> toStudentDtoSet(Set<Student> studentEntities) {
+        return studentEntities
+                .stream()
+                .map(StudentMapper::toStudentDto)
+                .collect(Collectors
+                        .toSet());
     }
 }
