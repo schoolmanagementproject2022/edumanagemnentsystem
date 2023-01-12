@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -91,6 +92,17 @@ public class StudentServiceImpl implements StudentService {
         updatableStudent.setPicUrl(newStudent.getPicUrl());
         logger.debug(updatableStudent.getName());
         return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
+    }
+
+        @Override
+        public List<StudentDto> findStudentsByClassName(String name) {
+            List<StudentDto> studentsOfConcreteName = new ArrayList<>();
+            for (StudentDto studentDto : findAll()) {
+                if (studentDto.getAcademicClass() != null && studentDto.getAcademicClass().getClassNumber().equals(name)) {
+                    studentsOfConcreteName.add(studentDto);
+                }
+            }
+            return studentsOfConcreteName;
     }
 
     @Override

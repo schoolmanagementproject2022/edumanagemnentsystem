@@ -84,4 +84,9 @@ public class AcademicClassServiceImpl implements AcademicClassService {
         }
     }
 
+    @Override
+    public Set<AcademicClass> findAcademicClassByTeacherId(Long id) {
+         return academicClassRepository.findAcademicClassByTeachersId(id);
+    }
+
 }

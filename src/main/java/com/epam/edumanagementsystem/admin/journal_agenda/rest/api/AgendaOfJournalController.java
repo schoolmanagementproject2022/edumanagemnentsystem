@@ -9,7 +9,6 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
@@ -17,22 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
-import java.util.List;
-import com.epam.edumanagementsystem.admin.journal_agenda.rest.service.TestService;
-import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
-import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
@@ -71,22 +54,6 @@ public class AgendaOfJournalController {
             redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
             redirectAttributes.addAttribute("concreteDay", concreteDay);
             return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
-    }
-
-    @PostMapping("/add")
-    public String addAgenda(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto, BindingResult result,
-                            @RequestParam("concreteDay") String concreteDay, Model model,
-                            RedirectAttributes redirectAttributes) {
-        AcademicClassDto classById = academicClassService.getById(agendaDto.getClassId());
-        if (result.hasErrors()) {
-           model.addAttribute("saveAgenda", agendaDto);
-            return "forward:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
-        }
-
-        if (agendaDto.getClasswork().isBlank() && agendaDto.getTest().isBlank() && agendaDto.getHomework().isBlank()) {
-            redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
-            redirectAttributes.addAttribute("concreteDay", concreteDay);
-            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
         }
 
         if (classworkService.getClassWorkOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
