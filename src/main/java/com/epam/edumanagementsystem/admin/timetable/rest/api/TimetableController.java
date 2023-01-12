@@ -1,11 +1,8 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.api;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
-import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.mapper.CoursesForTimetableMapper;
@@ -435,7 +432,7 @@ public class TimetableController {
         List<AcademicCourseDto> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
 
         if (result.hasErrors()) {
-            model.addAttribute("timetable", new Timetable());
+            model.addAttribute("timetable", new TimetableDto());
             allAcademicCourses_academicClass(model, allAcademicCourses, academicClass);
             putLessons(model, academicClass.getId());
             model.addAttribute("dayOfWeek", coursesForTimetableDto.getDayOfWeek());
@@ -444,7 +441,7 @@ public class TimetableController {
 
         coursesForTimetableDto.setStatus("Active");
         coursesService.create(coursesForTimetableDto);
-        model.addAttribute("timetable", new Timetable());
+        model.addAttribute("timetable", new TimetableDto());
         putLessons(model, academicClass.getId());
         allAcademicCourses_academicClass(model, allAcademicCourses, academicClass);
         return "timetable4-1";
@@ -461,7 +458,6 @@ public class TimetableController {
         String invalidMsg = "Please, select right dates";
         List<AcademicCourseDto> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
-
 
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {

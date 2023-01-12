@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.admin.timetable.impl;
 
 import com.epam.edumanagementsystem.admin.timetable.mapper.TimetableMapper;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
+import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.TimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class TimetableServiceImpl implements TimetableService {
     public TimetableDto create(TimetableDto timetableDto) {
         logger.info("Creating Timetable");
         return TimetableMapper.toDto(timetableRepository.save(TimetableMapper.toTimetable(timetableDto)));
+    }
+
+    @Override
+    public boolean existTimetableByClassId(Long id) {
+        return timetableRepository.existsTimetableByAcademicClassId(id);
     }
 
     @Override

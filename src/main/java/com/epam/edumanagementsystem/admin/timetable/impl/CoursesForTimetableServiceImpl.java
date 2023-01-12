@@ -24,12 +24,12 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
-    public CoursesForTimetableDto create(CoursesForTimetableDto coursesForTimetableDto) {
+    public void create(CoursesForTimetableDto coursesForTimetableDto) {
         logger.info("Creating Course for Timetable");
-        return CoursesForTimetableMapper.toCoursesForTimetableDto(coursesForTimetableRepository.create(coursesForTimetableDto.getDayOfWeek(),
+         coursesForTimetableRepository.create(coursesForTimetableDto.getDayOfWeek(),
                 coursesForTimetableDto.getAcademicCourse().getName(),
                 coursesForTimetableDto.getAcademicClass().getId(),
-                coursesForTimetableDto.getStatus()));
+                coursesForTimetableDto.getStatus());
     }
 
     @Override

@@ -24,4 +24,5 @@ public interface TimetableRepository extends JpaRepository<Timetable, Long> {
     @Query(nativeQuery = true, value = "UPDATE timetable_table SET start_date = (?1), end_date = (?2),status = (?3) WHERE academic_class_id =(?4);")
     void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId);
 
+    boolean existsTimetableByAcademicClassId(Long id);
 }

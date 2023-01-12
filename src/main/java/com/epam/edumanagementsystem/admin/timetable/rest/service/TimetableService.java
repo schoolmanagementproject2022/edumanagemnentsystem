@@ -16,4 +16,6 @@ public interface TimetableService {
 
     void updateTimetableDatesAndStatusByAcademicClassId(LocalDate startDate, LocalDate endDate, String timeTableStatus, Long academicClassId);
 
+    boolean existTimetableByClassId(Long id);
+
 }
