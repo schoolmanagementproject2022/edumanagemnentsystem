@@ -5,8 +5,6 @@ import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.rest.service.SubjectService;
@@ -14,7 +12,6 @@ import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
-import com.epam.edumanagementsystem.util.InputFieldsValidation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
@@ -99,7 +96,7 @@ public class AcademicCourseController {
         }
         academicClassSet = academicClassService.findAll().stream()
                 .filter(academicClass -> !academicClassesInCourse
-                .contains(academicClass)).collect(Collectors.toList());
+                        .contains(academicClass)).collect(Collectors.toList());
         model.addAttribute("academicClasses", academicClassSet);
         return "academicCourseSectionForClasses";
     }
@@ -107,7 +104,7 @@ public class AcademicCourseController {
     @PostMapping("{name}/teachers")
     @Operation(summary = "Adds a teacher to the group of teachers who run the selected course")
     public String saveTeacher(@ModelAttribute("existingAcademicCourse") AcademicCourseDto academicCourse,
-                                @PathVariable("name") String courseName, Model model) {
+                              @PathVariable("name") String courseName, Model model) {
         Set<TeacherDto> teachers;
         Set<TeacherDto> allTeacherSet = TeacherMapper.mapToTeacherDtoSet(academicCourseService.findByName(courseName).getSubject().getTeacherSet());
         Set<TeacherDto> allTeachersInAcademicCourse = teacherService.findAllTeachersByCourseName(courseName);
@@ -177,7 +174,7 @@ public class AcademicCourseController {
 
         academicCourseSet.add(academicCourseService.findByName(courseName));
         academicClassFindByName.getTeachers().addAll(academicClassDto.getTeachers());
-        academicClassFindByName.getAcademicCourse().addAll(AcademicCourseMapper.toSetOfAcademicCourse(academicCourseSet));
+        academicClassFindByName.getAcademicCourseSet().addAll(AcademicCourseMapper.toSetOfAcademicCourse(academicCourseSet));
         return academicClassFindByName;
     }
 
