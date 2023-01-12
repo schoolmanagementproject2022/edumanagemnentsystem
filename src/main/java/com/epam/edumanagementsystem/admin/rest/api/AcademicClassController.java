@@ -4,7 +4,6 @@ import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
@@ -80,13 +79,14 @@ public class AcademicClassController {
 
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
-        model.addAttribute("existingClass", new AcademicClass());
+        model.addAttribute("existingClass", academicClassService.findByClassNumber(name));
 
         List<AcademicCourse> coursesForSelection = allCourses.stream()
                 .filter(course -> !academicCoursesInClass.contains(course))
                 .filter(course -> !course.getTeachers().isEmpty())
                 .collect(Collectors.toList());
-        model.addAttribute("coursesForSelect", coursesForSelection);
+        model.addAttribute("coursesF" +
+                "orSelect", coursesForSelection);
         return "academicCourseForAcademicClass";
     }
 
@@ -106,16 +106,12 @@ public class AcademicClassController {
         model.addAttribute("coursesForSelect", coursesForSelection);
         model.addAttribute("academicCourseSet", academicCoursesInClass);
 
-        String message = academicClassDto.getAcademicCourse().isEmpty() ? SELECT_FIELD : "";
-        message += academicClassDto.getTeachers() == null ? SELECT_FIELD : "";
-
-        if (!message.isEmpty()) {
-            model.addAttribute("blank", message);
-            return ACADEMIC_COURSE_FOR_ACADEMIC_CLASS;
+        if (checkCourseAndTeacherForAcademicClass(academicClassDto, model) == true) {
+            return "academicCourseForAcademicClass";
         }
 
         AcademicClassDto foundClass = academicClassService.findByClassNumber(name);
-        foundClass.getAcademicCourse().addAll(academicClassDto.getAcademicCourse());
+        foundClass.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
         foundClass.getTeachers().addAll(academicClassDto.getTeachers());
         academicClassService.update(foundClass);
         return ACADEMIC_CLASSES_REDIRECT + name + ACADEMIC_COURSES_URL;
@@ -203,4 +199,18 @@ public class AcademicClassController {
         return TEACHERS_FOR_ACADEMIC_CLASSES;
     }
 
+    private boolean checkCourseAndTeacherForAcademicClass(AcademicClassDto academicClassDto, Model model) {
+        boolean check = false;
+        if (!check)
+            if (academicClassDto.getAcademicCourseSet().isEmpty()) {
+                model.addAttribute("blankClass", SELECT_FIELD);
+                check = true;
+            }
+        if (academicClassDto.getTeachers() == null) {
+            model.addAttribute("blank", SELECT_FIELD);
+            check = true;
+        }
+        return check;
+    }
 }
+

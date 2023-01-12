@@ -18,7 +18,7 @@ public class AcademicClassMapper {
         academicClass.setId(academicClassDto.getId());
         academicClass.setClassNumber(academicClassDto.getClassNumber());
         academicClass.setTeachers(academicClassDto.getTeachers());
-        academicClass.setAcademicCourseSet(academicClassDto.getAcademicCourse());
+        academicClass.setAcademicCourseSet(academicClassDto.getAcademicCourseSet());
         academicClass.setStudent(academicClassDto.getStudents());
         academicClass.setClassroomTeacher(academicClassDto.getClassroomTeacher());
 
@@ -30,7 +30,7 @@ public class AcademicClassMapper {
         academicClassDto.setId(academicClass.getId());
         academicClassDto.setClassNumber(academicClass.getClassNumber());
         academicClassDto.setTeachers(academicClass.getTeachers());
-        academicClassDto.setAcademicCourse(academicClass.getAcademicCourseSet());
+        academicClassDto.setAcademicCourseSet(academicClass.getAcademicCourseSet());
         academicClassDto.setStudents(academicClass.getStudent());
         academicClassDto.setClassroomTeacher(academicClass.getClassroomTeacher());
         return academicClassDto;

@@ -13,6 +13,7 @@ import org.springframework.validation.ObjectError;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -43,7 +44,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     @Override
     public AcademicClassDto findByClassNumber(String name) {
         logger.info("Finding Academic Class by Class Number");
-        return AcademicClassMapper.toDto(academicClassRepository.findByClassNumber(name).orElseThrow(EntityNotFoundException::new));
+        return AcademicClassMapper.toDto(academicClassRepository.findByClassNumber(name).get());
     }
 
     @Override
@@ -56,7 +57,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     public AcademicClassDto update(AcademicClassDto academicClassDto) {
         logger.info("Updating Academic Class");
         AcademicClassDto academicClassByNameDto = findByClassNumber(academicClassDto.getClassNumber());
-        academicClassByNameDto.getAcademicCourse().addAll(academicClassDto.getAcademicCourse());
+        academicClassByNameDto.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
         academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
         academicClassByNameDto.getStudents().addAll(academicClassDto.getStudents());
         academicClassByNameDto.setClassroomTeacher(academicClassDto.getClassroomTeacher());

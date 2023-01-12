@@ -1,6 +1,7 @@
 package com.epam.edumanagementsystem.admin.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
@@ -82,7 +83,8 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     @Override
     public List<AcademicCourseDto> findAllAcademicCoursesInClassByName(String name) {
         logger.info("Finding All Academic Courses in Class by Name");
-        return new ArrayList<>(AcademicCourseMapper.toSetOfAcademicCourseDto(academicClassService.findByClassNumber(name).getAcademicCourse()));
+
+        return new ArrayList<>(AcademicCourseMapper.toSetOfAcademicCourseDto(academicClassService.findByClassNumber(name).getAcademicCourseSet()));
     }
 
     @Override
