@@ -56,12 +56,11 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     @Override
     public AcademicClassDto update(AcademicClassDto academicClassDto) {
         logger.info("Updating Academic Class");
-        AcademicClassDto academicClassByNameDto = findByClassNumber(academicClassDto.getClassNumber());
-        academicClassByNameDto.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
-        academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
-        academicClassByNameDto.getStudents().addAll(academicClassDto.getStudents());
-        academicClassByNameDto.setClassroomTeacher(academicClassDto.getClassroomTeacher());
-        return save(academicClassByNameDto);
+//        AcademicClassDto academicClassByNameDto = findByClassNumber(academicClassDto.getClassNumber());
+//        academicClassByNameDto.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
+//        academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
+//        academicClassByNameDto.setClassroomTeacher(academicClassDto.getClassroomTeacher());
+        return save(academicClassDto);
     }
 
     @Override

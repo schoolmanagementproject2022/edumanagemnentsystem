@@ -76,19 +76,16 @@ public class AcademicClassController {
     @Operation(summary = "Shows academic courses in academic class section")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
         List<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
-        Set<TeacherDto> allTeachersByAcademicCourse = teacherService.findAllTeachersInAllCourses();
-        List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
 
         model.addAttribute("academicCourseSet", academicCoursesInClass);
-        model.addAttribute("allTeacherByAcademicCourse", allTeachersByAcademicCourse);
+        model.addAttribute("allTeacherByAcademicCourse", teacherService.findAllTeachersInAllCourses());
         model.addAttribute("existingClass", academicClassService.findByClassNumber(name));
 
-        List<AcademicCourse> coursesForSelection = allCourses.stream()
+        List<AcademicCourseDto> coursesForSelection = academicCourseService.findAll().stream()
                 .filter(course -> !academicCoursesInClass.contains(course))
                 .filter(course -> !course.getTeachers().isEmpty())
                 .collect(Collectors.toList());
-        model.addAttribute("coursesF" +
-                "orSelect", coursesForSelection);
+        model.addAttribute("coursesForSelect", coursesForSelection);
         return "academicCourseForAcademicClass";
     }
 
@@ -97,10 +94,10 @@ public class AcademicClassController {
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClassDto academicClassDto,
                                                  @PathVariable("name") String name, Model model) {
         List<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
-        List<AcademicCourse> allCourses = AcademicCourseMapper.toListOfAcademicCourses(academicCourseService.findAll());
         model.addAttribute("allTeacherByAcademicCourse", teacherService.findAllTeachersInAllCourses());
+        AcademicClassDto academicClass = academicClassService.findByClassNumber(name);
 
-        List<AcademicCourse> coursesForSelection = allCourses.stream()
+        List<AcademicCourseDto> coursesForSelection = academicCourseService.findAll().stream()
                 .filter(course -> !academicCoursesInClass.contains(course))
                 .filter(course -> !course.getTeachers().isEmpty())
                 .collect(Collectors.toList());
@@ -108,12 +105,13 @@ public class AcademicClassController {
         model.addAttribute("coursesForSelect", coursesForSelection);
         model.addAttribute("academicCourseSet", academicCoursesInClass);
 
-        if (checkCourseAndTeacherForAcademicClass(academicClassDto, model) == true) {
+        if (checkCourseAndTeacherForAcademicClass(academicClassDto, model)) {
             return "academicCourseForAcademicClass";
         }
 
-
-        academicClassService.update(academicClassDto);
+        academicClass.setClassNumber(name);
+        academicClass.setAcademicCourseSet(academicClassDto.getAcademicCourseSet());
+        academicClassService.update(academicClass);
         return ACADEMIC_CLASSES_REDIRECT + name + ACADEMIC_COURSES_URL;
     }
 
@@ -160,7 +158,7 @@ public class AcademicClassController {
         }
         academicClassFindByName.setClassroomTeacher(academicClassDto.getClassroomTeacher());
         academicClassService.update(academicClassFindByName);
-        return ACADEMIC_CLASSES_REDIRECT + "/" + name + CLASSROOM_URL;
+        return ACADEMIC_CLASSES_REDIRECT + name + CLASSROOM_URL;
     }
 
     @GetMapping("/{name}/students")

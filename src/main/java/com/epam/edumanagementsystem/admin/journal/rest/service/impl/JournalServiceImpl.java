@@ -60,7 +60,7 @@ public class JournalServiceImpl implements JournalService {
         LocalDate journalStartDate = null;
 
         if (startDate != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL);
             LocalDate localdate = LocalDate.parse(startDate, formatter);
             if (!localdate.isAfter(timetableEndDate) && !localdate.isBefore(timetableStartDate)) {
                 journalStartDate = localdate;

@@ -61,15 +61,6 @@ public class StudentDto {
     private AcademicClass academicClass;
 
     private String picUrl;
-//@ToDo Constructor should not have too many params!!!
-
-    public StudentDto() {
-        this.id=id;
-    }
-
-    public StudentDto(Long id) {
-        this.id = id;
-    }
 
     public Long getId() {
         return id;

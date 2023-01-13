@@ -1058,3 +1058,8 @@ list {
     font-size: 19px;
     font-family: "Montserrat", sans-serif;
 }
+
+.img-user {
+    width: 13VW;
+    height: 12VW;
+}

@@ -132,7 +132,7 @@ public class AcademicClass {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, teachers, academicCourseSet, classroomTeacher, coursesForTimetableList);
+        return Objects.hash(id, classNumber, classroomTeacher, coursesForTimetableList);
     }
 
 

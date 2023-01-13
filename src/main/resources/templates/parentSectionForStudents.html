@@ -48,7 +48,7 @@
                 <h1 class="userNameSurname" th:text="${parent.getSurname()}"></h1></div>
             <span class="tooltiptext" th:text="${parent.getFullName()}">Tooltip text</span>
         </div>
-        <div class="sidebar_right_link">
+        <div class="sidebar_right_links">
             <a class="sidebar_right_links_item"
                th:classappend="${lastUrl eq 'profile' ? 'activeTab' : 'notActiveTab'}"
                th:href="${'/' + firstUrl + '/' + middleUrl + '/profile'}">Profile</a>
