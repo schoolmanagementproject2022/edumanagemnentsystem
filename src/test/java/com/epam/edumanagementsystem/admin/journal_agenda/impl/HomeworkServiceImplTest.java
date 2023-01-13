@@ -1,8 +1,9 @@
 package com.epam.edumanagementsystem.admin.journal_agenda.impl;
 
-import com.epam.edumanagementsystem.admin.journal_agenda.model.dto.SaveAgendaDto;
-import com.epam.edumanagementsystem.admin.journal_agenda.model.entity.Homework;
-import com.epam.edumanagementsystem.admin.journal_agenda.rest.repository.HomeworkRepository;
+import com.epam.edumanagementsystem.admin.journal.model.dto.SaveAgendaDto;
+import com.epam.edumanagementsystem.admin.journal.model.entity.Homework;
+import com.epam.edumanagementsystem.admin.journal.rest.repository.HomeworkRepository;
+import com.epam.edumanagementsystem.admin.journal.rest.service.impl.HomeworkServiceImpl;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.repository.AcademicClassRepository;

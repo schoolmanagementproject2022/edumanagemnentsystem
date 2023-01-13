@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
+import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -54,7 +55,7 @@ class StudentServiceImplTest {
     private Student secondStudent;
     private Student studentWithoutClass;
     private Student studentWithoutParent;
-    private StudentDto datesToBeUpdated;
+    private StudentEditDto datesToBeUpdated;
     private User userStudent;
 
     @BeforeEach
@@ -135,7 +136,7 @@ class StudentServiceImplTest {
         secondStudent.setBloodGroup(BloodGroup.A_PLUS);
         secondStudent.setUser(userStudent);
 
-        datesToBeUpdated = new StudentDto();
+        datesToBeUpdated = new StudentEditDto();
         datesToBeUpdated.setId(2L);
         datesToBeUpdated.setName("Name2");
         datesToBeUpdated.setSurname("Surname2");
