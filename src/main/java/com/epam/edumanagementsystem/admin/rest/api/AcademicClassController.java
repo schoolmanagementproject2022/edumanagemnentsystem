@@ -4,10 +4,12 @@ import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
+import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
@@ -110,10 +112,8 @@ public class AcademicClassController {
             return "academicCourseForAcademicClass";
         }
 
-        AcademicClassDto foundClass = academicClassService.findByClassNumber(name);
-        foundClass.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
-        foundClass.getTeachers().addAll(academicClassDto.getTeachers());
-        academicClassService.update(foundClass);
+
+        academicClassService.update(academicClassDto);
         return ACADEMIC_CLASSES_REDIRECT + name + ACADEMIC_COURSES_URL;
     }
 
@@ -169,24 +169,28 @@ public class AcademicClassController {
         Long id = academicClassService.findByClassNumber(name).getId();
         model.addAttribute("studentsInAcademicClass", studentService.findByAcademicClassId(id));
         model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
+        model.addAttribute("existingAcademicClass", academicClassService.findByClassNumber(name));
         return ACADEMIC_CLASS_SECTION_FOR_STUDENTS;
     }
 
     @PostMapping("{name}/students")
-    public String addNewTeacher(@ModelAttribute("existingAcademicClass") AcademicClassDto academicClassDto,
-                                @PathVariable("name") String name, Model model) {
-        Set<Student> students = academicClassDto.getStudents();
-        AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
-        if (academicClassDto.getStudents() == null) {
+    public String addNewStudents(@ModelAttribute("existingAcademicClass") AcademicClassDto academicClassDto,
+                                 @PathVariable("name") String name, Model model) {
+        if (academicClassDto.getStudents().size() == 0) {
             model.addAttribute("blank", "There is no new selection.");
             model.addAttribute("studentsInAcademicClass", studentService
                     .findByAcademicClassId(academicClassService.findByClassNumber(name).getId()));
             model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
             return ACADEMIC_CLASS_SECTION_FOR_STUDENTS;
         }
-        for (Student student : students) {
-            student.setAcademicClass(AcademicClassMapper.toAcademicClass(academicClassByName));
-            studentService.create(StudentMapper.toStudentDto(student));
+        AcademicClassDto byClassNumber = academicClassService.findByClassNumber(name);
+        byClassNumber.getStudents().addAll(academicClassDto.getStudents());
+        Set<Student> students = byClassNumber.getStudents();
+        AcademicClass academicClass = AcademicClassMapper.toAcademicClass(byClassNumber);
+        for (Student student : academicClassDto.getStudents()) {
+            StudentEditDto studentEditDto = StudentMapper.toStudentEditDto(student);
+            studentEditDto.setAcademicClass(academicClass);
+            studentService.updateFields(studentEditDto);
         }
         return ACADEMIC_CLASSES_REDIRECT + name + STUDENTS_URL;
     }

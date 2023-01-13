@@ -19,7 +19,8 @@ public class AcademicClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @OneToMany
+    private Set<Student> students;
     @Column(unique = true)
     private String classNumber;
 
@@ -45,22 +46,20 @@ public class AcademicClass {
     @ManyToMany
     private List<CoursesForTimetable> coursesForTimetableList = new ArrayList<>();
 
-    @OneToMany
-    private Set<Student> student;
 
     public AcademicClass() {
     }
 
     public AcademicClass(Long id, String classNumber, Set<Teacher> teachers,
                          Set<AcademicCourse> academicCourseSet, Teacher classroomTeacher,
-                         List<CoursesForTimetable> coursesForTimetableList, Set<Student> student) {
+                         List<CoursesForTimetable> coursesForTimetableList, Set<Student> students) {
         this.id = id;
         this.classNumber = classNumber;
         this.teachers = teachers;
         this.academicCourseSet = academicCourseSet;
         this.classroomTeacher = classroomTeacher;
         this.coursesForTimetableList = coursesForTimetableList;
-        this.student = student;
+        this.students = students;
     }
 
     public AcademicClass(String classNumber) {
@@ -115,12 +114,12 @@ public class AcademicClass {
         this.coursesForTimetableList = coursesForTimetableList;
     }
 
-    public Set<Student> getStudent() {
-        return student;
+    public Set<Student> getStudents() {
+        return students;
     }
 
-    public void setStudent(Set<Student> student) {
-        this.student = student;
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     @Override
@@ -128,27 +127,14 @@ public class AcademicClass {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicClass that = (AcademicClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(classNumber, that.classNumber) &&
-                Objects.equals(classroomTeacher, that.classroomTeacher) &&
-                Objects.equals(teachers, that.teachers);
+        return Objects.equals(id, that.id) && Objects.equals(students, that.students) && Objects.equals(classNumber, that.classNumber) && Objects.equals(teachers, that.teachers) && Objects.equals(academicCourseSet, that.academicCourseSet) && Objects.equals(classroomTeacher, that.classroomTeacher) && Objects.equals(coursesForTimetableList, that.coursesForTimetableList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, classNumber, classroomTeacher, student, teachers);
+        return Objects.hash(id, classNumber, teachers, academicCourseSet, classroomTeacher, coursesForTimetableList);
     }
 
-    @Override
-    public String toString() {
-        return "AcademicClass{" +
-                "id=" + id +
-                ", classNumber='" + classNumber + '\'' +
-                ", teachers=" + teachers +
-                ", academicCourseSet=" + academicCourseSet +
-                ", classroomTeacher=" + classroomTeacher +
-                ", coursesForTimetableList=" + coursesForTimetableList +
-                ", student=" + student +
-                '}';
-    }
+
 }
 

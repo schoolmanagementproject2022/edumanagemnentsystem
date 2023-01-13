@@ -64,7 +64,7 @@ class CoursesForTimetableRepositoryTest {
         academicClass.setAcademicCourseSet(new HashSet<>());
         academicClass.setClassroomTeacher(teacher);
         academicClass.setCoursesForTimetableList(new ArrayList<>());
-        academicClass.setStudent(new HashSet<>());
+        academicClass.setStudents(new HashSet<>());
         academicClassId = entityManager.persist(academicClass).getId();
 
         AcademicClass academicClass1 = new AcademicClass();
@@ -73,7 +73,7 @@ class CoursesForTimetableRepositoryTest {
         academicClass1.setAcademicCourseSet(new HashSet<>());
         academicClass1.setClassroomTeacher(teacher);
         academicClass1.setCoursesForTimetableList(new ArrayList<>());
-        academicClass1.setStudent(new HashSet<>());
+        academicClass1.setStudents(new HashSet<>());
         academicClass1Id = entityManager.persist(academicClass1).getId();
 
         AcademicClass academicClass2 = new AcademicClass();
@@ -82,7 +82,7 @@ class CoursesForTimetableRepositoryTest {
         academicClass2.setAcademicCourseSet(new HashSet<>());
         academicClass2.setClassroomTeacher(teacher);
         academicClass2.setCoursesForTimetableList(new ArrayList<>());
-        academicClass2.setStudent(new HashSet<>());
+        academicClass2.setStudents(new HashSet<>());
         academicClass2Id = entityManager.persist(academicClass2).getId();
 
         AcademicClass academicClass3 = new AcademicClass();
@@ -91,7 +91,7 @@ class CoursesForTimetableRepositoryTest {
         academicClass3.setAcademicCourseSet(new HashSet<>());
         academicClass3.setClassroomTeacher(teacher);
         academicClass3.setCoursesForTimetableList(new ArrayList<>());
-        academicClass3.setStudent(new HashSet<>());
+        academicClass3.setStudents(new HashSet<>());
         academicClass3Id = entityManager.persist(academicClass3).getId();
 
         academicCourse = new AcademicCourse();

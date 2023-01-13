@@ -163,20 +163,4 @@ public class Student {
                 password, bloodGroup, parent, academicClass);
     }
 
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", user=" + user +
-                ", address='" + address + '\'' +
-                ", date=" + date +
-                ", gender=" + gender +
-                ", generatePassword='" + password + '\'' +
-                ", bloodGroup=" + bloodGroup +
-                ", parent=" + parent +
-                ", academicClass=" + academicClass +
-                '}';
-    }
 }

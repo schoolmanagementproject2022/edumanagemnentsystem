@@ -55,6 +55,7 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDto(studentRepository.save(student));
     }
 
+    @Transactional
     @Override
     public StudentDto updateFields(StudentEditDto studentDto) {
         studentRepository.findById(studentDto.getId()).orElseThrow(EntityNotFoundException::new);
@@ -94,15 +95,15 @@ public class StudentServiceImpl implements StudentService {
         return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
     }
 
-        @Override
-        public List<StudentDto> findStudentsByClassName(String name) {
-            List<StudentDto> studentsOfConcreteName = new ArrayList<>();
-            for (StudentDto studentDto : findAll()) {
-                if (studentDto.getAcademicClass() != null && studentDto.getAcademicClass().getClassNumber().equals(name)) {
-                    studentsOfConcreteName.add(studentDto);
-                }
+    @Override
+    public List<StudentDto> findStudentsByClassName(String name) {
+        List<StudentDto> studentsOfConcreteName = new ArrayList<>();
+        for (StudentDto studentDto : findAll()) {
+            if (studentDto.getAcademicClass() != null && studentDto.getAcademicClass().getClassNumber().equals(name)) {
+                studentsOfConcreteName.add(studentDto);
             }
-            return studentsOfConcreteName;
+        }
+        return studentsOfConcreteName;
     }
 
     @Override
@@ -145,4 +146,6 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findStudentsWithoutConnectionWithClass() {
         return StudentMapper.toStudentDtoList(studentRepository.findAllByAcademicClassIsNull());
     }
+
+
 }

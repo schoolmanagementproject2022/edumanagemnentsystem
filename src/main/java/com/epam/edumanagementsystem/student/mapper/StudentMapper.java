@@ -73,6 +73,25 @@ public class StudentMapper {
         studentDto.setPicUrl(student.getPicUrl());
         return studentDto;
     }
+    public static StudentEditDto toStudentEditDto(Student student) {
+        if (student == null) {
+            throw new ObjectIsNull();
+        }
+        StudentEditDto studentDto = new StudentEditDto();
+        studentDto.setId(student.getId());
+        studentDto.setName(student.getName());
+        studentDto.setSurname(student.getSurname());
+        studentDto.setEmail(student.getUser().getEmail());
+        studentDto.setRole(student.getUser().getRole());
+        studentDto.setDate(student.getDate());
+        studentDto.setAddress(student.getAddress());
+        studentDto.setBloodGroup(student.getBloodGroup());
+        studentDto.setGender(student.getGender());
+        studentDto.setParent(student.getParent());
+        studentDto.setAcademicClass(student.getAcademicClass());
+        studentDto.setPicUrl(student.getPicUrl());
+        return studentDto;
+    }
 
     public static List<StudentDto> toStudentDtoList(List<Student> studentEntities) {
         return studentEntities
