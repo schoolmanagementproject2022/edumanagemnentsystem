@@ -34,7 +34,7 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Override
     public void deleteCourseById(Long courseId) {
-        coursesForTimetableRepository.deleteById(courseId);
+        coursesForTimetableRepository.deleteCourseById(courseId);
         logger.info("Deleted Course for Timetable by Id");
     }
 

@@ -85,6 +85,9 @@ public class TimetableController {
                 return TIMETABLE_HTML;
             }
         }
+        if (timetableService.existTimetableByClassId(academicClass.getId())) {
+            model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
+        }
         model.addAttribute("creationStatus", creationStatus);
         putLessons(model, academicClass.getId());
         return TIMETABLE_HTML;
@@ -110,8 +113,9 @@ public class TimetableController {
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
         List<AcademicCourseDto> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         List<CoursesForTimetable> coursesWithNotActiveStatus = coursesService.getCoursesWithNotActiveStatusByAcademicClassId(academicClass.getId());
+        boolean isExist = timetableService.existTimetableByClassId(academicClass.getId());
 
-        if (    !coursesWithNotActiveStatus.isEmpty() &&
+        if (!isExist && !coursesWithNotActiveStatus.isEmpty() &&
                 lessonId == null && !status.equals("CANCEL")) {
             for (CoursesForTimetable course : coursesWithNotActiveStatus) {
                 coursesService.deleteCourseById(course.getId());
@@ -122,7 +126,7 @@ public class TimetableController {
             putLessons(model, academicClass.getId());
             return TIMETABLE_CREATION_HTML;
         }
-        if ( coursesWithNotActiveStatus.isEmpty() &&
+        if (!isExist && coursesWithNotActiveStatus.isEmpty() &&
                 !coursesService.getCoursesWithActiveStatusByAcademicClassId(academicClass.getId()).isEmpty() &&
                 lessonId == null && !status.equals("CANCEL")) {
             if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
@@ -161,7 +165,7 @@ public class TimetableController {
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (lessonId != null) {
-            if (timetableService.findTimetableByAcademicClassId(academicClass.getId()) != null) {
+            if (timetableService.existTimetableByClassId(academicClass.getId())) {
                 coursesService.updateCourseStatusById(lessonId);
                 return "redirect:/classes/" + academicClassName + "/timetable/edit";
             } else {

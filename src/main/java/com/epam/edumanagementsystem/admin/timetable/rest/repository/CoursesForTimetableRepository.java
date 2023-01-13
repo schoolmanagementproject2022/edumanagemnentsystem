@@ -14,6 +14,10 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     void updateCourseStatusById(Long courseId);
 
     @Modifying
+    @Query(nativeQuery = true, value = "Delete FROM courses_table WHERE id =(?1);")
+    void deleteCourseById(Long courseId);
+
+    @Modifying
     @Query(nativeQuery = true, value = "UPDATE courses_table SET status = 'Active' WHERE id =(?1);")
     void updateCourseStatusToActiveById(Long courseId);
 
