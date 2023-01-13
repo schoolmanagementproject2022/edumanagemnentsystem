@@ -4,6 +4,9 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
+import com.epam.edumanagementsystem.util.annotation.ValidName;
+import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,41 +15,43 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class StudentDto {
 
+    private static final String REQUIRED_FIELDS = "Please, fill the required fields";
+
     private Long id;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
     private String name;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
     private String surname;
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidEmail
     private String email;
 
     @NotBlank
-    private String role= "STUDENT";
+    private String role = "STUDENT";
 
-    @NotBlank(message = "Please, fill the required fields")
+    @ValidName
+
     private String address;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = REQUIRED_FIELDS)
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = REQUIRED_FIELDS)
     private Gender gender;
-
+    @ValidPassword
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(message = "Please, fill the required fields")
+    @NotNull(message = REQUIRED_FIELDS)
     private BloodGroup bloodGroup;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -56,33 +61,6 @@ public class StudentDto {
     private AcademicClass academicClass;
 
     private String picUrl;
-
-    public StudentDto(Long id,
-                      String name,
-                      String surname,
-                      String email,
-                      String address,
-                      LocalDate date,
-                      BloodGroup bloodGroup,
-                      Gender gender,
-                      String password,
-                      Parent parent,
-                      AcademicClass academicClass) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.address = address;
-        this.date = date;
-        this.bloodGroup = bloodGroup;
-        this.gender = gender;
-        this.password = password;
-        this.parent = parent;
-        this.academicClass = academicClass;
-    }
-
-    public StudentDto() {
-    }
 
     public Long getId() {
         return id;

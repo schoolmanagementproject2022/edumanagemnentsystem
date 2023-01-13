@@ -41,7 +41,7 @@
             color: #111111;
         }
     </style>
-    <title th:text="${name_surname}+' Profile'">Title</title>
+    <title th:text="${studentData}+' Profile'">Title</title>
 </head>
 <body>
 <div class="header" id="header">
@@ -55,7 +55,7 @@
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Students'}"></a>
 
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
-                   th:text="${name_surname}"></a>
+                   th:text="${studentData}"></a>
 
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
@@ -66,10 +66,10 @@
                 <p th:text="'Email: '+${existingStudent.getEmail()}"></p>
                 <p th:text="'Address: '+${existingStudent.getAddress()}"></p>
                 <p th:text="'Birth date: '+${existingStudent.getDate()}"></p>
-                <p th:text="'Blood group: '+${existingStudent.getBloodGroup().getBloodGroup()}"></p>
-                <p th:text="'Gender: '+${existingStudent.getGender().getGender()}"></p>
+                <p th:text="'Blood group: '+${existingStudent.getBloodGroup().getBlood()}"></p>
+                <p th:text="'Gender: '+${existingStudent.getGender().getGenderIdentity()}"></p>
                 <p th:if="*{existingStudent.getParent() != null}"
-                   th:text="'Parent: '+${existingStudent.getParent().getNameAndSurname()}"></p>
+                   th:text="'Parent: '+${existingStudent.getParent().getFullName()}"></p>
                 <p th:if="*{existingStudent.getParent() == null}">Parent: N/A </p>
                 <p th:if="*{existingStudent.getAcademicClass() != null}"
                    th:text="'Academic class: '+${existingStudent.getAcademicClass().getClassNumber()}"></p>
@@ -88,7 +88,7 @@
                              color: rgb(84, 84, 84); border: solid 4px; padding: 0% 11% 8% 11%"></span>
                             <p class="p-item" style="padding-left: 18%;">PNG, JPEG, JPG</p>
                         </label>
-                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" multiple type="file"
+                        <input id="file-input" accept="image/png, image/jpeg" th:name="picture" type="file"
                                onchange="filevalidation()">
                     </div>
                 </form>
@@ -139,13 +139,12 @@
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <div class="tooltip">
-            <h1 th:text="${name_surname}">Student name</h1>
+            <h1 th:text="${studentData}">Student name</h1>
             <span class="tooltiptext" th:text="${name_surname}">Tooltip text</span>
         </div>
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${existingStudent}">
             <script th:inline="javascript"
-                    th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${emailSize} or ${surnameSize}
-                    or ${nameSize} or ${addressSize}or ${invalidEmail}">
+                    th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
@@ -158,9 +157,6 @@
                            th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
-                    <div th:if="${nameSize}!= null" class="error">
-                        <p th:text="${nameSize}"></p>
-                    </div>
 
                     <label class="popup-label-title">Student surname <span style="color:#A30014">*</span></label>
                     <input class="form_input"
@@ -170,10 +166,6 @@
                            th:value="${#object.surname}"/>
                     <div class="error" th:if="${#fields.hasErrors('surname')}"
                          th:errors="*{surname}"></div>
-                    <div th:if="${surnameSize}!= null" class="error">
-                        <p th:text="${surnameSize}"></p>
-                    </div>
-
                     <label class="popup-label-title">Student email <span style="color:#A30014">*</span></label>
                     <input class="form_input"
                            th:type="text"
@@ -185,12 +177,6 @@
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-                    <div th:if="${invalidEmail}!= null" class="error">
-                        <p th:text="${invalidEmail}"></p>
-                    </div>
-                    <div th:if="${emailSize}!= null" class="error">
-                        <p th:text="${emailSize}"></p>
-                    </div>
 
                     <label class="popup-label-title">Student address <span style="color:#A30014">*</span></label>
                     <input class="form_input"
@@ -201,10 +187,6 @@
                            th:value="${#object.address}"/>
                     <div class="error" th:if="${#fields.hasErrors('address')}"
                          th:errors="*{address}"></div>
-                    <div th:if="${addressSize}!= null" class="error">
-                        <p th:text="${addressSize}"></p>
-                    </div>
-
                     <label class="popup-label-title">Birth Date <span style="color:#A30014">*</span>
                         <span class="check-validation-date"></span>
                     </label>
@@ -226,7 +208,7 @@
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="bloodGroup : ${bloodGroups}"
                                 th:value="${bloodGroup}"
-                                th:text="${bloodGroup.bloodGroup}"></option>
+                                th:text="${bloodGroup.blood}"></option>
                     </select>
                     <div class="error" th:if="${#fields.hasErrors('bloodGroup')}"
                          th:errors="*{bloodGroup}"></div>
@@ -236,7 +218,7 @@
                         <option th:if="*{gender == null}" class="short" th:text="'Gender'" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="gender : ${genders}" th:value="${gender}"
-                                th:text="${gender.gender}"></option>
+                                th:text="${gender.genderIdentity}"></option>
                     </select>
                     <div class="error" th:if="${#fields.hasErrors('gender')}"
                          th:errors="*{gender}"></div>
@@ -246,7 +228,7 @@
                         <option th:text="' Select parent'" class="short" data-limit="23"
                                 th:value="null"></option>
                         <option class="short" data-limit="23" th:each="parent : ${parents}" th:value="${parent.id}"
-                                th:text="${parent.getNameAndSurname}"></option>
+                                th:text="${parent.getFullName}"></option>
                     </select>
 
                     <label class="popup-label-title">Linked Class</label>

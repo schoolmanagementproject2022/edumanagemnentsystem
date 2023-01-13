@@ -9,35 +9,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class TimetableServiceImpl implements TimetableService {
 
     private final TimetableRepository timetableRepository;
+    private final Logger logger = Logger.getLogger(TimetableServiceImpl.class.getName());
 
     public TimetableServiceImpl(TimetableRepository timetableRepository) {
         this.timetableRepository = timetableRepository;
     }
 
     @Override
-    public List<Timetable> findAll() {
-        return timetableRepository.findAll();
+    public TimetableDto findTimetableByAcademicClassName(String academicClassName) {
+        logger.info("Finding Timetable by Academic Class Name");
+        return TimetableMapper.toDto(timetableRepository.findByAcademicClass_ClassNumber(academicClassName));
     }
 
     @Override
-    public Timetable findTimetableByAcademicClassName(String academicClassName) {
-        return timetableRepository.findByAcademicClass_ClassNumber(academicClassName);
+    public TimetableDto create(TimetableDto timetableDto) {
+        logger.info("Creating Timetable");
+        return TimetableMapper.toDto(timetableRepository.save(TimetableMapper.toTimetable(timetableDto)));
     }
 
     @Override
-    public TimetableDto create(Timetable timetable) {
-        return TimetableMapper.toDto(timetableRepository.save(timetable));
+    public boolean existTimetableByClassId(Long id) {
+        return timetableRepository.existsTimetableByAcademicClassId(id);
     }
 
     @Override
-    public Timetable findTimetableByAcademicClassId(Long academicClassId) {
-        return timetableRepository.getTimetableByAcademicClassId(academicClassId);
+    public TimetableDto findTimetableByAcademicClassId(Long academicClassId) {
+        logger.info("Finding Timetable by Academic Class Id");
+        return TimetableMapper.toDto(timetableRepository.getTimetableByAcademicClassId(academicClassId));
     }
 
     @Transactional
@@ -46,11 +50,14 @@ public class TimetableServiceImpl implements TimetableService {
                                                                String timeTableStatus, Long academicClassId) {
         timetableRepository.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate,
                 timeTableStatus, academicClassId);
+        logger.info("Updated Timetable Dates and Status by Academic Class Id");
     }
 
     @Transactional
     @Override
     public void updateTimetableStatusByAcademicClassId(String timeTableStatus, Long academicClassId) {
         timetableRepository.updateTimetableStatusByAcademicClassId(timeTableStatus, academicClassId);
+        logger.info("Updated Timetable Status by Academic Class Id");
     }
+
 }

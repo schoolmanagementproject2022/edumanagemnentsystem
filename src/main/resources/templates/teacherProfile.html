@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
-    <title th:text="${name_surname} + ' Profile'"></title>
+    <title th:text="${teacherData} + ' Profile'"></title>
 </head>
 <body>
 <div class="header" id="header">
@@ -23,7 +23,7 @@
             <div class="url-path">
                 <a class="a-url" th:href="${'/'+firstUrl}" th:text="${'Teachers'}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}"
-                   th:text="${name_surname}"></a>
+                   th:text="${teacherData}"></a>
                 <a class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Profile'}"></a>
             </div>
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Edit</b></button>
@@ -92,53 +92,37 @@
 </div>
 
 <div class="create">
+
     <div class="popup-container" id="popup-container">
         <button class="close-btn" title="close" id="hide" onclick="PopUpHide()">×</button>
         <div class="tooltip">
-            <h1 th:text="${name_surname}">Teacher name</h1>
-            <span class="tooltiptext" th:text="${name_surname}">Tooltip text</span>
+            <h1 th:text="${teacherData}">Teacher name</h1>
+            <span class="tooltiptext" th:text="${teacherData}">Tooltip text</span>
         </div>
+
         <form id="form" class="form" th:method="POST" th:action="@{${allTab}}" th:object="${teacher}">
-            <script th:inline="javascript"
-                    th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${invalidEmail} or ${emailSize}
-            or ${surnameSize} or ${nameSize}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
             </script>
             <div class="popup-wrapper">
                 <div class="half">
-                    <label class="popup-label-title">Teacher name <span
-                            style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" id="name" th:name="name" th:value="${#object.name}"/>
-                    <div class="error" th:if="${#fields.hasErrors('name')}"
-                         th:errors="*{name}"></div>
-                    <div th:if="${nameSize}!= null" class="error">
-                        <p th:text="${nameSize}"></p>
-                    </div>
+                    <label class="popup-label-title">Teacher name <span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="name" th:value="${#object.name}"/>
+                    <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
-                    <label class="popup-label-title" for="surname">Teacher surname <span style="color:#A30014">*</span></label>
+
+                    <label class="popup-label-title">Teacher surname <span style="color:#A30014">*</span></label>
                     <input class="form_input" type="text" th:name="surname" id="surname" th:value="${#object.surname}"/>
-                    <div class="error" th:if="${#fields.hasErrors('surname')}"
-                         th:errors="*{surname}"></div>
-                    <div th:if="${surnameSize}!= null" class="error">
-                        <p th:text="${surnameSize}"></p>
-                    </div>
+                    <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
 
-                    <label class="popup-label-title" for="email">Teacher email <span
-                            style="color:#A30014">*</span></label>
-                    <input class="form_input" type="text" th:name="email" id="email"
-                           th:value="${#object.email}"/>
-                    <div class="error" th:if="${#fields.hasErrors('email')}"
-                         th:errors="*{email}"></div>
-                    <div th:if="${duplicated}!= null" class="error">
-                        <p th:text="${duplicated}"></p>
-                    </div>
-                    <div th:if="${invalidEmail}!= null" class="error">
-                        <p th:text="${invalidEmail}"></p>
-                    </div>
-                    <div th:if="${emailSize}!= null" class="error">
-                        <p th:text="${emailSize}"></p>
-                    </div>
+
+                    <label class="popup-label-title">Teacher email <span style="color:#A30014">*</span></label>
+                    <input class="form_input" type="text" th:name="email" id="email" th:value="${#object.email}"/>
+                    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    <div th:if="${duplicated}!= null" class="error"><p th:text="${duplicated}"></p></div>
+
                 </div>
+
                 <div class="half2"></div>
                 <div name="btn-div">
                     <button type="submit" class="button-save" id="submit"><b>Save</b></button>
@@ -166,7 +150,7 @@
         </div>
         <div>
             <form th:action="@{'/teachers/' + ${teacher.id} + '/image/delete'}" method="get">
-                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Confirm</b>
+                <button type="submit" style="margin-left: -28%" class="button-save" id="submit-image"><b>Yes</b>
                 </button>
             </form>
         </div>
