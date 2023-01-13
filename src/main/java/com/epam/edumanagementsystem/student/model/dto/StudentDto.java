@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
 import com.epam.edumanagementsystem.util.annotation.ValidName;
 import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
@@ -14,7 +15,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -30,8 +30,7 @@ public class StudentDto {
     @ValidName
     private String surname;
 
-    @ValidName
-
+    @ValidEmail
     private String email;
 
     @NotBlank
@@ -66,12 +65,12 @@ public class StudentDto {
 
     public StudentDto() {
         this.id=id;
-
     }
+
     public StudentDto(Long id) {
-        this.id=id;
-
+        this.id = id;
     }
+
     public Long getId() {
         return id;
     }

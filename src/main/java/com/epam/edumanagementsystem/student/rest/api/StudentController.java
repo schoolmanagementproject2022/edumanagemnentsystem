@@ -102,12 +102,11 @@ public class StudentController extends StudentControllerHelper {
 
         UserDataValidation.validatePassword(studentDto.getPassword(), model);
 
-
-        studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
-
         if (result.hasErrors()) {
             return STUDENT_HTML;
         }
+        studentDto.setPassword(bcryptPasswordEncoder.encode(studentDto.getPassword()));
+
         StudentDto student = studentService.create(studentDto);
 
         if (!multipartFile.isEmpty()) {
