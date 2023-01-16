@@ -46,6 +46,6 @@ jobs:
           use_existing_version_if_available: false
           application_name: eduManagement
           environment_name: Edumanagement-devEnv
-          version_label:  "Version + ${{ github.run_number }}"
+          version_label:  "Version ${{ github.run_number }}"
           region: eu-north-1
           deployment_package: edumanagement.jar

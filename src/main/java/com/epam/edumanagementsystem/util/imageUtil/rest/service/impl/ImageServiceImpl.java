@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.util.imageUtil.impl;
+package com.epam.edumanagementsystem.util.imageUtil.rest.service.impl;
 
 import com.epam.edumanagementsystem.teacher.rest.api.TeacherController;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;

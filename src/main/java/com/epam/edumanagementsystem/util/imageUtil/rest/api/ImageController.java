@@ -21,13 +21,9 @@ public class ImageController {
 
     private final String upload = System.getProperty("user.home") + "/img/";
 
-    @GetMapping(
-            value = "/image",
-            produces = MediaType.IMAGE_JPEG_VALUE
-    )
-    public @ResponseBody
-    byte[] getImage(@RequestParam("name") String imageName) throws IOException {
-        InputStream in = new FileInputStream(upload_path + File.separator + imageName);
+    @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
+    public @ResponseBody byte[] getImage(@RequestParam("name") String imageName) throws IOException {
+        InputStream in = new FileInputStream(upload + File.separator + imageName);
         return IOUtils.toByteArray(in);
     }
 
