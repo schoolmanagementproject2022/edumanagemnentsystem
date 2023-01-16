@@ -8,6 +8,7 @@ public interface ImageService {
     String saveImage(MultipartFile file);
 
     void deleteImage(String name);
+
     void checkMultipartFile(MultipartFile multipartFile, String status, Model model);
 
     public void validateImage(MultipartFile multipartFile, Model model);

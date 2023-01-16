@@ -1,11 +1,9 @@
 package com.epam.edumanagementsystem.util.imageUtil.rest.service.impl;
 
 import com.epam.edumanagementsystem.teacher.rest.api.TeacherController;
-import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +17,6 @@ import java.util.Objects;
 
 @Service
 public class ImageServiceImpl implements ImageService {
-
-    @Value("${upload.path}")
-    private String upload_path;
-
     private final String upload = System.getProperty("user.home") + "/img/";
 
     private static final Logger logger = LoggerFactory
@@ -30,7 +24,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public String saveImage(MultipartFile file) {
-        String picUrl="";
+        String picUrl = "";
 
         if (!file.isEmpty()) {
             File fileToCreate = new File(upload);
@@ -58,28 +52,29 @@ public class ImageServiceImpl implements ImageService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            logger.error("Error! File name is null!");
         }
-        logger.info("Error! File name is null!");
     }
 
     public void checkMultipartFile(MultipartFile multipartFile, String status,
-                                          Model model) {
+                                   Model model) {
         if (!multipartFile.isEmpty()) {
             validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
-            model.addAttribute("size", "File size exceeds maximum 2mb limit");
+            model.addAttribute("size", "File size exceeds maximum 10mb limit");
         }
     }
 
 
-    public void validateImage(MultipartFile multipartFile, Model model){
+    public void validateImage(MultipartFile multipartFile, Model model) {
         try {
             if (multipartFile.getBytes().length > 2097152) {
                 model.addAttribute("size", "File size exceeds maximum 2mb limit");
             }
         } catch (IOException e) {
-            logger.info (e.toString(), "Could not find file " + multipartFile);
+            logger.error(e.toString(), "Could not find file " + multipartFile);
         }
         if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
                 && !multipartFile.getContentType().equals("image/jpeg")

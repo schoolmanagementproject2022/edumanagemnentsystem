@@ -112,7 +112,7 @@
             return;
         }
 
-        if (fi.files[0].size> 2*1024*1024) {
+        if (fi.files[0].size> 10*1024*1024) {
             document.getElementById("status").value = "validationFail"
             fi.value = '';
             return;
