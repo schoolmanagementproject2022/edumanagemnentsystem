@@ -1,15 +1,25 @@
 package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.annotation.ValidProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.SYMBOL_LENGTH;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.FIELD_MAX_SIZE;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.USED_SYMBOLS;
 
 public class SubjectDto {
 
     private Long id;
 
+    @ValidProperty
     private String name;
 
     private Set<Teacher> teacherSet = new HashSet<>();
@@ -52,7 +62,8 @@ public class SubjectDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SubjectDto that = (SubjectDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(teacherSet, that.teacherSet);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(teacherSet, that.teacherSet);
     }
 
     @Override

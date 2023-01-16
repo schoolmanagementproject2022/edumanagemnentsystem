@@ -3,10 +3,15 @@ package com.epam.edumanagementsystem.admin.mapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicYearDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicYear;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AcademicYearMapper {
+
+    private AcademicYearMapper() {
+        throw new IllegalStateException();
+    }
+
     public static AcademicYear toAcademicYear(AcademicYearDto academicYearDto) {
         AcademicYear academicYear = new AcademicYear();
         academicYear.setId(academicYearDto.getId());
@@ -23,19 +28,16 @@ public class AcademicYearMapper {
         return academicYearDto;
     }
 
-    public static List<AcademicYearDto> toListOfAcademicYearsDto(List<AcademicYear> academicYear) {
-        List<AcademicYearDto> academicYearsDto = new ArrayList<>();
-        for (AcademicYear year : academicYear) {
-            academicYearsDto.add(toDto(year));
-        }
-        return academicYearsDto;
+    public static List<AcademicYearDto> toListOfAcademicYearsDto(List<AcademicYear> academicYearList) {
+        return academicYearList.stream()
+                .map(AcademicYearMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public static List<AcademicYear> toListOfAcademicYears(List<AcademicYearDto> academicYearDto) {
-        List<AcademicYear> academicYears = new ArrayList<>();
-        for (AcademicYearDto yearDto : academicYearDto) {
-            academicYears.add(toAcademicYear(yearDto));
-        }
-        return academicYears;
+    public static List<AcademicYear> toListOfAcademicYears(List<AcademicYearDto> academicYearDtoList) {
+        return academicYearDtoList.stream()
+                .map(AcademicYearMapper::toAcademicYear)
+                .collect(Collectors.toList());
     }
+
 }

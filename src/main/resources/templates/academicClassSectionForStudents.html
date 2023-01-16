@@ -54,8 +54,9 @@
                 <div class="half">
                     <label class="popup-label-title" for="student">Students<span style="color:#A30014">*</span></label>
                     <div>
-                        <select id="student" name="student" style="width: 250px" multiple>
+                        <select id="student" name="student"  th:field="*{students}" style="width: 250px" multiple>
                             <option th:each="select : ${students}"
+
                                     th:value="${select.id}"
                                     th:title="${select.getName() + ' ' + select.getSurname()}"
                                     th:text="${select.getName() + ' ' + select.getSurname()}"></option>

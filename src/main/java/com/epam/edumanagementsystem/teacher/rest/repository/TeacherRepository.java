@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
-    Teacher findByUserId(Long id);
+    Optional<Teacher> findByUserId(Long id);
 
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE teacher SET pic_url = NULL WHERE id =(?1);")

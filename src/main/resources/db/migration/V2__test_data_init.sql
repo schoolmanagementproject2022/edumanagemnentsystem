@@ -1,6 +1,6 @@
 CREATE TABLE if not exists admin (
     id       SERIAL PRIMARY KEY,
-    username    VARCHAR ( 50 ) NOT NULL,
+    name    VARCHAR ( 50 ) NOT NULL,
     surname VARCHAR ( 50 ) NOT NULL,
     password VARCHAR ( 255 ) NOT NULL,
     user_id bigint
@@ -108,7 +108,7 @@ VALUES('parent@gmail.com','PARENT');
 INSERT INTO user_table (email, role)
 VALUES('nairaBogdanyan@gmail.com','PARENT');
 
-INSERT INTO admin (username, surname, password, user_id)
+INSERT INTO admin (name, surname, password, user_id)
 VALUES ('Heghine', 'Khachatryan' ,'$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC',
         (SELECT id FROM user_table WHERE email='heghine9696@gmail.com'));
 

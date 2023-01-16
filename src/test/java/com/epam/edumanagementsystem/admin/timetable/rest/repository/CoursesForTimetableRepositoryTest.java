@@ -60,44 +60,44 @@ class CoursesForTimetableRepositoryTest {
 
         academicClass = new AcademicClass();
         academicClass.setClassNumber("Test class");
-        academicClass.setTeacher(new HashSet<>());
+        academicClass.setTeachers(new HashSet<>());
         academicClass.setAcademicCourseSet(new HashSet<>());
         academicClass.setClassroomTeacher(teacher);
         academicClass.setCoursesForTimetableList(new ArrayList<>());
-        academicClass.setStudent(new HashSet<>());
+        academicClass.setStudents(new HashSet<>());
         academicClassId = entityManager.persist(academicClass).getId();
 
         AcademicClass academicClass1 = new AcademicClass();
         academicClass1.setClassNumber("Test class1");
-        academicClass1.setTeacher(new HashSet<>());
+        academicClass1.setTeachers(new HashSet<>());
         academicClass1.setAcademicCourseSet(new HashSet<>());
         academicClass1.setClassroomTeacher(teacher);
         academicClass1.setCoursesForTimetableList(new ArrayList<>());
-        academicClass1.setStudent(new HashSet<>());
+        academicClass1.setStudents(new HashSet<>());
         academicClass1Id = entityManager.persist(academicClass1).getId();
 
         AcademicClass academicClass2 = new AcademicClass();
         academicClass2.setClassNumber("Test class2");
-        academicClass2.setTeacher(new HashSet<>());
+        academicClass2.setTeachers(new HashSet<>());
         academicClass2.setAcademicCourseSet(new HashSet<>());
         academicClass2.setClassroomTeacher(teacher);
         academicClass2.setCoursesForTimetableList(new ArrayList<>());
-        academicClass2.setStudent(new HashSet<>());
+        academicClass2.setStudents(new HashSet<>());
         academicClass2Id = entityManager.persist(academicClass2).getId();
 
         AcademicClass academicClass3 = new AcademicClass();
         academicClass3.setClassNumber("Test class3");
-        academicClass3.setTeacher(new HashSet<>());
+        academicClass3.setTeachers(new HashSet<>());
         academicClass3.setAcademicCourseSet(new HashSet<>());
         academicClass3.setClassroomTeacher(teacher);
         academicClass3.setCoursesForTimetableList(new ArrayList<>());
-        academicClass3.setStudent(new HashSet<>());
+        academicClass3.setStudents(new HashSet<>());
         academicClass3Id = entityManager.persist(academicClass3).getId();
 
         academicCourse = new AcademicCourse();
         academicCourse.setName("Test course");
         academicCourse.setSubject(subject);
-        academicCourse.setTeacher(Set.of(teacher));
+        academicCourse.setTeachers(Set.of(teacher));
         academicCourse.setAcademicClass(Set.of(academicClass1));
         entityManager.persist(academicCourse).getId();
 
@@ -135,7 +135,7 @@ class CoursesForTimetableRepositoryTest {
 
     @Test
     void testDeleteCourseByIdReturnsEmptyOptionalCourse() {
-        repository.deleteCourseById(notActiveCourseId);
+        repository.deleteById(notActiveCourseId);
         Optional<CoursesForTimetable> deletedCourse = repository.findById(notActiveCourseId);
         assertThat(deletedCourse.isEmpty());
     }
@@ -176,7 +176,7 @@ class CoursesForTimetableRepositoryTest {
 
     @Test
     void testFindCoursesWithEditStatusByAcademicCourseIdReturnsCorrectList() {
-        List<CoursesForTimetable> listOfEditedCourses = repository.findCoursesWithEditStatusByAcademicCourseId(academicClass2Id);
+        List<CoursesForTimetable> listOfEditedCourses = repository.findCoursesWithEditStatusByAcademicClassId(academicClass2Id);
         assertThat(listOfEditedCourses).isNotNull();
         assertEquals(1, listOfEditedCourses.size());
     }
@@ -204,14 +204,14 @@ class CoursesForTimetableRepositoryTest {
 
     @Test
     void testFindCoursesWithActiveStatusByAcademicCourseIdReturnsCorrectList() {
-        List<CoursesForTimetable> listOfActiveCourses = repository.findCoursesWithActiveStatusByAcademicCourseId(academicClass1Id);
+        List<CoursesForTimetable> listOfActiveCourses = repository.findCoursesWithActiveStatusByAcademicClassId(academicClass1Id);
         assertThat(listOfActiveCourses).isNotNull();
         assertEquals(1, listOfActiveCourses.size());
     }
 
     @Test
     void testFindCoursesWithNotActiveStatusByAcademicCourseIdReturnsCorrectList() {
-        List<CoursesForTimetable> listOfNotActiveCourses = repository.findCoursesWithNotActiveStatusByAcademicCourseId(academicClass3Id);
+        List<CoursesForTimetable> listOfNotActiveCourses = repository.findCoursesWithNotActiveStatusByAcademicClassId(academicClass3Id);
         assertThat(listOfNotActiveCourses).isNotNull();
         assertEquals(1, listOfNotActiveCourses.size());
     }

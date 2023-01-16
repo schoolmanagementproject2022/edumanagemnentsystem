@@ -2,26 +2,32 @@ package com.epam.edumanagementsystem.admin.model.dto;
 
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
+import com.epam.edumanagementsystem.config.MessageByLang;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
+import com.epam.edumanagementsystem.util.AppConstants;
+import com.epam.edumanagementsystem.util.annotation.ValidProperty;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.epam.edumanagementsystem.admin.constants.ExceptionMessages.EMPTY_FIELD;
+
 public class AcademicCourseDto {
+
     private Long id;
+
+    @ValidProperty
     private String name;
+
+    @NotNull(message = "{SELECT_INPUT_FIELD}")
     private Subject subject;
-    private Set<Teacher> teacher;
+
+    private Set<Teacher> teachers;
+
     private Set<AcademicClass> academicClassSet;
 
     public AcademicCourseDto() {
-    }
-
-    public AcademicCourseDto(Long id, String name, Subject subject, Set<Teacher> teacher) {
-        this.id = id;
-        this.name = name;
-        this.subject = subject;
-        this.teacher = teacher;
     }
 
     public Long getId() {
@@ -39,6 +45,7 @@ public class AcademicCourseDto {
     public void setName(String name) {
         this.name = name;
     }
+
     public Subject getSubject() {
         return subject;
     }
@@ -47,12 +54,12 @@ public class AcademicCourseDto {
         this.subject = subject;
     }
 
-    public Set<Teacher> getTeacher() {
-        return teacher;
+    public Set<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setTeacher(Set<Teacher> teacher) {
-        this.teacher = teacher;
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
     }
 
     public Set<AcademicClass> getAcademicClassSet() {
@@ -68,12 +75,15 @@ public class AcademicCourseDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AcademicCourseDto that = (AcademicCourseDto) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(subject, that.subject) && Objects.equals(teacher, that.teacher) && Objects.equals(academicClassSet, that.academicClassSet);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) &&
+                Objects.equals(subject, that.subject) &&
+                Objects.equals(teachers, that.teachers) &&
+                Objects.equals(academicClassSet, that.academicClassSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subject, teacher, academicClassSet);
+        return Objects.hash(id, name, subject, teachers, academicClassSet);
     }
 
     @Override
@@ -82,7 +92,7 @@ public class AcademicCourseDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subject=" + subject +
-                ", teacher=" + teacher +
+                ", teacher=" + teachers +
                 '}';
     }
 }

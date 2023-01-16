@@ -1,8 +1,11 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.api;
 
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
+import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import org.springframework.stereotype.Component;
@@ -39,7 +42,7 @@ public class UtilForTimetableController {
         model.addAttribute("lessonsOfSunday", coursesService.getCoursesByDayOfWeekAndStatusAndAcademicClassId("Sunday", "Edit", academicClassId));
     }
 
-    public static void currentTimetable_LessonId(Model model, Timetable currentTimetable, Long lessonId) {
+    public static void currentTimetable_LessonId(Model model, TimetableDto currentTimetable, Long lessonId) {
         model.addAttribute("timetable", currentTimetable);
         model.addAttribute("lessonId", lessonId);
     }
@@ -49,12 +52,12 @@ public class UtilForTimetableController {
         model.addAttribute("timetable", new Timetable());
     }
 
-    public static void allAcademicCourses_academicClass(Model model, List<AcademicCourse> allAcademicCourses, AcademicClass academicClass) {
+    public static void allAcademicCourses_academicClass(Model model, List<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("academicClass", academicClass);
         model.addAttribute("courses", allAcademicCourses);
     }
 
-    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, List<AcademicCourse> allAcademicCourses, AcademicClass academicClass) {
+    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, List<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         allAcademicCourses_academicClass(model, allAcademicCourses, academicClass);
     }

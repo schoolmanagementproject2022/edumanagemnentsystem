@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -54,18 +56,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
             if (foundUserRole.equalsIgnoreCase("ADMIN")) {
-                Admin admin = adminRepository.findByUserId(foundUserId);
+                Optional<Admin> admin = adminRepository.findByUserId(foundUserId);
 
                 CurrentUser user = new CurrentUser();
-                user.setName(admin.getUsername());
-                user.setSurname(admin.getSurname());
-                user.setEmail(admin.getUser().getEmail());
-                user.setPassword(admin.getPassword());
-                user.setRole(admin.getUser().getRole());
+                user.setName(admin.get().getName());
+                user.setSurname(admin.get().getSurname());
+                user.setEmail(admin.get().getUser().getEmail());
+                user.setPassword(admin.get().getPassword());
+                user.setRole(admin.get().getUser().getRole());
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("TEACHER")) {
-                Teacher teacher = teacherRepository.findByUserId(foundUserId);
+                Teacher teacher = teacherRepository.findByUserId(foundUserId).get();
 
                 CurrentUser user = new CurrentUser();
                 user.setName(teacher.getName());
@@ -76,7 +78,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("PARENT")) {
-                Parent parent = parentRepository.findByUserId(foundUserId);
+                Parent parent = parentRepository.findByUserId(foundUserId).get();
 
                 CurrentUser user = new CurrentUser();
                 user.setName(parent.getName());
@@ -87,7 +89,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 return new SecurityUser(user);
 
             } else if (foundUserRole.equalsIgnoreCase("STUDENT")) {
-                Student student = studentRepository.findByUserId(foundUserId);
+                Student student = studentRepository.findByUserId(foundUserId).get();
 
                 CurrentUser user = new CurrentUser();
                 user.setName(student.getName());
