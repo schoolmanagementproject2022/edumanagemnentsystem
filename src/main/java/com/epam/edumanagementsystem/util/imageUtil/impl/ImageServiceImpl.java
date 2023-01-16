@@ -30,13 +30,13 @@ public class ImageServiceImpl implements ImageService {
         String picUrl="";
 
         if (!file.isEmpty()) {
-            File fileToCreate = new File(upload_path);
+            File fileToCreate = new File(upload);
             if (!fileToCreate.exists()) {
                 fileToCreate.mkdir();
             }
             picUrl = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             try {
-                file.transferTo(new File(upload_path + File.separator + picUrl));
+                file.transferTo(new File(upload + File.separator + picUrl));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -48,7 +48,7 @@ public class ImageServiceImpl implements ImageService {
     public void deleteImage(String fileName) {
         if (fileName != null) {
             try {
-                Path path = Paths.get(upload_path + fileName);
+                Path path = Paths.get(upload + fileName);
                 Files.delete(path);
 
                 logger.info("You successfully deleted file");
