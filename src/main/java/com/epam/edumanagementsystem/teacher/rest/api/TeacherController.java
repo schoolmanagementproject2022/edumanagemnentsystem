@@ -71,7 +71,7 @@ public class TeacherController {
                               Model model) throws IOException {
 
         model.addAttribute("teachers", teacherService.findAll());
-        UserDataValidation.checkMultipartFile(multipartFile, status, model);
+        imageService.checkMultipartFile(multipartFile, status, model);
         checkEmailForCreate(teacherDto, bindingResult, model);
 
         if (bindingResult.hasErrors()) {

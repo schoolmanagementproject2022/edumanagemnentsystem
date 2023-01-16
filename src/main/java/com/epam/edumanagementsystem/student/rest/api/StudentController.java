@@ -86,7 +86,7 @@ public class StudentController extends StudentControllerHelper {
                               @RequestParam(value = "status", required = false) String status,
                               Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            UserDataValidation.validateImage(multipartFile, model);
+            imageService.validateImage(multipartFile, model);
         }
         logger.debug(multipartFile.getName() + " " + studentDto.getNameAndSurname());
         if (status.equals("validationFail")) {
