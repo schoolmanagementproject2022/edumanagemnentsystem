@@ -7,34 +7,33 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ImageServiceTest {
-        @Test
-    void imageIsValid()  {
+    @Test
+    void imageIsValid() {
         File file = new File("C:\\edumanagemnentsystem\\src\\main\\resources\\static\\img\\avatar.png");
-            FileInputStream input = null;
-            try {
-                MultipartFile multipartFile = new MockMultipartFile("picture",
-                        file.getName(), "png", IOUtils.toByteArray(input));
-                input = new FileInputStream(file);
-                assertFalse(multipartFile.getBytes().length > 2097152);
-                assertEquals(multipartFile.getContentType(), "png");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        FileInputStream input = null;
+        try {
+            MultipartFile multipartFile = new MockMultipartFile("picture",
+                    file.getName(), "png", IOUtils.toByteArray(input));
+            input = new FileInputStream(file);
+            assertFalse(multipartFile.getBytes().length > 2097152);
+            assertEquals(multipartFile.getContentType(), "png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
     void imageSizeValidation() {
         File file = new File("C:\\edumanagemnentsystem\\src\\test\\java\\com\\epam\\edumanagementsystem\\util\\img\\Meteosat7-full-scan.jpg");
         try {
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("picture",
-                file.getName(), "jpg", IOUtils.toByteArray(input));
+            FileInputStream input = new FileInputStream(file);
+            MultipartFile multipartFile = new MockMultipartFile("picture",
+                    file.getName(), "jpg", IOUtils.toByteArray(input));
 
             assertTrue(multipartFile.getBytes().length > 2097152);
             assertEquals(multipartFile.getContentType(), "jpg");
