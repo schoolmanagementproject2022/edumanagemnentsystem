@@ -98,4 +98,9 @@ public class ParentServiceImpl implements ParentService {
         parentRepository.updateImageUrl(id);
     }
 
+    @Override
+    public boolean existsParentById(Long id) {
+        return parentRepository.existsParentById(id);
+    }
+
 }

@@ -107,6 +107,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public boolean existStudentById(Long id) {
+        return studentRepository.existsStudentById(id);
+    }
+
+    @Override
     public StudentDto findByUserId(Long id) {
         return StudentMapper.toStudentDto(studentRepository.findByUserId(id).get());
     }
@@ -146,6 +151,5 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findStudentsWithoutConnectionWithClass() {
         return StudentMapper.toStudentDtoList(studentRepository.findAllByAcademicClassIsNull());
     }
-
 
 }

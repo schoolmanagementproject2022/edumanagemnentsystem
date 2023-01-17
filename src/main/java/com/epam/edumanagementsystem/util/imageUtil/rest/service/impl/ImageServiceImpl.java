@@ -63,7 +63,7 @@ public class ImageServiceImpl implements ImageService {
             validateImage(multipartFile, model);
         }
         if (status.equals("validationFail")) {
-            model.addAttribute("size", "File size exceeds maximum 10mb limit");
+            model.addAttribute("size", "File size exceeds maximum 2mb limit");
         }
     }
 

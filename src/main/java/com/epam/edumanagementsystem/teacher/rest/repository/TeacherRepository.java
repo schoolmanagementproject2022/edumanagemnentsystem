@@ -17,4 +17,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     @Query(nativeQuery = true, value = "UPDATE teacher SET pic_url = NULL WHERE id =(?1);")
     void updateTeacherPicUrl(Long id);
 
+    boolean existsTeacherById(Long Id);
 }

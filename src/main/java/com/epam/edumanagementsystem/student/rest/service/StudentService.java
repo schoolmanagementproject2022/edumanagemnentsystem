@@ -36,4 +36,6 @@ public interface StudentService {
     StudentDto updateForPic(StudentDto studentDto);
 
     List<StudentDto> findStudentsByClassName(String name);
+
+    boolean existStudentById(Long id);
 }

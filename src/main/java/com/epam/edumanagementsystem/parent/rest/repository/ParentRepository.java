@@ -17,4 +17,5 @@ public interface ParentRepository extends JpaRepository<Parent, Long> {
     @Query(nativeQuery = true, value = "UPDATE parent SET pic_url = NULL WHERE id =(?1);")
     void updateImageUrl(Long parentId);
 
+    boolean existsParentById(Long id);
 }

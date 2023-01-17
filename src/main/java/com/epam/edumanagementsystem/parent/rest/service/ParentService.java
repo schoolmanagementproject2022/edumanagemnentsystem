@@ -23,4 +23,6 @@ public interface ParentService {
     void addImage(ParentDto parentDto, MultipartFile multipartFile);
 
     void removeImage(Long parentId);
+
+    boolean existsParentById(Long id);
 }
