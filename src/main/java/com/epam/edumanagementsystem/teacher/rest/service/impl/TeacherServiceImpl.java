@@ -137,4 +137,9 @@ public class TeacherServiceImpl implements TeacherService {
         LOGGER.info("removeImage method entered: {}", id);
         teacherRepository.updateTeacherPicUrl(id);
     }
+
+    @Override
+    public boolean existTeacherById(Long id) {
+        return teacherRepository.existsTeacherById(id);
+    }
 }

@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.util.AppConstants;
 import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
@@ -106,7 +107,15 @@ public class ParentController {
     @PostMapping("/{id}/image/add")
     @Operation(summary = "Adds image to selected parent's profile")
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
-        parentService.addImage(parentService.findById(id), multipartFile);
+        if (parentService.existsParentById(id)) {
+            ParentDto parent = parentService.findById(id);
+            if (parent.getPicUrl() != null) {
+                imageService.deleteImage(parent.getPicUrl());
+                parentService.addImage(parent, multipartFile);
+            } else {
+                parentService.addImage(parent, multipartFile);
+            }
+        }
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }
 

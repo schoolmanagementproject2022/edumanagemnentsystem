@@ -160,8 +160,15 @@ public class StudentController extends StudentControllerHelper {
     @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        logger.debug(multipartFile.getName() + " " + studentService.findById(id));
-        studentService.addProfilePicture(studentService.findById(id), multipartFile);
+        if (studentService.existStudentById(id)) {
+            StudentDto student = studentService.findById(id);
+            if (student.getPicUrl() != null) {
+                imageService.deleteImage(student.getPicUrl());
+                studentService.addProfilePicture(student, multipartFile);
+            } else {
+                studentService.addProfilePicture(student, multipartFile);
+            }
+        }
         return REDIRECT + id + PROFILE;
     }
 
