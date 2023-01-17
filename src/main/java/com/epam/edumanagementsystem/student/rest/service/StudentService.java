@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Set;
 
 public interface StudentService {
 
@@ -37,5 +36,4 @@ public interface StudentService {
 
     List<StudentDto> findStudentsByClassName(String name);
 
-    boolean existStudentById(Long id);
 }

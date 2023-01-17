@@ -1,20 +1,17 @@
 spring:
-  profiles:
-    active: ebs
-
   servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 10MB
+   multipart:
+    max-file-size: 10MB
+    max-request-size: 10MB
   mvc:
     static-path-pattern: /static/**
 
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://edu-db:5432/edumanagement
-    username: root
-    password: root
+    url: jdbc:postgresql://edumanagement.cp7ompjjcxv5.eu-north-1.rds.amazonaws.com/postgres
+    username: postgres
+    password: edum2022
 
   jpa:
     show-sql: true
@@ -29,13 +26,10 @@ spring:
 
 
 server:
-  port: 8082
+  port: 5000
   max-http-header-size: 20KB
 
 
 springdoc:
   api-docs:
     path: /api-docs
-
-upload:
-  path: /usr/edumanagementsystem/images

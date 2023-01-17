@@ -97,10 +97,4 @@ public class ParentServiceImpl implements ParentService {
         LOGGER.info("removeImage method entered: {}", id);
         parentRepository.updateImageUrl(id);
     }
-
-    @Override
-    public boolean existsParentById(Long id) {
-        return parentRepository.existsParentById(id);
-    }
-
 }

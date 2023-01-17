@@ -138,8 +138,4 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepository.updateTeacherPicUrl(id);
     }
 
-    @Override
-    public boolean existTeacherById(Long id) {
-        return teacherRepository.existsTeacherById(id);
-    }
 }

@@ -35,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
             try {
                 file.transferTo(new File(upload + File.separator + picUrl));
             } catch (IOException e) {
-                e.printStackTrace();
+               logger.error(e.getMessage());
             }
         }
         return picUrl;
@@ -50,7 +50,7 @@ public class ImageServiceImpl implements ImageService {
 
                 logger.info("You successfully deleted file");
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         } else {
             logger.error("Error! File name is null!");
@@ -74,7 +74,7 @@ public class ImageServiceImpl implements ImageService {
                 model.addAttribute("size", "File size exceeds maximum 2mb limit");
             }
         } catch (IOException e) {
-            logger.error(e.toString(), "Could not find file " + multipartFile);
+            logger.error(e.getMessage(), "Could not find file " + multipartFile);
         }
         if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
                 && !multipartFile.getContentType().equals("image/jpeg")

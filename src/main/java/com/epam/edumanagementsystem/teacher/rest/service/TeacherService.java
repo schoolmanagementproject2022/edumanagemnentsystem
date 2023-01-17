@@ -33,6 +33,4 @@ public interface TeacherService {
 
     void removeImage(Long id);
 
-    boolean existTeacherById(Long id);
-
 }
