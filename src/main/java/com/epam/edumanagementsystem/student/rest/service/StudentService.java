@@ -28,6 +28,8 @@ public interface StudentService {
 
     void addProfilePicture(StudentDto studentDto, MultipartFile multipartFile);
 
+    void updateImage(StudentDto studentDto, MultipartFile multipartFile);
+
     void deletePic(Long id);
 
     List<StudentDto> findStudentsWithoutConnectionWithClass();

@@ -162,9 +162,10 @@ public class StudentController extends StudentControllerHelper {
                          @RequestParam("picture") MultipartFile multipartFile) {
         StudentDto student = studentService.findById(id);
         if (student.getPicUrl() != null) {
-            imageService.deleteImage(student.getPicUrl());
+            studentService.updateImage(student, multipartFile);
+        } else {
+            studentService.addProfilePicture(student, multipartFile);
         }
-        studentService.addProfilePicture(student, multipartFile);
         return REDIRECT + id + PROFILE;
     }
 

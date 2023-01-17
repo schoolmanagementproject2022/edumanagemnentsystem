@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/teachers")
@@ -68,7 +67,7 @@ public class TeacherController {
                               BindingResult bindingResult,
                               @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                               @RequestParam(value = "status", required = false) String status,
-                              Model model) throws IOException {
+                              Model model) {
 
         model.addAttribute("teachers", teacherService.findAll());
         imageService.checkMultipartFile(multipartFile, status, model);
@@ -112,9 +111,10 @@ public class TeacherController {
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
         TeacherDto teacher = teacherService.findById(id);
         if (teacher.getPicUrl() != null) {
-            imageService.deleteImage(teacher.getPicUrl());
+            teacherService.updateImage(teacher, multipartFile);
+        } else {
+            teacherService.addImage(teacher, multipartFile);
         }
-        teacherService.addImage(teacher, multipartFile);
         return REDIRECT_TO_TEACHERS + id + PROFILE_URL;
     }
 

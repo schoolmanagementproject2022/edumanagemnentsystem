@@ -108,10 +108,10 @@ public class ParentController {
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
         ParentDto parent = parentService.findById(id);
         if (parent.getPicUrl() != null) {
-            imageService.deleteImage(parent.getPicUrl());
+            parentService.updateImage(parent, multipartFile);
+        } else {
+            parentService.addImage(parent, multipartFile);
         }
-        parentService.addImage(parent, multipartFile);
-
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }
 

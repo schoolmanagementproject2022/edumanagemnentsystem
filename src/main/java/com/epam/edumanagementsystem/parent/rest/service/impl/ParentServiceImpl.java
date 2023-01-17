@@ -93,6 +93,12 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
+    public void updateImage(ParentDto parentDto, MultipartFile multipartFile) {
+        imageService.deleteImage(parentDto.getPicUrl());
+        addImage(parentDto, multipartFile);
+    }
+
+    @Override
     public void removeImage(Long id) {
         LOGGER.info("removeImage method entered: {}", id);
         parentRepository.updateImageUrl(id);

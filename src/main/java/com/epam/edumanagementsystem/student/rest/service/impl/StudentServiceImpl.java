@@ -8,6 +8,7 @@ import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.api.StudentController;
 import com.epam.edumanagementsystem.student.rest.repository.StudentRepository;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.util.entity.User;
 import com.epam.edumanagementsystem.util.exceptions.UserNotFoundException;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
@@ -135,6 +136,12 @@ public class StudentServiceImpl implements StudentService {
         studentDto.setPicUrl(imageService.saveImage(multipartFile));
         logger.debug(studentDto.getPicUrl());
         updateForPic(studentDto);
+    }
+
+    @Override
+    public void updateImage(StudentDto studentDto, MultipartFile multipartFile) {
+        imageService.deleteImage(studentDto.getPicUrl());
+        addProfilePicture(studentDto,multipartFile);
     }
 
     @Override
