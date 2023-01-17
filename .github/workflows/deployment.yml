@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - 3Gteam
+
 jobs:
   build:
     runs-on : ubuntu-latest
