@@ -1,4 +1,4 @@
-var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com/'
+var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com'
 var localhost ='http://localhost:8082'
 
 
