@@ -160,12 +160,7 @@ public class StudentController extends StudentControllerHelper {
     @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        StudentDto student = studentService.findById(id);
-        if (student.getPicUrl() != null) {
-            studentService.updateImage(student, multipartFile);
-        } else {
-            studentService.addProfilePicture(student, multipartFile);
-        }
+        studentService.addProfilePicture(studentService.findById(id), multipartFile);
         return REDIRECT + id + PROFILE;
     }
 

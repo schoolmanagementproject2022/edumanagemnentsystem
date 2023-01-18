@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -129,14 +128,11 @@ public class TeacherServiceImpl implements TeacherService {
     public void addImage(TeacherDto teacherDto, MultipartFile multipartFile) {
         LOGGER.info("addImage method entered: {}", teacherDto);
         Teacher teacher = teacherRepository.findById(teacherDto.getId()).get();
+        if (teacher.getPicUrl() != null) {
+            imageService.deleteImage(teacher.getPicUrl());
+        }
         teacher.setPicUrl(imageService.saveImage(multipartFile));
         teacherRepository.save(teacher);
-    }
-
-    @Override
-    public void updateImage(TeacherDto teacherDto, MultipartFile multipartFile) {
-           imageService.deleteImage(teacherDto.getPicUrl());
-           addImage(teacherDto,multipartFile);
     }
 
     @Override

@@ -106,12 +106,7 @@ public class ParentController {
     @PostMapping("/{id}/image/add")
     @Operation(summary = "Adds image to selected parent's profile")
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
-        ParentDto parent = parentService.findById(id);
-        if (parent.getPicUrl() != null) {
-            parentService.updateImage(parent, multipartFile);
-        } else {
-            parentService.addImage(parent, multipartFile);
-        }
+        parentService.addImage(parentService.findById(id), multipartFile);
         return REDIRECT_TO_PARENTS + id + PROFILE_URL;
     }
 

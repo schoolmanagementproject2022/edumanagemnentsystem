@@ -22,7 +22,5 @@ public interface ParentService {
 
     void addImage(ParentDto parentDto, MultipartFile multipartFile);
 
-    void updateImage(ParentDto parentDto, MultipartFile multipartFile);
-
     void removeImage(Long parentId);
 }

@@ -109,12 +109,7 @@ public class TeacherController {
     @PostMapping("/{id}/image/add")
     @Operation(summary = "Adds image to selected teacher's profile")
     public String addImage(@PathVariable("id") Long id, @RequestParam("picture") MultipartFile multipartFile) {
-        TeacherDto teacher = teacherService.findById(id);
-        if (teacher.getPicUrl() != null) {
-            teacherService.updateImage(teacher, multipartFile);
-        } else {
-            teacherService.addImage(teacher, multipartFile);
-        }
+        teacherService.addImage(teacherService.findById(id), multipartFile);
         return REDIRECT_TO_TEACHERS + id + PROFILE_URL;
     }
 

@@ -88,14 +88,11 @@ public class ParentServiceImpl implements ParentService {
     public void addImage(ParentDto parentDto, MultipartFile multipartFile) {
         LOGGER.info("addImage method entered: {} {}", parentDto, multipartFile);
         Parent parent = parentRepository.findById(parentDto.getId()).get();
+        if (parent.getPicUrl() != null) {
+            imageService.deleteImage(parent.getPicUrl());
+        }
         parent.setPicUrl(imageService.saveImage(multipartFile));
         parentRepository.save(parent);
-    }
-
-    @Override
-    public void updateImage(ParentDto parentDto, MultipartFile multipartFile) {
-        imageService.deleteImage(parentDto.getPicUrl());
-        addImage(parentDto, multipartFile);
     }
 
     @Override
