@@ -1,18 +1,15 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
-import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
-import com.epam.edumanagementsystem.teacher.model.dto.TeacherDto;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -75,11 +72,11 @@ public class AcademicClassController {
     @GetMapping("/{name}/courses")
     @Operation(summary = "Shows academic courses in academic class section")
     public String openAcademicClassForAcademicCourse(@PathVariable("name") String name, Model model) {
-        List<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        Set<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
 
         model.addAttribute("academicCourseSet", academicCoursesInClass);
         model.addAttribute("allTeacherByAcademicCourse", teacherService.findAllTeachersInAllCourses());
-        model.addAttribute("existingClass", academicClassService.findByClassNumber(name));
+        model.addAttribute("existingClass", new AcademicClass());
 
         List<AcademicCourseDto> coursesForSelection = academicCourseService.findAll().stream()
                 .filter(course -> !academicCoursesInClass.contains(course))
@@ -93,9 +90,8 @@ public class AcademicClassController {
     @Operation(summary = "Adds new academic courses and teachers for selected academic class")
     public String addNewAcademicCourseAndTeacher(@ModelAttribute("existingClass") AcademicClassDto academicClassDto,
                                                  @PathVariable("name") String name, Model model) {
-        List<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        Set<AcademicCourseDto> academicCoursesInClass = academicCourseService.findAllAcademicCoursesInClassByName(name);
         model.addAttribute("allTeacherByAcademicCourse", teacherService.findAllTeachersInAllCourses());
-        AcademicClassDto academicClass = academicClassService.findByClassNumber(name);
 
         List<AcademicCourseDto> coursesForSelection = academicCourseService.findAll().stream()
                 .filter(course -> !academicCoursesInClass.contains(course))
@@ -109,9 +105,7 @@ public class AcademicClassController {
             return "academicCourseForAcademicClass";
         }
 
-        academicClass.setClassNumber(name);
-        academicClass.setAcademicCourseSet(academicClassDto.getAcademicCourseSet());
-        academicClassService.update(academicClass);
+        academicClassService.updateCourses(academicClassDto, name);
         return ACADEMIC_CLASSES_REDIRECT + name + ACADEMIC_COURSES_URL;
     }
 
@@ -120,9 +114,8 @@ public class AcademicClassController {
     public String classroomTeacherForAcademicClass(@PathVariable("name") String name, Model model) {
         AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
         Set<Teacher> allTeachersInClassName = academicClassByName.getTeachers();
-        List<AcademicClassDto> allClasses = academicClassService.findAll();
 
-        for (AcademicClassDto allClass : allClasses) {
+        for (AcademicClassDto allClass : academicClassService.findAll()) {
             if (allClass.getClassroomTeacher() != null) {
                 allTeachersInClassName.removeIf(teacher -> teacher == allClass.getClassroomTeacher());
             }
@@ -143,8 +136,7 @@ public class AcademicClassController {
     public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClassDto academicClassDto,
                                                      @PathVariable("name") String name,
                                                      Model model) {
-        AcademicClassDto academicClassFindByName = academicClassService.findByClassNumber(name);
-        model.addAttribute("teachers", academicClassFindByName.getTeachers());
+        model.addAttribute("teachers", academicClassService.findByClassNumber(name).getTeachers());
         if (academicClassDto.getClassroomTeacher() == null) {
             model.addAttribute("blank", SELECT_FIELD);
             return CLASSROOM_TEACHER_SECTION;
@@ -156,8 +148,7 @@ public class AcademicClassController {
                 return CLASSROOM_TEACHER_SECTION;
             }
         }
-        academicClassFindByName.setClassroomTeacher(academicClassDto.getClassroomTeacher());
-        academicClassService.update(academicClassFindByName);
+        academicClassService.updateClassroomTeacher(academicClassDto, name);
         return ACADEMIC_CLASSES_REDIRECT + name + CLASSROOM_URL;
     }
 
@@ -183,7 +174,6 @@ public class AcademicClassController {
         }
         AcademicClassDto byClassNumber = academicClassService.findByClassNumber(name);
         byClassNumber.getStudents().addAll(academicClassDto.getStudents());
-        Set<Student> students = byClassNumber.getStudents();
         AcademicClass academicClass = AcademicClassMapper.toAcademicClass(byClassNumber);
         for (Student student : academicClassDto.getStudents()) {
             StudentEditDto studentEditDto = StudentMapper.toStudentEditDto(student);

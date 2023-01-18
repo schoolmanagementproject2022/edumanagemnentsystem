@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class UtilForTimetableController {
@@ -52,12 +53,12 @@ public class UtilForTimetableController {
         model.addAttribute("timetable", new Timetable());
     }
 
-    public static void allAcademicCourses_academicClass(Model model, List<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
+    public static void allAcademicCourses_academicClass(Model model, Set<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("academicClass", academicClass);
         model.addAttribute("courses", allAcademicCourses);
     }
 
-    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, List<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
+    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, Set<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         allAcademicCourses_academicClass(model, allAcademicCourses, academicClass);
     }
