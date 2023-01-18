@@ -1,3 +1,7 @@
+var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com'
+var localhost ='http://localhost:8082'
+
+
 function PopUpShowAgendaMonday() {
     let dateValue = document.getElementById("mondayDate").innerText
     let courseName = document.getElementById("course-name").innerText
@@ -233,7 +237,7 @@ function PopUpShowAgendaSunday() {
 
 function hideMondayPopup() {
     let dateValue = document.getElementById("mondayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -244,7 +248,7 @@ function hideMondayPopup() {
 
 function hideTuesdayPopup() {
     let dateValue = document.getElementById("tuesdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -255,7 +259,7 @@ function hideTuesdayPopup() {
 
 function hideWednesdayPopup() {
     let dateValue = document.getElementById("wednesdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -266,7 +270,7 @@ function hideWednesdayPopup() {
 
 function hideThursdayPopup() {
     let dateValue = document.getElementById("thursdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -277,7 +281,7 @@ function hideThursdayPopup() {
 
 function hideFridayPopup() {
     let dateValue = document.getElementById("fridayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -288,7 +292,7 @@ function hideFridayPopup() {
 
 function hideSaturdayPopup() {
     let dateValue = document.getElementById("saturdayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -299,7 +303,7 @@ function hideSaturdayPopup() {
 
 function hideSundayPopup() {
     let dateValue = document.getElementById("sundayDate").innerText
-    window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");

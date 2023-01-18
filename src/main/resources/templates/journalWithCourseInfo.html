@@ -182,18 +182,20 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                           id="classwork-monday" th:field="*{classwork}" th:value="*{classwork}" th:text="${classwork}"></textarea>
+                              id="classwork-monday" th:field="*{classwork}" th:value="*{classwork}"
+                              th:text="${classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-monday" th:field="*{test}" th:value="*{test}" th:text="${test}"></textarea>
+                              id="test-monday" th:field="*{test}" th:value="*{test}" th:text="${test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-monday" th:field="*{homework}" th:value="*{homework}" th:text="${homework}"></textarea>
+                              id="homework-monday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="${homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -239,20 +241,21 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                           id="classwork-tuesday" th:field="*{classwork}" th:value="*{classwork}"
-                           th:text="*{classwork}"></textarea>
+                              id="classwork-tuesday" th:field="*{classwork}" th:value="*{classwork}"
+                              th:text="*{classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
 
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-tuesday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
+                              id="test-tuesday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-tuesday" th:field="*{homework}" th:value="*{homework}" th:text="*{homework}"></textarea>
+                              id="homework-tuesday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="*{homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -265,7 +268,8 @@
                     <script th:inline="javascript"
                             th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'TUESDAY'">
                         PopUpShowAgendaTuesday();
-                    </script> <script th:inline="javascript"
+                    </script>
+                    <script th:inline="javascript"
                             th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'TUESDAY'">
                         PopUpShowAgendaTuesday();
                     </script>
@@ -293,19 +297,21 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                              id="classwork-wednesday" th:field="*{classwork}" th:text="*{classwork}" th:value="*{classwork}"></textarea>
+                              id="classwork-wednesday" th:field="*{classwork}" th:text="*{classwork}"
+                              th:value="*{classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
 
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-wednesday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
+                              id="test-wednesday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-wednesday" th:field="*{homework}" th:value="*{homework}" th:text="*{homework}"></textarea>
+                              id="homework-wednesday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="*{homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -347,20 +353,21 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                           id="classwork-thursday" th:field="*{classwork}" th:value="*{classwork}"
-                           th:text="*{classwork}"></textarea>
+                              id="classwork-thursday" th:field="*{classwork}" th:value="*{classwork}"
+                              th:text="*{classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
 
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-thursday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
+                              id="test-thursday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-thursday" th:field="*{homework}" th:value="*{homework}" th:text="*{homework}"></textarea>
+                              id="homework-thursday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="*{homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -403,19 +410,21 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                           id="classwork-friday" th:field="*{classwork}" th:value="*{classwork}" th:text="*{classwork}"></textarea>
+                              id="classwork-friday" th:field="*{classwork}" th:value="*{classwork}"
+                              th:text="*{classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
 
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-friday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
+                              id="test-friday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-friday" th:field="*{homework}" th:value="*{homework}" th:text="*{homework}"></textarea>
+                              id="homework-friday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="*{homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -457,19 +466,20 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                           id="classwork-saturday" th:field="*{classwork}" th:value="*{classwork}"
-                           th:text="*{classwork}"></textarea>
+                              id="classwork-saturday" th:field="*{classwork}" th:value="*{classwork}"
+                              th:text="*{classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-saturday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
+                              id="test-saturday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-saturday" th:field="*{homework}" th:value="*{homework}" th:text="*{homework}"></textarea>
+                              id="homework-saturday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="*{homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -509,19 +519,21 @@
                 <div class="half_1">
                     <label class="popup-label-title">Classwork</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="classwork"
-                           id="classwork-sunday" th:field="*{classwork}" th:value="*{classwork}" th:text="*{classwork}"></textarea>
+                              id="classwork-sunday" th:field="*{classwork}" th:value="*{classwork}"
+                              th:text="*{classwork}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('classwork')}"
                          th:errors="*{classwork}"></div>
 
                     <label class="popup-label-title">Test</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="test"
-                           id="test-sunday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
+                              id="test-sunday" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('test')}"
                          th:errors="*{test}"></div>
 
                     <label class="popup-label-title">Homework</label>
                     <textarea type="text" class="form_input" style="cursor:auto;" th:name="homework"
-                           id="homework-sunday" th:field="*{homework}" th:value="*{homework}" th:text="*{homework}"></textarea>
+                              id="homework-sunday" th:field="*{homework}" th:value="*{homework}"
+                              th:text="*{homework}"></textarea>
                     <div class="error" th:if="${#fields.hasErrors('homework')}"
                          th:errors="*{homework}"></div>
 
@@ -532,10 +544,10 @@
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                     <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SUNDAY'">
-                    PopUpShowAgendaSunday();
+                        PopUpShowAgendaSunday();
                     </script>
                     <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SATURDAY'">
-                    PopUpShowAgendaSunday();
+                        PopUpShowAgendaSunday();
                     </script>
 
                 </div>
@@ -550,6 +562,10 @@
 </div>
 
 <script>
+    var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com/'
+    var localhost = 'http://localhost:8082'
+
+
     $("#abc").on('click', function () {
         $("#dateInput").datepicker("show");
     });
@@ -579,13 +595,13 @@
     let id = $("#middleUrl").val()
     let course_id = $("#activeTab").val()
     $("#previousDate").on('click', function () {
-        window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${finalPreviousDate}`
+        window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${finalPreviousDate}`
     });
     $("#todayDate").on('click', function () {
-        window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${today}`
+        window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${today}`
     });
     $("#nextDate").on('click', function () {
-        window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${finalNextDate}`
+        window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${finalNextDate}`
     });
     // #middleUrl
     $(document).ready(function () {
@@ -608,7 +624,7 @@
                 let id = $("#middleUrl").val()
                 let course_id = $("#activeTab").val()
                 let formatedDate = dateInput.replaceAll('/', '-')
-                window.location.href = `http://localhost:8082/classes/${id}/journal/${course_id}?date=${formatedDate}`
+                window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${formatedDate}`
             }
         });
     });
