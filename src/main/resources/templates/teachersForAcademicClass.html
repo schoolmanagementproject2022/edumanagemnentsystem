@@ -25,8 +25,8 @@
         </div>
         <div class="div-pddng"></div>
         <div class="list">
-            <div class="list-items" th:each="teacher : ${teachers}">
-                <p class="item" th:text="${teacher.getNameSurname()}"> Teacher </p>
+            <div class="list-items" th:each="teacher : ${allTeacherByAcademicClass}">
+                <p class="item" th:text="${teacher.getFullName()}"> Teacher </p>
             </div>
         </div>
     </div>
