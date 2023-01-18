@@ -81,8 +81,8 @@
 <div th:fragment="lang">
 
     <div class="switch-lang">
-        <div class="current-lang" ><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png"/>
-            <a href="?lang=hy" class="lang-text">Armenian</a>
+        <div class="current-lang"  ><img class="lang-flag" id="img-en" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png"/>
+            <a href="?lang=hy" class="lang-text" id="fff">Armenian</a>
         </div>
         <div class="lang-dropdown">
             <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png"/>
@@ -91,10 +91,23 @@
             <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Russia.png"/>
                 <a href="?lang=ru" class="lang-text">Russian</a>
             </div>
-            <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_United_Kingdom.png"/>
+            <div class="selecting-lang"><img class="lang-flag"  src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_United_Kingdom.png"/>
                 <a href="?lang=en" class="lang-text">English</a>
             </div>
         </div>
     </div>
+    <script>
+    const ln = window.location.search;
+    const elem = document.getElementById("fff")
+    const img = document.getElementById("img-en")
+    switch(ln){
+        case "?lang=en": elem.textContent = "English"; img.src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_United_Kingdom.png"; break;
+        case "?lang=hy": elem.textContent = "Armenian"; img.src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png";  break;
+        case "?lang=ru": elem.textContent = "Russia"; img.src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Russia.png" ;  break;
+        default : elem.textContent = "Armenia"; img.src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Armenia.png";  break;;
+    }
+</script>
 </div>
+
+
 </html>
