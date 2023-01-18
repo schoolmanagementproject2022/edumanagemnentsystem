@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.util.imageUtil.rest.service.impl;
 
+import com.epam.edumanagementsystem.exception.ImageNotFoundException;
 import com.epam.edumanagementsystem.teacher.rest.api.TeacherController;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ public class ImageServiceImpl implements ImageService {
                 file.transferTo(new File(upload + File.separator + picUrl));
             } catch (IOException e) {
                 logger.error(e.getMessage());
+                throw new ImageNotFoundException();
             }
         }
         return picUrl;
@@ -51,9 +53,11 @@ public class ImageServiceImpl implements ImageService {
                 logger.info("You successfully deleted file");
             } catch (Exception e) {
                 logger.error(e.getMessage());
+                throw  new ImageNotFoundException();
             }
         } else {
             logger.error("Error! File name is null!");
+            throw new ImageNotFoundException();
         }
     }
 
@@ -75,6 +79,7 @@ public class ImageServiceImpl implements ImageService {
             }
         } catch (IOException e) {
             logger.error(e.getMessage());
+            throw new ImageNotFoundException();
         }
         if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
                 && !multipartFile.getContentType().equals("image/jpeg")

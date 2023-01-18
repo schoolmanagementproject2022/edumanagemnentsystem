@@ -11,7 +11,7 @@ public interface ImageService {
 
     void deleteImage(String name);
 
-    void checkMultipartFile(MultipartFile multipartFile, String status, Model model) ;
+    void checkMultipartFile(MultipartFile multipartFile, String status, Model model);
 
     public void validateImage(MultipartFile multipartFile, Model model);
 
