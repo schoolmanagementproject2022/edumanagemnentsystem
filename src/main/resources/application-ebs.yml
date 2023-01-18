@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://edumanagement.cp7ompjjcxv5.eu-north-1.rds.amazonaws.com/postgres
+    username: postgres
+    password: edum2022
+
+server:
+  port: 5000
+  max-http-header-size: 20KB

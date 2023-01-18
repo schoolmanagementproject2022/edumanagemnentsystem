@@ -3,7 +3,7 @@ package com.epam.edumanagementsystem.parent.rest.service.impl;
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
-import com.epam.edumanagementsystem.parent.rest.mapper.ParentMapper;
+import com.epam.edumanagementsystem.parent.mapper.ParentMapper;
 import com.epam.edumanagementsystem.parent.rest.repository.ParentRepository;
 import com.epam.edumanagementsystem.parent.rest.service.ParentService;
 import com.epam.edumanagementsystem.util.entity.User;
@@ -88,6 +88,9 @@ public class ParentServiceImpl implements ParentService {
     public void addImage(ParentDto parentDto, MultipartFile multipartFile) {
         LOGGER.info("addImage method entered: {} {}", parentDto, multipartFile);
         Parent parent = parentRepository.findById(parentDto.getId()).get();
+        if (parent.getPicUrl() != null) {
+            imageService.deleteImage(parent.getPicUrl());
+        }
         parent.setPicUrl(imageService.saveImage(multipartFile));
         parentRepository.save(parent);
     }
@@ -97,5 +100,4 @@ public class ParentServiceImpl implements ParentService {
         LOGGER.info("removeImage method entered: {}", id);
         parentRepository.updateImageUrl(id);
     }
-
 }

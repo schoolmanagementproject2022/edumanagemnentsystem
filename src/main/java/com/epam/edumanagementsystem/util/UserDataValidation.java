@@ -4,9 +4,7 @@ import com.epam.edumanagementsystem.util.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @Component
@@ -46,29 +44,6 @@ public class UserDataValidation {
                     .anyMatch(userEmail -> userEmail.getEmail().equalsIgnoreCase(email));
         }
         return false;
-    }
-
-
-    public static void checkMultipartFile(MultipartFile multipartFile, String status,
-                                          Model model) throws IOException {
-        if (!multipartFile.isEmpty()) {
-            UserDataValidation.validateImage(multipartFile, model);
-        }
-        if (status.equals("validationFail")) {
-            model.addAttribute("size", "File size exceeds maximum 2mb limit");
-        }
-    }
-
-
-    public static void validateImage(MultipartFile multipartFile, Model model) throws IOException {
-        if (multipartFile.getBytes().length > 2097152) {
-            model.addAttribute("size", "File size exceeds maximum 2mb limit");
-        }
-        if (!Objects.requireNonNull(multipartFile.getContentType()).equals("image/jpg")
-                && !multipartFile.getContentType().equals("image/jpeg")
-                && !multipartFile.getContentType().equals("image/png")) {
-            model.addAttribute("formatValidationMessage", "Only PNG, JPEG and JPG files are allowed.");
-        }
     }
 
 }

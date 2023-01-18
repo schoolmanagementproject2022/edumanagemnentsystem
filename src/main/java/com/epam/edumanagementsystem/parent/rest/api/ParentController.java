@@ -67,7 +67,7 @@ public class ParentController {
                              Model model) throws IOException {
 
         model.addAttribute("parents", parentService.findAll());
-        UserDataValidation.checkMultipartFile(multipartFile, status, model);
+        imageService.checkMultipartFile(multipartFile, status, model);
         checkEmailForCreate(parentDto, bindingResult, model);
 
         if (bindingResult.hasErrors()) {
