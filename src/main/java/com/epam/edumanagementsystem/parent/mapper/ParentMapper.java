@@ -1,4 +1,4 @@
-package com.epam.edumanagementsystem.parent.rest.mapper;
+package com.epam.edumanagementsystem.parent.mapper;
 
 import com.epam.edumanagementsystem.parent.model.dto.ParentDto;
 import com.epam.edumanagementsystem.parent.model.dto.ParentEditDto;

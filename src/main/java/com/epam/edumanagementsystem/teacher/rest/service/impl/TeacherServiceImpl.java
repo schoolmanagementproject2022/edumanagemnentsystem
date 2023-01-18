@@ -128,6 +128,9 @@ public class TeacherServiceImpl implements TeacherService {
     public void addImage(TeacherDto teacherDto, MultipartFile multipartFile) {
         LOGGER.info("addImage method entered: {}", teacherDto);
         Teacher teacher = teacherRepository.findById(teacherDto.getId()).get();
+        if (teacher.getPicUrl() != null) {
+            imageService.deleteImage(teacher.getPicUrl());
+        }
         teacher.setPicUrl(imageService.saveImage(multipartFile));
         teacherRepository.save(teacher);
     }
@@ -137,4 +140,5 @@ public class TeacherServiceImpl implements TeacherService {
         LOGGER.info("removeImage method entered: {}", id);
         teacherRepository.updateTeacherPicUrl(id);
     }
+
 }

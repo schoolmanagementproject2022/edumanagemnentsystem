@@ -132,6 +132,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void addProfilePicture(StudentDto studentDto, MultipartFile multipartFile) {
+        if (studentDto.getPicUrl() != null) {
+            imageService.deleteImage(studentDto.getPicUrl());
+        }
         studentDto.setPicUrl(imageService.saveImage(multipartFile));
         logger.debug(studentDto.getPicUrl());
         updateForPic(studentDto);
@@ -146,6 +149,5 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findStudentsWithoutConnectionWithClass() {
         return StudentMapper.toStudentDtoList(studentRepository.findAllByAcademicClassIsNull());
     }
-
 
 }

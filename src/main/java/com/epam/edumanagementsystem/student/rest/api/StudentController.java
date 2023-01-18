@@ -86,7 +86,7 @@ public class StudentController extends StudentControllerHelper {
                               @RequestParam(value = "status", required = false) String status,
                               Model model) throws IOException {
         if (!multipartFile.isEmpty()) {
-            UserDataValidation.validateImage(multipartFile, model);
+            imageService.validateImage(multipartFile, model);
         }
         logger.debug(multipartFile.getName() + " " + studentDto.getNameAndSurname());
         if (status.equals("validationFail")) {
@@ -160,7 +160,6 @@ public class StudentController extends StudentControllerHelper {
     @Operation(summary = "Adds image to selected student's profile")
     public String addPic(@PathVariable("id") Long id,
                          @RequestParam("picture") MultipartFile multipartFile) {
-        logger.debug(multipartFile.getName() + " " + studentService.findById(id));
         studentService.addProfilePicture(studentService.findById(id), multipartFile);
         return REDIRECT + id + PROFILE;
     }

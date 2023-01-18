@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/teachers")
@@ -68,10 +67,10 @@ public class TeacherController {
                               BindingResult bindingResult,
                               @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                               @RequestParam(value = "status", required = false) String status,
-                              Model model) throws IOException {
+                              Model model) {
 
         model.addAttribute("teachers", teacherService.findAll());
-        UserDataValidation.checkMultipartFile(multipartFile, status, model);
+        imageService.checkMultipartFile(multipartFile, status, model);
         checkEmailForCreate(teacherDto, bindingResult, model);
 
         if (bindingResult.hasErrors()) {
