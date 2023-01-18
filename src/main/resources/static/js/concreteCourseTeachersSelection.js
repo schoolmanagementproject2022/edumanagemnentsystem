@@ -1,8 +1,12 @@
+var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com/'
+var localhost ='http://localhost:8082'
+
+
 function chooseTeachersOfConcreteCourse() {
     let elem = document.getElementById("course")
     let elem1 = document.getElementById("teacher")
     elem.addEventListener("change", (item) => {
-        fetch(`http://localhost:8082/teacherByCourseId?teachers=${item.target.value}`).then(data => {
+        fetch(awsHost+`/teacherByCourseId?teachers=${item.target.value}`).then(data => {
             return data.json()
         })
             .then(elem => {
@@ -34,7 +38,7 @@ function chooseTeachersOfConcreteCourseAfterError() {
     var popupContainer = document.getElementById("popup-container");
     popupContainer.addEventListener("mouseenter", (ev) => {
         var val = $("#course option:selected").val();
-        fetch(`http://localhost:8082/teacherByCourseId?teachers=${val}`).then(data => {
+        fetch(awsHost+`/teacherByCourseId?teachers=${val}`).then(data => {
             return data.json()
         })
             .then(elem => {
