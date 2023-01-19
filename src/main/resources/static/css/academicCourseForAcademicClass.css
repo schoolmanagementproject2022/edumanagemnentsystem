@@ -10,6 +10,11 @@ body {
     background: #ffffff;
     font-family: "Montserrat", sans-serif;
 }
+.main-page-title{
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.5s;
+}
 
 .container {
     width: 100%;

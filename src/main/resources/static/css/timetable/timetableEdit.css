@@ -11,6 +11,12 @@ body {
     font-family: "Montserrat", sans-serif;
 }
 
+.main-page-title{
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+
 
 /*Top part styles*/
 .container {
