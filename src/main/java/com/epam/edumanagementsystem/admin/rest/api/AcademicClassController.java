@@ -10,6 +10,7 @@ import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.teacher.rest.service.TeacherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -186,7 +187,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/teachers")
     @Operation(summary = "Gets the list of the teachers for the academic class")
     public String teachersForAcademicClass(Model model, @PathVariable("name") String name) {
-        model.addAttribute("teachers", academicClassService.findByClassNumber(name).getTeachers());
+        model.addAttribute("teachers", TeacherMapper.mapToTeacherDtoSet(academicClassService.findByClassNumber(name).getTeachers()));
         model.addAttribute("allTeacherByAcademicClass", teacherService.findAllTeachersInAllCourses());
         return TEACHERS_FOR_ACADEMIC_CLASSES;
     }
