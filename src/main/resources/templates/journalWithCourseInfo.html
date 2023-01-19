@@ -210,7 +210,8 @@
                         PopUpShowAgendaMonday();
                     </script>
                     <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'MONDAY'">
+                            th:if="${#fields.hasAnyErrors()} or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'MONDAY'">
                         PopUpShowAgendaMonday();
                     </script>
                     <script th:inline="javascript"
@@ -266,7 +267,8 @@
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                     <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'TUESDAY'">
+                            th:if="${#fields.hasAnyErrors()} or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'TUESDAY'">
                         PopUpShowAgendaTuesday();
                     </script>
                     <script th:inline="javascript"
@@ -322,7 +324,8 @@
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                     <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'WEDNESDAY'">
+                            th:if="${#fields.hasAnyErrors()} or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'WEDNESDAY'">
                         PopUpShowAgendaWednesday();
                     </script>
                     <script th:inline="javascript"
@@ -377,7 +380,8 @@
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                     <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'THURSDAY'">
+                            th:if="${#fields.hasAnyErrors()} or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'THURSDAY'">
                         PopUpShowAgendaThursday();
                     </script>
                     <script th:inline="javascript"
@@ -434,11 +438,12 @@
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
                     <script th:inline="javascript"
-                            th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'FRIDAY'">
+                            th:if="${#fields.hasAnyErrors()} or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'FRIDAY'">
                         PopUpShowAgendaFriday();
                     </script>
                     <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'FRIDAY'">
+                            th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'FRIDAY'">
                         PopUpShowAgendaFriday();
                     </script>
                 </div>
@@ -488,7 +493,8 @@
                     <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SATURDAY'">
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()}or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'SATURDAY'">
                         PopUpShowAgendaSaturday();
                     </script>
                     <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SATURDAY'">
@@ -540,7 +546,8 @@
                     <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
                     <div class="error"
                          th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SUNDAY'">
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${#fields.hasErrors('classwork')}
+                    or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'SUNDAY'">
                         PopUpShowAgendaSunday();
                     </script>
                     <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SATURDAY'">
