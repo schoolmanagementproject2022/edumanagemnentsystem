@@ -38,6 +38,8 @@ public class AcademicClassController {
     private final StudentService studentService;
     private final TeacherService teacherService;
 
+    private static final String TEACHERS = "teachers";
+
     public AcademicClassController(AcademicClassService academicClassService,
                                    AcademicCourseService academicCourseService,
                                    StudentService studentService, TeacherService teacherService) {
@@ -116,14 +118,13 @@ public class AcademicClassController {
         AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
         Set<Teacher> allTeachersInClassName = academicClassByName.getTeachers();
 
-        for (AcademicClassDto allClass : academicClassService.findAll()) {
-            if (allClass.getClassroomTeacher() != null) {
-                allTeachersInClassName.removeIf(teacher -> teacher == allClass.getClassroomTeacher());
-            }
-        }
+        allTeachersInClassName.removeIf(
+                teacher -> academicClassService.findAll().stream()
+                        .filter(allClass -> allClass.getClassroomTeacher() != null)
+                        .anyMatch(allClass -> allClass.getClassroomTeacher() == teacher));
 
         model.addAttribute("existingClassroomTeacher", new AcademicClassDto());
-        model.addAttribute("teachers", allTeachersInClassName);
+        model.addAttribute(TEACHERS, allTeachersInClassName);
         if (academicClassByName.getClassroomTeacher() == null) {
             return CLASSROOM_TEACHER_SECTION;
         } else {
@@ -137,7 +138,7 @@ public class AcademicClassController {
     public String addClassroomTeacherInAcademicClass(@ModelAttribute("existingClassroomTeacher") AcademicClassDto academicClassDto,
                                                      @PathVariable("name") String name,
                                                      Model model) {
-        model.addAttribute("teachers", academicClassService.findByClassNumber(name).getTeachers());
+        model.addAttribute(TEACHERS, academicClassService.findByClassNumber(name).getTeachers());
         if (academicClassDto.getClassroomTeacher() == null) {
             model.addAttribute("blank", SELECT_FIELD);
             return CLASSROOM_TEACHER_SECTION;
@@ -187,7 +188,7 @@ public class AcademicClassController {
     @GetMapping("/{name}/teachers")
     @Operation(summary = "Gets the list of the teachers for the academic class")
     public String teachersForAcademicClass(Model model, @PathVariable("name") String name) {
-        model.addAttribute("teachers", TeacherMapper.mapToTeacherDtoSet(academicClassService.findByClassNumber(name).getTeachers()));
+        model.addAttribute(TEACHERS, TeacherMapper.mapToTeacherDtoSet(academicClassService.findByClassNumber(name).getTeachers()));
         model.addAttribute("allTeacherByAcademicClass", teacherService.findAllTeachersInAllCourses());
         return TEACHERS_FOR_ACADEMIC_CLASSES;
     }

@@ -2,8 +2,6 @@ package com.epam.edumanagementsystem.admin.timetable.rest.api;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
@@ -11,7 +9,6 @@ import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimet
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -43,23 +40,23 @@ public class UtilForTimetableController {
         model.addAttribute("lessonsOfSunday", coursesService.getCoursesByDayOfWeekAndStatusAndAcademicClassId("Sunday", "Edit", academicClassId));
     }
 
-    public static void currentTimetable_LessonId(Model model, TimetableDto currentTimetable, Long lessonId) {
+    public static void sendToFrontCurrentTimetableAndLessonId(Model model, TimetableDto currentTimetable, Long lessonId) {
         model.addAttribute("timetable", currentTimetable);
         model.addAttribute("lessonId", lessonId);
     }
 
-    public static void newTimetable_academicClassName(Model model, String academicClassName) {
+    public static void sendToFrontNewTimetableAndAcademicClassName(Model model, String academicClassName) {
         model.addAttribute("class", academicClassName);
         model.addAttribute("timetable", new Timetable());
     }
 
-    public static void allAcademicCourses_academicClass(Model model, Set<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
+    public static void sendToFrontAllAcademicCoursesAndAcademicClass(Model model, Set<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("academicClass", academicClass);
         model.addAttribute("courses", allAcademicCourses);
     }
 
-    public static void allAcademicCourses_newCourseForTimetable_academicClass(Model model, Set<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
+    public static void sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(Model model, Set<AcademicCourseDto> allAcademicCourses, AcademicClassDto academicClass) {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
-        allAcademicCourses_academicClass(model, allAcademicCourses, academicClass);
+        sendToFrontAllAcademicCoursesAndAcademicClass(model, allAcademicCourses, academicClass);
     }
 }

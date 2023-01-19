@@ -48,7 +48,8 @@ public class AcademicCourseMapper {
 
     public static Set<AcademicCourseDto> toSetOfAcademicCourseDto(Set<AcademicCourse> academicCourseSet) {
         return academicCourseSet.stream()
-                .map(AcademicCourseMapper::toDto).collect(Collectors.toCollection(LinkedHashSet::new));
+                .map(AcademicCourseMapper::toDto)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public static Set<AcademicCourse> toSetOfAcademicCourse(Set<AcademicCourseDto> academicCourseSet) {

@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.model.entity.Subject;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
+import com.epam.edumanagementsystem.admin.timetable.rest.service.impl.CoursesForTimetableServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;
