@@ -21,16 +21,6 @@ public class VacationDto {
     @DateTimeFormat(pattern = DATE_FORMATTER)
     private LocalDate endDate;
 
-    public VacationDto(Long id, LocalDate startDate, LocalDate endDate) {
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
-    public VacationDto() {
-
-    }
-
     public Long getId() {
         return id;
     }
