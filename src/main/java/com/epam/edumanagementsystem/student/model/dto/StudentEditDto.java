@@ -4,8 +4,8 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.parent.model.entity.Parent;
 import com.epam.edumanagementsystem.student.model.entity.BloodGroup;
 import com.epam.edumanagementsystem.student.model.entity.Gender;
+import com.epam.edumanagementsystem.util.annotation.ValidEmail;
 import com.epam.edumanagementsystem.util.annotation.ValidName;
-import com.epam.edumanagementsystem.util.annotation.ValidPassword;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -29,15 +29,13 @@ public class StudentEditDto {
     @ValidName
     private String surname;
 
-    @ValidName
-
+    @ValidEmail
     private String email;
 
     @NotBlank
     private String role = "STUDENT";
 
     @ValidName
-
     private String address;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -59,16 +57,7 @@ public class StudentEditDto {
     private AcademicClass academicClass;
 
     private String picUrl;
-//@ToDo Constructor should not have too many params!!!
 
-    public StudentEditDto() {
-        this.id=id;
-
-    }
-    public StudentEditDto(Long id) {
-        this.id=id;
-
-    }
     public Long getId() {
         return id;
     }
