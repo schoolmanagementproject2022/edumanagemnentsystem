@@ -1,8 +1,7 @@
-package com.epam.edumanagementsystem.admin.timetable.impl;
+package com.epam.edumanagementsystem.admin.timetable.rest.service.impl;
 
 import com.epam.edumanagementsystem.admin.timetable.mapper.TimetableMapper;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
-import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.TimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import org.springframework.stereotype.Service;

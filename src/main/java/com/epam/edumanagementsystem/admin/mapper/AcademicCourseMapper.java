@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.mapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,13 +49,13 @@ public class AcademicCourseMapper {
     public static Set<AcademicCourseDto> toSetOfAcademicCourseDto(Set<AcademicCourse> academicCourseSet) {
         return academicCourseSet.stream()
                 .map(AcademicCourseMapper::toDto)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public static Set<AcademicCourse> toSetOfAcademicCourse(Set<AcademicCourseDto> academicCourseSet) {
         return academicCourseSet.stream()
                 .map(AcademicCourseMapper::toAcademicCourse)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
 }

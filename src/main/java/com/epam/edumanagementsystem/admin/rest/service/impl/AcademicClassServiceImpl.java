@@ -13,7 +13,6 @@ import org.springframework.validation.ObjectError;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -54,13 +53,20 @@ public class AcademicClassServiceImpl implements AcademicClassService {
     }
 
     @Override
-    public AcademicClassDto update(AcademicClassDto academicClassDto) {
-        logger.info("Updating Academic Class");
-//        AcademicClassDto academicClassByNameDto = findByClassNumber(academicClassDto.getClassNumber());
-//        academicClassByNameDto.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
-//        academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
-//        academicClassByNameDto.setClassroomTeacher(academicClassDto.getClassroomTeacher());
-        return save(academicClassDto);
+    public AcademicClassDto updateCourses(AcademicClassDto academicClassDto, String classNumber) {
+        logger.info("Add courses in class");
+        AcademicClassDto academicClassByNameDto = findByClassNumber(classNumber);
+        academicClassByNameDto.getAcademicCourseSet().addAll(academicClassDto.getAcademicCourseSet());
+        academicClassByNameDto.getTeachers().addAll(academicClassDto.getTeachers());
+        return save(academicClassByNameDto);
+    }
+
+    @Override
+    public AcademicClassDto updateClassroomTeacher(AcademicClassDto academicClassDto, String classNumber) {
+        logger.info("Updating classroom teacher of class");
+        AcademicClassDto academicClassByNameDto = findByClassNumber(classNumber);
+        academicClassByNameDto.setClassroomTeacher(academicClassDto.getClassroomTeacher());
+        return save(academicClassByNameDto);
     }
 
     @Override
@@ -86,7 +92,7 @@ public class AcademicClassServiceImpl implements AcademicClassService {
 
     @Override
     public Set<AcademicClass> findAcademicClassByTeacherId(Long id) {
-         return academicClassRepository.findAcademicClassByTeachersId(id);
+        return academicClassRepository.findAcademicClassByTeachersId(id);
     }
 
 }

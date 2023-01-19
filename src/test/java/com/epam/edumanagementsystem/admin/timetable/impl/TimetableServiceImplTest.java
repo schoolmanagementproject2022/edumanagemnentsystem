@@ -4,6 +4,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.TimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.Timetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.TimetableRepository;
+import com.epam.edumanagementsystem.admin.timetable.rest.service.impl.TimetableServiceImpl;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.entity.User;
 import org.junit.jupiter.api.BeforeEach;

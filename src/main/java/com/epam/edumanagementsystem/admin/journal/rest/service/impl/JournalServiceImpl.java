@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.*;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
@@ -77,7 +78,7 @@ public class JournalServiceImpl implements JournalService {
             }
         }
         journalStartDate = DateUtil.recurs(journalStartDate);
-        List<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
         model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClassDto);
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
