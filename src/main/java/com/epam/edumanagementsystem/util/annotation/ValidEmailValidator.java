@@ -19,7 +19,7 @@ public class ValidEmailValidator implements ConstraintValidator<ValidEmail, Stri
             message = MessageByLang.getMessage("FILL_INPUT_FIELD");
         } else if (!PATTERN.matcher(email).matches()) {
             message = MessageByLang.getMessage("INVALID_EMAIL");
-        }else if (email.length() > AppConstants.FIELD_MAX_SIZE) {
+        } else if (email.length() > AppConstants.FIELD_MAX_SIZE) {
             message = MessageByLang.getMessage("SYMBOLS_MAX_LENGTH");
         }
 
