@@ -140,7 +140,7 @@ public class AcademicCourseController {
             return "academicCourseSectionForClasses";
         }
 
-        academicClassService.update(addClassesToCourse(academicClassDto, courseName));
+        academicClassService.updateCourses(addClassesToCourse(academicClassDto, courseName), academicClassDto.getClassNumber());
         return "redirect:/courses/" + courseName + "/classes";
     }
 

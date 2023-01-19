@@ -1,5 +1,5 @@
-var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com'
-var localhost ='http://localhost:8082'
+var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
+// var host = 'http://localhost:8082'
 
 
 function PopUpShowAgendaMonday() {
@@ -13,8 +13,8 @@ function PopUpShowAgendaMonday() {
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -41,13 +41,13 @@ function PopUpShowAgendaTuesday() {
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
     document.getElementById("course-tuesday").innerText = courseName + ': Agenda ' + dateValue
-    document.getElementById("date-tuesday").value= dateValue
+    document.getElementById("date-tuesday").value = dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -75,13 +75,13 @@ function PopUpShowAgendaWednesday() {
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
     document.getElementById("course-wednesday").innerText = courseName + ': Agenda ' + dateValue
-    document.getElementById("date-wednesday").value= dateValue
+    document.getElementById("date-wednesday").value = dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -108,13 +108,13 @@ function PopUpShowAgendaThursday() {
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
     document.getElementById("course-thursday").innerText = courseName + ': Agenda ' + dateValue
-    document.getElementById("date-thursday").value= dateValue
+    document.getElementById("date-thursday").value = dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -141,13 +141,13 @@ function PopUpShowAgendaFriday() {
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
     document.getElementById("course-friday").innerText = courseName + ': Agenda ' + dateValue
-    document.getElementById("date-friday").value= dateValue
+    document.getElementById("date-friday").value = dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -175,13 +175,13 @@ function PopUpShowAgendaSaturday() {
     let courseId = document.getElementById("courseId").value
 
     document.getElementById("course-saturday").innerText = courseName + ': Agenda ' + dateValue
-    document.getElementById("date-saturday").value= dateValue
+    document.getElementById("date-saturday").value = dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -208,13 +208,13 @@ function PopUpShowAgendaSunday() {
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
     document.getElementById("course-sunday").innerText = courseName + ': Agenda ' + dateValue
-    document.getElementById("date-sunday").value= dateValue
+    document.getElementById("date-sunday").value = dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
         dataType: 'json',
-        contentType : "application/json",
-        success: function(response) {
+        contentType: "application/json",
+        success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
@@ -237,7 +237,7 @@ function PopUpShowAgendaSunday() {
 
 function hideMondayPopup() {
     let dateValue = document.getElementById("mondayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -248,7 +248,7 @@ function hideMondayPopup() {
 
 function hideTuesdayPopup() {
     let dateValue = document.getElementById("tuesdayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -259,7 +259,7 @@ function hideTuesdayPopup() {
 
 function hideWednesdayPopup() {
     let dateValue = document.getElementById("wednesdayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -270,7 +270,7 @@ function hideWednesdayPopup() {
 
 function hideThursdayPopup() {
     let dateValue = document.getElementById("thursdayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -281,7 +281,7 @@ function hideThursdayPopup() {
 
 function hideFridayPopup() {
     let dateValue = document.getElementById("fridayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -292,7 +292,7 @@ function hideFridayPopup() {
 
 function hideSaturdayPopup() {
     let dateValue = document.getElementById("saturdayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");
@@ -303,7 +303,7 @@ function hideSaturdayPopup() {
 
 function hideSundayPopup() {
     let dateValue = document.getElementById("sundayDate").innerText
-    window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=` + dateValue;
+    window.location.href = host + `/classes/${id}/journal/${course_id}?date=` + dateValue;
     $("#header").css("-webkit-filter", "blur(0px)");
     $("#header").css("pointer-events", "auto");
     $("#show-btn").css("pointer-events", "auto");

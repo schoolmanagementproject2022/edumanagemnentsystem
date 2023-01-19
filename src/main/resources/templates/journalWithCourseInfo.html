@@ -559,8 +559,8 @@
 </div>
 
 <script>
-    var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com'
-    var localhost = 'http://localhost:8082'
+    var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
+    // var host = 'http://localhost:8082'
 
 
     $("#abc").on('click', function () {
@@ -592,13 +592,13 @@
     let id = $("#middleUrl").val()
     let course_id = $("#activeTab").val()
     $("#previousDate").on('click', function () {
-        window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${finalPreviousDate}`
+        window.location.href = host + `/classes/${id}/journal/${course_id}?date=${finalPreviousDate}`
     });
     $("#todayDate").on('click', function () {
-        window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${today}`
+        window.location.href = host + `/classes/${id}/journal/${course_id}?date=${today}`
     });
     $("#nextDate").on('click', function () {
-        window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${finalNextDate}`
+        window.location.href = host + `/classes/${id}/journal/${course_id}?date=${finalNextDate}`
     });
     // #middleUrl
     $(document).ready(function () {
@@ -621,7 +621,7 @@
                 let id = $("#middleUrl").val()
                 let course_id = $("#activeTab").val()
                 let formatedDate = dateInput.replaceAll('/', '-')
-                window.location.href = awsHost+`/classes/${id}/journal/${course_id}?date=${formatedDate}`
+                window.location.href = host + `/classes/${id}/journal/${course_id}?date=${formatedDate}`
             }
         });
     });

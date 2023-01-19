@@ -81,10 +81,9 @@ public class AcademicCourseServiceImpl implements AcademicCourseService {
     }
 
     @Override
-    public List<AcademicCourseDto> findAllAcademicCoursesInClassByName(String name) {
+    public Set<AcademicCourseDto> findAllAcademicCoursesInClassByName(String name) {
         logger.info("Finding All Academic Courses in Class by Name");
-
-        return new ArrayList<>(AcademicCourseMapper.toSetOfAcademicCourseDto(academicClassService.findByClassNumber(name).getAcademicCourseSet()));
+        return AcademicCourseMapper.toSetOfAcademicCourseDto(academicClassService.findByClassNumber(name).getAcademicCourseSet());
     }
 
     @Override
