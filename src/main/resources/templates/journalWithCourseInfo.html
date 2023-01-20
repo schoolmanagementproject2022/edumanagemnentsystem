@@ -173,7 +173,10 @@
 
     <div class="popup-container" id="popup-container-agenda-monday">
         <button class="close-btn" title="close" onclick="hideMondayPopup()">×</button>
-        <h1 id="course-monday" style="font-size: 1.5rem; font-weight: bold"></h1>
+        <div class="tooltip">
+            <h1 id="course-monday" style="font-size: 1.5rem; font-weight: bold" data-limit="23"></h1>
+            <span id="course-monday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
 
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
@@ -233,7 +236,10 @@
 
     <div class="popup-container" id="popup-container-agenda-tuesday">
         <button class="close-btn" title="close" onclick="hideTuesdayPopup()">×</button>
-        <h1 id="course-tuesday" style="font-size: 1.5rem; font-weight: bold"></h1>
+        <div class="tooltip">
+            <h1 id="course-tuesday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="course-tuesday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
 
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
@@ -290,8 +296,10 @@
 
     <div class="popup-container" id="popup-container-agenda-wednesday">
         <button class="close-btn" title="close" onclick="hideWednesdayPopup()">×</button>
-        <h1 id="course-wednesday" style="font-size: 1.5rem; font-weight: bold"></h1>
-
+        <div class="tooltip">
+            <h1 id="course-wednesday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="course-wednesday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
 
@@ -347,7 +355,10 @@
 
     <div class="popup-container" id="popup-container-agenda-thursday">
         <button class="close-btn" title="close" onclick="hideThursdayPopup()">×</button>
-        <h1 id="course-thursday" style="font-size: 1.5rem; font-weight: bold"></h1>
+        <div class="tooltip">
+            <h1 id="course-thursday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="course-thursday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
 
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
@@ -404,7 +415,10 @@
 
     <div class="popup-container" id="popup-container-agenda-friday">
         <button class="close-btn" title="close" onclick="hideFridayPopup()">×</button>
-        <h1 id="course-friday" style="font-size: 1.5rem; font-weight: bold"></h1>
+        <div class="tooltip">
+            <h1 id="course-friday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="course-friday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
 
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
@@ -461,7 +475,10 @@
 
     <div class="popup-container" id="popup-container-agenda-saturday">
         <button class="close-btn" title="close" onclick="hideSaturdayPopup()">×</button>
-        <h1 id="course-saturday" style="font-size: 1.5rem; font-weight: bold"></h1>
+        <div class="tooltip">
+            <h1 id="course-saturday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="course-saturday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
 
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
@@ -497,7 +514,8 @@
                     or ${#fields.hasErrors('test')} or ${#fields.hasErrors('homework')} and ${concreteDay} eq 'SATURDAY'">
                         PopUpShowAgendaSaturday();
                     </script>
-                    <script th:inline="javascript" th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SATURDAY'">
+                    <script th:inline="javascript"
+                            th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'SATURDAY'">
                         PopUpShowAgendaSaturday();
                     </script>
                 </div>
@@ -515,7 +533,10 @@
 
     <div class="popup-container" id="popup-container-agenda-sunday">
         <button class="close-btn" title="close" onclick="hideSundayPopup()">×</button>
-        <h1 id="course-sunday" style="font-size: 1.5rem; font-weight: bold"></h1>
+        <div class="tooltip">
+            <h1 id="course-sunday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="course-sunday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
 
         <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
               th:action="@{'/agenda/add'}">
@@ -564,6 +585,29 @@
         </form>
     </div>
 </div>
+
+<script>
+    function shortString(selector) {
+        const elements = document.querySelectorAll(selector);
+        const tail = '...';
+        if (elements && elements.length) {
+            for (const element of elements) {
+                let text = element.innerText;
+                if (element.hasAttribute('data-limit')) {
+                    if (text.length > element.dataset.limit) {
+                        element.innerText = `${text.substring(0, element.dataset.limit - tail.length).trim()}${tail}`;
+                    }
+                } else {
+                    throw Error('Cannot find attribute \'data-limit\'');
+                }
+            }
+        }
+    }
+
+    window.onload = function () {
+        shortString('.short');
+    };
+</script>
 
 <script>
     var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'

@@ -16,6 +16,36 @@ body {
     color: #01A7F0;
 }
 
+.tooltip {
+    outline: none;
+    position: relative;
+    min-width: 90px;
+    max-width: 535px;
+    opacity: 1; !important;
+}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    font-size: 14px;
+    padding: 4px;
+}
+
+.tooltip:hover .tooltiptext {
+    background: #dfdddd;
+    border: 1px solid #555;
+    color: #000000;
+    border-radius: 7px;
+    position: absolute;
+    left: 0;
+    word-break: break-word;
+    top: calc(100% + 1px);
+    z-index: 99;
+    visibility: visible;
+    opacity: 1;
+}
+
 td {
     border: 1px solid black;
     border-collapse: collapse;
@@ -187,7 +217,7 @@ tr td:not(:first-child) {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 65%;
+    margin-top: 55%;
     margin-left: -15%;
     width: 83px;
     display: block;
