@@ -9,6 +9,7 @@ function PopUpShowAgendaMonday() {
     let courseId = document.getElementById("courseId").value
     document.getElementById("date-monday").value = dateValue
     document.getElementById("course-monday").innerText = courseName + ': Agenda ' + dateValue
+    document.getElementById("course-monday-tooltip").innerText = courseName + ': Agenda ' + dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
@@ -40,8 +41,9 @@ function PopUpShowAgendaTuesday() {
     let courseName = document.getElementById("course-name").innerText
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
-    document.getElementById("course-tuesday").innerText = courseName + ': Agenda ' + dateValue
     document.getElementById("date-tuesday").value = dateValue
+    document.getElementById("course-tuesday").innerText = courseName + ': Agenda ' + dateValue
+    document.getElementById("course-tuesday-tooltip").innerText = courseName + ': Agenda ' + dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
@@ -74,8 +76,9 @@ function PopUpShowAgendaWednesday() {
     let courseName = document.getElementById("course-name").innerText
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
-    document.getElementById("course-wednesday").innerText = courseName + ': Agenda ' + dateValue
     document.getElementById("date-wednesday").value = dateValue
+    document.getElementById("course-wednesday").innerText = courseName + ': Agenda ' + dateValue
+    document.getElementById("course-wednesday-tooltip").innerText = courseName + ': Agenda ' + dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
@@ -107,8 +110,9 @@ function PopUpShowAgendaThursday() {
     let courseName = document.getElementById("course-name").innerText
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
-    document.getElementById("course-thursday").innerText = courseName + ': Agenda ' + dateValue
     document.getElementById("date-thursday").value = dateValue
+    document.getElementById("course-thursday").innerText = courseName + ': Agenda ' + dateValue
+    document.getElementById("course-thursday-tooltip").innerText = courseName + ': Agenda ' + dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
@@ -140,8 +144,9 @@ function PopUpShowAgendaFriday() {
     let courseName = document.getElementById("course-name").innerText
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
-    document.getElementById("course-friday").innerText = courseName + ': Agenda ' + dateValue
     document.getElementById("date-friday").value = dateValue
+    document.getElementById("course-friday").innerText = courseName + ': Agenda ' + dateValue
+    document.getElementById("course-friday-tooltip").innerText = courseName + ': Agenda ' + dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
@@ -173,9 +178,9 @@ function PopUpShowAgendaSaturday() {
     let courseName = document.getElementById("course-name").innerText
     let classId = document.getElementById("classId").value
     let courseId = document.getElementById("courseId").value
-
-    document.getElementById("course-saturday").innerText = courseName + ': Agenda ' + dateValue
     document.getElementById("date-saturday").value = dateValue
+    document.getElementById("course-saturday").innerText = courseName + ': Agenda ' + dateValue
+    document.getElementById("course-saturday-tooltip").innerText = courseName + ': Agenda ' + dateValue
     $.ajax({
         type: 'GET',
         url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
