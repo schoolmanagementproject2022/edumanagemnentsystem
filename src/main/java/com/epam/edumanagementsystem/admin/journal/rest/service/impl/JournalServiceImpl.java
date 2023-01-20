@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.*;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
@@ -56,7 +57,9 @@ public class JournalServiceImpl implements JournalService {
         LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
         LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
         model.addAttribute(START_DATE, timetableStartDate);
+        model.addAttribute("statDateForDatePicker", timetableStartDate);
         model.addAttribute(END_DATE, timetableEndDate);
+        model.addAttribute("endDateForDatePicker", timetableEndDate);
         LocalDate journalStartDate = null;
 
         if (startDate != null) {
