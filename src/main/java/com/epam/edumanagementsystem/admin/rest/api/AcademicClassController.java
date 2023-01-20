@@ -200,7 +200,7 @@ public class AcademicClassController {
                 model.addAttribute("blankClass", SELECT_FIELD);
                 check = true;
             }
-        if (academicClassDto.getTeachers() == null) {
+        if (academicClassDto.getTeachers() == null || academicClassDto.getTeachers().isEmpty()) {
             model.addAttribute("blank", SELECT_FIELD);
             check = true;
         }
