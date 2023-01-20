@@ -15,7 +15,6 @@ function chooseTeachersOfConcreteCourse() {
                 a.textContent = "Select teacher"
                 a.setAttribute("disabled", true)
                 a.setAttribute("selected", true)
-                a.setAttribute("hidden", true)
                 elem1.appendChild(a)
                 if (elem.length === 0) {
                     let a = document.createElement("option")
@@ -47,7 +46,6 @@ function chooseTeachersOfConcreteCourseAfterError() {
                 a.textContent = "Select teacher"
                 a.setAttribute("disabled", true)
                 a.setAttribute("selected", true)
-                a.setAttribute("hidden", true)
                 elem1.appendChild(a)
                 if (elem.length === 0) {
                     let a = document.createElement("option")
