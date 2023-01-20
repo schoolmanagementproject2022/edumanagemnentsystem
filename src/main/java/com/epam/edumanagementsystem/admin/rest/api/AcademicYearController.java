@@ -84,6 +84,9 @@ public class AcademicYearController {
                 if (endDate.getMonth().maxLength() + endDate.getDayOfMonth() - startDate.getDayOfMonth() < 30) {
                     model.addAttribute("min", minRangeMsg);
                     return "academicYearSection";
+                } else if (endDate.isBefore(startDate.plusDays(30))) {
+                    model.addAttribute("min", minRangeMsg);
+                    return "academicYearSection";
                 }
             }
         } else if (endDate.getYear() > now.getYear() + 10) {
