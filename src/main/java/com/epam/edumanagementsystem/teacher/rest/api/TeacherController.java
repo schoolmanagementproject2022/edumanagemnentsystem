@@ -12,6 +12,8 @@ import com.epam.edumanagementsystem.util.UserDataValidation;
 import com.epam.edumanagementsystem.util.imageUtil.rest.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +21,13 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/teachers")
@@ -67,13 +75,41 @@ public class TeacherController {
                               BindingResult bindingResult,
                               @RequestParam(value = "picture", required = false) MultipartFile multipartFile,
                               @RequestParam(value = "status", required = false) String status,
-                              Model model) {
+                              HttpSession httpSession,
+                              HttpServletResponse response,
+                              Model model) throws IOException {
 
         model.addAttribute("teachers", teacherService.findAll());
         imageService.checkMultipartFile(multipartFile, status, model);
         checkEmailForCreate(teacherDto, bindingResult, model);
 
         if (bindingResult.hasErrors()) {
+            byte[] bytes = multipartFile.getBytes();
+            String originalFilename = multipartFile.getOriginalFilename();
+            String contentType = multipartFile.getContentType();
+            ByteArrayResource byteArrayResource = new ByteArrayResource(bytes) {
+                @Override
+                public String getFilename() {
+                    return originalFilename;
+                }
+            };
+            MultipartFile file = new MockMultipartFile(originalFilename, byteArrayResource.getFilename(), contentType,
+                    byteArrayResource.getInputStream());
+            model.addAttribute("multipartFile", file);
+            model.addAttribute("originalFileName", file.getOriginalFilename());
+            model.addAttribute("contentType", file.getContentType());
+            model.addAttribute("byteArray", file.getBytes());
+
+//            if (bytes != null) {
+//                Cookie cookie = new Cookie("file", Base64.getEncoder().encodeToString(bytes));
+//                response.addCookie(cookie);
+//                return TEACHER_SECTION_HTML;
+//            }
+//            File tempFile = File.createTempFile("prefix", "suffix");
+//            multipartFile.transferTo(tempFile);
+//            httpSession.setAttribute("filePath", tempFile.getAbsolutePath());
+//            model.addAttribute("picture", multipartFile.getBytes());
+
             return TEACHER_SECTION_HTML;
         }
         TeacherDto savedTeacherDto = teacherService.save(teacherDto);

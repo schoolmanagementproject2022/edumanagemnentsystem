@@ -66,3 +66,42 @@ function showDotsInLength(){
         }
     });
 }
+
+function keepMultipartFile() {
+    // Get a reference to our file input
+    const fileInput = document.querySelector('input[type="file"]');
+
+    const multipartFile = document.getElementById("multipartFile").value
+    const contentType = document.getElementById("contentType").value
+    const originalFileName = document.getElementById("originalFileName").value
+    const byteArray = document.getElementById("byteArray").value
+
+    // Create a new File object
+    const myFile = new File([multipartFile], originalFileName, {
+        type: contentType,
+        lastModified: new Date(),
+    });
+
+    // Now let's create a DataTransfer to get a FileList
+    const dataTransfer = new DataTransfer();
+    dataTransfer.items.add(myFile);
+    fileInput.files = dataTransfer.files;
+
+
+
+
+    // Get the input element
+    // var fileInput = document.getElementById("picture");
+    //
+    // var multipartFile = document.getElementById("multipartFile").value
+    //
+    // var blob = new Blob([multipartFile.data], {type: multipartFile.contentType});
+    //
+    // var file = new File([blob], multipartFile.name, { type: multipartFile.contentType });
+
+// Create a file list object
+//     var fileList = new FileList({ 0: file, length: 1 });
+
+// Set the value of the input element to the file list object
+//     fileInput.files = fileList;
+}
