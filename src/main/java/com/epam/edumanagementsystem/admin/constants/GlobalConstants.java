@@ -33,6 +33,7 @@ public final class GlobalConstants {
     public static final String CLASSROOM_TEACHER_SECTION = "classroomTeacherSection";
     public static final String ACADEMIC_CLASS_SECTION_FOR_STUDENTS = "academicClassSectionForStudents";
     public static final String VACATION_SECTION = "vacationSection";
+    public static final String ACADEMIC_YEAR_SECTION = "academicYearSection";
 
 
 }

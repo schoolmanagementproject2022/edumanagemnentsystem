@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.time.LocalDate;
 
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.ACADEMIC_YEAR_SECTION;
+
 @Controller
 @RequestMapping("/years")
 @Tag(name = "Academic year")
@@ -34,7 +36,7 @@ public class AcademicYearController {
     @Operation(summary = "Gets all academic years and shows them on admin's dashboard")
     public String openAcademicYearSection(Model model) {
         setAttributesInYearSection(model);
-        return "academicYearSection";
+        return ACADEMIC_YEAR_SECTION;
     }
 
     @PostMapping
@@ -63,37 +65,33 @@ public class AcademicYearController {
                 if (startDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                 }
-                return "academicYearSection";
+                return ACADEMIC_YEAR_SECTION;
             } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
                 if (endDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
                 }
-                return "academicYearSection";
+                return ACADEMIC_YEAR_SECTION;
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
-                return "academicYearSection";
+                return ACADEMIC_YEAR_SECTION;
             }
         }
         if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) {
             model.addAttribute("invalid", invalidMsg);
-            return "academicYearSection";
+            return ACADEMIC_YEAR_SECTION;
         } else if (endDate.getYear() == startDate.getYear()) {
-            if (endDate.getMonth().getValue() == startDate.getMonth().getValue()) {
-                model.addAttribute("min", minRangeMsg);
-                return "academicYearSection";
-            } else if (endDate.getMonth().getValue() - startDate.getMonth().getValue() == 1) {
-                if (endDate.getMonth().maxLength() + endDate.getDayOfMonth() - startDate.getDayOfMonth() < 30) {
+            if (endDate.getMonth() == startDate.getMonth()) {
+                if (startDate.plusDays(30).isAfter(endDate)) {
                     model.addAttribute("min", minRangeMsg);
-                    return "academicYearSection";
-                } else if (endDate.isBefore(startDate.plusDays(30))) {
-                    model.addAttribute("min", minRangeMsg);
-                    return "academicYearSection";
+                    return ACADEMIC_YEAR_SECTION;
                 }
+            } else if (endDate.isBefore(startDate.plusDays(30))) {
+                model.addAttribute("min", minRangeMsg);
+                return ACADEMIC_YEAR_SECTION;
             }
         } else if (endDate.getYear() > now.getYear() + 10) {
             model.addAttribute("max", "Academic Year can’t be more than 10 year");
-            return "academicYearSection";
+            return ACADEMIC_YEAR_SECTION;
         }
-
         return "Passed";
     }
 
