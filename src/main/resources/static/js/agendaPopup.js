@@ -1,5 +1,5 @@
-var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
-// var host = 'http://localhost:8082'
+// var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
+var host = 'http://localhost:8082'
 
 
 function PopUpShowAgendaMonday() {
@@ -19,9 +19,15 @@ function PopUpShowAgendaMonday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-monday").value = parse.classwork
-                document.getElementById("homework-monday").value = parse.homework
-                document.getElementById("test-monday").value = parse.test
+                if (document.getElementById("classwork-monday").value === "") {
+                    document.getElementById("classwork-monday").value = parse.classwork
+                }
+                if (document.getElementById("homework-monday").value === "") {
+                    document.getElementById("homework-monday").value = parse.homework
+                }
+                if (document.getElementById("test-monday").value === "") {
+                    document.getElementById("test-monday").value = parse.test
+                }
             }
             console.log(response);
         }
@@ -53,9 +59,16 @@ function PopUpShowAgendaTuesday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-tuesday").value = parse.classwork
-                document.getElementById("homework-tuesday").value = parse.homework
-                document.getElementById("test-tuesday").value = parse.test
+                if (document.getElementById("classwork-tuesday").value === "") {
+                    document.getElementById("classwork-tuesday").value = parse.classwork
+
+                }
+                if (document.getElementById("homework-tuesday").value === "") {
+                    document.getElementById("homework-tuesday").value = parse.homework
+                }
+                if (document.getElementById("test-tuesday").value === "") {
+                    document.getElementById("test-tuesday").value = parse.test
+                }
             }
             console.log(response);
         }
@@ -88,9 +101,16 @@ function PopUpShowAgendaWednesday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-wednesday").value = parse.classwork
-                document.getElementById("homework-wednesday").value = parse.homework
-                document.getElementById("test-wednesday").value = parse.test
+                if (document.getElementById("classwork-wednesday").value === "") {
+                    document.getElementById("classwork-wednesday").value = parse.classwork
+
+                }
+                if (document.getElementById("homework-wednesday").value === "") {
+                    document.getElementById("homework-wednesday").value = parse.homework
+                }
+                if (document.getElementById("test-wednesday").value === "") {
+                    document.getElementById("test-wednesday").value = parse.test
+                }
             }
             console.log(response);
         }
@@ -119,16 +139,23 @@ function PopUpShowAgendaThursday() {
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
-            if (response != null) {
+            if (response.valueOf() != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-thursday").value = parse.classwork
-                document.getElementById("homework-thursday").value = parse.homework
-                document.getElementById("test-thursday").value = parse.test
+                if (document.getElementById("classwork-thursday").value === "") {
+                    document.getElementById("classwork-thursday").value = parse.classwork
+                }
+                if (document.getElementById("homework-thursday").value === "") {
+                    document.getElementById("homework-thursday").value = parse.homework
+                }
+                if (document.getElementById("test-thursday").value === "") {
+                    document.getElementById("test-thursday").value = parse.test
+                }
             }
             console.log(response);
         }
     })
+
 
     $("#popup-container-agenda-thursday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
@@ -156,9 +183,15 @@ function PopUpShowAgendaFriday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-friday").value = parse.classwork
-                document.getElementById("homework-friday").value = parse.homework
-                document.getElementById("test-friday").value = parse.test
+                if (document.getElementById("classwork-friday").value === "") {
+                    document.getElementById("classwork-friday").value = parse.classwork
+                }
+                if (document.getElementById("homework-friday").value === "") {
+                    document.getElementById("homework-friday").value = parse.homework
+                }
+                if (document.getElementById("test-friday").value === "") {
+                    document.getElementById("test-friday").value = parse.test
+                }
             }
             console.log(response);
         }
@@ -190,9 +223,15 @@ function PopUpShowAgendaSaturday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-saturday").value = parse.classwork
-                document.getElementById("homework-saturday").value = parse.homework
-                document.getElementById("test-saturday").value = parse.test
+                if (document.getElementById("classwork-saturday").value === "") {
+                    document.getElementById("classwork-saturday").value = parse.classwork
+                }
+                if (document.getElementById("homework-saturday").value === "") {
+                    document.getElementById("homework-saturday").value = parse.homework
+                }
+                if (document.getElementById("test-saturday").value === "") {
+                    document.getElementById("test-saturday").value = parse.test
+                }
             }
             console.log(response);
         }
@@ -223,9 +262,15 @@ function PopUpShowAgendaSunday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                document.getElementById("classwork-sunday").value = parse.classwork
-                document.getElementById("homework-sunday").value = parse.homework
-                document.getElementById("test-sunday").value = parse.test
+                if (document.getElementById("classwork-sunday").value === "") {
+                    document.getElementById("classwork-sunday").value = parse.classwork
+                }
+                if (document.getElementById("homework-sunday").value === "") {
+                    document.getElementById("homework-sunday").value = parse.homework
+                }
+                if (document.getElementById("test-sunday").value === "") {
+                    document.getElementById("test-sunday").value = parse.test
+                }
             }
             console.log(response);
         }

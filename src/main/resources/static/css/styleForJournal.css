@@ -168,7 +168,7 @@ tr td:not(:first-child) {
 .popup-container {
     display: none;
     width: 620px;
-    height: 530px;
+    height: 540px;
     padding: 20px;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.25);
@@ -208,7 +208,7 @@ tr td:not(:first-child) {
 }
 
 .half_2 {
-    width: 30%;
+    width: 24%;
     margin-left: 20%;
     height: 360px;
 }
@@ -217,7 +217,7 @@ tr td:not(:first-child) {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 55%;
+    margin-top: 62%;
     margin-left: -15%;
     width: 83px;
     display: block;
@@ -243,7 +243,7 @@ tr td:not(:first-child) {
     margin-top: 4px;
     margin-bottom: 4px;
     display: block;
-    width: 100%;
+    width: 105%;
     border-radius: 1px;
     border-width: 1.5px;
 }

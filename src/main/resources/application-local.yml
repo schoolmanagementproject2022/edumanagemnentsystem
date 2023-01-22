@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/edumanagement
+    username: postgres
+    password: root
+
+server:
+  port: 8082
+  max-http-header-size: 20KB

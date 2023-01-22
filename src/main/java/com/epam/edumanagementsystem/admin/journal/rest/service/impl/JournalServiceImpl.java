@@ -110,7 +110,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public void checksUpdateOrSaveObjectsAndDoes(SaveAgendaDto agendaDto) {
+    public void checksUpdateOrSaveObjectsInAgendaAndDoes(SaveAgendaDto agendaDto) {
         if (classworkService.getClassWorkOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
             classworkService.update(agendaDto);
         } else if (!agendaDto.getClasswork().isBlank()) {

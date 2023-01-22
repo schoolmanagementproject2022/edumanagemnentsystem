@@ -9,5 +9,5 @@ public interface JournalService {
 
     void doNotOpenJournal_timetableIsNotExist(String date, String startDate, String className, Model model);
 
-    void checksUpdateOrSaveObjectsAndDoes(SaveAgendaDto agendaDto);
+    void checksUpdateOrSaveObjectsInAgendaAndDoes(SaveAgendaDto agendaDto);
 }
