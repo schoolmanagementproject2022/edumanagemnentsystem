@@ -70,9 +70,7 @@ public class ParentController {
         imageService.checkMultipartFile(multipartFile, status, model);
         checkEmailForCreate(parentDto, bindingResult, model);
 
-        if (bindingResult.hasErrors() || model.containsAttribute("size")
-                || model.containsAttribute("formatValidationMessage")
-                || model.containsAttribute("validationFail")) {
+        if (bindingResult.hasErrors()) {
             return PARENT_SECTION_HTML;
         }
         ParentDto savedParentDto = parentService.save(parentDto);
