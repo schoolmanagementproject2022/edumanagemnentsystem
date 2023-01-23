@@ -42,10 +42,10 @@ public class AgendaOfJournalController {
         if (agendaDto.getClasswork().isBlank() && agendaDto.getTest().isBlank() && agendaDto.getHomework().isBlank()) {
             redirectAttributes.addAttribute("allFieldsBlankMessage", "At least one type has to be chosen");
             redirectAttributes.addAttribute("concreteDay", concreteDay);
-            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId();
+            return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
         }
 
-        journalService.checksUpdateOrSaveObjectsAndDoes(agendaDto);
+        journalService.checksUpdateOrSaveObjectsInAgendaAndDoes(agendaDto);
         return "redirect:/classes/" + classById.getClassNumber() + "/journal/" + agendaDto.getCourseId() + "?date=" + agendaDto.getDate();
     }
 
