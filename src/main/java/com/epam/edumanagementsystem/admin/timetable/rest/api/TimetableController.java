@@ -23,10 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.*;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 @RequestMapping("/classes/")
@@ -380,6 +382,13 @@ public class TimetableController {
         Set<AcademicCourseDto> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
 
+        if (ChronoUnit.DAYS.between(startDate, endDate) < 7){
+            invalidMsg = "Timetable duration can't be less than 7 days";
+            model.addAttribute("invalid", invalidMsg);
+            sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
+            putLessons(model, academicClass.getId());
+            return TIMETABLE_CREATION_HTML;
+        }
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 if (startDate.isBefore(now)) {
@@ -465,6 +474,13 @@ public class TimetableController {
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (result.hasErrors()) {
+            if (ChronoUnit.DAYS.between(startDate, endDate) < 7){
+                invalidMsg = "Timetable duration can't be less than 7 days";
+                model.addAttribute("invalid", invalidMsg);
+                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
+                putEditedLessons(model, timetable.getAcademicClass().getId());
+                return TIMETABLE_EDIT_HTML;
+            }
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 if (startDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
