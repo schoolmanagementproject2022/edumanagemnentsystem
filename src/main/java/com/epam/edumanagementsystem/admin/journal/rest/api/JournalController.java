@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/classes")
@@ -61,10 +60,8 @@ public class JournalController {
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
 
-        LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
-        LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
-        model.addAttribute("startDateForDatePicker", timetableStartDate);
-        model.addAttribute("endDateForDatePicker", timetableEndDate);
+        model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
+        model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
 
         if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
             model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
@@ -95,10 +92,8 @@ public class JournalController {
                                      @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                      Model model) {
 
-        LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
-        LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
-        model.addAttribute("startDateForDatePicker", timetableStartDate);
-        model.addAttribute("endDateForDatePicker", timetableEndDate);
+        model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
+        model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
