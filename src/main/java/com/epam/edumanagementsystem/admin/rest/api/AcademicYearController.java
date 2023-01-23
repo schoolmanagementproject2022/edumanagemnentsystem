@@ -80,11 +80,11 @@ public class AcademicYearController {
             return ACADEMIC_YEAR_SECTION;
         } else if (endDate.getYear() == startDate.getYear()) {
             if (endDate.getMonth() == startDate.getMonth()) {
-                if (startDate.plusDays(30).isAfter(endDate)) {
+                if (startDate.plusDays(29).isAfter(endDate)) {
                     model.addAttribute("min", minRangeMsg);
                     return ACADEMIC_YEAR_SECTION;
                 }
-            } else if (endDate.isBefore(startDate.plusDays(30))) {
+            } else if (endDate.isBefore(startDate.plusDays(29))) {
                 model.addAttribute("min", minRangeMsg);
                 return ACADEMIC_YEAR_SECTION;
             }
