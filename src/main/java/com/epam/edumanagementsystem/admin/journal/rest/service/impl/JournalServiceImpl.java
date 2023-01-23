@@ -56,7 +56,7 @@ public class JournalServiceImpl implements JournalService {
 
         LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
         LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
-        model.addAttribute("statDateForDatePicker", timetableStartDate);
+        model.addAttribute("startDateForDatePicker", timetableStartDate);
         model.addAttribute("endDateForDatePicker", timetableEndDate);
         LocalDate journalStartDate = null;
 

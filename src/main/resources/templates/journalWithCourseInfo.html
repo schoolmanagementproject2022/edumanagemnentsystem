@@ -42,8 +42,8 @@
                    id="create-btn"><b>Add students</b></a>
             </div>
 
-            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateInput}"/>
-            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateInput}"/>
+            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateForDatePicker}"/>
+            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateForDatePicker}"/>
             <input type="hidden" id="1234date" th:value="${startDate}"/>
 
             <div th:if="${allStudentsInAcademicClass.size()!=0}" class="list"

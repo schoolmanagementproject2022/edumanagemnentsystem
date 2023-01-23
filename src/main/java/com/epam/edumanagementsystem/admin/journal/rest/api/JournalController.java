@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/classes")
@@ -60,6 +61,11 @@ public class JournalController {
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
 
+        LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
+        LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
+        model.addAttribute("startDateForDatePicker", timetableStartDate);
+        model.addAttribute("endDateForDatePicker", timetableEndDate);
+
         if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
             model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
             model.addAttribute("concreteDay", concreteDay);
@@ -88,6 +94,11 @@ public class JournalController {
                                      @RequestParam(name = "startDate", required = false) String startDate,
                                      @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                      Model model) {
+
+        LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
+        LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
+        model.addAttribute("startDateForDatePicker", timetableStartDate);
+        model.addAttribute("endDateForDatePicker", timetableEndDate);
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
