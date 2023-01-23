@@ -36,8 +36,7 @@
         <form id="form" th:action="@{/parents}" method="POST" enctype="multipart/form-data" th:object="${parent}" onsubmit="return filevalidation()">
 
             <input type="hidden" id="status" name="status" th:value="null">
-            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated} or ${size}
-             or ${formatValidationMessage} or ${validationFail}">
+            <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
             </script>
 

@@ -90,10 +90,6 @@
                         <label class="popup-label-title">Image</label>
                         <input type="file" accept="image/png,image/jpeg,image/jpg" class="form_input" id="picture"
                                th:name="picture"/>
-                        <input type="hidden" id="multipartFile" th:value="${multipartFile}">
-                        <input type="hidden" id="originalFileName" th:value="${originalFileName}">
-                        <input type="hidden" id="contentType" th:value="${contentType}">
-                        <input type="hidden" id="byteArray" th:value="${byteArray}">
                         <div class="error">
                             <p id="errorPic" th:text="${formatValidationMessage}"></p>
                             <p th:text="${size}"></p>
@@ -109,10 +105,6 @@
     </div>
 </div>
 </body>
-<script>
-keepMultipartFile();
-</script>
-
 <script>
     filevalidation = () => {
         const fi = document.getElementById('picture');
