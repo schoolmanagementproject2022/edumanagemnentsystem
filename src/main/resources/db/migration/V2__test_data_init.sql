@@ -49,8 +49,8 @@ CREATE TABLE if not exists user_table (
 
 CREATE TABLE if not exists academic_year (
     id       SERIAL PRIMARY KEY,
-    end_date date NOT NULL,
-    start_date date NOT NULL
+    start_date date NOT NULL,
+    end_date date NOT NULL
 );
 
 CREATE TABLE if not exists subject (
@@ -136,7 +136,7 @@ VALUES ('Student', 'Studentyan', (SELECT id FROM user_table WHERE email='student
         '2019-10-09','MALE', 'A_PLUS',
         '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC', (SELECT id FROM academic_class WHERE class_number='1A'));
 
-INSERT INTO academic_year (end_date, start_date)
+INSERT INTO academic_year (start_date, end_date)
 VALUES ('2023-11-09', '2024-11-09');
 
 INSERT INTO subject (name)

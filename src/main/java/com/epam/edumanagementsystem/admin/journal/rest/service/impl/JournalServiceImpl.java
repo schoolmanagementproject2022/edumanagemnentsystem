@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.*;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
@@ -55,8 +56,8 @@ public class JournalServiceImpl implements JournalService {
 
         LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
         LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
-        model.addAttribute(START_DATE, timetableStartDate);
-        model.addAttribute(END_DATE, timetableEndDate);
+        model.addAttribute("statDateForDatePicker", timetableStartDate);
+        model.addAttribute("endDateForDatePicker", timetableEndDate);
         LocalDate journalStartDate = null;
 
         if (startDate != null) {
@@ -77,7 +78,7 @@ public class JournalServiceImpl implements JournalService {
             }
         }
         journalStartDate = DateUtil.recurs(journalStartDate);
-        List<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
         model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClassDto);
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
@@ -109,7 +110,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public void checksUpdateOrSaveObjectsAndDoes(SaveAgendaDto agendaDto) {
+    public void checksUpdateOrSaveObjectsInAgendaAndDoes(SaveAgendaDto agendaDto) {
         if (classworkService.getClassWorkOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
             classworkService.update(agendaDto);
         } else if (!agendaDto.getClasswork().isBlank()) {

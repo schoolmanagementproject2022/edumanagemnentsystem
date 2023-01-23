@@ -1,6 +1,5 @@
-package com.epam.edumanagementsystem.admin.timetable.impl;
+package com.epam.edumanagementsystem.admin.timetable.rest.service.impl;
 
-import com.epam.edumanagementsystem.admin.timetable.mapper.CoursesForTimetableMapper;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;

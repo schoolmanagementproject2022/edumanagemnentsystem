@@ -91,6 +91,7 @@ public class JournalController {
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
+            model.addAttribute("concreteDay", concreteDay);
             if (studentService.findStudentsByClassName(name).isEmpty()) {
                 return JOURNAL_WITH_COURSE_INFO_HTML;
             }
@@ -99,7 +100,7 @@ public class JournalController {
             return JOURNAL_WITH_COURSE_INFO_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
-           setAttributesInJournalSectionWhenTimetableNotExist(model, name);
+            setAttributesInJournalSectionWhenTimetableNotExist(model, name);
             return CREATE_TIMETABLE_MSG_FROM_JOURNAL_HTML;
         }
     }

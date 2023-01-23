@@ -40,8 +40,8 @@
                 <span class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Journal'}"></span>
             </div>
 
-            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateInput}"/>
-            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateInput}"/>
+            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${statDateForDatePicker}"/>
+            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateForDatePicker}"/>
             <input type="hidden" id="1234date" th:value="${startDate}"/>
 
             <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
@@ -126,8 +126,8 @@
 </div>
 </div>
 <script>
-    var awsHost = 'http://edu-development.eu-north-1.elasticbeanstalk.com'
-    var localhost = 'http://localhost:8082'
+    var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
+    // var host = 'http://localhost:8082'
 
 
     $("#abc").on('click', function () {
@@ -158,13 +158,13 @@
 
     let id = $("#middleUrl").val()
     $("#previousDate").on('click', function () {
-        window.location.href = awsHost + `/classes/${id}/journal?date=${finalPreviousDate}`
+        window.location.href = host + `/classes/${id}/journal?date=${finalPreviousDate}`
     });
     $("#todayDate").on('click', function () {
-        window.location.href = awsHost + `/classes/${id}/journal?date=${today}`
+        window.location.href = host + `/classes/${id}/journal?date=${today}`
     });
     $("#nextDate").on('click', function () {
-        window.location.href = awsHost + `/classes/${id}/journal?date=${finalNextDate}`
+        window.location.href = host + `/classes/${id}/journal?date=${finalNextDate}`
     });
     // #middleUrl
     $(document).ready(function () {
@@ -185,7 +185,7 @@
                 $('#dateInput').val($('#dateInput').val() + `  ⋁`);
                 let id = $("#middleUrl").val()
                 let formatedDate = dateInput.replaceAll('/', '-')
-                window.location.href = awsHost + `/classes/${id}/journal?date=${formatedDate}`
+                window.location.href = host + `/classes/${id}/journal?date=${formatedDate}`
             }
         });
     });

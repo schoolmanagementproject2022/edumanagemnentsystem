@@ -12,8 +12,6 @@ public final class GlobalConstants {
     public static final String ACADEMIC_COURSE_SECTION = "academicCourseSection";
     public static final String DATE_FORMATTER_JOURNAL = "yyyy-MM-dd";
     public static final String DATE_FORMATTER = "dd-MM-yyyy";
-    public static final String START_DATE = "startDate";
-    public static final String END_DATE = "endDate";
     public static final String ALL_COURSES_IN_ACADEMIC_CLASS = "allCoursesInAcademicClass";
 
     public static final String USED_SYMBOLS = "<>-_`*,:|() symbols can be used.";

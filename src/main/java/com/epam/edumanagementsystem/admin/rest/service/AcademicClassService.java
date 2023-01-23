@@ -20,7 +20,8 @@ public interface AcademicClassService {
 
     AcademicClassDto removeByTeacherName(String teacherName);
 
-    AcademicClassDto update(AcademicClassDto academicClassDto);
+    AcademicClassDto updateCourses(AcademicClassDto academicClassDto, String classNumber);
+    AcademicClassDto updateClassroomTeacher(AcademicClassDto academicClassDto, String classNumber);
 
     Set<AcademicClassDto> findByTeacherId(Long id);
 

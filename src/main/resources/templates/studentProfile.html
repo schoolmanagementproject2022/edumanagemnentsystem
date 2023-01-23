@@ -110,7 +110,7 @@
                                       th:action="@{'/students/' + ${existingStudent.getId()} + '/image/add'}"
                                       th:object="${existingStudent}" enctype="multipart/form-data">
                                     <div class="image-upload">
-                                        <input id="form-pic-edit" th:name="picture" multiple type="file"
+                                        <input id="form-pic-edit" th:name="picture" type="file"
                                                accept="image/png,image/jpeg" onchange="filevalidationEdit()">
                                     </div>
                                 </form>

@@ -1,7 +1,6 @@
 package com.epam.edumanagementsystem.admin.rest.service;
 
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -18,7 +17,7 @@ public interface AcademicCourseService {
 
     List<AcademicCourseDto> findAll();
 
-    List<AcademicCourseDto> findAllAcademicCoursesInClassByName(String name);
+    Set<AcademicCourseDto> findAllAcademicCoursesInClassByName(String name);
 
     AcademicCourseDto update(AcademicCourseDto academicCourse);
 
