@@ -78,7 +78,7 @@ public class JournalServiceImpl implements JournalService {
             }
         }
         journalStartDate = DateUtil.recurs(journalStartDate);
-        List<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
+        Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
         model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClassDto);
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
@@ -110,7 +110,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public void checksUpdateOrSaveObjectsAndDoes(SaveAgendaDto agendaDto) {
+    public void checksUpdateOrSaveObjectsInAgendaAndDoes(SaveAgendaDto agendaDto) {
         if (classworkService.getClassWorkOfCourse(LocalDate.parse(agendaDto.getDate()), agendaDto.getClassId(), agendaDto.getCourseId()) != null) {
             classworkService.update(agendaDto);
         } else if (!agendaDto.getClasswork().isBlank()) {

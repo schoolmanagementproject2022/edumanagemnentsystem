@@ -49,8 +49,8 @@ CREATE TABLE if not exists user_table (
 
 CREATE TABLE if not exists academic_year (
     id       SERIAL PRIMARY KEY,
-    end_date date NOT NULL,
-    start_date date NOT NULL
+    start_date date NOT NULL,
+    end_date date NOT NULL
 );
 
 CREATE TABLE if not exists subject (
@@ -136,7 +136,7 @@ VALUES ('Student', 'Studentyan', (SELECT id FROM user_table WHERE email='student
         '2019-10-09','MALE', 'A_PLUS',
         '$2a$10$Bc4E52S/HJLeWUmZZT5/YOOI49CfeOeLUOix9CShwWkN7aOLTL9FC', (SELECT id FROM academic_class WHERE class_number='1A'));
 
-INSERT INTO academic_year (end_date, start_date)
+INSERT INTO academic_year (start_date, end_date)
 VALUES ('2023-11-09', '2024-11-09');
 
 INSERT INTO subject (name)
@@ -144,11 +144,18 @@ VALUES ('Languages');
 
 INSERT INTO subject_teacher_mapping (subject_id, teacher_id)
 VALUES ((SELECT id FROM subject WHERE name='Languages'), (SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email='gayaneHovhannisyan@gmail.com')));
+
 INSERT INTO academic_course (name, subject_id)
 VALUES ('English', (SELECT id FROM subject WHERE name='Languages'));
 
+INSERT INTO subject_teacher_mapping (subject_id, teacher_id)
+VALUES ((SELECT id FROM subject WHERE name='Languages'), (SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email='gayushPoghosyan@gmail.com')));
+
 INSERT INTO academic_course_teacher_mapping (academic_course_id, teacher_id)
 VALUES ((SELECT id FROM academic_course WHERE name='English'), (SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email = 'gayaneHovhannisyan@gmail.com')));
+
+INSERT INTO academic_course_teacher_mapping (academic_course_id, teacher_id)
+VALUES ((SELECT id FROM academic_course WHERE name='English'), (SELECT id FROM teacher WHERE teacher.user_id=(SELECT id FROM user_table WHERE email = 'gayushPoghosyan@gmail.com')));
 
 INSERT INTO academic_class_academic_course_mapping (academic_class_id, academic_course_id)
 VALUES ((SELECT id FROM academic_class WHERE class_number='1A'), (SELECT id FROM academic_course WHERE name='English'));

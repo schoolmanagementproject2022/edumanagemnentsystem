@@ -54,7 +54,7 @@
 
         <div class="list">
             <div class="list-items" th:each="vacation : ${vacations}">
-                <p class="item" th:text="${vacation.getStartDate() + ' - ' + vacation.getEndDate}">Vacation</p>
+                <p class="item" th:text="${vacation.getStartDate + ' - ' + vacation.getEndDate}">Vacation</p>
             </div>
         </div>
     </div>

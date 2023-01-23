@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ebs
+    active: ${ACTIVE_PROFILE}
 
   servlet:
     multipart:

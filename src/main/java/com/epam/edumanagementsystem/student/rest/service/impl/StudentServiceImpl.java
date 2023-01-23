@@ -67,6 +67,8 @@ public class StudentServiceImpl implements StudentService {
         updatableStudent.setId(newStudent.getId());
         updatableStudent.setName(newStudent.getName());
         updatableStudent.setSurname(newStudent.getSurname());
+        updatableStudent.setAddress(newStudent.getAddress());
+        updatableStudent.setBloodGroup(newStudent.getBloodGroup());
         updatableStudent.setDate(newStudent.getDate());
         updatableStudent.setGender(newStudent.getGender());
         updatableStudent.setParent(newStudent.getParent());
