@@ -383,7 +383,7 @@ public class TimetableController {
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (ChronoUnit.DAYS.between(startDate, endDate) < 7){
-            invalidMsg = "timetables period cannot be less than 7 days";
+            invalidMsg = "Timetable duration can't be less than 7 days";
             model.addAttribute("invalid", invalidMsg);
             sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
             putLessons(model, academicClass.getId());
@@ -475,7 +475,7 @@ public class TimetableController {
 
         if (result.hasErrors()) {
             if (ChronoUnit.DAYS.between(startDate, endDate) < 7){
-                invalidMsg = "timetables period cannot be less than 7 days";
+                invalidMsg = "Timetable duration can't be less than 7 days";
                 model.addAttribute("invalid", invalidMsg);
                 sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
                 putEditedLessons(model, timetable.getAcademicClass().getId());
