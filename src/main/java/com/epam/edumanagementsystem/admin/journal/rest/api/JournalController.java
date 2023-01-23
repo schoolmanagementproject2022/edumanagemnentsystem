@@ -60,6 +60,9 @@ public class JournalController {
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
 
+        model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
+        model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
+
         if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
             model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
             model.addAttribute("concreteDay", concreteDay);
@@ -88,6 +91,9 @@ public class JournalController {
                                      @RequestParam(name = "startDate", required = false) String startDate,
                                      @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                      Model model) {
+
+        model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
+        model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
