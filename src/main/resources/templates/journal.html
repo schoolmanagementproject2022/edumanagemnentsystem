@@ -40,8 +40,8 @@
                 <span class="a-url" th:classappend="${allUrl}" th:href="${allUrl}" th:text="${'Journal'}"></span>
             </div>
 
-            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${startDateInput}"/>
-            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateInput}"/>
+            <input type="text" id="startDateTime" style="display: none; overflow: hidden" th:value="${statDateForDatePicker}"/>
+            <input type="text" id="endDateTime" style="display: none; overflow: hidden" th:value="${endDateForDatePicker}"/>
             <input type="hidden" id="1234date" th:value="${startDate}"/>
 
             <div class="list" style=" -ms-overflow-style: none !important;; scrollbar-width: none !important;">
