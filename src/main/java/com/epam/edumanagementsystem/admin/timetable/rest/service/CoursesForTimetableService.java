@@ -9,6 +9,8 @@ public interface CoursesForTimetableService {
 
     void create(CoursesForTimetableDto coursesForTimetableDto);
 
+    List<CoursesForTimetable> findAllByDayOfWeek(String dayOfWeek);
+
     void deleteCourseById(Long courseId);
 
     void updateCourseStatusById(Long courseId);

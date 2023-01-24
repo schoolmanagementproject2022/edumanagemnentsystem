@@ -17,6 +17,8 @@ public interface CoursesForTimetableRepository extends JpaRepository<CoursesForT
     @Query(nativeQuery = true, value = "Delete FROM courses_table WHERE id =(?1);")
     void deleteCourseById(Long courseId);
 
+    List<CoursesForTimetable> findAllByDayOfWeek(String dayOfWeek);
+
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE courses_table SET status = 'Active' WHERE id =(?1);")
     void updateCourseStatusToActiveById(Long courseId);

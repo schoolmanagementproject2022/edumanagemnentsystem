@@ -32,6 +32,11 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
+    public List<CoursesForTimetable> findAllByDayOfWeek(String dayOfWeek) {
+        return coursesForTimetableRepository.findAllByDayOfWeek(dayOfWeek);
+    }
+
+    @Override
     public void deleteCourseById(Long courseId) {
         coursesForTimetableRepository.deleteCourseById(courseId);
         logger.info("Deleted Course for Timetable by Id");
