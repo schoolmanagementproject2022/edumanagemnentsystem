@@ -31,7 +31,7 @@ public class ScheduleConfig {
         this.doneCoursesService = doneCoursesService;
     }
 
-    @Scheduled(cron = "0/30 * * * * ?")
+    @Scheduled(cron = "0/50 * * * * ?")
     @Transactional
     public void scheduleFixedRateTask() {
         LocalDate now = LocalDate.now();
@@ -41,7 +41,7 @@ public class ScheduleConfig {
                         .findTimetableByAcademicClassId(course.getAcademicClass().get(0).getId()).getStartDate()))
                 .forEach(course -> doneCoursesService.save(new DoneCourses(AcademicCourseMapper
                         .toAcademicCourse(academicCourseService.findByName(course.getAcademicCourse())),
-                        course.getAcademicClass().get(0), now.minusDays(1))));
+                        course.getAcademicClass().get(0), now)));
         logger.info("Added done courses to table");
     }
 
