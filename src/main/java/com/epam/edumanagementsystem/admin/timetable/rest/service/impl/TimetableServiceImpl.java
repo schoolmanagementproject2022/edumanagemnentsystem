@@ -6,8 +6,10 @@ import com.epam.edumanagementsystem.admin.timetable.rest.repository.TimetableRep
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
 @Service
@@ -59,4 +61,38 @@ public class TimetableServiceImpl implements TimetableService {
         logger.info("Updated Timetable Status by Academic Class Id");
     }
 
+    @Override
+    public boolean validateEditedTimetableDates(LocalDate editedStartDate, LocalDate editedEndDate, String classname, Model model) {
+        TimetableDto timetable = findTimetableByAcademicClassName(classname);
+
+        if (editedStartDate.isAfter(editedEndDate) || editedStartDate.isBefore(timetable.getStartDate()) ||
+                editedEndDate.isBefore(timetable.getStartDate())) {
+            model.addAttribute("invalid", "Please, select right dates");
+            return true;
+        } else if (ChronoUnit.DAYS.between(editedStartDate, editedEndDate) < 6) {
+            model.addAttribute("invalid", "Timetable duration can't be less than 7 days");
+            return true;
+        } else if (ChronoUnit.YEARS.between(editedStartDate, editedEndDate) >= 1) {
+            model.addAttribute("invalid", "Timetable duration can't be more than 12 months");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean validateTimetableDates(LocalDate startDate, LocalDate endDate, Model model) {
+        LocalDate now = LocalDate.now();
+
+        if ((startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now))) {
+            model.addAttribute("invalid", "Please, select right dates");
+            return true;
+        } else if (ChronoUnit.DAYS.between(startDate, endDate) < 6) {
+            model.addAttribute("invalid", "Timetable duration can't be less than 7 days");
+            return true;
+        } else if (ChronoUnit.YEARS.between(startDate, endDate) >= 1) {
+            model.addAttribute("invalid", "Timetable duration can't be more than 12 months");
+            return true;
+        }
+        return false;
+    }
 }

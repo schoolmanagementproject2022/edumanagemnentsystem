@@ -10,6 +10,7 @@
     <link href="/static/css/dateStyle.css" rel="stylesheet">
 
     <script src="/static/js/popupControlTimetable.js"></script>
+    <script src="/static/js/date.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -27,29 +28,68 @@
     </script>
 
     <script>
-        $(function () {
-            $("#startDate").datepicker({
-                dateFormat: "dd-mm-yy",
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-0:+10",
-                minDate: 0,
-                maxDate: "+0D +0M +1Y",
-                onSelect: function (dateStr) {
-                    var date = $(this).datepicker('getDate');
-                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
-                }
+        $(document).ready(function () {
+            $("#setMin").datepicker({
+                dateFormat: "dd-mm-yy"
             });
-            $("#endDate").datepicker({
+
+            $('#startDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-0:+10",
-                minDate: 0,
                 maxDate: "+0D +0M +1Y",
+                minDate: 0,
                 onSelect: function (selectedDate) {
                     var date = $(this).datepicker('getDate');
                     localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
+                }
+            });
+
+            $('#setMin').find(function () {
+
+                var minDate = $("#setMin").val();
+
+                if (minDate != '') {
+                    $('#startDate').datepicker('option', 'minDate', new Date(minDate));
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#setMin").datepicker({
+                dateFormat: "dd-mm-yy"
+            });
+
+            $('#endDate').datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-0:+10",
+                maxDate:  "+0D +0M +1Y",
+                minDate: 0,
+                onSelect: function (selectedDate) {
+                    var date = $(this).datepicker('getDate');
+                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
+                }
+            });
+
+            $('#setMin').find(function () {
+                var date = $("#setMin").val();
+                const maxDate = new Date(date);
+                maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                const minDate = new Date(date);
+                minDate.setDate(minDate.getDate()+6)
+
+
+                if (minDate !== '') {
+                    $('#endDate').datepicker('option', 'minDate', minDate);
+                }
+
+                if (maxDate !== '') {
+                    $('#endDate').datepicker('option', 'maxDate', maxDate);
                 }
             });
         });
@@ -230,6 +270,10 @@
 
             <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
                   th:object="${timetable}">
+                <div class="container">
+                    <input th:value="*{startDate}" type='hidden' id='setMin'>
+                    <input th:value="*{endDate}" type='hidden' id='setMax'>
+                </div>
                 <div class="dates_and_create">
                     <div class="dates">
                         <div class="start_date">

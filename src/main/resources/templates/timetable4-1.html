@@ -39,16 +39,43 @@
                     localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
             });
-            $("#endDate").datepicker({
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#setMin").datepicker({
+                dateFormat: "dd-mm-yy"
+            });
+
+            $('#endDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-0:+10",
+                maxDate:  "+0D +0M +1Y",
                 minDate: 0,
-                maxDate: "+0D +0M +1Y",
-                onSelect: function () {
-                    var date = $("#endDate").datepicker('getDate');
+                onSelect: function (selectedDate) {
+                    var date = $(this).datepicker('getDate');
                     localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
+                }
+            });
+
+            $('#setMin').find(function () {
+                var date = $("#setMin").val();
+                const maxDate = new Date(date);
+                maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                const minDate = new Date(date);
+                minDate.setDate(minDate.getDate()+6)
+
+
+                if (minDate !== '') {
+                    $('#endDate').datepicker('option', 'minDate', minDate);
+                }
+
+                if (maxDate !== '') {
+                    $('#endDate').datepicker('option', 'maxDate', maxDate);
                 }
             });
         });
@@ -232,6 +259,7 @@
                 <div class="dates_and_create">
                     <div class="dates">
                         <div class="start_date">
+                            <input th:value="*{startDate}" type='hidden' id='setMin'>
                             <label class="popup-label-title">Start Date<span
                                     class="check-validation-date"></span></label>
                             <div class="date_input_form">
