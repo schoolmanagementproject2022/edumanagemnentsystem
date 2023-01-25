@@ -33,4 +33,6 @@ public interface CoursesForTimetableService {
 
     List<String> getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId);
 
+    List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek,  Long academicClassId);
+
 }

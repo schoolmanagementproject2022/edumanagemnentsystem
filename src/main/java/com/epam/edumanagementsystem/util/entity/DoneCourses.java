@@ -23,6 +23,9 @@ public class DoneCourses {
 
     private LocalDate date;
 
+    public DoneCourses() {
+    }
+
     public DoneCourses(AcademicCourse academicCourse, AcademicClass academicClass, LocalDate date) {
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;

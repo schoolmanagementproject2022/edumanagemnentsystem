@@ -86,25 +86,14 @@ public class JournalServiceImpl implements JournalService {
         }
         journalStartDate = DateUtil.recurs(journalStartDate);
         Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
-        LocalDate parsedDate = null;
-        if (date != null) {
-            parsedDate = LocalDate.parse(date);
-        }
-        if (parsedDate != null) {
-            if (parsedDate.isBefore(LocalDate.now()) && parsedDate.isAfter(LocalDate.parse(startDate))){
-                Set<DoneCourses> doneCourses = doneCoursesService.findAllByAcademicClassId(academicClassByName.getId());
-                for (DoneCourses doneCourse : doneCourses) {
-                    academicCoursesInClassDto.add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse()));
-                }
-                model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClassDto);
-                journalStartDate = parsedDate;
-            } else {
-                parsedDate = null;
+
+        if (journalStartDate.isBefore(LocalDate.now()) && timetableStartDate.isAfter(journalStartDate)) {
+            Set<DoneCourses> doneCourses = doneCoursesService.findAllByAcademicClassId(academicClassByName.getId());
+            for (DoneCourses doneCourse : doneCourses) {
+                academicCoursesInClassDto.add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse()));
             }
         }
-        if (parsedDate == null) {
-            model.addAttribute(ALL_COURSES_IN_ACADEMIC_CLASS, academicCoursesInClassDto);
-        }
+        model.addAttribute("allCoursesInAcademicClass", academicCoursesInClassDto);
 
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
@@ -159,16 +148,30 @@ public class JournalServiceImpl implements JournalService {
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
-        List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
-                .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByNameDto.getId());
-        model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
-        if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
-                !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
-            model.addAttribute(day, true);
-            existDay = true;
-        } else {
-            model.addAttribute(day, false);
+        if (journalStartDate.isBefore(LocalDate.now()) && timetableStartDate.isAfter(journalStartDate)){
+            List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
+                    .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId());
+            model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
+            if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
+                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                model.addAttribute(day, true);
+                existDay = true;
+            } else {
+                model.addAttribute(day, false);
+            }
+        }else {
+            List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
+                    .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByNameDto.getId());
+            model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
+            if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
+                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                model.addAttribute(day, true);
+                existDay = true;
+            } else {
+                model.addAttribute(day, false);
+            }
         }
+
         return existDay;
     }
 

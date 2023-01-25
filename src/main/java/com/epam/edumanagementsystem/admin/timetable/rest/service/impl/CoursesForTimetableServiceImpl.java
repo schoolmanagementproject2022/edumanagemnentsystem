@@ -4,6 +4,8 @@ import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetabl
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
+import com.epam.edumanagementsystem.util.entity.DoneCourses;
+import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +19,18 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     private final CoursesForTimetableRepository coursesForTimetableRepository;
     private final Logger logger = Logger.getLogger(CoursesForTimetableServiceImpl.class.getName());
+    private final DoneCoursesService doneCoursesService;
 
-    public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository) {
+
+    public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository, DoneCoursesService doneCoursesService) {
         this.coursesForTimetableRepository = coursesForTimetableRepository;
+        this.doneCoursesService = doneCoursesService;
     }
 
     @Override
     public void create(CoursesForTimetableDto coursesForTimetableDto) {
         logger.info("Creating Course for Timetable");
-         coursesForTimetableRepository.create(coursesForTimetableDto.getDayOfWeek(),
+        coursesForTimetableRepository.create(coursesForTimetableDto.getDayOfWeek(),
                 coursesForTimetableDto.getAcademicCourse().getName(),
                 coursesForTimetableDto.getAcademicClass().getId(),
                 coursesForTimetableDto.getStatus());
@@ -102,6 +107,18 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         coursesForTimetableRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId)
                 .forEach(coursesForTimetable -> namesOfCourses.add(coursesForTimetable.getAcademicCourse()));
         logger.info("Getting Names of Courses for Timetable by Day of Week, Status and Academic Class Id");
+        return namesOfCourses;
+    }
+
+    @Override
+    public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId) {
+        List<String> namesOfCourses = new ArrayList<>();
+        for (DoneCourses doneCourses : doneCoursesService.findAllByAcademicClassId(academicClassId)) {
+            if (doneCourses.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek)) {
+                namesOfCourses.add(doneCourses.getAcademicCourse().getName());
+            }
+        }
+
         return namesOfCourses;
     }
 

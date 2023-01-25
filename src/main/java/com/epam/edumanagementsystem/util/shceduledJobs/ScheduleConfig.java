@@ -37,6 +37,7 @@ public class ScheduleConfig {
         LocalDate now = LocalDate.now();
         coursesForTimetableService.findAllByDayOfWeek(capitalize(now))
         .stream()
+                .filter(course -> course.getAcademicClass().get(0)!=null)
                 .filter(course -> !now.isBefore(timetableService
                         .findTimetableByAcademicClassId(course.getAcademicClass().get(0).getId()).getStartDate()))
                 .forEach(course -> doneCoursesService.save(new DoneCourses(AcademicCourseMapper
