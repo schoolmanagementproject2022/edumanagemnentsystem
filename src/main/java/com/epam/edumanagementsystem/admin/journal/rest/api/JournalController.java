@@ -6,21 +6,25 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.util.entity.DoneCourses;
+import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/classes")
 @Tag(name = "Journal")
 public class JournalController {
+
     private final TimetableService timetableService;
     private final JournalService journalService;
+    private final DoneCoursesService doneCoursesService;
     private final AcademicCourseService academicCourseService;
     private final AcademicClassService academicClassService;
     private final StudentService studentService;
@@ -30,10 +34,11 @@ public class JournalController {
     private static final String CREATE_TIMETABLE_MSG_FROM_JOURNAL_HTML = "createTimetableMsgFromJournal";
 
     public JournalController(TimetableService timetableService, JournalService journalService,
-                             AcademicCourseService academicCourseService, AcademicClassService academicClassService,
+                             DoneCoursesService doneCoursesService, AcademicCourseService academicCourseService, AcademicClassService academicClassService,
                              StudentService studentService) {
         this.timetableService = timetableService;
         this.journalService = journalService;
+        this.doneCoursesService = doneCoursesService;
         this.academicCourseService = academicCourseService;
         this.academicClassService = academicClassService;
         this.studentService = studentService;
@@ -85,7 +90,7 @@ public class JournalController {
     }
 
     @PostMapping("/{name}/journal/{courseId}")
-    public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto, BindingResult result,
+    public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto,
                                      @PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                      @RequestParam(name = "date", required = false) String date,
                                      @RequestParam(name = "startDate", required = false) String startDate,
