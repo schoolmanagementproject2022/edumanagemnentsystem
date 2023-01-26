@@ -84,7 +84,7 @@ public class JournalServiceImpl implements JournalService {
         journalStartDate = DateUtil.recurs(journalStartDate);
         Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
 
-        if (journalStartDate.isBefore(LocalDate.now()) && timetableStartDate.isAfter(journalStartDate)) {
+        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))) {
             doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
                     .forEach(doneCourse -> academicCoursesInClassDto
                             .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
@@ -144,31 +144,29 @@ public class JournalServiceImpl implements JournalService {
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
-        if (journalStartDate.isBefore(LocalDate.now()) && timetableStartDate.isAfter(journalStartDate)){
+        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))){
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId());
-            model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
-            if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
-                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
-                model.addAttribute(day, true);
-                existDay = true;
-            } else {
-                model.addAttribute(day, false);
-            }
+            existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
+                    existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId);
         }else {
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByNameDto.getId());
-            model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
-            if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
-                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
-                model.addAttribute(day, true);
-                existDay = true;
-            } else {
-                model.addAttribute(day, false);
-            }
+            existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
+                    existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId);
         }
-
         return existDay;
     }
 
+    private boolean isExistDay(Model model, LocalDate journalStartDate, LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay, String deyOfWeek, String day, List<String> coursesByDayOfWeekAndStatusAndAcademicClassId) {
+        model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
+        if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
+                !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+            model.addAttribute(day, true);
+            existDay = true;
+        } else {
+            model.addAttribute(day, false);
+        }
+        return existDay;
+    }
 }

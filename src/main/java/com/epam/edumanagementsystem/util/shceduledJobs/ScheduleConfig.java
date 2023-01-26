@@ -31,7 +31,7 @@ public class ScheduleConfig {
         this.doneCoursesService = doneCoursesService;
     }
 
-    @Scheduled(cron = "0 0 22 1/1 * ? *")
+    @Scheduled(cron = "0 0 22 1/1 * ?")
     @Transactional
     public void scheduleFixedRateTask() {
         LocalDate now = LocalDate.now();
