@@ -40,9 +40,9 @@ public class TimetableController {
     private final AcademicCourseService academicCourseService;
 
     private final TimetableService timetableService;
-    private static final String TIMETABLE_HTML="timetable4";
-    private static final String TIMETABLE_CREATION_HTML="timetable4-1";
-    private static final String TIMETABLE_EDIT_HTML="timetableEdit";
+    private static final String TIMETABLE_HTML = "timetable4";
+    private static final String TIMETABLE_CREATION_HTML = "timetable4-1";
+    private static final String TIMETABLE_EDIT_HTML = "timetableEdit";
 
     public TimetableController(CoursesForTimetableService coursesService, AcademicClassService academicClassService,
                                AcademicCourseService academicCourseService, TimetableService timetableService) {
@@ -89,6 +89,12 @@ public class TimetableController {
         if (timetableService.existTimetableByClassId(academicClass.getId())) {
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
         }
+        if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
+            List<CoursesForTimetable> allCourses = coursesService.getCoursesByAcademicClassId(academicClass.getId());
+            for (CoursesForTimetable course : allCourses) {
+                coursesService.deleteCourseById(course.getId());
+            }
+        }
         model.addAttribute("creationStatus", creationStatus);
         putLessons(model, academicClass.getId());
         return TIMETABLE_HTML;
@@ -130,18 +136,14 @@ public class TimetableController {
         if (!isExist && coursesWithNotActiveStatus.isEmpty() &&
                 !coursesService.getCoursesWithActiveStatusByAcademicClassId(academicClass.getId()).isEmpty() &&
                 lessonId == null && !status.equals("CANCEL")) {
-            if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
-                List<CoursesForTimetable> allCourses = coursesService.getCoursesByAcademicClassId(academicClass.getId());
-                for (CoursesForTimetable course : allCourses) {
-                    coursesService.deleteCourseById(course.getId());
-                }
-                sendToFrontNewTimetableAndAcademicClassName(model, academicClassName);
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                model.addAttribute("lessonId", lessonId);
-                putLessons(model, academicClass.getId());
-                return TIMETABLE_CREATION_HTML;
-            }
+            model.addAttribute("delete", academicClassName);
+            sendToFrontNewTimetableAndAcademicClassName(model, academicClassName);
+            sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
+            model.addAttribute("lessonId", lessonId);
+            putLessons(model, academicClass.getId());
+            return TIMETABLE_CREATION_HTML;
         }
+
         sendToFrontNewTimetableAndAcademicClassName(model, academicClassName);
         sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
         model.addAttribute("lessonId", lessonId);
