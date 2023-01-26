@@ -2,6 +2,7 @@ package com.epam.edumanagementsystem.util.shceduledJobs;
 
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.util.entity.DoneCourses;
@@ -33,17 +34,26 @@ public class ScheduleConfig {
 
     @Scheduled(cron = "0 0 22 1/1 * ?")
     @Transactional
-    public void scheduleFixedRateTask() {
+    public void archivePastCoursesDataFromTimetable() {
         LocalDate now = LocalDate.now();
         coursesForTimetableService.findAllByDayOfWeek(capitalize(now))
                 .stream()
-                .filter(course -> course.getAcademicClass().get(0) != null)
-                .filter(course -> !now.isBefore(timetableService
-                        .findTimetableByAcademicClassId(course.getAcademicClass().get(0).getId()).getStartDate()))
-                .forEach(course -> doneCoursesService.save(new DoneCourses(AcademicCourseMapper
-                        .toAcademicCourse(academicCourseService.findByName(course.getAcademicCourse())),
-                        course.getAcademicClass().get(0), now.minusDays(1))));
+                .filter(course -> ifNowDateIsAfterStartDate(now, course))
+                .forEach(course -> createDoneCourses(now, course));
         logger.info("Added done courses to table");
+    }
+
+    private boolean ifNowDateIsAfterStartDate(LocalDate now, CoursesForTimetable course) {
+        if (course.getAcademicClass().get(0) != null) {
+            return !now.isBefore(timetableService.findTimetableByAcademicClassId(course.getAcademicClass().get(0).getId()).getStartDate());
+        }
+        return false;
+    }
+
+    private void createDoneCourses(LocalDate now, CoursesForTimetable course) {
+         doneCoursesService.save(new DoneCourses(AcademicCourseMapper
+                .toAcademicCourse(academicCourseService.findByName(course.getAcademicCourse())),
+                course.getAcademicClass().get(0), now.minusDays(1)));
     }
 
     private String capitalize(LocalDate now) {
