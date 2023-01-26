@@ -8,13 +8,11 @@ import com.epam.edumanagementsystem.admin.journal.rest.service.TestService;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
-import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.util.DateUtil;
-import com.epam.edumanagementsystem.util.entity.DoneCourses;
 import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -22,12 +20,11 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.*;
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER_JOURNAL;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
 
 @Service
@@ -88,10 +85,9 @@ public class JournalServiceImpl implements JournalService {
         Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
 
         if (journalStartDate.isBefore(LocalDate.now()) && timetableStartDate.isAfter(journalStartDate)) {
-            Set<DoneCourses> doneCourses = doneCoursesService.findAllByAcademicClassId(academicClassByName.getId());
-            for (DoneCourses doneCourse : doneCourses) {
-                academicCoursesInClassDto.add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse()));
-            }
+            doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
+                    .forEach(doneCourse -> academicCoursesInClassDto
+                            .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
         }
         model.addAttribute("allCoursesInAcademicClass", academicCoursesInClassDto);
 

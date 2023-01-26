@@ -31,18 +31,18 @@ public class ScheduleConfig {
         this.doneCoursesService = doneCoursesService;
     }
 
-    @Scheduled(cron = "0/50 * * * * ?")
+    @Scheduled(cron = "0 0 22 1/1 * ? *")
     @Transactional
     public void scheduleFixedRateTask() {
         LocalDate now = LocalDate.now();
         coursesForTimetableService.findAllByDayOfWeek(capitalize(now))
-        .stream()
-                .filter(course -> course.getAcademicClass().get(0)!=null)
+                .stream()
+                .filter(course -> course.getAcademicClass().get(0) != null)
                 .filter(course -> !now.isBefore(timetableService
                         .findTimetableByAcademicClassId(course.getAcademicClass().get(0).getId()).getStartDate()))
                 .forEach(course -> doneCoursesService.save(new DoneCourses(AcademicCourseMapper
                         .toAcademicCourse(academicCourseService.findByName(course.getAcademicCourse())),
-                        course.getAcademicClass().get(0), now)));
+                        course.getAcademicClass().get(0), now.minusDays(1))));
         logger.info("Added done courses to table");
     }
 

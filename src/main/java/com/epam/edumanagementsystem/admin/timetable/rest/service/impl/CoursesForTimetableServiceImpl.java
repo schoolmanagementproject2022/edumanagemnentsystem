@@ -113,13 +113,9 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     @Override
     public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId) {
         List<String> namesOfCourses = new ArrayList<>();
-        for (DoneCourses doneCourses : doneCoursesService.findAllByAcademicClassId(academicClassId)) {
-            if (doneCourses.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek)) {
-                namesOfCourses.add(doneCourses.getAcademicCourse().getName());
-            }
-        }
-
+        doneCoursesService.findAllByAcademicClassId(academicClassId).stream()
+                .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek))
+                .forEach(doneCourse -> namesOfCourses.add(doneCourse.getAcademicCourse().getName()));
         return namesOfCourses;
     }
-
 }
