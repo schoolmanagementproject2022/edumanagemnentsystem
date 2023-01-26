@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.logging.Logger;
 
+import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.CRON;
+
 @EnableScheduling
 @Configuration
 public class ScheduleConfig {
@@ -32,7 +34,7 @@ public class ScheduleConfig {
         this.doneCoursesService = doneCoursesService;
     }
 
-    @Scheduled(cron = "0 0 22 1/1 * ?")
+    @Scheduled(cron = CRON)
     @Transactional
     public void archivePastCoursesDataFromTimetable() {
         LocalDate now = LocalDate.now();

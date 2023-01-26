@@ -111,7 +111,9 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Override
     public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId) {
-        return doneCoursesService.findAllByAcademicClassId(academicClassId).stream()
+        logger.info("Getting Done Courses by Day of Week and Academic Class Id");
+        return doneCoursesService.findAllByAcademicClassId(academicClassId)
+                .stream()
                 .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek))
                 .map(doneCourses -> doneCourses.getAcademicCourse().getName())
                 .collect(Collectors.toList());
