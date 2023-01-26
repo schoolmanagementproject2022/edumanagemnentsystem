@@ -91,10 +91,8 @@ public class TimetableController {
             model.addAttribute("timetable", timetableService.findTimetableByAcademicClassName(academicClassName));
         }
         if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
-            List<CoursesForTimetable> allCourses = coursesService.getCoursesByAcademicClassId(academicClass.getId());
-            for (CoursesForTimetable course : allCourses) {
-                coursesService.deleteCourseById(course.getId());
-            }
+            coursesService.getCoursesByAcademicClassId(academicClass.getId()).stream()
+                    .forEach(course -> coursesService.deleteCourseById(course.getId()));
         }
         model.addAttribute("creationStatus", creationStatus);
         putLessons(model, academicClass.getId());
