@@ -3,12 +3,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/style.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
     <script src="/static/js/popupControl.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
+    <script src="/static/js/filter-multi-select-bundle.min.js"></script>
+    <link href="/static/css/style.css" rel="stylesheet">
+
+
     <title>Subject Page</title>
 </head>
 
@@ -36,23 +44,23 @@
 
             <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} or ${duplicated}">
                 PopUpShow();
+
             </script>
 
             <div class="popup-wrapper">
                 <div class="half">
                     <label class="popup-label-title-subject" for="name">Subject name <span
                             style="color:#A30014">*</span></label>
-                    <input class="form_input_subjectName" type="text" th:name="name" id="name" th:value="${#object.name}"/>
+                    <input class="form_input_subjectName" type="text" th:name="name" id="name"
+                           th:value="${#object.name}"/>
                     <div class="error" th:if="${#fields.hasErrors('name')}"
                          th:errors="*{name}"></div>
                     <div th:if="${duplicated}!= null" class="error">
                         <p th:text="${duplicated}"></p>
                     </div>
-
-
                     <div class="selectTeacher">
-                        <label class="popup-label-title-subject" for="teacher">Teachers</label>
-                        <select id="teacher" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple >
+                        <label class="popup-label-title-subject" for="shapes">Teachers</label>
+                        <select class="shape" name="teacherSet" id="shapes" th:field="*{teacherSet}" style="width:600px" multiple>
                             <option
                                     th:each="teacher:${teachers}"
                                     th:title="${teacher.getFullName()}"
@@ -72,13 +80,18 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#teacher').select2({
-           closeOnSelect: false,
-            placeholder: "Select teachers",
-            allowClear: true
+  $(function () {
+
+        var shapes = $('#shapes').filterMultiSelect({
+          selectAllText: 'all...',
+          placeholderText: 'click to select a shape',
+          filterText: 'search',
+
         });
-    });
+
+
+      });
+
 
 </script>
 <script>
@@ -89,6 +102,7 @@
     for (var i = 0; i < texttooltip.length; i++) {
         texttooltip[i].addEventListener('mouseover', updatetitle, false);
     }
+
 </script>
 <script>
     var maxLength = 23;
@@ -97,6 +111,7 @@
             return text.substr(0, maxLength) + '...';
         }
     });
+
 </script>
 </body>
 </html>
