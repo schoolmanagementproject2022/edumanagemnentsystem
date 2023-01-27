@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -90,7 +91,7 @@ public class JournalController {
     }
 
     @PostMapping("/{name}/journal/{courseId}")
-    public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto,
+    public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto, BindingResult result,
                                      @PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                      @RequestParam(name = "date", required = false) String date,
                                      @RequestParam(name = "startDate", required = false) String startDate,
