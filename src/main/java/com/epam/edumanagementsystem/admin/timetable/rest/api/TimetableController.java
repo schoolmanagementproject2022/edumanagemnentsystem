@@ -137,10 +137,7 @@ public class TimetableController {
         if (!isExist && coursesWithNotActiveStatus.isEmpty() &&
                 !coursesService.getCoursesWithActiveStatusByAcademicClassId(academicClass.getId()).isEmpty() &&
                 lessonId == null && !status.equals("CANCEL")) {
-//            if (coursesService.isPresentCoursesForClass(academicClass.getId())) {
-//                coursesService.getCoursesByAcademicClassId(academicClass.getId()).stream()
-//                        .forEach(course -> coursesService.deleteCourseById(course.getId()));
-//            }
+
             model.addAttribute("delete", academicClassName);
             sendToFrontNewTimetableAndAcademicClassName(model, academicClassName);
             sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
