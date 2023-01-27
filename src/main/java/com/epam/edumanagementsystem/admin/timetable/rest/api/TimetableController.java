@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.*;
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Controller
 @RequestMapping("/classes/")
