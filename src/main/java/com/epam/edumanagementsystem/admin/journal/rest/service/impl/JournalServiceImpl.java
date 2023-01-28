@@ -52,7 +52,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public void openJournal(String date, String startDate, String name, Model model) {
+    public void openJournal(String date, String startDate, String name, Model model, Long courseId) {
         if (date != null) {
             startDate = date;
         }
@@ -93,7 +93,7 @@ public class JournalServiceImpl implements JournalService {
 
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
-            existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
+            existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay, courseId);
             journalStartDate = journalStartDate.plusDays(1);
         }
         if (!existDay) {
@@ -101,7 +101,8 @@ public class JournalServiceImpl implements JournalService {
                 journalStartDate = journalStartDate.minusDays(14);
             }
             for (int i = 0; i < 7; i++) {
-                getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay);
+                getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate,
+                        existDay, courseId);
                 journalStartDate = journalStartDate.plusDays(1);
             }
         }
@@ -139,7 +140,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClassDto academicClassByNameDto,
-                                         LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay) {
+                                         LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay, Long courseId) {
 
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
@@ -148,24 +149,37 @@ public class JournalServiceImpl implements JournalService {
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId());
             existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
-                    existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId);
-        }else {
+                    existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId, courseId);
+        } else {
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByNameDto.getId());
             existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
-                    existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId);
+                    existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId, courseId);
         }
         return existDay;
     }
 
-    private boolean isExistDay(Model model, LocalDate journalStartDate, LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay, String deyOfWeek, String day, List<String> coursesByDayOfWeekAndStatusAndAcademicClassId) {
+    private boolean isExistDay(Model model, LocalDate journalStartDate, LocalDate timetableStartDate, LocalDate timetableEndDate,
+                               boolean existDay, String deyOfWeek, String day,
+                               List<String> coursesByDayOfWeekAndStatusAndAcademicClassId, Long courseId) {
         model.addAttribute(deyOfWeek.toLowerCase(Locale.ROOT), coursesByDayOfWeekAndStatusAndAcademicClassId);
-        if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
-                !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
-            model.addAttribute(day, true);
-            existDay = true;
+
+        if (courseId != null) {
+            if (coursesByDayOfWeekAndStatusAndAcademicClassId.contains(academicCourseService.findById(courseId).getName()) &&
+                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                model.addAttribute(day, true);
+                existDay = true;
+            } else {
+                model.addAttribute(day, false);
+            }
         } else {
-            model.addAttribute(day, false);
+            if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
+                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                model.addAttribute(day, true);
+                existDay = true;
+            } else {
+                model.addAttribute(day, false);
+            }
         }
         return existDay;
     }

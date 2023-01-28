@@ -6,7 +6,6 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
-import com.epam.edumanagementsystem.util.entity.DoneCourses;
 import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/classes")
@@ -25,7 +23,6 @@ public class JournalController {
 
     private final TimetableService timetableService;
     private final JournalService journalService;
-    private final DoneCoursesService doneCoursesService;
     private final AcademicCourseService academicCourseService;
     private final AcademicClassService academicClassService;
     private final StudentService studentService;
@@ -35,11 +32,10 @@ public class JournalController {
     private static final String CREATE_TIMETABLE_MSG_FROM_JOURNAL_HTML = "createTimetableMsgFromJournal";
 
     public JournalController(TimetableService timetableService, JournalService journalService,
-                             DoneCoursesService doneCoursesService, AcademicCourseService academicCourseService, AcademicClassService academicClassService,
+                             AcademicCourseService academicCourseService, AcademicClassService academicClassService,
                              StudentService studentService) {
         this.timetableService = timetableService;
         this.journalService = journalService;
-        this.doneCoursesService = doneCoursesService;
         this.academicCourseService = academicCourseService;
         this.academicClassService = academicClassService;
         this.studentService = studentService;
@@ -48,9 +44,10 @@ public class JournalController {
     @GetMapping("/{name}/journal")
     @Operation(summary = "Shows journal page")
     public String journal(Model model, @PathVariable("name") String name, @RequestParam(name = "date", required = false) String date,
-                          @RequestParam(name = "startDate", required = false) String startDate) {
+                          @RequestParam(name = "startDate", required = false) String startDate,
+                          @RequestParam(name = "courseId", required = false) Long courseId) {
         if (timetableService.existTimetableByClassId(academicClassService.findByClassNumber(name).getId())) {
-            journalService.openJournal(date, startDate, name, model);
+            journalService.openJournal(date, startDate, name, model, courseId);
             return JOURNAL_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
@@ -81,7 +78,7 @@ public class JournalController {
                 return JOURNAL_WITH_COURSE_INFO_HTML;
             }
 
-            journalService.openJournal(date, startDate, name, model);
+            journalService.openJournal(date, startDate, name, model, courseId);
             return JOURNAL_WITH_COURSE_INFO_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
@@ -108,7 +105,7 @@ public class JournalController {
                 return JOURNAL_WITH_COURSE_INFO_HTML;
             }
 
-            journalService.openJournal(date, startDate, name, model);
+            journalService.openJournal(date, startDate, name, model, courseId);
             return JOURNAL_WITH_COURSE_INFO_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
