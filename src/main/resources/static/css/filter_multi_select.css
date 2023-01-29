@@ -46,7 +46,6 @@ body {
      overflow-y: scroll;
 }
 
-
 .filter-multi-select > .viewbar > .selected-items > .item {
     margin: .125rem .25rem .125rem 0;
     padding: 0px 5px 0px .5em;
@@ -67,6 +66,14 @@ body {
     cursor: pointer;
 
 }
+.filter-multi-select > .viewbar > button {
+    background-color: transparent;
+    color: var(--fms-badge-text-color);
+    border: 0;
+    font-weight: 9000;
+    cursor: pointer;
+
+}
 .form-control {
     width: 120%;
     resize: none;
@@ -78,8 +85,17 @@ body {
 
     filter: contrast(50%);
 }
+.filter-multi-select > .viewbar > button:hover {
+
+    filter: contrast(50%);
+}
 
 .filter-multi-select > .viewbar > .selected-items > .item.disabled {
+    padding: 0px .5em 0px .5em;
+
+    filter: grayscale(80%) brightness(120%);
+}
+.filter-multi-select > .viewbar > .selected-items.disabled {
     padding: 0px .5em 0px .5em;
 
     filter: grayscale(80%) brightness(120%);
