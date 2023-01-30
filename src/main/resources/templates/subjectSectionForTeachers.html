@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
     <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="/static/js/filter-multi-select-bundle.min.js"></script>
+    <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
     <script src="/static/js/popupControl.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>Teachers in subject Page</title>
 
 </head>
@@ -54,9 +56,9 @@
 
         <div class="popup-wrapper">
             <div class="half">
-                <label class="popup-label-title" for="teacher">Teachers<span style="color:#A30014">*</span></label>
+                <label class="popup-label-title" for="shapes">Teachers<span style="color:#A30014">*</span></label>
                 <div class="selectTeacher">
-                    <select id="teacher" name="teacher" th:field="*{teacherSet}" style="width: 250px" multiple>
+                    <select class="shape" id="shapes" name="teacherSet" th:field="*{teacherSet}" style="width: 250px" multiple>
                         <option th:each="select : ${teachersToSelect}"
                                 th:value="${select.id}" th:title="${select.getFullName()}"
                                 th:text="${select.getFullName()}"></option>
@@ -76,13 +78,17 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#teacher').select2({
-            placeholder: "Select teachers",
-          closeOnSelect: false,
-            allowClear: true
+  $(function () {
+
+        var shapes = $('#shapes').filterMultiSelect({
+          selectAllText: 'all...',
+          placeholderText: 'click to select a shape',
+          filterText: 'search',
+
         });
-    });
+
+
+      });
 </script>
 </body>
 </html>
