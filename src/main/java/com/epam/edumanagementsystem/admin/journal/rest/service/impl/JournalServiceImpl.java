@@ -145,7 +145,7 @@ public class JournalServiceImpl implements JournalService {
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
-        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))){
+        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))) {
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId());
             existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,

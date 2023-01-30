@@ -29,8 +29,8 @@ public class CheckAgendasController {
     @GetMapping("{classId}/{courseId}/{date}")
     public @ResponseBody
     SaveAgendaDto checkingAgendas(@PathVariable(value = "classId", required = false) Long classId,
-                                 @PathVariable(value = "courseId", required = false) Long courseId,
-                                 @PathVariable(value = "date", required = false) String date) {
+                                  @PathVariable(value = "courseId", required = false) Long courseId,
+                                  @PathVariable(value = "date", required = false) String date) {
         SaveAgendaDto saveAgendaDto = new SaveAgendaDto();
         Classwork classWorkOfCourse = classworkService.getClassWorkOfCourse(LocalDate.parse(date), classId, courseId);
         Homework homeworkOfCourse = homeworkService.getHomeworkOfCourse(LocalDate.parse(date), classId, courseId);
