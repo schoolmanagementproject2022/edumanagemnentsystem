@@ -1,30 +1,20 @@
 package com.epam.edumanagementsystem.admin.journal.model.dto;
 
+import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TestDto {
 
     private Long id;
     private String test;
-    private int grade;
+    private List<Grades> grade;
     private LocalDate dateOfTest;
     private AcademicCourse academicCourse;
     private AcademicClass academicClass;
-
-    public TestDto() {
-    }
-
-    public TestDto(Long id, String test, int grade, LocalDate dateOfTest, AcademicCourse academicCourse, AcademicClass academicClass) {
-        this.id = id;
-        this.test = test;
-        this.grade = grade;
-        this.dateOfTest = dateOfTest;
-        this.academicCourse = academicCourse;
-        this.academicClass = academicClass;
-    }
 
     public Long getId() {
         return id;
@@ -42,11 +32,11 @@ public class TestDto {
         this.test = test;
     }
 
-    public int getGrade() {
+    public List<Grades> getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(List<Grades> grade) {
         this.grade = grade;
     }
 
@@ -76,13 +66,6 @@ public class TestDto {
 
     @Override
     public String toString() {
-        return "TestDto{" +
-                "id=" + id +
-                ", test='" + test + '\'' +
-                ", grade=" + grade +
-                ", dateOfTest=" + dateOfTest +
-                ", academicCourse=" + academicCourse +
-                ", academicClass=" + academicClass +
-                '}';
+        return "TestDto{" + "id=" + id + ", test='" + test + '\'' + ", grade=" + grade + ", dateOfTest=" + dateOfTest + ", academicCourse=" + academicCourse + ", academicClass=" + academicClass + '}';
     }
 }

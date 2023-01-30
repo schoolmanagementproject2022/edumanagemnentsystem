@@ -1,32 +1,21 @@
 package com.epam.edumanagementsystem.admin.journal.model.dto;
 
+import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ClassworkDto {
 
     private Long id;
     private String classwork;
-    private int grade;
+    private List<Grades> grade;
     private LocalDate dateOfClasswork;
     private AcademicCourse academicCourse;
 
     private AcademicClass academicClass;
-
-    public ClassworkDto() {
-
-    }
-
-    public ClassworkDto(Long id, String classwork, int grade, LocalDate dateOfClasswork, AcademicCourse academicCourse, AcademicClass academicClass) {
-        this.id = id;
-        this.classwork = classwork;
-        this.grade = grade;
-        this.dateOfClasswork = dateOfClasswork;
-        this.academicCourse = academicCourse;
-        this.academicClass = academicClass;
-    }
 
     public Long getId() {
         return id;
@@ -44,11 +33,11 @@ public class ClassworkDto {
         this.classwork = classwork;
     }
 
-    public int getGrade() {
+    public List<Grades> getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(List<Grades> grade) {
         this.grade = grade;
     }
 
