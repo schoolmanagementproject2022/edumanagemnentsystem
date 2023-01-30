@@ -10,7 +10,6 @@
     <link href="/static/css/dateStyle.css" rel="stylesheet">
 
     <script src="/static/js/popupControlTimetable.js"></script>
-    <script src="/static/js/date.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -29,10 +28,6 @@
 
     <script>
         $(document).ready(function () {
-            $("#setMin").datepicker({
-                dateFormat: "dd-mm-yy"
-            });
-
             $('#startDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
@@ -40,49 +35,50 @@
                 yearRange: "-0:+10",
                 maxDate: "+0D +0M +1Y",
                 minDate: 0,
-                onSelect: function (selectedDate) {
-                    var date = $(this).datepicker('getDate');
-                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
+                onSelect: function () {
+                    var from = $("#startDate").val().split("-")
+                    var startDate = new Date(from[2], from[1] - 1, from[0])
+                    console.log("valeu of startDate" + startDate)
+                    var maxDate = new Date(startDate);
+                    maxDate.setDate(maxDate.getDate() + 6)
+                    maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                    console.log("valeu of maxDate" + maxDate)
+
+                    const minDate = new Date(startDate);
+                    minDate.setDate(minDate.getDate() + 6);
+
+                    console.log("valeu of minDate" + minDate)
+
+                    if (minDate !== '') {
+                        $('#endDate').datepicker('option', 'minDate', minDate);
+                    }
+
+                    if (maxDate !== '') {
+                        $('#endDate').datepicker('option', 'maxDate', maxDate);
+                    }
+
+                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', startDate));
+                },
+            });
+
+            $('#startDate').find(function () {
+                var from = $("#startDate").val().split("-")
+                var startDate = new Date(from[2], from[1] - 1, from[0])
+                if (startDate != '') {
+                    $('#startDate').datepicker('option', 'minDate', startDate);
                 }
-            });
-
-            $('#setMin').find(function () {
-
-                var minDate = $("#setMin").val();
-
-                if (minDate != '') {
-                    $('#startDate').datepicker('option', 'minDate', new Date(minDate));
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#setMin").datepicker({
-                dateFormat: "dd-mm-yy"
-            });
-
-            $('#endDate').datepicker({
-                dateFormat: "dd-mm-yy",
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-0:+10",
-                maxDate:  "+0D +0M +1Y",
-                minDate: 0,
-                onSelect: function (selectedDate) {
-                    var date = $(this).datepicker('getDate');
-                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
-                }
-            });
-
-            $('#setMin').find(function () {
-                var date = $("#setMin").val();
-                const maxDate = new Date(date);
+                console.log(startDate)
+                var maxDate = new Date(startDate);
+                maxDate.setDate(maxDate.getDate() + 6)
                 maxDate.setFullYear(maxDate.getFullYear() + 1);
 
-                const minDate = new Date(date);
-                minDate.setDate(minDate.getDate()+6)
+                console.log("find valeu of maxDate" + maxDate)
 
+                const minDate = new Date(startDate);
+                minDate.setDate(minDate.getDate() + 6);
+
+                console.log("find valeu of minDate" + minDate)
 
                 if (minDate !== '') {
                     $('#endDate').datepicker('option', 'minDate', minDate);
@@ -91,7 +87,21 @@
                 if (maxDate !== '') {
                     $('#endDate').datepicker('option', 'maxDate', maxDate);
                 }
+            })
+
+            $('#endDate').datepicker({
+                dateFormat: "dd-mm-yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-0:+10",
+                maxDate: "+0D +0M +2Y",
+                minDate: 0,
+                onSelect: function (selectedDate) {
+                    var date = $(this).datepicker('getDate');
+                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
+                }
             });
+
         });
     </script>
 
@@ -270,10 +280,6 @@
 
             <form th:method="POST" th:action="@{'/classes/' + ${middleUrl} + '/timetable/edit'}"
                   th:object="${timetable}">
-                <div class="container">
-                    <input th:value="*{startDate}" type='hidden' id='setMin'>
-                    <input th:value="*{endDate}" type='hidden' id='setMax'>
-                </div>
                 <div class="dates_and_create">
                     <div class="dates">
                         <div class="start_date">

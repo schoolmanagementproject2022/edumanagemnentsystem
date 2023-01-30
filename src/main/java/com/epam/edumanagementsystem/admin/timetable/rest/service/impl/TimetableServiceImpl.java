@@ -9,13 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
 @Service
 public class TimetableServiceImpl implements TimetableService {
-
     private final TimetableRepository timetableRepository;
+    private static final int TIMETABLE_MIN_DURATION_IN_DAYS = 371;
+    private static final int TIMETABLE_MAX_DURATION_IN_YEARS = 1;
+    private static final int TIMETABLE_MIN_DURATION_IN_MONTHS = 6;
+
     private final Logger logger = Logger.getLogger(TimetableServiceImpl.class.getName());
 
     public TimetableServiceImpl(TimetableRepository timetableRepository) {
@@ -64,15 +68,16 @@ public class TimetableServiceImpl implements TimetableService {
     @Override
     public boolean validateEditedTimetableDates(LocalDate editedStartDate, LocalDate editedEndDate, String classname, Model model) {
         TimetableDto timetable = findTimetableByAcademicClassName(classname);
+        Period diffOfDate = Period.between(editedEndDate, editedStartDate);
 
         if (editedStartDate.isAfter(editedEndDate) || editedStartDate.isBefore(timetable.getStartDate()) ||
                 editedEndDate.isBefore(timetable.getStartDate())) {
             model.addAttribute("invalid", "Please, select right dates");
             return true;
-        } else if (ChronoUnit.DAYS.between(editedStartDate, editedEndDate) < 6) {
+        } else if (ChronoUnit.DAYS.between(editedStartDate, editedEndDate) < TIMETABLE_MIN_DURATION_IN_MONTHS) {
             model.addAttribute("invalid", "Timetable duration can't be less than 7 days");
             return true;
-        } else if (ChronoUnit.YEARS.between(editedStartDate, editedEndDate) >= 1) {
+        } else if (diffOfDate.getDays() > TIMETABLE_MIN_DURATION_IN_MONTHS && diffOfDate.getYears() >= TIMETABLE_MAX_DURATION_IN_YEARS) {
             model.addAttribute("invalid", "Timetable duration can't be more than 12 months");
             return true;
         }
@@ -82,14 +87,16 @@ public class TimetableServiceImpl implements TimetableService {
     @Override
     public boolean validateTimetableDates(LocalDate startDate, LocalDate endDate, Model model) {
         LocalDate now = LocalDate.now();
+        Period diffOfDate = Period.between(endDate, startDate);
 
         if ((startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now))) {
             model.addAttribute("invalid", "Please, select right dates");
             return true;
-        } else if (ChronoUnit.DAYS.between(startDate, endDate) < 6) {
+        } else if (ChronoUnit.DAYS.between(startDate, endDate) < TIMETABLE_MIN_DURATION_IN_MONTHS) {
             model.addAttribute("invalid", "Timetable duration can't be less than 7 days");
             return true;
-        } else if (ChronoUnit.YEARS.between(startDate, endDate) >= 1) {
+
+        } else if (diffOfDate.getDays() > TIMETABLE_MIN_DURATION_IN_MONTHS && diffOfDate.getYears() >= TIMETABLE_MAX_DURATION_IN_YEARS) {
             model.addAttribute("invalid", "Timetable duration can't be more than 12 months");
             return true;
         }

@@ -20,6 +20,6 @@ public interface TimetableService {
     boolean existTimetableByClassId(Long id);
 
     boolean validateEditedTimetableDates(LocalDate editedStartDate, LocalDate editedEndDate, String className, Model model);
-    boolean validateTimetableDates(LocalDate startDate, LocalDate endDate, Model model);
 
+    boolean validateTimetableDates(LocalDate startDate, LocalDate endDate, Model model);
 }
