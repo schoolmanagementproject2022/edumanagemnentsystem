@@ -37,18 +37,12 @@
                 onSelect: function () {
                     var from = $("#startDate").val().split("-")
                     var startDate = new Date(from[2], from[1] - 1, from[0])
-                    console.log("valeu of startDate" + startDate)
                     var maxDate = new Date(startDate);
                     maxDate.setDate(maxDate.getDate() + 6)
                     maxDate.setFullYear(maxDate.getFullYear() + 1);
 
-                    console.log("valeu of maxDate" + maxDate)
-
                     const minDate = new Date(startDate);
                     minDate.setDate(minDate.getDate() + 6);
-
-                    console.log("valeu of minDate" + minDate)
-
                     if (minDate !== '') {
                         $('#endDate').datepicker('option', 'minDate', minDate);
                     }
@@ -56,7 +50,6 @@
                     if (maxDate !== '') {
                         $('#endDate').datepicker('option', 'maxDate', maxDate);
                     }
-
                     localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', startDate));
                 }
             });
@@ -65,20 +58,12 @@
                 if (localStorage.getItem("startDate") != null) {
                     var from = localStorage.getItem("startDate").split("-")
                     var startDate = new Date(from[2], from[1] - 1, from[0])
-
-                    console.log("my start date" + startDate + "and" + from)
-
                     const minDate = new Date(startDate);
                     minDate.setDate(minDate.getDate() + 6);
-
-                    console.log("find valeu of minDate" + minDate)
 
                     var maxDate = new Date(minDate);
                     maxDate.setDate(maxDate.getDate() + 6)
                     maxDate.setFullYear(maxDate.getFullYear() + 1);
-
-                    console.log("find valeu of maxDate" + maxDate)
-
                     if (minDate !== '') {
                         $('#endDate').datepicker('option', 'minDate', minDate);
                     }
@@ -95,23 +80,6 @@
                 changeYear: true,
                 yearRange: "-0:+10",
                 maxDate: "+0D +0M +2Y",
-                minDate: 0,
-                onSelect: function (selectedDate) {
-                    var date = $(this).datepicker('getDate');
-                    localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('#endDate').datepicker({
-                dateFormat: "dd-mm-yy",
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "-0:+10",
-                maxDate:  "+6D +0M +1Y",
                 minDate: 0,
                 onSelect: function (selectedDate) {
                     var date = $(this).datepicker('getDate');
