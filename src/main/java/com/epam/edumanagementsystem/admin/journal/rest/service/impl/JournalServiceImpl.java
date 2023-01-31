@@ -88,11 +88,6 @@ public class JournalServiceImpl implements JournalService {
 
         Set<AcademicCourseDto> academicCoursesInClassDto = new LinkedHashSet<>();
 
-//        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate))) {
-//            doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
-//                    .forEach(doneCourse -> academicCoursesInClassDto
-//                            .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
-//        }
         LocalDate tmpForDoneCourses = journalStartDate;
 
         if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate)
