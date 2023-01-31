@@ -22,8 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
@@ -384,13 +382,6 @@ public class TimetableController {
         Set<AcademicCourseDto> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
 
-        if (ChronoUnit.DAYS.between(startDate, endDate) < 7) {
-            invalidMsg = "Timetable duration can't be less than 7 days";
-            model.addAttribute("invalid", invalidMsg);
-            sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-            putLessons(model, academicClass.getId());
-            return TIMETABLE_CREATION_HTML;
-        }
         if (result.hasErrors()) {
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
                 if (startDate.isBefore(now)) {
@@ -398,31 +389,28 @@ public class TimetableController {
                     sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
                     putLessons(model, timetableDto.getAcademicClass().getId());
                 }
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putLessons(model, academicClass.getId());
+                sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                        academicClass.getId());
                 return TIMETABLE_CREATION_HTML;
             } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
                 if (endDate.isBefore(now)) {
                     model.addAttribute("invalid", invalidMsg);
-                    sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                    putLessons(model, timetableDto.getAcademicClass().getId());
+                    sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                            academicClass.getId());
                 }
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putLessons(model, academicClass.getId());
+                sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                        academicClass.getId());
                 return TIMETABLE_CREATION_HTML;
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putLessons(model, timetableDto.getAcademicClass().getId());
+                sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                        academicClass.getId());
                 return TIMETABLE_CREATION_HTML;
             }
         }
 
-        Period diffOfDate = Period.between(endDate, startDate);
-        if ((startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now)) ||
-                (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) || (startDate.equals(endDate))) {
-            model.addAttribute("invalid", invalidMsg);
-            sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-            putLessons(model, timetableDto.getAcademicClass().getId());
+        if (timetableService.validateTimetableDates(startDate, endDate, model)) {
+            sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                    academicClass.getId());
             return TIMETABLE_CREATION_HTML;
         }
 
@@ -465,69 +453,61 @@ public class TimetableController {
 
     @PostMapping("{academicClassName}/timetable/edit")
     @Operation(summary = "Edits timetable for academic class")
-    public String editTimetable(@ModelAttribute("timetable") @Valid TimetableDto timetable, BindingResult result,
+    public String editTimetable(@ModelAttribute("timetable") @Valid TimetableDto editedTimetable, BindingResult result,
                                 @PathVariable("academicClassName") String academicClassName, Model model) {
 
-        LocalDate now = LocalDate.now();
-        LocalDate startDate = timetable.getStartDate();
-        LocalDate endDate = timetable.getEndDate();
+        TimetableDto timetable = timetableService.findTimetableByAcademicClassName(academicClassName);
+        LocalDate editedStartDate = editedTimetable.getStartDate();
+        LocalDate editedEndDate = editedTimetable.getEndDate();
         String invalidMsg = "Please, select right dates";
         Set<AcademicCourseDto> allAcademicCourses = academicCourseService.findAllAcademicCoursesInClassByName(academicClassName);
         AcademicClassDto academicClass = academicClassService.findByClassNumber(academicClassName);
 
         if (result.hasErrors()) {
-            if (ChronoUnit.DAYS.between(startDate, endDate) < 7) {
-                invalidMsg = "Timetable duration can't be less than 7 days";
-                model.addAttribute("invalid", invalidMsg);
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putEditedLessons(model, timetable.getAcademicClass().getId());
-                return TIMETABLE_EDIT_HTML;
-            }
             if (!result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
-                if (startDate.isBefore(now)) {
+                if (editedStartDate.isBefore(timetable.getStartDate())) {
                     model.addAttribute("invalid", invalidMsg);
-                    sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                    putEditedLessons(model, timetable.getAcademicClass().getId());
+                    sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                            editedTimetable.getAcademicClass().getId());
                 }
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putEditedLessons(model, academicClass.getId());
+                sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                        academicClass.getId());
                 return TIMETABLE_EDIT_HTML;
             } else if (result.hasFieldErrors("startDate") && !result.hasFieldErrors("endDate")) {
-                if (endDate.isBefore(now)) {
+                if (editedEndDate.isBefore(timetable.getStartDate())) {
                     model.addAttribute("invalid", invalidMsg);
-                    sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                    putEditedLessons(model, timetable.getAcademicClass().getId());
+                    sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                            editedTimetable.getAcademicClass().getId());
                 }
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putEditedLessons(model, academicClass.getId());
+                sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                        academicClass.getId());
                 return TIMETABLE_EDIT_HTML;
             } else if (result.hasFieldErrors("startDate") && result.hasFieldErrors("endDate")) {
-                sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-                putEditedLessons(model, timetable.getAcademicClass().getId());
+                sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                        editedTimetable.getAcademicClass().getId());
                 return TIMETABLE_EDIT_HTML;
             }
         }
-        Period diffOfDate = Period.between(endDate, startDate);
-        if (startDate.isAfter(endDate) || startDate.isBefore(now) || endDate.isBefore(now) ||
-                (diffOfDate.getYears() <= -1 && diffOfDate.getMonths() <= 0) || (startDate.equals(endDate))) {
-            model.addAttribute("invalid", invalidMsg);
-            sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-            putEditedLessons(model, timetable.getAcademicClass().getId());
+
+        if (timetableService.validateEditedTimetableDates(editedStartDate, editedEndDate, academicClassName, model)) {
+            sendToFrontAllNecessaryInfoAfterDateFailValidation(model, allAcademicCourses, academicClass,
+                    editedTimetable.getAcademicClass().getId());
             return TIMETABLE_EDIT_HTML;
         }
+
         if (coursesService.isPresentCoursesForClass(academicClass.getId()) &&
                 !coursesService.getCoursesWithActiveStatusByAcademicClassId(academicClass.getId()).isEmpty() &&
                 coursesService.getCoursesWithEditStatusByAcademicClassId(academicClass.getId()).isEmpty() &&
                 coursesService.getCoursesWithNotActiveStatusByAcademicClassId(academicClass.getId()).isEmpty()) {
             model.addAttribute("noLessonInTimetable", "Please, select Courses");
             sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
-            putEditedLessons(model, timetable.getAcademicClass().getId());
+            putEditedLessons(model, editedTimetable.getAcademicClass().getId());
             return TIMETABLE_EDIT_HTML;
         }
 
-        timetable.setAcademicClass(AcademicClassMapper.toAcademicClass(academicClass));
-        timetableService.updateTimetableDatesAndStatusByAcademicClassId(startDate, endDate, "Edit", academicClass.getId());
-        putEditedLessons(model, timetable.getAcademicClass().getId());
-        return "redirect:/classes/" + timetable.getAcademicClass().getClassNumber() + "/timetable";
+        editedTimetable.setAcademicClass(AcademicClassMapper.toAcademicClass(academicClass));
+        timetableService.updateTimetableDatesAndStatusByAcademicClassId(editedStartDate, editedEndDate, "Edit", academicClass.getId());
+        putEditedLessons(model, editedTimetable.getAcademicClass().getId());
+        return "redirect:/classes/" + editedTimetable.getAcademicClass().getClassNumber() + "/timetable";
     }
 }

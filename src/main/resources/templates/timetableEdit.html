@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/timetable/timetableEdit.css" rel="stylesheet">
     <link href="/static/css/dateStyle.css" rel="stylesheet">
-
     <script src="/static/js/popupControlTimetable.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -27,32 +26,79 @@
     </script>
 
     <script>
-        $(function () {
-            $("#startDate").datepicker({
+        $(document).ready(function () {
+            $('#startDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-0:+10",
-                minDate: 0,
                 maxDate: "+0D +0M +1Y",
-                onSelect: function (dateStr) {
-                    var date = $(this).datepicker('getDate');
-                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
-                }
+                minDate: 0,
+                onSelect: function () {
+                    var from = $("#startDate").val().split("-")
+                    var startDate = new Date(from[2], from[1] - 1, from[0])
+                    const minDate = new Date(startDate);
+                    minDate.setDate(minDate.getDate() + 6);
+
+                    var maxDate = new Date(minDate);
+                    maxDate.setDate(maxDate.getDate() + 6)
+                    maxDate.setFullYear(maxDate.getFullYear() + 1);
+                    if (minDate !== '') {
+                        $('#endDate').datepicker('option', 'minDate', minDate);
+                    }
+
+                    if (maxDate !== '') {
+                        $('#endDate').datepicker('option', 'maxDate', maxDate);
+                    }
+                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', startDate));
+                },
             });
-            $("#endDate").datepicker({
+
+            $('#startDate').find(function () {
+                var from;
+                var startDate;
+                if (localStorage.getItem("startDate") != null) {
+                    from = localStorage.getItem("startDate").split("-")
+                    startDate = new Date(from[2], from[1] - 1, from[0])
+                    if (startDate !== '') {
+                        $('#startDate').datepicker('option', 'minDate', startDate);
+                    }
+                } else {
+                    from = $("#startDate").val().split("-")
+                    startDate = new Date(from[2], from[1] - 1, from[0])
+                    if (startDate !== '') {
+                        $('#startDate').datepicker('option', 'minDate', startDate);
+                    }
+                }
+                const minDate = new Date(startDate);
+                minDate.setDate(minDate.getDate() + 6);
+
+                var maxDate = new Date(minDate);
+                maxDate.setDate(maxDate.getDate() + 6)
+                maxDate.setFullYear(maxDate.getFullYear() + 1);
+                if (minDate !== '') {
+                    $('#endDate').datepicker('option', 'minDate', minDate);
+                }
+
+                if (maxDate !== '') {
+                    $('#endDate').datepicker('option', 'maxDate', maxDate);
+                }
+            })
+
+            $('#endDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-0:+10",
+                maxDate: "+0D +0M +2Y",
                 minDate: 0,
-                maxDate: "+0D +0M +1Y",
                 onSelect: function (selectedDate) {
                     var date = $(this).datepicker('getDate');
                     localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
             });
-        });
+        })
+        ;
     </script>
 
     <script>
