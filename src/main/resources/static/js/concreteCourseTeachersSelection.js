@@ -1,5 +1,5 @@
-var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
-// var host ='http://localhost:8082'
+// var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
+var host ='http://localhost:8082'
 
 
 function chooseTeachersOfConcreteCourse() {

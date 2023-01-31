@@ -10,10 +10,10 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
-import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.util.DateUtil;
+import com.epam.edumanagementsystem.util.entity.DoneCourses;
 import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -25,7 +25,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER_JOURNAL;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
@@ -70,11 +69,11 @@ public class JournalServiceImpl implements JournalService {
         if (startDate != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL);
             LocalDate localdate = LocalDate.parse(startDate, formatter);
-            if (!localdate.isAfter(timetableEndDate) && !localdate.isBefore(timetableStartDate)) {
+            if (localdate.isBefore(timetableEndDate) && localdate.isAfter(timetableStartDate)) {
                 journalStartDate = localdate;
-            } else if (!localdate.isAfter(timetableStartDate)) {
+            } else if (localdate.isBefore(timetableStartDate)) {
                 journalStartDate = timetableStartDate;
-            } else if (!localdate.isBefore(timetableEndDate)) {
+            } else if (localdate.isAfter(timetableEndDate)) {
                 journalStartDate = timetableEndDate;
             }
         } else {
@@ -85,7 +84,35 @@ public class JournalServiceImpl implements JournalService {
             }
         }
 
+        if (journalStartDate.isAfter(LocalDate.now()) || journalStartDate.equals(LocalDate.now())) {
+            journalStartDate = DateUtil.recurs(journalStartDate);
+        } else {
+            journalStartDate = DateUtil.doneRecurs(journalStartDate);
+        }
+
         Set<AcademicCourseDto> academicCoursesInClassDto = new LinkedHashSet<>();
+
+        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate))) {
+            doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
+                    .forEach(doneCourse -> academicCoursesInClassDto
+                            .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
+        }
+
+        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate))) {
+            for (int i = 0; i < 7; i++) {
+                Set<DoneCourses> allByAcademicClassIdAndDate = doneCoursesService.findAllByAcademicClassIdAndDate(academicClassByName.getId(), journalStartDate);
+                if (!allByAcademicClassIdAndDate.isEmpty()) {
+                    allByAcademicClassIdAndDate.forEach(doneCourses -> academicCoursesInClassDto
+                            .add(AcademicCourseMapper.toDto(doneCourses.getAcademicCourse())));
+                }
+                journalStartDate = journalStartDate.plusDays(1);
+
+                if (journalStartDate.equals(LocalDate.now())) {
+                    break;
+                }
+            }
+        }
+
         if (journalStartDate.equals(LocalDate.now()) || journalStartDate.isAfter(LocalDate.now())) {
             coursesForTimetableService.getCoursesByAcademicClassId(academicClassByName.getId())
                     .stream()
@@ -93,14 +120,8 @@ public class JournalServiceImpl implements JournalService {
                     .forEach(coursesForTimetable -> academicCoursesInClassDto.add(academicCourseService.findByName(coursesForTimetable.getAcademicCourse())));
         }
 
-        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))) {
-            doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
-                    .forEach(doneCourse -> academicCoursesInClassDto
-                            .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
-        }
         model.addAttribute("allCoursesInAcademicClass", academicCoursesInClassDto);
 
-        journalStartDate = DateUtil.recurs(journalStartDate);
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
             existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay, courseId);
@@ -109,7 +130,10 @@ public class JournalServiceImpl implements JournalService {
         if (!existDay) {
             if (journalStartDate.isAfter(timetableEndDate)) {
                 journalStartDate = journalStartDate.minusDays(14);
+            } else if (journalStartDate.isAfter(LocalDate.now())) {
+                journalStartDate = journalStartDate.minusDays(14);
             }
+
             for (int i = 0; i < 7; i++) {
                 getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate,
                         existDay, courseId);
