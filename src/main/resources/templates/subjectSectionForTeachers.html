@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-    <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
     <script src="/static/js/filter-multi-select-bundle.min.js"></script>
-    <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
     <script src="/static/js/popupControl.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/static/css/subjectSectionForTeachersStyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
+    <link rel="stylesheet" href="/static/css/multiSelectStyle.css"/>
 
     <title>Teachers in subject Page</title>
 
@@ -34,7 +33,7 @@
 
         <div class="list">
             <div class="list-items" th:each="teacher : ${teachers}">
-                <p class="item" th:text="${teacher.getFullName()}"> Teacher </p>
+                <p class="itemList" th:text="${teacher.getFullName()}"> Teacher </p>
             </div>
         </div>
     </div>
@@ -81,13 +80,10 @@
   $(function () {
 
         var shapes = $('#shapes').filterMultiSelect({
-          selectAllText: 'all...',
-          placeholderText: 'click to select a shape',
-          filterText: 'search',
-
+            selectAllText: 'All...',
+            placeholderText: 'Select a teachers',
+            filterText: 'Search',
         });
-
-
       });
 </script>
 </body>

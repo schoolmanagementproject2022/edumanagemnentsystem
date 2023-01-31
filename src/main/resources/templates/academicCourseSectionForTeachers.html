@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/js/filter-multi-select-bundle.min.js"></script>
     <script src="/static/js/popupControl.js"></script>
     <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
-    <script src="/static/js/popupControl.js"></script>
+    <link rel="stylesheet" href="/static/css/multiSelectStyle.css"/>
+
     <title th:text="'Teachers in ' + ${middleUrl}">Teachers in academic course</title>
 </head>
 <body>
@@ -32,14 +32,14 @@
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
             <div class="list">
                 <div class="list-items" th:each="teacher : ${teachersInAcademicCourse}">
-                    <p class="item" th:text="${teacher.getFullName()}"> Teacher </p>
+                    <p class="itemList" th:text="${teacher.getFullName()}"> Teacher </p>
                 </div>
             </div>
         </div>
         <div class="sidebar2 header" id="sidebar2">
-            <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+            <a class="itemList" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
                th:href="@{${allUrl}}">Teachers</a>
-            <a class="item"
+            <a class="itemList"
                th:classappend="${lastUrl eq 'classes' ? 'activeTab' : 'notActiveTab'}"
                th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'classes'}}">Classes</a>
         </div>
@@ -57,7 +57,8 @@
                 <div class="half">
                     <label class="popup-label-title" for="shapes">Teachers<span style="color:#A30014">*</span></label>
                     <div>
-                        <select class="shape" id="shapes" name="teacher" th:field="*{teachers}" style="width: 250px" multiple>
+                        <select class="shape" id="shapes" name="teacher" th:field="*{teachers}" style="width: 250px"
+                                multiple>
                             <option th:each="select : ${teachers}"
                                     th:value="${select.id}" th:title="${select.getFullName()}"
                                     th:text="${select.getFullName()}"></option>
@@ -76,17 +77,13 @@
     </div>
 </div>
 <script type="text/javascript">
-   $(function () {
-
+    $(function () {
         var shapes = $('#shapes').filterMultiSelect({
-          selectAllText: 'all...',
-          placeholderText: 'click to select a shape',
-          filterText: 'search',
-
+            selectAllText: 'All...',
+            placeholderText: 'Select a teachers',
+            filterText: 'Search',
         });
-
-
-      });
+    });
 </script>
 </body>
 </html>

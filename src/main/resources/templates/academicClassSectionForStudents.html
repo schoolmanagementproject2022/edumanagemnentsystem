@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="/static/js/filter-multi-select-bundle.min.js"></script>
-    <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
     <script src="/static/js/popupControl.js"></script>
+    <link href="/static/css/styleForCoursesAndClassesSections.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/filter_multi_select.css"/>
+    <link rel="stylesheet" href="/static/css/multiSelectStyle.css"/>
+
     <title>Students</title>
 </head>
 <body>
@@ -32,7 +33,7 @@
             <button class="show-btn" id="show-btn" onclick="PopUpShow()"><b>Add</b></button>
             <div class="list">
                 <div class="list-items" th:each="studentInAcademicClass : ${studentsInAcademicClass}">
-                    <p class="item"
+                    <p class="itemList"
                        th:text="${studentInAcademicClass.getName() + ' ' + studentInAcademicClass.getSurname()}">
                         Student </p>
                 </div>
@@ -41,7 +42,7 @@
         <div class="sidebar2 header" id="sidebar2">
             <div th:insert="fragments/fragments :: sidebar2"></div>
         </div>
-</div>
+    </div>
 </div>
 <div class="create">
     <div class="popup-container" id="popup-container">
@@ -55,11 +56,9 @@
                 <div class="half">
                     <label class="popup-label-title" for="shapes">Students<span style="color:#A30014">*</span></label>
                     <div>
-                        <select id="shapes" name="student"  th:field="*{students}" style="width: 250px" multiple>
+                        <select id="shapes" name="student" th:field="*{students}" style="width: 250px" multiple>
                             <option th:each="select : ${students}"
-
-                                    th:value="${select.id}"
-                                    th:title="${select.getName() + ' ' + select.getSurname()}"
+                                    th:value="${select.getId()}"
                                     th:text="${select.getName() + ' ' + select.getSurname()}"></option>
                         </select>
                         <div th:if="${blank}!= null" class="error">
@@ -77,16 +76,12 @@
 </div>
 <script type="text/javascript">
     $(function () {
-
         var shapes = $('#shapes').filterMultiSelect({
-          selectAllText: 'all...',
-          placeholderText: 'click to select a shape',
-          filterText: 'search',
-
+            selectAllText: 'All...',
+            placeholderText: 'Select a teachers',
+            filterText: 'Search',
         });
-
-
-      });
+    });
 </script>
 </body>
 </html>
