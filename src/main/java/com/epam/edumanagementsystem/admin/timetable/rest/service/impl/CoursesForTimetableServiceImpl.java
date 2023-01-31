@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -121,11 +122,13 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
-    public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId) {
+    public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId, LocalDate localDate) {
         logger.info("Getting Done Courses by Day of Week and Academic Class Id");
         return doneCoursesService.findAllByAcademicClassId(academicClassId)
                 .stream()
-                .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek))
+                .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek)
+                        && doneCourse.getDate().equals(localDate)
+                )
                 .map(doneCourses -> doneCourses.getAcademicCourse().getName())
                 .collect(Collectors.toList());
     }

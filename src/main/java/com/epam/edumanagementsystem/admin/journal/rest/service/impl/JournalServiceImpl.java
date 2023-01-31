@@ -84,36 +84,35 @@ public class JournalServiceImpl implements JournalService {
             }
         }
 
-        if (journalStartDate.isAfter(LocalDate.now()) || journalStartDate.equals(LocalDate.now())) {
-            journalStartDate = DateUtil.recurs(journalStartDate);
-        } else {
-            journalStartDate = DateUtil.doneRecurs(journalStartDate);
-        }
+        journalStartDate = DateUtil.recurs(journalStartDate);
 
         Set<AcademicCourseDto> academicCoursesInClassDto = new LinkedHashSet<>();
 
-        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate))) {
-            doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
-                    .forEach(doneCourse -> academicCoursesInClassDto
-                            .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
-        }
+//        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate))) {
+//            doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
+//                    .forEach(doneCourse -> academicCoursesInClassDto
+//                            .add(AcademicCourseMapper.toDto(doneCourse.getAcademicCourse())));
+//        }
+        LocalDate tmpForDoneCourses = journalStartDate;
 
-        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate))) {
+        if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate)
+                || DateUtil.recurs(timetableStartDate).equals(journalStartDate))) {
             for (int i = 0; i < 7; i++) {
-                Set<DoneCourses> allByAcademicClassIdAndDate = doneCoursesService.findAllByAcademicClassIdAndDate(academicClassByName.getId(), journalStartDate);
+                Set<DoneCourses> allByAcademicClassIdAndDate = doneCoursesService.findAllByAcademicClassIdAndDate(academicClassByName.getId(), tmpForDoneCourses);
                 if (!allByAcademicClassIdAndDate.isEmpty()) {
                     allByAcademicClassIdAndDate.forEach(doneCourses -> academicCoursesInClassDto
                             .add(AcademicCourseMapper.toDto(doneCourses.getAcademicCourse())));
                 }
-                journalStartDate = journalStartDate.plusDays(1);
+                tmpForDoneCourses = tmpForDoneCourses.plusDays(1);
 
-                if (journalStartDate.equals(LocalDate.now())) {
+                if (tmpForDoneCourses.equals(LocalDate.now())) {
                     break;
                 }
             }
         }
 
-        if (journalStartDate.equals(LocalDate.now()) || journalStartDate.isAfter(LocalDate.now())) {
+        if (tmpForDoneCourses.equals(LocalDate.now()) || tmpForDoneCourses.isAfter(LocalDate.now()) ||
+                DateUtil.recurs(timetableStartDate).equals(journalStartDate)) {
             coursesForTimetableService.getCoursesByAcademicClassId(academicClassByName.getId())
                     .stream()
                     .filter(coursesForTimetable -> coursesForTimetable.getAcademicCourse() != null)
@@ -181,7 +180,7 @@ public class JournalServiceImpl implements JournalService {
         String day = StringUtils.capitalize(deyOfWeek.toLowerCase(Locale.ROOT));
         if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))){
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
-                    .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId());
+                    .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId(), journalStartDate);
             existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
                     existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId, courseId);
         } else {
@@ -200,7 +199,7 @@ public class JournalServiceImpl implements JournalService {
 
         if (courseId != null) {
             if (coursesByDayOfWeekAndStatusAndAcademicClassId.contains(academicCourseService.findById(courseId).getName()) &&
-                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                    journalStartDate.isAfter(timetableStartDate) && journalStartDate.isBefore(timetableEndDate)) {
                 model.addAttribute(day, true);
                 existDay = true;
             } else {
@@ -208,7 +207,7 @@ public class JournalServiceImpl implements JournalService {
             }
         } else {
             if (!coursesByDayOfWeekAndStatusAndAcademicClassId.isEmpty() &&
-                    !journalStartDate.isBefore(timetableStartDate) && !journalStartDate.isAfter(timetableEndDate)) {
+                    journalStartDate.isAfter(timetableStartDate) && journalStartDate.isBefore(timetableEndDate)) {
                 model.addAttribute(day, true);
                 existDay = true;
             } else {
