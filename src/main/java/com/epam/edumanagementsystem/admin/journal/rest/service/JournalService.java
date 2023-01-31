@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 
 public interface JournalService {
 
-    void openJournal(String date, String startDate, String name, Model model);
+    void openJournal(String date, String startDate, String name, Model model, Long courseId);
 
     void doNotOpenJournal_timetableIsNotExist(String date, String startDate, String className, Model model);
 

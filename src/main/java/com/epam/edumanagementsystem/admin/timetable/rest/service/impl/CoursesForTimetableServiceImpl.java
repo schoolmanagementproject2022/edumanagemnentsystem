@@ -4,12 +4,13 @@ import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetabl
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
+import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -17,18 +18,26 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     private final CoursesForTimetableRepository coursesForTimetableRepository;
     private final Logger logger = Logger.getLogger(CoursesForTimetableServiceImpl.class.getName());
+    private final DoneCoursesService doneCoursesService;
 
-    public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository) {
+
+    public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository, DoneCoursesService doneCoursesService) {
         this.coursesForTimetableRepository = coursesForTimetableRepository;
+        this.doneCoursesService = doneCoursesService;
     }
 
     @Override
     public void create(CoursesForTimetableDto coursesForTimetableDto) {
         logger.info("Creating Course for Timetable");
-         coursesForTimetableRepository.create(coursesForTimetableDto.getDayOfWeek(),
+        coursesForTimetableRepository.create(coursesForTimetableDto.getDayOfWeek(),
                 coursesForTimetableDto.getAcademicCourse().getName(),
                 coursesForTimetableDto.getAcademicClass().getId(),
                 coursesForTimetableDto.getStatus());
+    }
+
+    @Override
+    public List<CoursesForTimetable> findAllByDayOfWeek(String dayOfWeek) {
+        return coursesForTimetableRepository.findAllByDayOfWeek(dayOfWeek);
     }
 
     @Override
@@ -93,11 +102,20 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
 
     @Override
     public List<String> getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(String dayOfWeek, String status, Long academicClassId) {
-        List<String> namesOfCourses = new ArrayList<>();
-        coursesForTimetableRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId)
-                .forEach(coursesForTimetable -> namesOfCourses.add(coursesForTimetable.getAcademicCourse()));
         logger.info("Getting Names of Courses for Timetable by Day of Week, Status and Academic Class Id");
-        return namesOfCourses;
+        return coursesForTimetableRepository.findCoursesByDayOfWeekAndStatusAndAcademicClassId(dayOfWeek, status, academicClassId)
+                .stream()
+                .map(CoursesForTimetable::getAcademicCourse)
+                .collect(Collectors.toList());
     }
 
+    @Override
+    public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId) {
+        logger.info("Getting Done Courses by Day of Week and Academic Class Id");
+        return doneCoursesService.findAllByAcademicClassId(academicClassId)
+                .stream()
+                .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek))
+                .map(doneCourses -> doneCourses.getAcademicCourse().getName())
+                .collect(Collectors.toList());
+    }
 }

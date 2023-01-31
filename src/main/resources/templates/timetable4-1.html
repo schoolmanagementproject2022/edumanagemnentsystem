@@ -238,6 +238,14 @@
         }
     </script>
 
+    <script type="text/javascript">
+function preventBack(){
+window.history.forward();
+}
+setTimeout("preventBack()", 0);
+window.onunload = function () {return "Are you sure?"};
+</script>
+
     <title>Timetable</title>
 </head>
 
@@ -779,6 +787,15 @@
             return text.substr(0, maxLength) + '...';
         }
     });
+</script>
+<script th:inline="javascript" th:if="${delete != null}">
+   if (confirm('Changes you made may not be saved.')) {
+  // Save it!
+  console.log('Thing was saved to the database.');
+} else {
+  // Do nothing!
+  console.log('Thing was not saved to the database.');
+}
 </script>
 </body>
 </html>

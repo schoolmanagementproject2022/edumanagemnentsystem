@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
+import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 @RequestMapping("/classes")
 @Tag(name = "Journal")
 public class JournalController {
+
     private final TimetableService timetableService;
     private final JournalService journalService;
     private final AcademicCourseService academicCourseService;
@@ -42,9 +44,10 @@ public class JournalController {
     @GetMapping("/{name}/journal")
     @Operation(summary = "Shows journal page")
     public String journal(Model model, @PathVariable("name") String name, @RequestParam(name = "date", required = false) String date,
-                          @RequestParam(name = "startDate", required = false) String startDate) {
+                          @RequestParam(name = "startDate", required = false) String startDate,
+                          @RequestParam(name = "courseId", required = false) Long courseId) {
         if (timetableService.existTimetableByClassId(academicClassService.findByClassNumber(name).getId())) {
-            journalService.openJournal(date, startDate, name, model);
+            journalService.openJournal(date, startDate, name, model, courseId);
             return JOURNAL_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date, startDate, name, model);
@@ -60,6 +63,9 @@ public class JournalController {
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
 
+        model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
+        model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
+
         if (allFieldsBlankMessage != null && !allFieldsBlankMessage.isBlank()) {
             model.addAttribute("allFieldsBlankMessage", allFieldsBlankMessage);
             model.addAttribute("concreteDay", concreteDay);
@@ -72,7 +78,7 @@ public class JournalController {
                 return JOURNAL_WITH_COURSE_INFO_HTML;
             }
 
-            journalService.openJournal(date, startDate, name, model);
+            journalService.openJournal(date, startDate, name, model, courseId);
             return JOURNAL_WITH_COURSE_INFO_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);
@@ -89,6 +95,9 @@ public class JournalController {
                                      @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                      Model model) {
 
+        model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
+        model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
+
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
             model.addAttribute("concreteDay", concreteDay);
@@ -96,7 +105,7 @@ public class JournalController {
                 return JOURNAL_WITH_COURSE_INFO_HTML;
             }
 
-            journalService.openJournal(date, startDate, name, model);
+            journalService.openJournal(date, startDate, name, model, courseId);
             return JOURNAL_WITH_COURSE_INFO_HTML;
         } else {
             journalService.doNotOpenJournal_timetableIsNotExist(date.split("/")[0], startDate, name, model);

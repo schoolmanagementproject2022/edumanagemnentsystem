@@ -7,6 +7,7 @@ public final class GlobalConstants {
     }
 
     public static final String MONDAY = "MONDAY";
+    public static final String CRON = "0 0 22 1/1 * ?";
     public static final int FIELD_MAX_SIZE = 50;
     public static final String REGEXP = "[^@]+@[^@]+\\.[a-zA-Z]{2,3}$";
     public static final String ACADEMIC_COURSE_SECTION = "academicCourseSection";
@@ -31,6 +32,7 @@ public final class GlobalConstants {
     public static final String CLASSROOM_TEACHER_SECTION = "classroomTeacherSection";
     public static final String ACADEMIC_CLASS_SECTION_FOR_STUDENTS = "academicClassSectionForStudents";
     public static final String VACATION_SECTION = "vacationSection";
+    public static final String ACADEMIC_YEAR_SECTION = "academicYearSection";
 
 
 }
