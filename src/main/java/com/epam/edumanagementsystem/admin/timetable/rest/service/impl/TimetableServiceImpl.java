@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 @Service
 public class TimetableServiceImpl implements TimetableService {
     private final TimetableRepository timetableRepository;
-    private static final int TIMETABLE_MIN_DURATION_IN_DAYS = 371;
     private static final int TIMETABLE_MAX_DURATION_IN_YEARS = 1;
     private static final int TIMETABLE_MIN_DURATION_IN_MONTHS = 6;
 
