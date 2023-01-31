@@ -61,6 +61,34 @@
                 }
             });
 
+            $('#startDate').find(function () {
+                if (localStorage.getItem("startDate") != null) {
+                    var from = localStorage.getItem("startDate").split("-")
+                    var startDate = new Date(from[2], from[1] - 1, from[0])
+
+                    console.log("my start date" + startDate + "and" + from)
+
+                    const minDate = new Date(startDate);
+                    minDate.setDate(minDate.getDate() + 6);
+
+                    console.log("find valeu of minDate" + minDate)
+
+                    var maxDate = new Date(minDate);
+                    maxDate.setDate(maxDate.getDate() + 6)
+                    maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                    console.log("find valeu of maxDate" + maxDate)
+
+                    if (minDate !== '') {
+                        $('#endDate').datepicker('option', 'minDate', minDate);
+                    }
+
+                    if (maxDate !== '') {
+                        $('#endDate').datepicker('option', 'maxDate', maxDate);
+                    }
+                }
+            })
+
             $('#endDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,

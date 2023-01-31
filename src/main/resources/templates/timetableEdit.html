@@ -39,16 +39,18 @@
                     var from = $("#startDate").val().split("-")
                     var startDate = new Date(from[2], from[1] - 1, from[0])
                     console.log("valeu of startDate" + startDate)
-                    var maxDate = new Date(startDate);
-                    maxDate.setDate(maxDate.getDate() + 6)
-                    maxDate.setFullYear(maxDate.getFullYear() + 1);
-
-                    console.log("valeu of maxDate" + maxDate)
-
                     const minDate = new Date(startDate);
                     minDate.setDate(minDate.getDate() + 6);
 
                     console.log("valeu of minDate" + minDate)
+
+                    var maxDate = new Date(minDate);
+                    maxDate.setDate(maxDate.getDate() + 6)
+
+                    console.log("valeu of maxDate 1" + maxDate)
+                    maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                    console.log("valeu of maxDate" + maxDate)
 
                     if (minDate !== '') {
                         $('#endDate').datepicker('option', 'minDate', minDate);
@@ -63,22 +65,35 @@
             });
 
             $('#startDate').find(function () {
-                var from = $("#startDate").val().split("-")
-                var startDate = new Date(from[2], from[1] - 1, from[0])
-                if (startDate != '') {
-                    $('#startDate').datepicker('option', 'minDate', startDate);
+                var from;
+                var startDate;
+                console.log("my start date" + startDate + "and" + from)
+                if (localStorage.getItem("startDate") != null) {
+                    from = localStorage.getItem("startDate").split("-")
+                    startDate = new Date(from[2], from[1] - 1, from[0])
+                    if (startDate !== '') {
+                        $('#startDate').datepicker('option', 'minDate', startDate);
+                    }
+                    console.log("my start date" + startDate + "and" + from)
+                } else {
+                    from = $("#startDate").val().split("-")
+                    startDate = new Date(from[2], from[1] - 1, from[0])
+                    if (startDate !== '') {
+                        $('#startDate').datepicker('option', 'minDate', startDate);
+                    }
+                    console.log("my start date" + startDate + "and" + from)
                 }
-                console.log(startDate)
-                var maxDate = new Date(startDate);
-                maxDate.setDate(maxDate.getDate() + 6)
-                maxDate.setFullYear(maxDate.getFullYear() + 1);
-
-                console.log("find valeu of maxDate" + maxDate)
 
                 const minDate = new Date(startDate);
                 minDate.setDate(minDate.getDate() + 6);
 
                 console.log("find valeu of minDate" + minDate)
+
+                var maxDate = new Date(minDate);
+                maxDate.setDate(maxDate.getDate() + 6)
+                maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                console.log("find valeu of maxDate" + maxDate)
 
                 if (minDate !== '') {
                     $('#endDate').datepicker('option', 'minDate', minDate);
@@ -102,7 +117,8 @@
                 }
             });
 
-        });
+        })
+        ;
     </script>
 
     <script>
