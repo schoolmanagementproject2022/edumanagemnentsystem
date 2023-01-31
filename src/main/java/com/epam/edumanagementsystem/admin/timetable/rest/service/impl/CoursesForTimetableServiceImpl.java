@@ -1,14 +1,18 @@
 package com.epam.edumanagementsystem.admin.timetable.rest.service.impl;
 
+import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.model.dto.CoursesForTimetableDto;
 import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.repository.CoursesForTimetableRepository;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.util.service.DoneCoursesService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -17,12 +21,14 @@ import java.util.stream.Collectors;
 public class CoursesForTimetableServiceImpl implements CoursesForTimetableService {
 
     private final CoursesForTimetableRepository coursesForTimetableRepository;
+    private final AcademicCourseService academicCourseService;
     private final Logger logger = Logger.getLogger(CoursesForTimetableServiceImpl.class.getName());
     private final DoneCoursesService doneCoursesService;
 
 
-    public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository, DoneCoursesService doneCoursesService) {
+    public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository, AcademicCourseService academicCourseService, DoneCoursesService doneCoursesService) {
         this.coursesForTimetableRepository = coursesForTimetableRepository;
+        this.academicCourseService = academicCourseService;
         this.doneCoursesService = doneCoursesService;
     }
 
@@ -69,6 +75,11 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
         logger.info("Getting Courses for Timetable by Academic Class Id");
         return coursesForTimetableRepository.findCoursesByAcademicClassId(academicClassId);
     }
+
+//    @Override
+//    public Set<AcademicCourseDto> getSetOfCoursesFromAcademicClassById(Long academicClassId) {
+//        return
+//    }
 
     @Override
     public List<CoursesForTimetable> getCoursesForDayAndAcademicClassId(String dayOfWeek, Long academicClassId) {

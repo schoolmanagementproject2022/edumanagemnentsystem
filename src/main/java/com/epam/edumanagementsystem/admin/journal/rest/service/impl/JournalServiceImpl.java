@@ -10,6 +10,7 @@ import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
+import com.epam.edumanagementsystem.admin.timetable.model.entity.CoursesForTimetable;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.CoursesForTimetableService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.util.DateUtil;
@@ -20,9 +21,11 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER_JOURNAL;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
@@ -81,8 +84,14 @@ public class JournalServiceImpl implements JournalService {
                 journalStartDate = LocalDate.now();
             }
         }
-        journalStartDate = DateUtil.recurs(journalStartDate);
-        Set<AcademicCourseDto> academicCoursesInClassDto = academicCourseService.findAllAcademicCoursesInClassByName(name);
+
+        Set<AcademicCourseDto> academicCoursesInClassDto = new LinkedHashSet<>();
+        if (journalStartDate.equals(LocalDate.now()) || journalStartDate.isAfter(LocalDate.now())) {
+            coursesForTimetableService.getCoursesByAcademicClassId(academicClassByName.getId())
+                    .stream()
+                    .filter(coursesForTimetable -> coursesForTimetable.getAcademicCourse() != null)
+                    .forEach(coursesForTimetable -> academicCoursesInClassDto.add(academicCourseService.findByName(coursesForTimetable.getAcademicCourse())));
+        }
 
         if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))) {
             doneCoursesService.findAllByAcademicClassId(academicClassByName.getId())
@@ -91,6 +100,7 @@ public class JournalServiceImpl implements JournalService {
         }
         model.addAttribute("allCoursesInAcademicClass", academicCoursesInClassDto);
 
+        journalStartDate = DateUtil.recurs(journalStartDate);
         boolean existDay = false;
         for (int i = 0; i < 7; i++) {
             existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay, courseId);
