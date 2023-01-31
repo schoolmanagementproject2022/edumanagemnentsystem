@@ -39,7 +39,7 @@ body {
 
 .filter-multi-select > .viewbar {
     white-space: normal;
-    padding-top: 6px;
+    padding-top: 25px;
     padding-left: 6px;
     cursor: pointer;
     weight: 400%;

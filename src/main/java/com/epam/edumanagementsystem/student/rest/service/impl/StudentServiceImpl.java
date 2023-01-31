@@ -1,5 +1,9 @@
 package com.epam.edumanagementsystem.student.rest.service.impl;
 
+import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
+import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.exception.EntityNotFoundException;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
@@ -28,6 +32,7 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final AcademicClassService academicClassService;
     private final UserService userService;
     private final ImageService imageService;
     private final PasswordEncoder encoder;
@@ -35,8 +40,9 @@ public class StudentServiceImpl implements StudentService {
     private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
-    public StudentServiceImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, UserService userService, ImageService imageService) {
+    public StudentServiceImpl(PasswordEncoder passwordEncoder, StudentRepository studentRepository, AcademicClassService academicClassService, UserService userService, ImageService imageService) {
         this.studentRepository = studentRepository;
+        this.academicClassService = academicClassService;
         this.userService = userService;
         this.imageService = imageService;
         this.encoder = passwordEncoder;
@@ -75,6 +81,23 @@ public class StudentServiceImpl implements StudentService {
         updatableStudent.setAcademicClass(newStudent.getAcademicClass());
         logger.debug(updatableStudent.getName());
         return StudentMapper.toStudentDto(studentRepository.save(updatableStudent));
+    }
+
+    @Override
+    public void updateAcademicClassOfStudent(AcademicClassDto academicClassDto) {
+        AcademicClass academicClass = AcademicClassMapper.toAcademicClass(academicClassService.
+                findByClassNumber(academicClassDto.getClassNumber()));
+        if (!academicClassDto.getStudents().isEmpty()) {
+            for (Student student : academicClassDto.getStudents()) {
+                if (student != null) {
+                    if (student.getAcademicClass() == null) {
+                        StudentDto studentDto = findById(student.getId());
+                        studentDto.setAcademicClass(academicClass);
+                        studentRepository.save(StudentMapper.toStudent(studentDto, userService.findByEmail(studentDto.getEmail())));
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -151,5 +174,4 @@ public class StudentServiceImpl implements StudentService {
     public List<StudentDto> findStudentsWithoutConnectionWithClass() {
         return StudentMapper.toStudentDtoList(studentRepository.findAllByAcademicClassIsNull());
     }
-
 }
