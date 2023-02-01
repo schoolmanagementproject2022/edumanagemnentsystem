@@ -70,7 +70,7 @@ public class JournalController {
             model.addAttribute("concreteDay", concreteDay);
         }
         model.addAttribute("saveAgenda", new SaveAgendaDto());
-        model.addAttribute("addGrades",new GradesDto());
+        model.addAttribute("saveGrade",new GradesDto());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
@@ -89,6 +89,7 @@ public class JournalController {
 
     @PostMapping("/{name}/journal/{courseId}")
     public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto, BindingResult result,
+                                     @ModelAttribute(value = "saveGrade") @Valid GradesDto saveGrade, BindingResult bindingResult,
                                      @PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                      @RequestParam(name = "date", required = false) String date,
                                      @RequestParam(name = "startDate", required = false) String startDate,

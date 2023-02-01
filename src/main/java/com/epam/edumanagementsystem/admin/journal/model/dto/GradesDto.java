@@ -5,10 +5,19 @@ import com.epam.edumanagementsystem.admin.journal.model.entity.Homework;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Test;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class GradesDto {
     private Long id;
+    @Min(value = 1, message = "Only 1-100 numbers are allowed")
+    @Max(value = 100, message = "Only 1-100 numbers are allowed")
     private int gradeClasswork;
+    @Min(value = 1, message = "Only 1-100 numbers are allowed")
+    @Max(value = 100, message = "Only 1-100 numbers are allowed")
     private int gradeHomework;
+    @Min(value = 1, message = "Only 1-100 numbers are allowed")
+    @Max(value = 100, message = "Only 1-100 numbers are allowed")
     private int gradeTest;
     private Student student;
     private Classwork classwork;

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/grades")
 @Tag(name = "Grades in journal")
@@ -32,19 +34,25 @@ public class GradesController {
     }
 
     @PostMapping("/add")
-    public String addGrade(@ModelAttribute(value = "saveGrade") GradesDto gradesDto, BindingResult result, Model model,
+    public String addGrade(@ModelAttribute(value = "saveGrade") @Valid GradesDto gradesDto, BindingResult result, Model model,
                            @RequestParam(value = "classId", required = false) Long classId,
                            @RequestParam(value = "studentId", required = false) Long studentId,
-                           @RequestParam(value = "courseId", required = false) Long courseId,
+                           @RequestParam(value = "courseId", required = false) Long academicCourseId,
                            @RequestParam(name = "date", required = false) String date,
                            @RequestParam(name = "classwork", required = false) String classwork) {
 
+
         AcademicClassDto academicClass = academicClassService.findById(classId);
+        if(result.hasFieldErrors("gradeHomework")||result.hasFieldErrors("gradeTest")||result.hasFieldErrors("gradeClasswork")){
+            model.addAttribute("gradesDto", gradesDto);
+            return "forward:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId;
+        }
+
         StudentDto student = studentService.findById(studentId);
         gradesDto.setStudent(StudentMapper.mapToStudent(student));
         gradeService.save(gradesDto);
 
-        return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + courseId + "?date=" + date;
+        return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId + "?date=" + date;
 
     }
 }
