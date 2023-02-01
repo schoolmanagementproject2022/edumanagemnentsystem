@@ -12,24 +12,20 @@ public class Grades {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int grade;
+    private int gradeHomework;
+    private int gradeTest;
+    private int gradeClasswork;
     @ManyToOne
+    @JoinColumn(name = "student_id")
     private Student student;
-    @ManyToMany
-    @JoinTable(name = "classwork_grades_mapping",
-            joinColumns = @JoinColumn(name = "grades_id"),
-            inverseJoinColumns = @JoinColumn(name = "classwork_id"))
-    private List<Classwork> classworkList;
-    @ManyToMany
-    @JoinTable(name = "test_grades_mapping",
-            joinColumns = @JoinColumn(name = "grades_id"),
-            inverseJoinColumns = @JoinColumn(name = "test_id"))
-    private List<Test> testList;
-    @ManyToMany
-    @JoinTable(name = "homework_grades_mapping",
-            joinColumns = @JoinColumn(name = "grades_id"),
-            inverseJoinColumns = @JoinColumn(name = "homework_id"))
-    private List<Homework> homeworkList;
+    @OneToOne
+    private Classwork classwork;
+    @OneToOne
+
+    private Test test;
+    @OneToOne
+
+    private Homework homework;
 
     public Long getId() {
         return id;
@@ -37,14 +33,6 @@ public class Grades {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 
     public Student getStudent() {
@@ -59,35 +47,61 @@ public class Grades {
         return classworkList;
     }
 
-    public void setClassworkList(List<Classwork> classworkList) {
-        this.classworkList = classworkList;
+    public void setClassworkList(Classwork classworkList) {
+        this.classwor = classwork;
     }
 
-    public List<Test> getTestList() {
-        return testList;
+    public Test getTestList() {
+        return test;
     }
 
-    public void setTestList(List<Test> testList) {
-        this.testList = testList;
+    public void setTestList(Test test) {
+        this.test = test;
     }
 
-    public List<Homework> getHomeworkList() {
-        return homeworkList;
+    public Homework getHomeworkList() {
+        return homework;
     }
 
-    public void setHomeworkList(List<Homework> homeworkList) {
-        this.homeworkList = homeworkList;
+    public void setHomeworkList(Homework homework) {
+        this.homework = homework;
+    }
+
+    public int getGradeHomework() {
+        return gradeHomework;
+    }
+
+    public void setGradeHomework(int gradeHomework) {
+        this.gradeHomework = gradeHomework;
+    }
+
+    public int getGradeTest() {
+        return gradeTest;
+    }
+
+    public void setGradeTest(int gradeTest) {
+        this.gradeTest = gradeTest;
+    }
+
+    public int getGradeClasswork() {
+        return gradeClasswork;
+    }
+
+    public void setGradeClasswork(int gradeClasswork) {
+        this.gradeClasswork = gradeClasswork;
     }
 
     @Override
     public String toString() {
         return "Grades{" +
                 "id=" + id +
-                ", grade=" + grade +
+                ", gradeHomework=" + gradeHomework +
+                ", gradeTest=" + gradeTest +
+                ", gradeClasswork=" + gradeClasswork +
                 ", student=" + student +
-                ", classwork=" + classworkList +
-                ", test=" + testList +
-                ", homework=" + homeworkList +
+                ", classworkList=" + classworkList +
+                ", testList=" + testList +
+                ", homeworkList=" + homeworkList +
                 '}';
     }
 }

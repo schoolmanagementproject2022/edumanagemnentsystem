@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal.rest.api;
 
+import com.epam.edumanagementsystem.admin.journal.model.dto.GradesDto;
 import com.epam.edumanagementsystem.admin.journal.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal.rest.service.JournalService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
@@ -61,7 +62,6 @@ public class JournalController {
                                         @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
-
         model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
         model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
 
@@ -70,6 +70,7 @@ public class JournalController {
             model.addAttribute("concreteDay", concreteDay);
         }
         model.addAttribute("saveAgenda", new SaveAgendaDto());
+        model.addAttribute("addGrades",new GradesDto());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
@@ -93,7 +94,6 @@ public class JournalController {
                                      @RequestParam(name = "startDate", required = false) String startDate,
                                      @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                      Model model) {
-
         model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
         model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
 

@@ -8,8 +8,10 @@ public class GradesMapper {
     public static Grades toGrades(GradesDto gradesDto) {
         Grades grades = new Grades();
         grades.setId(grades.getId());
-        grades.setGrade(grades.getGrade());
-        grades.setStudent(grades.getStudent());
+        grades.setGradeHomework(gradesDto.getGradeHomework());
+        grades.setGradeTest(gradesDto.getGradeTest());
+        grades.setGradeClasswork(gradesDto.getGradeClasswork());
+        grades.setStudent(gradesDto.getStudent());
         grades.setClassworkList(grades.getClassworkList());
         grades.setTestList(grades.getTestList());
         grades.setHomeworkList(grades.getHomeworkList());
@@ -19,12 +21,14 @@ public class GradesMapper {
 
     public static GradesDto toDto(Grades grades) {
         GradesDto gradesDto = new GradesDto();
-        gradesDto.setId(gradesDto.getId());
-        gradesDto.setGrade(gradesDto.getGrade());
-        gradesDto.setStudent(gradesDto.getStudent());
+        gradesDto.setId(grades.getId());
+        gradesDto.setGradeClasswork(grades.getGradeClasswork());
+        gradesDto.setGradeTest(grades.getGradeTest());
+        gradesDto.setGradeHomework(grades.getGradeHomework());
+        gradesDto.setStudent(grades.getStudent());
         gradesDto.setClassworkList(gradesDto.getClassworkList());
-        gradesDto.setTestList(gradesDto.getTestList());
-        gradesDto.setHomeworkList(gradesDto.getHomeworkList());
+        gradesDto.setTestList(grades.getTestList());
+        gradesDto.setHomeworkList(grades.getHomeworkList());
         return gradesDto;
     }
 }

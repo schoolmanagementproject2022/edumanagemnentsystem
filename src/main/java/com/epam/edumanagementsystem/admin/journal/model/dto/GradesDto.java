@@ -9,7 +9,9 @@ import java.util.List;
 
 public class GradesDto {
     private Long id;
-    private int grade;
+    private int gradeClasswork;
+    private int gradeHomework;
+    private int gradeTest;
     private Student student;
     private List<Classwork> classworkList;
     private List<Test> testList;
@@ -20,7 +22,7 @@ public class GradesDto {
 
     public GradesDto(Long id, int grade, Student student, List<Classwork> classworkList, List<Test> testList, List<Homework> homeworkList) {
         this.id = id;
-        this.grade = grade;
+        this.gradeClasswork = grade;
         this.student = student;
         this.classworkList = classworkList;
         this.testList = testList;
@@ -35,12 +37,12 @@ public class GradesDto {
         this.id = id;
     }
 
-    public int getGrade() {
-        return grade;
+    public int getGradeClasswork() {
+        return gradeClasswork;
     }
 
-    public void setGrade(int grade) {
-        this.grade = grade;
+    public void setGradeClasswork(int gradeClasswork) {
+        this.gradeClasswork = gradeClasswork;
     }
 
     public Student getStudent() {
@@ -79,11 +81,27 @@ public class GradesDto {
     public String toString() {
         return "GradesDto{" +
                 "id=" + id +
-                ", grade=" + grade +
+                ", grade=" + gradeClasswork +
                 ", student=" + student +
                 ", classworkList=" + classworkList +
                 ", testList=" + testList +
                 ", homeworkList=" + homeworkList +
                 '}';
+    }
+
+    public int getGradeHomework() {
+        return gradeHomework;
+    }
+
+    public void setGradeHomework(int gradeHomework) {
+        this.gradeHomework = gradeHomework;
+    }
+
+    public int getGradeTest() {
+        return gradeTest;
+    }
+
+    public void setGradeTest(int gradeTest) {
+        this.gradeTest = gradeTest;
     }
 }
