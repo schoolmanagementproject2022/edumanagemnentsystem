@@ -15,8 +15,6 @@ public class Homework {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String homework;
-    @ManyToMany(mappedBy = "homeworkList", fetch = FetchType.EAGER)
-    private List<Grades> grades;
     private LocalDate dateOfHomework;
     @ManyToOne
     private AcademicCourse academicCourse;
@@ -26,10 +24,10 @@ public class Homework {
     public Homework() {
     }
 
-    public Homework(Long id, String homework, List<Grades> grades, LocalDate dateOfHomework, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public Homework(Long id, String homework, LocalDate dateOfHomework, AcademicCourse academicCourse,
+                    AcademicClass academicClass) {
         this.id = id;
         this.homework = homework;
-        this.grades = grades;
         this.dateOfHomework = dateOfHomework;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
@@ -49,14 +47,6 @@ public class Homework {
 
     public void setHomework(String homework) {
         this.homework = homework;
-    }
-
-    public List<Grades> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Grades> grades) {
-        this.grades = grades;
     }
 
     public AcademicCourse getAcademicCourse() {
@@ -96,7 +86,6 @@ public class Homework {
         return "Homework{" +
                 "id=" + id +
                 ", homework='" + homework + '\'' +
-                ", grades=" + grades +
                 ", dateOfHomework=" + dateOfHomework +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +

@@ -7,6 +7,8 @@ import com.epam.edumanagementsystem.admin.journal.rest.repository.GradesReposito
 import com.epam.edumanagementsystem.admin.journal.rest.service.GradesService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GradesServiceImpl implements GradesService {
 
@@ -19,5 +21,9 @@ public class GradesServiceImpl implements GradesService {
     @Override
     public Grades save(GradesDto gradesDto) {
         return gradesRepository.save(GradesMapper.toGrades(gradesDto));
+    }
+    @Override
+    public Optional<Grades> findById(Long id) {
+        return gradesRepository.findById(id);
     }
 }
