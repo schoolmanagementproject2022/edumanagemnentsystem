@@ -52,7 +52,7 @@ class HomeworkServiceImplTest {
         academicCourse = new AcademicCourse();
         academicCourse.setId(1L);
         academicCourse.setName("Course 1");
-        homework = new Homework(1L, "homework", List.of(), LocalDate.now(), academicCourse, academicClass);
+        homework = new Homework(1L, "homework",  LocalDate.now(), academicCourse, academicClass);
         saveAgendaDto = new SaveAgendaDto("classwork", homework.getHomework(), "test");
     }
 

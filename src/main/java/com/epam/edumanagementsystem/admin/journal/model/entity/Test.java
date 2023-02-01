@@ -15,8 +15,6 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String test;
-    @ManyToMany(mappedBy = "testList", fetch = FetchType.EAGER)
-    private List<Grades> grades;
     private LocalDate dateOfTest;
     @ManyToOne
     private AcademicCourse academicCourse;
@@ -26,10 +24,10 @@ public class Test {
     public Test() {
     }
 
-    public Test(Long id, String test, List<Grades> grades, LocalDate dateOfTest, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public Test(Long id, String test, LocalDate dateOfTest, AcademicCourse academicCourse,
+                AcademicClass academicClass) {
         this.id = id;
         this.test = test;
-        this.grades = grades;
         this.dateOfTest = dateOfTest;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
@@ -49,14 +47,6 @@ public class Test {
 
     public void setTest(String test) {
         this.test = test;
-    }
-
-    public List<Grades> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Grades> grades) {
-        this.grades = grades;
     }
 
     public LocalDate getDateOfTest() {
@@ -88,7 +78,6 @@ public class Test {
         return "Test{" +
                 "id=" + id +
                 ", test='" + test + '\'' +
-                ", grades=" + grades +
                 ", dateOfTest=" + dateOfTest +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +

@@ -12,9 +12,9 @@ public class GradesMapper {
         grades.setGradeTest(gradesDto.getGradeTest());
         grades.setGradeClasswork(gradesDto.getGradeClasswork());
         grades.setStudent(gradesDto.getStudent());
-        grades.setClassworkList(grades.getClassworkList());
-        grades.setTestList(grades.getTestList());
-        grades.setHomeworkList(grades.getHomeworkList());
+        grades.setClasswork(grades.getClasswork());
+        grades.setTest(grades.getTest());
+        grades.setHomework(grades.getHomework());
 
         return grades;
     }
@@ -26,9 +26,9 @@ public class GradesMapper {
         gradesDto.setGradeTest(grades.getGradeTest());
         gradesDto.setGradeHomework(grades.getGradeHomework());
         gradesDto.setStudent(grades.getStudent());
-        gradesDto.setClassworkList(gradesDto.getClassworkList());
-        gradesDto.setTestList(grades.getTestList());
-        gradesDto.setHomeworkList(grades.getHomeworkList());
+        gradesDto.setClasswork(gradesDto.getClasswork());
+        gradesDto.setTest(grades.getTest());
+        gradesDto.setHomework(grades.getHomework());
         return gradesDto;
     }
 }

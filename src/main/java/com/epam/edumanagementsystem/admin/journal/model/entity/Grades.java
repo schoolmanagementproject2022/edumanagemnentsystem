@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.journal.model.entity;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "grades")
@@ -20,8 +21,10 @@ public class Grades {
     @OneToOne
     private Classwork classwork;
     @OneToOne
+
     private Test test;
     @OneToOne
+
     private Homework homework;
 
     public Long getId() {
@@ -40,27 +43,27 @@ public class Grades {
         this.student = student;
     }
 
-    public Classwork getClasswork() {
-        return classwork;
+    public List<Classwork> getClassworkList() {
+        return classworkList;
     }
 
-    public void setClasswork(Classwork classwork) {
-        this.classwork = classwork;
+    public void setClassworkList(Classwork classworkList) {
+        this.classwor = classwork;
     }
 
-    public Test getTest() {
+    public Test getTestList() {
         return test;
     }
 
-    public void setTest(Test test) {
+    public void setTestList(Test test) {
         this.test = test;
     }
 
-    public Homework getHomework() {
+    public Homework getHomeworkList() {
         return homework;
     }
 
-    public void setHomework(Homework homework) {
+    public void setHomeworkList(Homework homework) {
         this.homework = homework;
     }
 
@@ -96,9 +99,9 @@ public class Grades {
                 ", gradeTest=" + gradeTest +
                 ", gradeClasswork=" + gradeClasswork +
                 ", student=" + student +
-                ", classwork=" + classwork +
-                ", test=" + test +
-                ", homework=" + homework +
+                ", classworkList=" + classworkList +
+                ", testList=" + testList +
+                ", homeworkList=" + homeworkList +
                 '}';
     }
 }

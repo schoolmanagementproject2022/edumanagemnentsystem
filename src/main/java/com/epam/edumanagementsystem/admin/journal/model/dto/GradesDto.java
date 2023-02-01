@@ -5,29 +5,28 @@ import com.epam.edumanagementsystem.admin.journal.model.entity.Homework;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Test;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
+import java.util.List;
+
 public class GradesDto {
     private Long id;
     private int gradeClasswork;
     private int gradeHomework;
     private int gradeTest;
     private Student student;
-    private Classwork classwork;
-    private Test test;
-    private Homework homework;
+    private List<Classwork> classworkList;
+    private List<Test> testList;
+    private List<Homework> homeworkList;
 
     public GradesDto() {
     }
 
-    public GradesDto(Long id, int gradeClasswork, int gradeHomework, int gradeTest, Student student,
-                     Classwork classwork, Test test, Homework homework) {
+    public GradesDto(Long id, int grade, Student student, List<Classwork> classworkList, List<Test> testList, List<Homework> homeworkList) {
         this.id = id;
-        this.gradeClasswork = gradeClasswork;
-        this.gradeHomework = gradeHomework;
-        this.gradeTest = gradeTest;
+        this.gradeClasswork = grade;
         this.student = student;
-        this.classwork = classwork;
-        this.test = test;
-        this.homework = homework;
+        this.classworkList = classworkList;
+        this.testList = testList;
+        this.homeworkList = homeworkList;
     }
 
     public Long getId() {
@@ -54,28 +53,40 @@ public class GradesDto {
         this.student = student;
     }
 
-    public Classwork getClasswork() {
-        return classwork;
+    public List<Classwork> getClassworkList() {
+        return classworkList;
     }
 
-    public void setClasswork(Classwork classwork) {
-        this.classwork = classwork;
+    public void setClassworkList(List<Classwork> classworkList) {
+        this.classworkList = classworkList;
     }
 
-    public Test getTest() {
-        return test;
+    public List<Test> getTestList() {
+        return testList;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
     }
 
-    public Homework getHomework() {
-        return homework;
+    public List<Homework> getHomeworkList() {
+        return homeworkList;
     }
 
-    public void setHomework(Homework homework) {
-        this.homework = homework;
+    public void setHomeworkList(List<Homework> homeworkList) {
+        this.homeworkList = homeworkList;
+    }
+
+    @Override
+    public String toString() {
+        return "GradesDto{" +
+                "id=" + id +
+                ", grade=" + gradeClasswork +
+                ", student=" + student +
+                ", classworkList=" + classworkList +
+                ", testList=" + testList +
+                ", homeworkList=" + homeworkList +
+                '}';
     }
 
     public int getGradeHomework() {
@@ -92,19 +103,5 @@ public class GradesDto {
 
     public void setGradeTest(int gradeTest) {
         this.gradeTest = gradeTest;
-    }
-
-    @Override
-    public String toString() {
-        return "GradesDto{" +
-                "id=" + id +
-                ", gradeClasswork=" + gradeClasswork +
-                ", gradeHomework=" + gradeHomework +
-                ", gradeTest=" + gradeTest +
-                ", student=" + student +
-                ", classwork=" + classwork +
-                ", test=" + test +
-                ", homework=" + homework +
-                '}';
     }
 }
