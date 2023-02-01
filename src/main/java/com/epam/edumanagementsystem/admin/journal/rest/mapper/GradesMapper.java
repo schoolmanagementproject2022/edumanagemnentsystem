@@ -26,7 +26,7 @@ public class GradesMapper {
         gradesDto.setGradeTest(grades.getGradeTest());
         gradesDto.setGradeHomework(grades.getGradeHomework());
         gradesDto.setStudent(grades.getStudent());
-        gradesDto.setClasswork(gradesDto.getClasswork());
+        gradesDto.setClasswork(grades.getClasswork());
         gradesDto.setTest(grades.getTest());
         gradesDto.setHomework(grades.getHomework());
         return gradesDto;
