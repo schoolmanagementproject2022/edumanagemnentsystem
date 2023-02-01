@@ -592,141 +592,7 @@
     </div>
 </div>
 <!--//grade-->
-<div class="create-pop">
 
-    <div class="popup-container" id="popup-container-grade-tuesday">
-        <button class="close-btn" title="close" onclick="hideTuesdayGradePopup()">×</button>
-        <div class="tooltip">
-            <h1 id="students-tuesday" style="font-size: 1.5rem; font-weight: bold"></h1>
-            <span id="student-tuesday-tooltip" class="tooltiptext">Tooltip text</span>
-        </div>
-
-        <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
-              th:action="@{'/agenda/add'}">
-
-            <div class="popup-wrap">
-                <div class="half_1">
-                    <label class="popup-label-title">Classwork</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
-                              id="classwork-tuesday-grade" th:field="*{classwork}" th:value="${classwork}"
-                              th:text="${classwork}" readonly></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('classwork')}"
-                         th:errors="*{classwork}"></div>
-
-                    <label class="popup-label-title">Test</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
-                              id="test-tuesday-grade" th:field="*{test}" th:value="${test}" th:text="${test}"
-                              readonly></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('test')}"
-                         th:errors="*{test}"></div>
-
-                    <label class="popup-label-title">Homework</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
-                              id="homework-tuesday-grade" th:field="*{homework}" th:value="*{homework}"
-                              th:text="*{homework}" readonly></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('homework')}"
-                         th:errors="*{homework}"></div>
-
-                    <input type="hidden" id="date-tuesday-grade" name="date"/>
-                    <input type="hidden" name="classId" th:value="${class.id}"/>
-                    <input type="hidden" name="courseId" th:value="${course.id}"/>
-                    <input type="hidden" name="concreteDay" th:value="'TUESDAY'"/>
-                    <div class="error"
-                         th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()}  and ${concreteDay} eq 'TUESDAY'">
-                        PopUpShowGradeTuesday();
-                    </script>
-                    <script th:inline="javascript"
-                            th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'TUESDAY'">
-                        PopUpShowGradeTuesday();
-                    </script>
-                </div>
-
-                <div class="half_2">
-                    <label class="popup-label-title">Grade</label>
-                    <input type="number" class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input type="number" class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input type="number" class="form_input_grade">
-                </div>
-                <div name="btn-div">
-                    <button type="submit" class="save" onclick="grade-tuesday_popUp()" id="submit_tuesday"><b>Save</b>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<!--wednesdayGradePopup-->
-<div class="create-pop">
-
-    <div class="popup-container" id="popup-container-grade-wednesday">
-        <button class="close-btn" title="close" onclick="hideWednesdayGradePopup()">×</button>
-        <div class="tooltip">
-            <h1 id="students-wednesday" style="font-size: 1.5rem; font-weight: bold"></h1>
-            <span id="student-wednesday-tooltip" class="tooltiptext">Tooltip text</span>
-        </div>
-        <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
-              th:action="@{'/agenda/add'}">
-
-            <div class="popup-wrap">
-                <div class="half_1">
-                    <label class="popup-label-title">Classwork</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
-                              id="classwork-wednesday-grade" th:field="*{classwork}" th:text="*{classwork}"
-                              th:value="*{classwork}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('classwork')}"
-                         th:errors="*{classwork}"></div>
-
-                    <label class="popup-label-title">Test</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
-                              id="test-wednesday-grade" th:field="*{test}" th:value="*{test}"
-                              th:text="*{test}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('test')}"
-                         th:errors="*{test}"></div>
-
-                    <label class="popup-label-title">Homework</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
-                              id="homework-wednesday-grade" th:field="*{homework}" th:value="*{homework}"
-                              th:text="*{homework}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('homework')}"
-                         th:errors="*{homework}"></div>
-
-                    <input type="hidden" id="date-wednesday-grade" name="date"/>
-                    <input type="hidden" name="classId" th:value="${class.id}"/>
-                    <input type="hidden" name="courseId" th:value="${course.id}"/>
-                    <input type="hidden" name="concreteDay" th:value="'WEDNESDAY'"/>
-                    <div class="error"
-                         th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'WEDNESDAY'">
-                        PopUpShowGradeWednesday();
-                    </script>
-                    <script th:inline="javascript"
-                            th:if=" ${allFieldsBlankMessage} and ${concreteDay} eq 'WEDNESDAY'">
-                        PopUpShowGradeWednesday();
-                    </script>
-                </div>
-
-                <div class="half_2">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                </div>
-                <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<!--mondayGradePopup-->
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-grade-monday">
@@ -736,178 +602,124 @@
             <span id="student-monday-tooltip" class="tooltiptext">Tooltip text</span>
         </div>
 
-        <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
-              th:action="@{'/agenda/add'}">
+        <div class="popup-wrap">
+            <div class="half_1">
+                <label class="popup-label-title">Classwork</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
+                          id="classwork-monday-grade"></textarea>
 
-            <div class="popup-wrap">
-                <div class="half_1">
-                    <label class="popup-label-title">Classwork</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
-                              id="classwork-monday-grade" th:field="*{classwork}" th:value="*{classwork}"
-                              th:text="*{classwork}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('classwork')}"
-                         th:errors="*{classwork}"></div>
+                <label class="popup-label-title">Test</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
+                          id="test-monday-grade"></textarea>
 
-                    <label class="popup-label-title">Test</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
-                              id="test-monday-grade" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('test')}"
-                         th:errors="*{test}"></div>
+                <label class="popup-label-title">Homework</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
+                          id="homework-monday-grade"></textarea>
 
-                    <label class="popup-label-title">Homework</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
-                              id="homework-monday-grade" th:field="*{homework}" th:value="*{homework}"
-                              th:text="*{homework}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('homework')}"
-                         th:errors="*{homework}"></div>
+                <input type="hidden" id="date-monday" name="date"/>
+                <input type="hidden" name="classId" th:value="${class.id}"/>
+                <input type="hidden" name="courseId" th:value="${course.id}"/>
+                <input type="hidden" name="concreteDay" th:value="'MONDAY'"/>
+            </div>
+            <form th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
+                <div class="half_2">
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeClasswork">
+                        <div class="error" th:if="${#fields.hasErrors('gradeClasswork')}"
+                             th:errors="*{gradeClasswork}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeTest">
+                        <div class="error" th:if="${#fields.hasErrors('gradeTest')}"
+                             th:errors="*{gradeTest}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeHomework')}"
+                             th:errors="*{gradeHomework}"></div>
+                    </div>
 
-                    <input type="hidden" id="date-monday-grade" name="date"/>
-                    <input type="hidden" name="classId" th:value="${class.id}"/>
-                    <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'MONDAY'">
+                        PopUpShowGradeMonday();
+                    </script>
+                    <input type="hidden" id="students-monday-grade" name="studentId"/>
+                    <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
+                    <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" id="date-monday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'MONDAY'"/>
-                    <div class="error"
-                         th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'MONDAY'">
-                        PopUpShowGradeMonday();
-                    </script>
-                    <script th:inline="javascript"
-                            th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'MONDAY'">
-                        PopUpShowGradeMonday();
-                    </script>
-
-                </div>
-                <div class="half_2">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_monday"><b>Save</b>
                     </button>
                 </div>
-            </div>
-        </form>
-    </div>
-</div>
-<!--fridayGradePopup-->
-<div class="create-pop">
-
-    <div class="popup-container" id="popup-container-grade-friday">
-        <button class="close-btn" title="close" onclick="hideFridayGradePopup()">×</button>
-        <div class="tooltip">
-            <h1 id="students-friday" style="font-size: 1.5rem; font-weight: bold"></h1>
-            <span id="student-friday-tooltip" class="tooltiptext">Tooltip text</span>
+            </form>
         </div>
-
-        <form id="form" class="form" th:method="POST" th:object="${saveAgenda}"
-              th:action="@{'/agenda/add'}">
-
-            <div class="popup-wrap">
-                <div class="half_1">
-                    <label class="popup-label-title">Classwork</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
-                              id="classwork-friday-grade" th:field="*{classwork}" th:value="*{classwork}"
-                              th:text="*{classwork}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('classwork')}"
-                         th:errors="*{classwork}"></div>
-
-                    <label class="popup-label-title">Test</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
-                              id="test-friday-grade" th:field="*{test}" th:value="*{test}" th:text="*{test}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('test')}"
-                         th:errors="*{test}"></div>
-
-                    <label class="popup-label-title">Homework</label>
-                    <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
-                              id="homework-friday-grade" th:field="*{homework}" th:value="*{homework}"
-                              th:text="*{homework}"></textarea>
-                    <div class="error" th:if="${#fields.hasErrors('homework')}"
-                         th:errors="*{homework}"></div>
-
-                    <input type="hidden" id="date-friday" name="date"/>
-                    <input type="hidden" name="classId" th:value="${class.id}"/>
-                    <input type="hidden" name="courseId" th:value="${course.id}"/>
-                    <input type="hidden" name="concreteDay" th:value="'FRIDAY'"/>
-                    <div class="error"
-                         th:text="${allFieldsBlankMessage}" th:value="${allFieldsBlankMessage}"></div>
-                    <script th:inline="javascript"
-                            th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'FRIDAY'">
-                        PopUpShowGradeFriday();
-                    </script>
-                    <script th:inline="javascript"
-                            th:if="${allFieldsBlankMessage} and ${concreteDay} eq 'FRIDAY'">
-                        PopUpShowGradeFriday();
-                    </script>
-                </div>
-                <div class="half_2">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                    <label class="popup-label-title">Grade</label>
-                    <input class="form_input_grade">
-                </div>
-                <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
-                    </button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
-<!--saturdayGradepopUp-->
+
 <div class="create-pop">
 
-    <div class="popup-container" id="popup-container-grade-saturday">
-        <button class="close-btn" title="close" onclick="hideSaturdayGradePopup()">×</button>
+    <div class="popup-container" id="popup-container-grade-tuesday">
+        <button class="close-btn" title="close" onclick="hideTuesdayGradePopup()">×</button>
         <div class="tooltip">
-            <h1 id="students-saturday" style="font-size: 1.5rem; font-weight: bold"></h1>
-            <span id="student-saturday-tooltip" class="tooltiptext">Tooltip text</span>
+            <h1 id="students-tuesday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="student-tuesday-tooltip" class="tooltiptext">Tooltip text</span>
         </div>
 
         <div class="popup-wrap">
             <div class="half_1">
                 <label class="popup-label-title">Classwork</label>
-                <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
-                          id="classwork-saturday-grade"></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;"
+                          th:name="classwork"
+                          id="classwork-tuesday-grade"></textarea>
 
                 <label class="popup-label-title">Test</label>
-                <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
-                          id="test-saturday-grade"></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
+                          id="test-tuesday-grade"></textarea>
 
                 <label class="popup-label-title">Homework</label>
-                <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
-                          id="homework-saturday-grade"></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;"
+                          th:name="homework"
+                          id="homework-tuesday-grade"></textarea>
 
-                <input type="hidden" id="date-saturday" name="date"/>
+                <input type="hidden" id="date-tuesday" name="date"/>
                 <input type="hidden" name="classId" th:value="${class.id}"/>
                 <input type="hidden" name="courseId" th:value="${course.id}"/>
-                <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
+                <input type="hidden" name="concreteDay" th:value="'TUESDAY'"/>
             </div>
 
-            <form id="form" class="form" th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
+            <form th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
                         <input type="number" class="form_input_grade" th:name="gradeClasswork">
-                    </div>
-                    <div class="gradeContainer">
-                        <label class="popup-label-title">Grade</label>
-                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeClasswork')}"
+                             th:errors="*{gradeClasswork}"></div>
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
                         <input type="number" class="form_input_grade" th:name="gradeTest">
+                        <div class="error" th:if="${#fields.hasErrors('gradeTest')}"
+                             th:errors="*{gradeTest}"></div>
                     </div>
-                    <input type="hidden" id="students-saturday-grade" name="studentId"/>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeHomework')}"
+                             th:errors="*{gradeHomework}"></div>
+                    </div>
+
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'TUESDAY'">
+                        PopUpShowGradeTuesday();
+                    </script>
+                    <input type="hidden" id="students-tuesday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
-                    <input type="hidden" id="date-saturday-grade" name="date" th:value="${date}"/>
-                    <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
+                    <input type="hidden" id="date-tuesday-grade" name="date" th:value="${date}"/>
+                    <input type="hidden" name="concreteDay" th:value="'TUESDAY'"/>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
@@ -917,32 +729,34 @@
         </div>
     </div>
 </div>
-<!--sundayGradepopUp-->
+
 <div class="create-pop">
-    <div class="popup-container" id="popup-container-grade-sunday">
-        <button class="close-btn" title="close" onclick="hideSundayGradePopup()">×</button>
+
+    <div class="popup-container" id="popup-container-grade-wednesday">
+        <button class="close-btn" title="close" onclick="hideWednesdayGradePopup()">×</button>
         <div class="tooltip">
-            <h1 id="students-sunday" style="font-size: 1.5rem; font-weight: bold"></h1>
-            <span id="student-sunday-tooltip" class="tooltiptext">Tooltip text</span>
+            <h1 id="students-wednesday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="student-wednesday-tooltip" class="tooltiptext">Tooltip text</span>
         </div>
+
         <div class="popup-wrap">
             <div class="half_1">
                 <label class="popup-label-title">Classwork</label>
-                <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
-                          id="classwork-sunday-grade"></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
+                          id="classwork-wednesday-grade"></textarea>
 
                 <label class="popup-label-title">Test</label>
-                <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
-                          id="test-sunday-grade"></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
+                          id="test-wednesday-grade"></textarea>
 
                 <label class="popup-label-title">Homework</label>
-                <textarea type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
-                          id="homework-sunday-grade"></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
+                          id="homework-wednesday-grade"></textarea>
 
-                <input type="hidden" id="date-sunday" name="date"/>
+                <input type="hidden" id="date-wednesday-grade" name="date"/>
                 <input type="hidden" name="classId" th:value="${class.id}"/>
                 <input type="hidden" name="courseId" th:value="${course.id}"/>
-                <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
+                <input type="hidden" name="concreteDay" th:value="'WEDNESDAY'"/>
             </div>
 
             <form th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
@@ -950,30 +764,40 @@
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
                         <input type="number" class="form_input_grade" th:name="gradeClasswork">
-                    </div>
-                    <div class="gradeContainer">
-                        <label class="popup-label-title">Grade</label>
-                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeClasswork')}"
+                             th:errors="*{gradeClasswork}"></div>
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
                         <input type="number" class="form_input_grade" th:name="gradeTest">
+                        <div class="error" th:if="${#fields.hasErrors('gradeTest')}"
+                             th:errors="*{gradeTest}"></div>
                     </div>
-                    <input type="hidden" id="students-sunday-grade" name="studentId"/>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeHomework')}"
+                             th:errors="*{gradeHomework}"></div>
+                    </div>
+
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'WEDNESDAY'">
+                        PopUpShowGradeWednesday();
+                    </script>
+                    <input type="hidden" id="students-wednesday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
-                    <input type="hidden" id="date-sunday-grade" name="date" th:value="${date}"/>
-                    <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
+                    <input type="hidden" id="date-wednesday-grade" name="date" th:value="${date}"/>
+                    <input type="hidden" name="concreteDay" th:value="'WEDNESDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" id="submit_sunday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_wednesday"><b>Save</b>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!--thursdayGradePopup-->
+
 <div class="create-pop">
 
     <div class="popup-container" id="popup-container-grade-thursday">
@@ -985,18 +809,18 @@
         <div class="popup-wrap">
             <div class="half_1">
                 <label class="popup-label-title">Classwork</label>
-                <textarea type="text" rows="3" cols="50" class="form_input_text" style="cursor:auto;"
+                <textarea readonly type="text" rows="3" cols="50" class="form_input_text" style="cursor:auto;"
                           id="classwork-thursday-grade"></textarea>
 
                 <label class="popup-label-title">Test</label>
-                <textarea type="text" rows="3" cols="50" class="form_input_text" style="cursor:auto;"
+                <textarea readonly type="text" rows="3" cols="50" class="form_input_text" style="cursor:auto;"
                           id="test-thursday-grade"></textarea>
                 <label class="popup-label-title">Homework</label>
-                <textarea type="text" rows="3" cols="50" class="form_input_text" style="cursor:auto;"
-                          th:name="homework" id="homework-thursday-grade" ></textarea>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input_text" style="cursor:auto;"
+                          th:name="homework" id="homework-thursday-grade"></textarea>
             </div>
 
-            <form  th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
+            <form th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
@@ -1024,9 +848,209 @@
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-thursday-grade" name="date" th:value="${date}"/>
+                    <input type="hidden" name="concreteDay" th:value="'THURSDAY'"/>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_thursday"><b>Save</b>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-grade-friday">
+        <button class="close-btn" title="close" onclick="hideFridayGradePopup()">×</button>
+        <div class="tooltip">
+            <h1 id="students-friday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="student-friday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
+
+        <div class="popup-wrap">
+            <div class="half_1">
+                <label class="popup-label-title">Classwork</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
+                          id="classwork-friday-grade"></textarea>
+
+                <label class="popup-label-title">Test</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
+                          id="test-friday-grade"></textarea>
+
+                <label class="popup-label-title">Homework</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
+                          id="homework-friday-grade"></textarea>
+
+                <input type="hidden" id="date-friday" name="date"/>
+                <input type="hidden" name="classId" th:value="${class.id}"/>
+                <input type="hidden" name="courseId" th:value="${course.id}"/>
+                <input type="hidden" name="concreteDay" th:value="'FRIDAY'"/>
+
+            </div>
+            <form th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
+                <div class="half_2">
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeClasswork">
+                        <div class="error" th:if="${#fields.hasErrors('gradeClasswork')}"
+                             th:errors="*{gradeClasswork}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeTest">
+                        <div class="error" th:if="${#fields.hasErrors('gradeTest')}"
+                             th:errors="*{gradeTest}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeHomework')}"
+                             th:errors="*{gradeHomework}"></div>
+                    </div>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'FRIDAY'">
+                        PopUpShowGradeFriday();
+                    </script>
+                    <input type="hidden" id="students-friday-grade" name="studentId"/>
+                    <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
+                    <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" id="date-friday-grade" name="date" th:value="${date}"/>
+                    <input type="hidden" name="concreteDay" th:value="'FRIDAY'"/>
+                </div>
+                <div name="btn-div">
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_friday"><b>Save</b>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="create-pop">
+
+    <div class="popup-container" id="popup-container-grade-saturday">
+        <button class="close-btn" title="close" onclick="hideSaturdayGradePopup()">×</button>
+        <div class="tooltip">
+            <h1 id="students-saturday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="student-saturday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
+
+        <div class="popup-wrap">
+            <div class="half_1">
+                <label class="popup-label-title">Classwork</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
+                          id="classwork-saturday-grade"></textarea>
+
+                <label class="popup-label-title">Test</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
+                          id="test-saturday-grade"></textarea>
+
+                <label class="popup-label-title">Homework</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
+                          id="homework-saturday-grade"></textarea>
+
+                <input type="hidden" id="date-saturday" name="date"/>
+                <input type="hidden" name="classId" th:value="${class.id}"/>
+                <input type="hidden" name="courseId" th:value="${course.id}"/>
+                <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
+            </div>
+
+            <form id="form" class="form" th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
+                <div class="half_2">
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeClasswork">
+                        <div class="error" th:if="${#fields.hasErrors('gradeClasswork')}"
+                             th:errors="*{gradeClasswork}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeTest">
+                        <div class="error" th:if="${#fields.hasErrors('gradeTest')}"
+                             th:errors="*{gradeTest}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeHomework')}"
+                             th:errors="*{gradeHomework}"></div>
+                    </div>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SATURDAY'">
+                        PopUpShowGradeSaturday();
+                    </script>
+                    <input type="hidden" id="students-saturday-grade" name="studentId"/>
+                    <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
+                    <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" id="date-saturday-grade" name="date" th:value="${date}"/>
+                    <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
+                </div>
+                <div name="btn-div">
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_saturday"><b>Save</b>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="create-pop">
+    <div class="popup-container" id="popup-container-grade-sunday">
+        <button class="close-btn" title="close" onclick="hideSundayGradePopup()">×</button>
+        <div class="tooltip">
+            <h1 id="students-sunday" style="font-size: 1.5rem; font-weight: bold"></h1>
+            <span id="student-sunday-tooltip" class="tooltiptext">Tooltip text</span>
+        </div>
+        <div class="popup-wrap">
+            <div class="half_1">
+                <label class="popup-label-title">Classwork</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="classwork"
+                          id="classwork-sunday-grade"></textarea>
+
+                <label class="popup-label-title">Test</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="test"
+                          id="test-sunday-grade"></textarea>
+
+                <label class="popup-label-title">Homework</label>
+                <textarea readonly type="text" rows="3" cols="50" class="form_input" style="cursor:auto;" th:name="homework"
+                          id="homework-sunday-grade"></textarea>
+
+                <input type="hidden" id="date-sunday" name="date"/>
+                <input type="hidden" name="classId" th:value="${class.id}"/>
+                <input type="hidden" name="courseId" th:value="${course.id}"/>
+                <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
+            </div>
+
+            <form th:method="POST" th:object="${saveGrade}" th:action="@{'/grades/add'}">
+                <div class="half_2">
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeClasswork">
+                        <div class="error" th:if="${#fields.hasErrors('gradeClasswork')}"
+                             th:errors="*{gradeClasswork}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeTest">
+                        <div class="error" th:if="${#fields.hasErrors('gradeTest')}"
+                             th:errors="*{gradeTest}"></div>
+                    </div>
+                    <div class="gradeContainer">
+                        <label class="popup-label-title">Grade</label>
+                        <input type="number" class="form_input_grade" th:name="gradeHomework">
+                        <div class="error" th:if="${#fields.hasErrors('gradeHomework')}"
+                             th:errors="*{gradeHomework}"></div>
+                    </div>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SUNDAY'">
+                        PopUpShowGradeSunday();
+                    </script>
+                    <input type="hidden" id="students-sunday-grade" name="studentId"/>
+                    <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
+                    <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
+                    <input type="hidden" id="date-sunday-grade" name="date" th:value="${date}"/>
+                    <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
+                </div>
+                <div name="btn-div">
+                    <button type="submit" class="saveGrade" id="submit_sunday"><b>Save</b>
                     </button>
                 </div>
             </form>
@@ -1056,7 +1080,6 @@
         shortString('.short');
     };
 </script>
-
 <script>
     // var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
     var host = 'http://localhost:8082'
@@ -1132,8 +1155,6 @@
             cls[n].id = "oct_" + (n + 1);
         }
     };
-
-
 </script>
 </body>
 </html>
