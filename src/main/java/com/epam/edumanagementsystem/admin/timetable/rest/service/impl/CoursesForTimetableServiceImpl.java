@@ -8,6 +8,7 @@ import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -19,7 +20,6 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     private final CoursesForTimetableRepository coursesForTimetableRepository;
     private final Logger logger = Logger.getLogger(CoursesForTimetableServiceImpl.class.getName());
     private final DoneCoursesService doneCoursesService;
-
 
     public CoursesForTimetableServiceImpl(CoursesForTimetableRepository coursesForTimetableRepository, DoneCoursesService doneCoursesService) {
         this.coursesForTimetableRepository = coursesForTimetableRepository;
@@ -110,11 +110,12 @@ public class CoursesForTimetableServiceImpl implements CoursesForTimetableServic
     }
 
     @Override
-    public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId) {
+    public List<String> getDoneCoursesNamesByDayOfWeekAndAcademicClassId(String dayOfWeek, Long academicClassId, LocalDate localDate) {
         logger.info("Getting Done Courses by Day of Week and Academic Class Id");
         return doneCoursesService.findAllByAcademicClassId(academicClassId)
                 .stream()
-                .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek))
+                .filter(doneCourse -> doneCourse.getDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek)
+                        && doneCourse.getDate().equals(localDate))
                 .map(doneCourses -> doneCourses.getAcademicCourse().getName())
                 .collect(Collectors.toList());
     }
