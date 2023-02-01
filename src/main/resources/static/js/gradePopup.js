@@ -97,15 +97,15 @@ function PopUpShowGradeMonday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-monday").value === "") {
-                    document.getElementById("classwork-monday").value = parse.classwork
+                if (document.getElementById("classwork-grade-monday").value === "") {
+                    document.getElementById("classwork-grade-monday").value = parse.classwork
 
                 }
-                if (document.getElementById("homework-monday").value === "") {
-                    document.getElementById("homework-monday").value = parse.homework
+                if (document.getElementById("homework-grade-monday").value === "") {
+                    document.getElementById("homework-grade-monday").value = parse.homework
                 }
-                if (document.getElementById("test-monday").value === "") {
-                    document.getElementById("test-monday").value = parse.test
+                if (document.getElementById("test-grade-monday").value === "") {
+                    document.getElementById("test-grade-monday").value = parse.test
                 }
             }
             console.log(response);
@@ -144,15 +144,15 @@ function PopUpShowGradeTuesday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-tuesday").value === "") {
-                    document.getElementById("classwork-tuesday").value = parse.classwork
+                if (document.getElementById("classwork-grade-tuesday").value === "") {
+                    document.getElementById("classwork-grade-tuesday").value = parse.classwork
 
                 }
-                if (document.getElementById("homework-tuesday").value === "") {
-                    document.getElementById("homework-tuesday").value = parse.homework
+                if (document.getElementById("homework-grade-tuesday").value === "") {
+                    document.getElementById("homework-grade-tuesday").value = parse.homework
                 }
-                if (document.getElementById("test-tuesday").value === "") {
-                    document.getElementById("test-tuesday").value = parse.test
+                if (document.getElementById("test-grade-tuesday").value === "") {
+                    document.getElementById("test-grade-tuesday").value = parse.test
                 }
             }
             console.log(response);
@@ -239,15 +239,15 @@ function PopUpShowGradeThursday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-thursday").value === "") {
-                    document.getElementById("classwork-thursday").value = parse.classwork
+                if (document.getElementById("classwork-grade-thursday").value === "") {
+                    document.getElementById("classwork-grade-thursday").value = parse.classwork
 
                 }
-                if (document.getElementById("homework-thursday").value === "") {
-                    document.getElementById("homework-thursday").value = parse.homework
+                if (document.getElementById("homework-grade-thursday").value === "") {
+                    document.getElementById("homework-grade-thursday").value = parse.homework
                 }
-                if (document.getElementById("test-thursday").value === "") {
-                    document.getElementById("test-thursday").value = parse.test
+                if (document.getElementById("test-grade-thursday").value === "") {
+                    document.getElementById("test-grade-thursday").value = parse.test
                 }
             }
             console.log(response);
@@ -286,15 +286,15 @@ function PopUpShowGradeFriday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-friday").value === "") {
-                    document.getElementById("classwork-friday").value = parse.classwork
+                if (document.getElementById("classwork-grade-friday").value === "") {
+                    document.getElementById("classwork-grade-friday").value = parse.classwork
 
                 }
-                if (document.getElementById("homework-friday").value === "") {
-                    document.getElementById("homework-friday").value = parse.homework
+                if (document.getElementById("homework-grade-friday").value === "") {
+                    document.getElementById("homework-grade-friday").value = parse.homework
                 }
-                if (document.getElementById("test-friday").value === "") {
-                    document.getElementById("test-friday").value = parse.test
+                if (document.getElementById("test-grade-friday").value === "") {
+                    document.getElementById("test-grade-friday").value = parse.test
                 }
             }
             console.log(response);
@@ -335,15 +335,15 @@ function PopUpShowGradeSaturday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-saturday").value === "") {
-                    document.getElementById("classwork-saturday").value = parse.classwork
+                if (document.getElementById("classwork-grade-saturday").value === "") {
+                    document.getElementById("classwork-grade-saturday").value = parse.classwork
 
                 }
-                if (document.getElementById("homework-saturday").value === "") {
-                    document.getElementById("homework-saturday").value = parse.homework
+                if (document.getElementById("homework-grade-saturday").value === "") {
+                    document.getElementById("homework-grade-saturday").value = parse.homework
                 }
-                if (document.getElementById("test-saturday").value === "") {
-                    document.getElementById("test-saturday").value = parse.test
+                if (document.getElementById("test-grade-saturday").value === "") {
+                    document.getElementById("test-grade-saturday").value = parse.test
                 }
             }
             console.log(response);
@@ -384,15 +384,15 @@ function PopUpShowGradeSunday() {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-sunday").value === "") {
-                    document.getElementById("classwork-sunday").value = parse.classwork
+                if (document.getElementById("classwork-grade-sunday").value === "") {
+                    document.getElementById("classwork-grade-sunday").value = parse.classwork
 
                 }
-                if (document.getElementById("homework-sunday").value === "") {
-                    document.getElementById("homework-sunday").value = parse.homework
+                if (document.getElementById("homework-grade-sunday").value === "") {
+                    document.getElementById("homework-grade-sunday").value = parse.homework
                 }
-                if (document.getElementById("test-sunday").value === "") {
-                    document.getElementById("test-sunday").value = parse.test
+                if (document.getElementById("test-grade-sunday").value === "") {
+                    document.getElementById("test-grade-sunday").value = parse.test
                 }
             }
             console.log(response);
