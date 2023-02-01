@@ -601,6 +601,15 @@ form {
     padding: 10px;
     text-decoration: none;
     border-bottom: 0.2px solid #777777;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+}
+.itemList {
+    display: block;
+    color: #FFFFFF;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 0.2px solid #777777;
     font-size: 19px;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
