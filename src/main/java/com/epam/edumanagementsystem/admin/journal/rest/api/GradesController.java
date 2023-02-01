@@ -12,6 +12,7 @@ import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -30,12 +31,12 @@ public class GradesController {
         this.studentService = service;
     }
     @PostMapping("/add")
-    public String addGrade(@ModelAttribute(value = "saveGrade")  GradesDto gradesDto,Model model,
-                            @RequestParam(value = "classId", required = false) Long classId,
-                            @RequestParam(value = "studentId", required = false) Long studentId,
-                            @RequestParam(value = "courseId", required = false) Long courseId,
-                            @RequestParam(name = "date", required = false) String date,
-                            @RequestParam(name = "classwork", required = false) String classwork
+    public String addGrade(@ModelAttribute(value = "saveGrade")  GradesDto gradesDto, BindingResult result, Model model,
+                           @RequestParam(value = "classId", required = false) Long classId,
+                           @RequestParam(value = "studentId", required = false) Long studentId,
+                           @RequestParam(value = "courseId", required = false) Long courseId,
+                           @RequestParam(name = "date", required = false) String date,
+                           @RequestParam(name = "classwork", required = false) String classwork
                              ) {
         AcademicClassDto academicClass = academicClassService.findById(classId);
         StudentDto student =studentService.findById(studentId);
