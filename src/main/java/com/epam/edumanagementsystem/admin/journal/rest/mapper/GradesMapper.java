@@ -30,7 +30,7 @@ public class GradesMapper {
         gradesDto.setGradeTest(Integer.toString(grades.getGradeTest()));
         gradesDto.setGradeClasswork(Integer.toString(grades.getGradeClasswork()));
         gradesDto.setGradeHomework(Integer.toString(grades.getGradeHomework()));
-        gradesDto.setStudent(grades.getStudent());
+//        gradesDto.setStudent(grades.getStudent());
         gradesDto.setClasswork(grades.getClasswork());
         gradesDto.setTest(grades.getTest());
         gradesDto.setHomework(grades.getHomework());

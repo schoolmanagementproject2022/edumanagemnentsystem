@@ -3,7 +3,6 @@ package com.epam.edumanagementsystem.admin.journal.model.entity;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "grades")

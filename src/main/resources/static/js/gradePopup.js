@@ -80,12 +80,10 @@ function hideSundayGradePopup() {
 
 function PopUpShowGradeMonday() {
     let dateValue = document.getElementById("mondayDate").innerText
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
     document.getElementById("date-monday-grade").value = dateValue
     table.addEventListener("click", function (event) {
-        const selectedRow = event.target.closest("td");
-        const selectedRowId = selectedRow.getAttribute("id");
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
         document.getElementById("student-monday-tooltip").innerText = studentName + ':' + dateValue
@@ -96,21 +94,21 @@ function PopUpShowGradeMonday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-monday-grade").value === "") {
-                    document.getElementById("classwork-monday-grade").value = parse.classwork
+                if (document.getElementById("monday-classwork-grade").value === "") {
+                    document.getElementById("monday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-monday-grade").value === "") {
-                    document.getElementById("homework-monday-grade").value = parse.homework
+                if (document.getElementById("monday-homework-grade").value === "") {
+                    document.getElementById("monday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-monday-grade").value === "") {
-                    document.getElementById("test-monday-grade").value = parse.test
+                if (document.getElementById("monday-test-grade").value === "") {
+                    document.getElementById("monday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);
@@ -128,12 +126,10 @@ function PopUpShowGradeMonday() {
 
 function PopUpShowGradeTuesday() {
     let dateValue = document.getElementById("tuesdayDate").innerText
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
     document.getElementById("date-tuesday-grade").value = dateValue
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
     table.addEventListener("click", function (event) {
-        const selectedRow = event.target.closest("td");
-        const selectedRowId = selectedRow.getAttribute("id");
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
         document.getElementById("student-tuesday-tooltip").innerText = studentName + ':' + dateValue
@@ -144,21 +140,21 @@ function PopUpShowGradeTuesday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-tuesday-grade").value === "") {
-                    document.getElementById("classwork-tuesday-grade").value = parse.classwork
+                if (document.getElementById("tuesday-classwork-grade").value === "") {
+                    document.getElementById("tuesday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-tuesday-grade").value === "") {
-                    document.getElementById("homework-tuesday-grade").value = parse.homework
+                if (document.getElementById("tuesday-homework-grade").value === "") {
+                    document.getElementById("tuesday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-tuesday-grade").value === "") {
-                    document.getElementById("test-tuesday-grade").value = parse.test
+                if (document.getElementById("tuesday-test-grade").value === "") {
+                    document.getElementById("tuesday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);
@@ -176,12 +172,10 @@ function PopUpShowGradeTuesday() {
 
 function PopUpShowGradeWednesday() {
     let dateValue = document.getElementById("wednesdayDate").innerText
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
     document.getElementById("date-wednesday-grade").value = dateValue
     table.addEventListener("click", function (event) {
-        const selectedRow = event.target.closest("td");
-        const selectedRowId = selectedRow.getAttribute("id");
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
         document.getElementById("student-wednesday-tooltip").innerText = studentName + ':' + dateValue
@@ -192,21 +186,21 @@ function PopUpShowGradeWednesday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-wednesday-grade").value === "") {
-                    document.getElementById("classwork-wednesday-grade").value = parse.classwork
+                if (document.getElementById("wednesday-classwork-grade").value === "") {
+                    document.getElementById("wednesday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-wednesday-grade").value === "") {
-                    document.getElementById("homework-wednesday-grade").value = parse.homework
+                if (document.getElementById("wednesday-homework-grade").value === "") {
+                    document.getElementById("wednesday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-wednesday-grade").value === "") {
-                    document.getElementById("test-wednesday-grade").value = parse.test
+                if (document.getElementById("wednesday-test-grade").value === "") {
+                    document.getElementById("wednesday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);
@@ -225,12 +219,10 @@ function PopUpShowGradeWednesday() {
 function PopUpShowGradeThursday() {
     let dateValue = document.getElementById("thursdayDate").innerText
     console.log(dateValue.valueOf())
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
-        document.getElementById("date-thursday-grade").value = dateValue
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
+    document.getElementById("date-thursday-grade").value = dateValue
         table.addEventListener("click", function(event) {
-                 const selectedRow = event.target.closest("td");
-                 const selectedRowId = selectedRow.getAttribute("id");
                  selectedRow.getAttribute("id").value;
                   var  studentName = document.getElementById(selectedRowId).innerText
                 document.getElementById("student-thursday-tooltip").innerText = studentName + ':' + dateValue
@@ -241,21 +233,21 @@ function PopUpShowGradeThursday() {
                });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-thursday-grade").value === "") {
-                    document.getElementById("classwork-thursday-grade").value = parse.classwork
+                if (document.getElementById("thursday-classwork-grade").value === "") {
+                    document.getElementById("thursday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-thursday-grade").value === "") {
-                    document.getElementById("homework-thursday-grade").value = parse.homework
+                if (document.getElementById("thursday-homework-grade").value === "") {
+                    document.getElementById("thursday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-thursday-grade").value === "") {
-                    document.getElementById("test-thursday-grade").value = parse.test
+                if (document.getElementById("thursday-test-grade").value === "") {
+                    document.getElementById("thursday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);
@@ -273,12 +265,10 @@ function PopUpShowGradeThursday() {
 
 function PopUpShowGradeFriday() {
     let dateValue = document.getElementById("fridayDate").innerText
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
     document.getElementById("date-friday-grade").value = dateValue
     table.addEventListener("click", function (event) {
-        const selectedRow = event.target.closest("td");
-        const selectedRowId = selectedRow.getAttribute("id");
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
         document.getElementById("student-friday-tooltip").innerText = studentName + ':' + dateValue
@@ -289,21 +279,21 @@ function PopUpShowGradeFriday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-friday-grade").value === "") {
-                    document.getElementById("classwork-friday-grade").value = parse.classwork
+                if (document.getElementById("friday-classwork-grade").value === "") {
+                    document.getElementById("friday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-friday-grade").value === "") {
-                    document.getElementById("homework-friday-grade").value = parse.homework
+                if (document.getElementById("friday-homework-grade").value === "") {
+                    document.getElementById("friday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-friday-grade").value === "") {
-                    document.getElementById("test-friday-grade").value = parse.test
+                if (document.getElementById("friday-test-grade").value === "") {
+                    document.getElementById("friday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);
@@ -321,12 +311,10 @@ function PopUpShowGradeFriday() {
 
 function PopUpShowGradeSaturday() {
     let dateValue = document.getElementById("saturdayDate").innerText
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
     document.getElementById("date-saturday-grade").value = dateValue
     table.addEventListener("click", function (event) {
-        const selectedRow = event.target.closest("td");
-        const selectedRowId = selectedRow.getAttribute("id");
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
         document.getElementById("student-saturday-tooltip").innerText = studentName + ':' + dateValue
@@ -337,21 +325,21 @@ function PopUpShowGradeSaturday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-saturday-grade").value === "") {
-                    document.getElementById("classwork-saturday-grade").value = parse.classwork
+                if (document.getElementById("saturday-classwork-grade").value === "") {
+                    document.getElementById("saturday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-saturday-grade").value === "") {
-                    document.getElementById("homework-saturday-grade").value = parse.homework
+                if (document.getElementById("saturday-homework-grade").value === "") {
+                    document.getElementById("saturday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-saturday-grade").value === "") {
-                    document.getElementById("test-saturday-grade").value = parse.test
+                if (document.getElementById("saturday-test-grade").value === "") {
+                    document.getElementById("saturday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);
@@ -369,12 +357,10 @@ function PopUpShowGradeSaturday() {
 
 function PopUpShowGradeSunday() {
     let dateValue = document.getElementById("sundayDate").innerText
-    let classId = document.getElementById("classId").value
-    let courseId = document.getElementById("courseId").value
+    const selectedRow = event.target.closest("td");
+    const selectedRowId = selectedRow.getAttribute("id");
     document.getElementById("date-sunday-grade").value = dateValue
     table.addEventListener("click", function (event) {
-        const selectedRow = event.target.closest("td");
-        const selectedRowId = selectedRow.getAttribute("id");
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
         document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
@@ -385,21 +371,21 @@ function PopUpShowGradeSunday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        url: "/agendas/check/grades/" + selectedRowId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
             if (response != null) {
                 response = JSON.stringify(response);
                 let parse = JSON.parse(response);
-                if (document.getElementById("classwork-sunday-grade").value === "") {
-                    document.getElementById("classwork-sunday-grade").value = parse.classwork
+                if (document.getElementById("sunday-classwork-grade").value === "") {
+                    document.getElementById("sunday-classwork-grade").value = parse.gradeClasswork
                 }
-                if (document.getElementById("homework-sunday-grade").value === "") {
-                    document.getElementById("homework-sunday-grade").value = parse.homework
+                if (document.getElementById("sunday-homework-grade").value === "") {
+                    document.getElementById("sunday-homework-grade").value = parse.gradeHomework
                 }
-                if (document.getElementById("test-sunday-grade").value === "") {
-                    document.getElementById("test-sunday-grade").value = parse.test
+                if (document.getElementById("sunday-test-grade").value === "") {
+                    document.getElementById("sunday-test-grade").value = parse.gradeTest
                 }
             }
             console.log(response);

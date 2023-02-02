@@ -22,8 +22,15 @@ public class GradesServiceImpl implements GradesService {
     public Grades save(GradesDto gradesDto) {
         return gradesRepository.save(GradesMapper.toGrades(gradesDto));
     }
+
     @Override
     public Optional<Grades> findById(Long id) {
         return gradesRepository.findById(id);
     }
+
+    @Override
+    public Optional<Grades> findByStudentId(Long id) {
+        return gradesRepository.findByStudentId(id);
+    }
+
 }

@@ -6,6 +6,11 @@ import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 import java.util.Optional;
 
 public interface GradesService {
+
     Grades save(GradesDto gradesDto);
+
     Optional<Grades> findById(Long id);
+
+    Optional<Grades> findByStudentId(Long id);
+
 }
