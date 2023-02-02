@@ -8,9 +8,14 @@ public class GradesMapper {
     public static Grades toGrades(GradesDto gradesDto) {
         Grades grades = new Grades();
         grades.setId(grades.getId());
-        grades.setGradeHomework(gradesDto.getGradeHomework());
-        grades.setGradeTest(gradesDto.getGradeTest());
-        grades.setGradeClasswork(gradesDto.getGradeClasswork());
+        if (gradesDto.getGradeTest().isBlank() || gradesDto.getGradeClasswork().isBlank() ||
+                gradesDto.getGradeHomework().isBlank()) {
+            grades.setGradeHomework(0);
+        } else {
+            grades.setGradeTest(Integer.parseInt(gradesDto.getGradeTest()));
+            grades.setGradeHomework(Integer.parseInt(gradesDto.getGradeHomework()));
+            grades.setGradeClasswork(Integer.parseInt(gradesDto.getGradeClasswork()));
+        }
         grades.setStudent(gradesDto.getStudent());
         grades.setClasswork(grades.getClasswork());
         grades.setTest(grades.getTest());
@@ -22,9 +27,9 @@ public class GradesMapper {
     public static GradesDto toDto(Grades grades) {
         GradesDto gradesDto = new GradesDto();
         gradesDto.setId(grades.getId());
-        gradesDto.setGradeClasswork(grades.getGradeClasswork());
-        gradesDto.setGradeTest(grades.getGradeTest());
-        gradesDto.setGradeHomework(grades.getGradeHomework());
+        gradesDto.setGradeTest(Integer.toString(grades.getGradeTest()));
+        gradesDto.setGradeClasswork(Integer.toString(grades.getGradeClasswork()));
+        gradesDto.setGradeHomework(Integer.toString(grades.getGradeHomework()));
         gradesDto.setStudent(grades.getStudent());
         gradesDto.setClasswork(grades.getClasswork());
         gradesDto.setTest(grades.getTest());

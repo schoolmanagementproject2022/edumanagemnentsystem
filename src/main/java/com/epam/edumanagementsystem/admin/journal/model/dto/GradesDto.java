@@ -4,21 +4,16 @@ import com.epam.edumanagementsystem.admin.journal.model.entity.Classwork;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Homework;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Test;
 import com.epam.edumanagementsystem.student.model.entity.Student;
-
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import com.epam.edumanagementsystem.util.annotation.ValidGrade;
 
 public class GradesDto {
     private Long id;
-    @Min(value = 1, message = "Only 1-100 numbers are allowed")
-    @Max(value = 100, message = "Only 1-100 numbers are allowed")
-    private int gradeClasswork;
-    @Min(value = 1, message = "Only 1-100 numbers are allowed")
-    @Max(value = 100, message = "Only 1-100 numbers are allowed")
-    private int gradeHomework;
-    @Min(value = 1, message = "Only 1-100 numbers are allowed")
-    @Max(value = 100, message = "Only 1-100 numbers are allowed")
-    private int gradeTest;
+    @ValidGrade
+    private String gradeClasswork;
+    @ValidGrade
+    private String gradeHomework;
+    @ValidGrade
+    private String gradeTest;
     private Student student;
     private Classwork classwork;
     private Test test;
@@ -27,7 +22,7 @@ public class GradesDto {
     public GradesDto() {
     }
 
-    public GradesDto(Long id, int gradeClasswork, int gradeHomework, int gradeTest, Student student,
+    public GradesDto(Long id, String gradeClasswork, String gradeHomework, String gradeTest, Student student,
                      Classwork classwork, Test test, Homework homework) {
         this.id = id;
         this.gradeClasswork = gradeClasswork;
@@ -45,14 +40,6 @@ public class GradesDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getGradeClasswork() {
-        return gradeClasswork;
-    }
-
-    public void setGradeClasswork(int gradeClasswork) {
-        this.gradeClasswork = gradeClasswork;
     }
 
     public Student getStudent() {
@@ -87,19 +74,27 @@ public class GradesDto {
         this.homework = homework;
     }
 
-    public int getGradeHomework() {
+    public String getGradeClasswork() {
+        return gradeClasswork;
+    }
+
+    public void setGradeClasswork(String gradeClasswork) {
+        this.gradeClasswork = gradeClasswork;
+    }
+
+    public String getGradeHomework() {
         return gradeHomework;
     }
 
-    public void setGradeHomework(int gradeHomework) {
+    public void setGradeHomework(String gradeHomework) {
         this.gradeHomework = gradeHomework;
     }
 
-    public int getGradeTest() {
+    public String getGradeTest() {
         return gradeTest;
     }
 
-    public void setGradeTest(int gradeTest) {
+    public void setGradeTest(String gradeTest) {
         this.gradeTest = gradeTest;
     }
 

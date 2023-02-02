@@ -203,14 +203,14 @@ tr td:not(:first-child) {
 }
 
 .half_1 {
-    width: 100%;
+    width: 80%;
     margin-top: -4%;
     height: 360px;
 }
 
 .half_2 {
     width: 24%;
-    margin-left: -20%;
+    margin-left: 28%;
     height: 360px;
 }
 
@@ -255,6 +255,11 @@ label {
 
 .error {
     font-size: 0.7em;
+    color: red;
+}
+.gradeError {
+    font-size: 0.7em;
+    width: 7vw;
     color: red;
 }
 
