@@ -7,10 +7,14 @@ import java.util.Optional;
 
 public interface GradesService {
 
-    Grades save(GradesDto gradesDto);
+    Grades save(GradesDto gradesDto, String date, Long studentId);
 
-    Optional<Grades> findById(Long id);
+    boolean existByStudentIdAndDate(Long id, String date);
 
     Optional<Grades> findByStudentId(Long id);
+
+    Grades findByDateAndStudentId(String date, Long studentId);
+
+    void update(GradesDto gradesDto, String date, Long studentId);
 
 }

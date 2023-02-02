@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.journal.model.entity;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "grades")
@@ -17,13 +18,22 @@ public class Grades {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+    private LocalDate date;
     @OneToOne
     private Classwork classwork;
+
     @OneToOne
     private Test test;
     @OneToOne
     private Homework homework;
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
     public Long getId() {
         return id;

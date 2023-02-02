@@ -209,8 +209,8 @@ tr td:not(:first-child) {
 }
 
 .half_2 {
-    width: 24%;
-    margin-left: 28%;
+    width: 20%;
+    margin-left: 5%;
     height: 360px;
 }
 
@@ -232,8 +232,8 @@ tr td:not(:first-child) {
     position: absolute;
     color: #A30014;
     float: right;
-    margin-top: 2%;
-    margin-left: -9%;
+    margin-top: 62%;
+    margin-left: -23%;
     width: 83px;
     display: block;
     height: 30px;

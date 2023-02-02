@@ -11,4 +11,5 @@ public interface HomeworkRepository extends JpaRepository<Homework, Long> {
 
     Homework findByDateOfHomeworkAndAcademicClassIdAndAcademicCourseId(LocalDate date, Long classId, Long courseId);
 
+    Homework findHomeworkByHomework(String homework);
 }

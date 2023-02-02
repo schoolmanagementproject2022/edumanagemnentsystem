@@ -1,8 +1,5 @@
 package com.epam.edumanagementsystem.admin.journal.model.dto;
 
-import com.epam.edumanagementsystem.admin.journal.model.entity.Classwork;
-import com.epam.edumanagementsystem.admin.journal.model.entity.Homework;
-import com.epam.edumanagementsystem.admin.journal.model.entity.Test;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.annotation.ValidGrade;
 
@@ -15,23 +12,11 @@ public class GradesDto {
     @ValidGrade
     private String gradeTest;
     private Student student;
-    private Classwork classwork;
-    private Test test;
-    private Homework homework;
+    private String classwork;
+    private String test;
+    private String homework;
 
     public GradesDto() {
-    }
-
-    public GradesDto(Long id, String gradeClasswork, String gradeHomework, String gradeTest, Student student,
-                     Classwork classwork, Test test, Homework homework) {
-        this.id = id;
-        this.gradeClasswork = gradeClasswork;
-        this.gradeHomework = gradeHomework;
-        this.gradeTest = gradeTest;
-        this.student = student;
-        this.classwork = classwork;
-        this.test = test;
-        this.homework = homework;
     }
 
     public Long getId() {
@@ -50,27 +35,27 @@ public class GradesDto {
         this.student = student;
     }
 
-    public Classwork getClasswork() {
+    public String getClasswork() {
         return classwork;
     }
 
-    public void setClasswork(Classwork classwork) {
+    public void setClasswork(String classwork) {
         this.classwork = classwork;
     }
 
-    public Test getTest() {
+    public String getTest() {
         return test;
     }
 
-    public void setTest(Test test) {
+    public void setTest(String test) {
         this.test = test;
     }
 
-    public Homework getHomework() {
+    public String getHomework() {
         return homework;
     }
 
-    public void setHomework(Homework homework) {
+    public void setHomework(String homework) {
         this.homework = homework;
     }
 

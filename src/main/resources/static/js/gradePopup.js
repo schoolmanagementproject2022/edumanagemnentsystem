@@ -82,6 +82,8 @@ function PopUpShowGradeMonday() {
     let dateValue = document.getElementById("mondayDate").innerText
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     document.getElementById("date-monday-grade").value = dateValue
     table.addEventListener("click", function (event) {
         selectedRow.getAttribute("id").value;
@@ -115,6 +117,29 @@ function PopUpShowGradeMonday() {
         }
     })
 
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-monday-grade").value === "") {
+                    document.getElementById("classwork-monday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-monday-grade").value === "") {
+                    document.getElementById("homework-monday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-monday-grade").value === "") {
+                    document.getElementById("test-monday-grade").value = parse.test
+                }
+            }
+            console.log(response);
+        }
+    })
+
     $("#popup-container-grade-monday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
@@ -129,6 +154,8 @@ function PopUpShowGradeTuesday() {
     document.getElementById("date-tuesday-grade").value = dateValue
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     table.addEventListener("click", function (event) {
         selectedRow.getAttribute("id").value;
         var studentName = document.getElementById(selectedRowId).innerText
@@ -161,6 +188,29 @@ function PopUpShowGradeTuesday() {
         }
     })
 
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-tuesday-grade").value === "") {
+                    document.getElementById("classwork-tuesday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-tuesday-grade").value === "") {
+                    document.getElementById("homework-tuesday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-tuesday-grade").value === "") {
+                    document.getElementById("test-tuesday-grade").value = parse.test
+                }
+            }
+            console.log(response);
+        }
+    })
+
     $("#popup-container-grade-tuesday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
@@ -174,6 +224,8 @@ function PopUpShowGradeWednesday() {
     let dateValue = document.getElementById("wednesdayDate").innerText
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     document.getElementById("date-wednesday-grade").value = dateValue
     table.addEventListener("click", function (event) {
         selectedRow.getAttribute("id").value;
@@ -207,6 +259,29 @@ function PopUpShowGradeWednesday() {
         }
     })
 
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-wednesday-grade").value === "") {
+                    document.getElementById("classwork-wednesday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-wednesday-grade").value === "") {
+                    document.getElementById("homework-wednesday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-wednesday-grade").value === "") {
+                    document.getElementById("test-wednesday-grade").value = parse.test
+                }
+            }
+            console.log(response);
+        }
+    })
+
     $("#popup-container-grade-wednesday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
@@ -221,16 +296,18 @@ function PopUpShowGradeThursday() {
     console.log(dateValue.valueOf())
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     document.getElementById("date-thursday-grade").value = dateValue
-        table.addEventListener("click", function(event) {
-                 selectedRow.getAttribute("id").value;
-                  var  studentName = document.getElementById(selectedRowId).innerText
-                document.getElementById("student-thursday-tooltip").innerText = studentName + ':' + dateValue
-                document.getElementById("students-thursday").innerText = studentName + ':' + dateValue
-                document.getElementById("students-thursday-grade").value = selectedRowId
+    table.addEventListener("click", function (event) {
+        selectedRow.getAttribute("id").value;
+        var studentName = document.getElementById(selectedRowId).innerText
+        document.getElementById("student-thursday-tooltip").innerText = studentName + ':' + dateValue
+        document.getElementById("students-thursday").innerText = studentName + ':' + dateValue
+        document.getElementById("students-thursday-grade").value = selectedRowId
 
-                 console.log("Selected row ID:", selectedRowId);
-               });
+        console.log("Selected row ID:", selectedRowId);
+    });
     $.ajax({
         type: 'GET',
         url: "/agendas/check/grades/" + selectedRowId,
@@ -254,6 +331,29 @@ function PopUpShowGradeThursday() {
         }
     })
 
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response.valueOf() != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-thursday-grade").value === "") {
+                    document.getElementById("classwork-thursday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-thursday-grade").value === "") {
+                    document.getElementById("homework-thursday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-thursday-grade").value === "") {
+                    document.getElementById("test-thursday-grade").value = parse.test
+                }
+            }
+            console.log(response);
+        }
+    })
+
     $("#popup-container-grade-thursday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
@@ -267,6 +367,8 @@ function PopUpShowGradeFriday() {
     let dateValue = document.getElementById("fridayDate").innerText
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     document.getElementById("date-friday-grade").value = dateValue
     table.addEventListener("click", function (event) {
         selectedRow.getAttribute("id").value;
@@ -300,6 +402,29 @@ function PopUpShowGradeFriday() {
         }
     })
 
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-friday-grade").value === "") {
+                    document.getElementById("classwork-friday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-friday-grade").value === "") {
+                    document.getElementById("homework-friday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-friday-grade").value === "") {
+                    document.getElementById("test-friday-grade").value = parse.test
+                }
+            }
+            console.log(response);
+        }
+    })
+
     $("#popup-container-grade-friday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
@@ -313,6 +438,8 @@ function PopUpShowGradeSaturday() {
     let dateValue = document.getElementById("saturdayDate").innerText
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     document.getElementById("date-saturday-grade").value = dateValue
     table.addEventListener("click", function (event) {
         selectedRow.getAttribute("id").value;
@@ -346,6 +473,29 @@ function PopUpShowGradeSaturday() {
         }
     })
 
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-saturday-grade").value === "") {
+                    document.getElementById("classwork-saturday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-saturday-grade").value === "") {
+                    document.getElementById("homework-saturday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-saturday-grade").value === "") {
+                    document.getElementById("test-saturday-grade").value = parse.test
+                }
+            }
+            console.log(response);
+        }
+    })
+
     $("#popup-container-grade-saturday").show();
     $("#header").css("-webkit-filter", "blur(10px)");
     $("#header").css("pointer-events", "none");
@@ -359,6 +509,8 @@ function PopUpShowGradeSunday() {
     let dateValue = document.getElementById("sundayDate").innerText
     const selectedRow = event.target.closest("td");
     const selectedRowId = selectedRow.getAttribute("id");
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
     document.getElementById("date-sunday-grade").value = dateValue
     table.addEventListener("click", function (event) {
         selectedRow.getAttribute("id").value;
@@ -386,6 +538,29 @@ function PopUpShowGradeSunday() {
                 }
                 if (document.getElementById("sunday-test-grade").value === "") {
                     document.getElementById("sunday-test-grade").value = parse.gradeTest
+                }
+            }
+            console.log(response);
+        }
+    })
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-sunday-grade").value === "") {
+                    document.getElementById("classwork-sunday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-sunday-grade").value === "") {
+                    document.getElementById("homework-sunday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-sunday-grade").value === "") {
+                    document.getElementById("test-sunday-grade").value = parse.test
                 }
             }
             console.log(response);

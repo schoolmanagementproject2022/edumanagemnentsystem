@@ -4,9 +4,6 @@ import com.epam.edumanagementsystem.admin.journal.model.dto.GradesDto;
 import com.epam.edumanagementsystem.admin.journal.rest.service.GradesService;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
-import com.epam.edumanagementsystem.student.mapper.StudentMapper;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
-import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +20,13 @@ import javax.validation.Valid;
 @Tag(name = "Grades in journal")
 public class GradesController {
 
-   private final GradesService gradeService;
-   private final AcademicClassService academicClassService;
-   private final StudentService studentService;
+    private final GradesService gradeService;
+    private final AcademicClassService academicClassService;
 
-    public GradesController(GradesService gradeService, AcademicClassService academicClassService, StudentService service) {
+
+    public GradesController(GradesService gradeService, AcademicClassService academicClassService) {
         this.gradeService = gradeService;
         this.academicClassService = academicClassService;
-        this.studentService = service;
     }
 
     @PostMapping("/add")
@@ -38,20 +34,21 @@ public class GradesController {
                            @RequestParam(value = "classId", required = false) Long classId,
                            @RequestParam(value = "studentId", required = false) Long studentId,
                            @RequestParam(value = "courseId", required = false) Long academicCourseId,
-                           @RequestParam(name = "date", required = false) String date,
-                           @RequestParam(name = "classwork", required = false) String classwork) {
+                           @RequestParam(name = "date", required = false) String date) {
 
 
         AcademicClassDto academicClass = academicClassService.findById(classId);
-        if(result.hasFieldErrors("gradeHomework")||result.hasFieldErrors("gradeTest")||result.hasFieldErrors("gradeClasswork")){
+        if (result.hasFieldErrors("gradeHomework") || result.hasFieldErrors("gradeTest") || result.hasFieldErrors("gradeClasswork")) {
             model.addAttribute("gradesDto", gradesDto);
             return "forward:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId;
         }
 
-        StudentDto student = studentService.findById(studentId);
-        gradesDto.setStudent(StudentMapper.mapToStudent(student));
-        gradeService.save(gradesDto);
+        if (gradeService.existByStudentIdAndDate(studentId, date)) {
+            gradeService.update(gradesDto, date, studentId);
+            return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId + "?date=" + date;
+        }
 
+        gradeService.save(gradesDto, date, studentId);
         return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId + "?date=" + date;
 
     }

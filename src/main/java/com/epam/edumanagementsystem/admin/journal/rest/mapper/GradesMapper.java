@@ -8,18 +8,22 @@ public class GradesMapper {
     public static Grades toGrades(GradesDto gradesDto) {
         Grades grades = new Grades();
         grades.setId(grades.getId());
-        if (gradesDto.getGradeTest().isBlank() || gradesDto.getGradeClasswork().isBlank() ||
-                gradesDto.getGradeHomework().isBlank()) {
+        if (gradesDto.getGradeHomework().isBlank()) {
             grades.setGradeHomework(0);
         } else {
-            grades.setGradeTest(Integer.parseInt(gradesDto.getGradeTest()));
             grades.setGradeHomework(Integer.parseInt(gradesDto.getGradeHomework()));
+        }
+        if (gradesDto.getGradeTest().isBlank()) {
+            grades.setGradeTest(0);
+        } else {
+            grades.setGradeTest(Integer.parseInt(gradesDto.getGradeTest()));
+        }
+        if (gradesDto.getGradeClasswork().isBlank()) {
+            grades.setGradeClasswork(0);
+        } else {
             grades.setGradeClasswork(Integer.parseInt(gradesDto.getGradeClasswork()));
         }
         grades.setStudent(gradesDto.getStudent());
-        grades.setClasswork(grades.getClasswork());
-        grades.setTest(grades.getTest());
-        grades.setHomework(grades.getHomework());
 
         return grades;
     }
@@ -27,13 +31,21 @@ public class GradesMapper {
     public static GradesDto toDto(Grades grades) {
         GradesDto gradesDto = new GradesDto();
         gradesDto.setId(grades.getId());
-        gradesDto.setGradeTest(Integer.toString(grades.getGradeTest()));
-        gradesDto.setGradeClasswork(Integer.toString(grades.getGradeClasswork()));
-        gradesDto.setGradeHomework(Integer.toString(grades.getGradeHomework()));
-//        gradesDto.setStudent(grades.getStudent());
-        gradesDto.setClasswork(grades.getClasswork());
-        gradesDto.setTest(grades.getTest());
-        gradesDto.setHomework(grades.getHomework());
+        if (grades.getGradeClasswork() == 0) {
+            gradesDto.setGradeClasswork("");
+        } else {
+            gradesDto.setGradeClasswork(Integer.toString(grades.getGradeClasswork()));
+        }
+        if (grades.getGradeHomework() == 0) {
+            gradesDto.setGradeHomework("");
+        } else {
+            gradesDto.setGradeHomework(Integer.toString(grades.getGradeHomework()));
+        }
+        if (grades.getGradeTest() == 0) {
+            gradesDto.setGradeTest("");
+        } else {
+            gradesDto.setGradeTest(Integer.toString(grades.getGradeTest()));
+        }
         return gradesDto;
     }
 }

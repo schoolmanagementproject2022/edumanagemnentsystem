@@ -12,4 +12,6 @@ public interface HomeworkService {
     Homework update(SaveAgendaDto saveAgendaDto);
 
     Homework getHomeworkOfCourse(LocalDate date, Long classId, Long courseId);
+
+    Homework findByHomework(String homework);
 }
