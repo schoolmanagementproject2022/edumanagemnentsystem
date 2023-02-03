@@ -50,18 +50,24 @@ public class GradesServiceImpl implements GradesService {
         grades.setDate(localdate);
         StudentDto student = studentService.findById(studentId);
         grades.setStudent(StudentMapper.mapToStudent(student));
-        grades.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
-        grades.setTest(testService.findByTest(gradesDto.getTest()));
-        grades.setClasswork(classworkService.findByClasswork(gradesDto.getClasswork()));
+        if (grades.getGradeHomework() != 0) {
+            grades.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
+        }
+        if (grades.getGradeTest() != 0) {
+            grades.setTest(testService.findByTest(gradesDto.getTest()));
+        }
+        if (grades.getGradeClasswork() != 0) {
+            grades.setClasswork(classworkService.findByClasswork(gradesDto.getClasswork()));
+        }
         grades.setAcademicCourse(AcademicCourseMapper.toAcademicCourse(academicCourseService.findById(gradesDto.getCourseId())));
         return gradesRepository.save(grades);
     }
 
     @Override
-    public boolean existByStudentIdAndDate(Long id, String date) {
+    public boolean existByDateStudentIdAndCourseId(String date, Long studentId, Long courseId) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL);
         LocalDate localDate = LocalDate.parse(date, formatter);
-        return gradesRepository.existsGradesByDateAndStudentId(localDate, id);
+        return gradesRepository.existsGradesByDateAndStudentIdAndAcademicCourseId(localDate, studentId, courseId);
     }
 
     @Override
@@ -70,10 +76,10 @@ public class GradesServiceImpl implements GradesService {
     }
 
     @Override
-    public Grades findByDateAndStudentId(String date, Long studentId) {
+    public Grades findByDateStudentIdAndCourseId(String date, Long studentId, Long courseId) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL);
         LocalDate localDate = LocalDate.parse(date, formatter);
-        return gradesRepository.findByDateAndStudentId(localDate, studentId);
+        return gradesRepository.findByDateAndStudentIdAndAcademicCourseId(localDate, studentId, courseId);
     }
 
     @Override
@@ -81,13 +87,21 @@ public class GradesServiceImpl implements GradesService {
         StudentDto student = studentService.findById(studentId);
         gradesDto.setStudent(StudentMapper.mapToStudent(student));
         Grades editedGrades = GradesMapper.toGrades(gradesDto);
-        if (existByStudentIdAndDate(gradesDto.getStudent().getId(), date)) {
-            Grades grade = findByDateAndStudentId(date, gradesDto.getStudent().getId());
+        if (existByDateStudentIdAndCourseId(date, gradesDto.getStudent().getId(), gradesDto.getCourseId())) {
+            Grades grade = findByDateStudentIdAndCourseId(date, gradesDto.getStudent().getId(), gradesDto.getCourseId());
             grade.setGradeClasswork(editedGrades.getGradeClasswork());
             grade.setGradeHomework(editedGrades.getGradeHomework());
             grade.setGradeTest(editedGrades.getGradeTest());
+            if (grade.getGradeHomework() != 0) {
+                grade.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
+            }
+            if (grade.getGradeTest() != 0) {
+                grade.setTest(testService.findByTest(gradesDto.getTest()));
+            }
+            if (grade.getGradeClasswork() != 0) {
+                grade.setClasswork(classworkService.findByClasswork(gradesDto.getClasswork()));
+            }
             gradesRepository.save(grade);
         }
     }
-
 }

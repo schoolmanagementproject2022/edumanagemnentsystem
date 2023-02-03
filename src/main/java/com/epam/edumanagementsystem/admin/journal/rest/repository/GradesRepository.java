@@ -12,7 +12,7 @@ public interface GradesRepository extends JpaRepository<Grades, Long> {
 
     Optional<Grades> findByStudentId(Long id);
 
-    boolean existsGradesByDateAndStudentId(LocalDate date, Long studentId);
+    boolean existsGradesByDateAndStudentIdAndAcademicCourseId(LocalDate date, Long studentId, Long courseId);
 
-    Grades findByDateAndStudentId(LocalDate date, Long studentId);
+    Grades findByDateAndStudentIdAndAcademicCourseId(LocalDate date, Long studentId, Long courseId);
 }

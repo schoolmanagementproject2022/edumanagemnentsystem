@@ -3,6 +3,8 @@ package com.epam.edumanagementsystem.admin.journal.model.dto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.util.annotation.ValidGrade;
 
+import java.time.LocalDate;
+
 public class GradesDto {
     private Long id;
     @ValidGrade
@@ -16,6 +18,7 @@ public class GradesDto {
     private String test;
     private String homework;
     private Long courseId;
+    private LocalDate date;
 
     public GradesDto() {
     }
@@ -90,6 +93,14 @@ public class GradesDto {
 
     public void setCourseId(Long courseId) {
         this.courseId = courseId;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override

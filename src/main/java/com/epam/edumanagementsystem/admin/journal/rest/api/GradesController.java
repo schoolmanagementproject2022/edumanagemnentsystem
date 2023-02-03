@@ -35,14 +35,13 @@ public class GradesController {
                            @RequestParam(value = "studentId", required = false) Long studentId,
                            @RequestParam(name = "date", required = false) String date) {
 
-
         AcademicClassDto academicClass = academicClassService.findById(classId);
         if (result.hasFieldErrors("gradeHomework") || result.hasFieldErrors("gradeTest") || result.hasFieldErrors("gradeClasswork")) {
             model.addAttribute("gradesDto", gradesDto);
             return "forward:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId();
         }
 
-        if (gradeService.existByStudentIdAndDate(studentId, date)) {
+        if (gradeService.existByDateStudentIdAndCourseId(date, studentId, gradesDto.getCourseId())) {
             gradeService.update(gradesDto, date, studentId);
             return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId() + "?date=" + date;
         }

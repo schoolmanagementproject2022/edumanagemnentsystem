@@ -9,11 +9,11 @@ public interface GradesService {
 
     Grades save(GradesDto gradesDto, String date, Long studentId);
 
-    boolean existByStudentIdAndDate(Long id, String date);
+    boolean existByDateStudentIdAndCourseId(String date, Long studentId, Long courseId);
 
     Optional<Grades> findByStudentId(Long id);
 
-    Grades findByDateAndStudentId(String date, Long studentId);
+    Grades findByDateStudentIdAndCourseId(String date, Long studentId, Long courseId);
 
     void update(GradesDto gradesDto, String date, Long studentId);
 

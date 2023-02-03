@@ -24,7 +24,6 @@ public class GradesMapper {
             grades.setGradeClasswork(Integer.parseInt(gradesDto.getGradeClasswork()));
         }
         grades.setStudent(gradesDto.getStudent());
-
         return grades;
     }
 
@@ -46,6 +45,12 @@ public class GradesMapper {
         } else {
             gradesDto.setGradeTest(Integer.toString(grades.getGradeTest()));
         }
+        gradesDto.setStudent(grades.getStudent());
+        gradesDto.setCourseId(grades.getAcademicCourse().getId());
+        gradesDto.setHomework(grades.getHomework().getHomework());
+        gradesDto.setClasswork(grades.getClasswork().getClasswork());
+        gradesDto.setTest(grades.getTest().getTest());
+        gradesDto.setDate(grades.getDate());
         return gradesDto;
     }
 }

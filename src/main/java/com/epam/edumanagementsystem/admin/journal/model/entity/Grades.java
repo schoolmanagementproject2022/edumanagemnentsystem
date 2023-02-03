@@ -21,10 +21,19 @@ public class Grades {
     private Student student;
     private LocalDate date;
     @OneToOne
+    @JoinTable(name = "classwork_classworkGrade_mapping",
+            joinColumns = @JoinColumn(name = "grades_id"),
+            inverseJoinColumns = @JoinColumn(name = "classwork_id"))
     private Classwork classwork;
     @OneToOne
+    @JoinTable(name = "test_testGrade_mapping",
+            joinColumns = @JoinColumn(name = "grades_id"),
+            inverseJoinColumns = @JoinColumn(name = "test_id"))
     private Test test;
     @OneToOne
+    @JoinTable(name = "homework_homeworkGrade_mapping",
+            joinColumns = @JoinColumn(name = "grades_id"),
+            inverseJoinColumns = @JoinColumn(name = "homework_id"))
     private Homework homework;
     @ManyToOne
     private AcademicCourse academicCourse;
