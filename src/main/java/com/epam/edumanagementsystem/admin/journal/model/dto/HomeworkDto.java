@@ -1,16 +1,14 @@
 package com.epam.edumanagementsystem.admin.journal.model.dto;
 
-import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class HomeworkDto {
+
     private Long id;
     private String homework;
-    private List<Grades> grade;
     private LocalDate dateOfHomework;
     private AcademicCourse academicCourse;
     private AcademicClass academicClass;
@@ -29,14 +27,6 @@ public class HomeworkDto {
 
     public void setHomework(String homework) {
         this.homework = homework;
-    }
-
-    public List<Grades> getGrade() {
-        return grade;
-    }
-
-    public void setGrade(List<Grades> grade) {
-        this.grade = grade;
     }
 
     public LocalDate getDateOfHomework() {
@@ -68,7 +58,6 @@ public class HomeworkDto {
         return "HomeworkDto{" +
                 "id=" + id +
                 ", homework='" + homework + '\'' +
-                ", grade=" + grade +
                 ", dateOfHomework=" + dateOfHomework +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +

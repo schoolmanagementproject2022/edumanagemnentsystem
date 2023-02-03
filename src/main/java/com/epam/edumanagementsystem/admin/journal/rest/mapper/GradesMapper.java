@@ -8,17 +8,17 @@ public class GradesMapper {
     public static Grades toGrades(GradesDto gradesDto) {
         Grades grades = new Grades();
         grades.setId(grades.getId());
-        if (gradesDto.getGradeHomework().isBlank()) {
+        if (gradesDto.getGradeHomework() == null || gradesDto.getGradeHomework().isBlank()) {
             grades.setGradeHomework(0);
         } else {
             grades.setGradeHomework(Integer.parseInt(gradesDto.getGradeHomework()));
         }
-        if (gradesDto.getGradeTest().isBlank()) {
+        if (gradesDto.getGradeTest() == null || gradesDto.getGradeTest().isBlank()) {
             grades.setGradeTest(0);
         } else {
             grades.setGradeTest(Integer.parseInt(gradesDto.getGradeTest()));
         }
-        if (gradesDto.getGradeClasswork().isBlank()) {
+        if (gradesDto.getGradeClasswork() == null || gradesDto.getGradeClasswork().isBlank()) {
             grades.setGradeClasswork(0);
         } else {
             grades.setGradeClasswork(Integer.parseInt(gradesDto.getGradeClasswork()));

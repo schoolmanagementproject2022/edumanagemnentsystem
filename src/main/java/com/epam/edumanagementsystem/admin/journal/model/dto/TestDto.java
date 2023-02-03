@@ -1,17 +1,14 @@
 package com.epam.edumanagementsystem.admin.journal.model.dto;
 
-import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class TestDto {
 
     private Long id;
     private String test;
-    private List<Grades> grade;
     private LocalDate dateOfTest;
     private AcademicCourse academicCourse;
     private AcademicClass academicClass;
@@ -30,14 +27,6 @@ public class TestDto {
 
     public void setTest(String test) {
         this.test = test;
-    }
-
-    public List<Grades> getGrade() {
-        return grade;
-    }
-
-    public void setGrade(List<Grades> grade) {
-        this.grade = grade;
     }
 
     public LocalDate getDateOfTest() {
@@ -66,6 +55,6 @@ public class TestDto {
 
     @Override
     public String toString() {
-        return "TestDto{" + "id=" + id + ", test='" + test + '\'' + ", grade=" + grade + ", dateOfTest=" + dateOfTest + ", academicCourse=" + academicCourse + ", academicClass=" + academicClass + '}';
+        return "TestDto{" + "id=" + id + ", test='" + test + '\'' + ", dateOfTest=" + dateOfTest + ", academicCourse=" + academicCourse + ", academicClass=" + academicClass + '}';
     }
 }

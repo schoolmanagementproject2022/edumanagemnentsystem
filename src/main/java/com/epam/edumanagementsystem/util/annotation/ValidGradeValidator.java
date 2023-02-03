@@ -11,7 +11,7 @@ public class ValidGradeValidator implements ConstraintValidator<ValidGrade, Stri
     public boolean isValid(String grade, ConstraintValidatorContext context) {
         String message = "";
 
-        if (grade.isBlank()) {
+        if (grade == null || grade.isBlank()) {
             return true;
         }
         int intGrade = Integer.parseInt(grade);

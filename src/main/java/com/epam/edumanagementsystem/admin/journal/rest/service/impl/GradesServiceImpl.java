@@ -39,9 +39,7 @@ public class GradesServiceImpl implements GradesService {
     @Override
     public Grades save(GradesDto gradesDto, String date) {
         Grades grades = GradesMapper.toGrades(gradesDto);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL);
-        LocalDate localdate = LocalDate.parse(date, formatter);
-        grades.setDate(localdate);
+        grades.setDate(LocalDate.parse(date, DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL)));
         if (grades.getGradeHomework() != 0) {
             grades.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
         }

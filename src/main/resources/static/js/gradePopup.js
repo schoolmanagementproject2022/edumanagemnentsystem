@@ -185,9 +185,10 @@ function PopUpShowGradeMondayError() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+
     let studentName = document.getElementById("studentNameSurname").value
-    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
-    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
+    document.getElementById("student-monday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-monday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeTuesday() {
@@ -298,8 +299,8 @@ function PopUpShowGradeTuesdayError() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     let studentName = document.getElementById("studentNameSurname").value
-    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
-    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
+    document.getElementById("student-tuesday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-tuesday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeWednesday() {
@@ -410,8 +411,8 @@ function PopUpShowGradeWednesdayError() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     let studentName = document.getElementById("studentNameSurname").value
-    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
-    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
+    document.getElementById("student-wednesday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-wednesday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeThursday() {
@@ -523,8 +524,8 @@ function PopUpShowGradeThursdayError() {
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
     let studentName = document.getElementById("studentNameSurname").value
-    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
-    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
+    document.getElementById("student-thursday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-thursday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeFriday() {
@@ -636,8 +637,8 @@ function PopUpShowGradeFridayError() {
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 
     let studentName = document.getElementById("studentNameSurname").value
-    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
-    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
+    document.getElementById("student-friday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-friday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeSaturday() {
@@ -749,8 +750,8 @@ function PopUpShowGradeSaturdayError() {
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 
     let studentName = document.getElementById("studentNameSurname").value
-    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
-    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
+    document.getElementById("student-saturday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-saturday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeSunday() {
@@ -847,6 +848,7 @@ function PopUpShowGradeSundayError() {
                     document.getElementById("test-sunday-grade").value = parse.test
                 }
             }
+            checkSundayInput();
         }
     })
 
