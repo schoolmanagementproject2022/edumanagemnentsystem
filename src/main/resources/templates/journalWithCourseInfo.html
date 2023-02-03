@@ -233,7 +233,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_monday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_tuesday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -350,7 +350,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_wednesday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -410,7 +410,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_thursday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -469,7 +469,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_friday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -525,7 +525,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_saturday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -582,7 +582,7 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_sunday"><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -622,7 +622,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="monday-classwork-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkMondayInput()" id="monday-classwork-grade" class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -632,7 +632,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="monday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkMondayInput()" id="monday-test-grade" class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -641,7 +641,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="monday-homework-grade" class="form_input_grade" th:name="gradeHomework"
+                        <input type="number" onkeyup="checkMondayInput()" id="monday-homework-grade" class="form_input_grade" th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -659,7 +659,7 @@
                     <input type="hidden" name="concreteDay" th:value="'MONDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_monday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_monday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -698,7 +698,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="tuesday-classwork-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkTuesdayInput()" id="tuesday-classwork-grade" class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -708,7 +708,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="tuesday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkTuesdayInput()" id="tuesday-test-grade" class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -717,7 +717,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="tuesday-homework-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkTuesdayInput()" id="tuesday-homework-grade" class="form_input_grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -736,7 +736,7 @@
                     <input type="hidden" name="concreteDay" th:value="'TUESDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_tuesday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_tuesday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -775,7 +775,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="wednesday-classwork-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkWednesdayInput()" id="wednesday-classwork-grade" class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -785,7 +785,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="wednesday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkWednesdayInput()" id="wednesday-test-grade" class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -794,7 +794,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="wednesday-homework-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkWednesdayInput()" id="wednesday-homework-grade" class="form_input_grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -813,7 +813,7 @@
                     <input type="hidden" name="concreteDay" th:value="'WEDNESDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_wednesday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_wednesday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -848,7 +848,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" class="form_input_grade" id="thursday-classwork-grade"
+                        <input type="number" onkeyup="checkThursdayInput()" class="form_input_grade" id="thursday-classwork-grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -858,7 +858,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" class="form_input_grade" id="thursday-test-grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkThursdayInput()" class="form_input_grade" id="thursday-test-grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -867,7 +867,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" class="form_input_grade" id="thursday-homework-grade"
+                        <input type="number" onkeyup="checkThursdayInput()" class="form_input_grade" id="thursday-homework-grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -886,7 +886,7 @@
                     <input type="hidden" name="concreteDay" th:value="'THURSDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_thursday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_thursday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -925,7 +925,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="friday-classwork-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkFridayInput()" id="friday-classwork-grade" class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -935,7 +935,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="friday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkFridayInput()" id="friday-test-grade" class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -944,7 +944,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="friday-homework-grade" class="form_input_grade" th:name="gradeHomework"
+                        <input type="number" onkeyup="checkFridayInput()" id="friday-homework-grade" class="form_input_grade" th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -961,7 +961,7 @@
                     <input type="hidden" name="concreteDay" th:value="'FRIDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_friday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_friday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -1000,7 +1000,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="saturday-classwork-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkSaturdayInput()" id="saturday-classwork-grade" class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -1010,7 +1010,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="saturday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkSaturdayInput()" id="saturday-test-grade" class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -1019,7 +1019,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="saturday-homework-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkSaturdayInput()" id="saturday-homework-grade" class="form_input_grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -1037,7 +1037,7 @@
                     <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_saturday"><b>Save</b>
+                    <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_saturday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>
@@ -1074,7 +1074,7 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="sunday-classwork-grade" class="form_input_grade"
+                        <input type="number" onkeyup="checkSundayInput()" id="sunday-classwork-grade" class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -1084,7 +1084,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="sunday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" onkeyup="checkSundayInput()" id="sunday-test-grade" class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -1093,7 +1093,7 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" id="sunday-homework-grade" class="form_input_grade" th:name="gradeHomework"
+                        <input type="number" onkeyup="checkSundayInput()" id="sunday-homework-grade" class="form_input_grade" th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -1110,7 +1110,7 @@
                     <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
                 </div>
                 <div name="btn-div">
-                    <button type="submit" class="saveGrade" id="submit_sunday"><b>Save</b>
+                    <button type="submit" class="saveGrade" id="submit_sunday" disabled><b>Save</b>
                     </button>
                 </div>
             </div>

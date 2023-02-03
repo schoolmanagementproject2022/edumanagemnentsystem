@@ -114,6 +114,7 @@ function PopUpShowGradeMonday() {
                 }
             }
             console.log(response);
+            checkMondayInput();
         }
     })
 
@@ -185,6 +186,7 @@ function PopUpShowGradeTuesday() {
                 }
             }
             console.log(response);
+            checkTuesdayInput();
         }
     })
 
@@ -256,6 +258,7 @@ function PopUpShowGradeWednesday() {
                 }
             }
             console.log(response);
+            checkWednesdayInput();
         }
     })
 
@@ -328,6 +331,7 @@ function PopUpShowGradeThursday() {
                 }
             }
             console.log(response);
+            checkThursdayInput();
         }
     })
 
@@ -399,6 +403,7 @@ function PopUpShowGradeFriday() {
                 }
             }
             console.log(response);
+            checkFridayInput();
         }
     })
 
@@ -470,6 +475,7 @@ function PopUpShowGradeSaturday() {
                 }
             }
             console.log(response);
+            checkSaturdayInput();
         }
     })
 
@@ -541,6 +547,7 @@ function PopUpShowGradeSunday() {
                 }
             }
             console.log(response);
+            checkSundayInput();
         }
     })
 
@@ -576,3 +583,79 @@ function PopUpShowGradeSunday() {
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
 }
 
+function checkMondayInput() {
+    if(document.getElementById("monday-homework-grade").value!=="" ||
+        document.getElementById("monday-test-grade").value!=="" ||
+        document.getElementById("monday-classwork-grade").value!=="") {
+
+        document.getElementById('submit_monday').disabled = false;
+    } else {
+        document.getElementById('submit_monday').disabled = true;
+    }
+}
+
+function checkTuesdayInput() {
+    if(document.getElementById("tuesday-homework-grade").value!=="" ||
+        document.getElementById("tuesday-test-grade").value!=="" ||
+        document.getElementById("tuesday-classwork-grade").value!=="") {
+
+        document.getElementById('submit_tuesday').disabled = false;
+    } else {
+        document.getElementById('submit_tuesday').disabled = true;
+    }
+}
+
+function checkWednesdayInput() {
+    if(document.getElementById("wednesday-homework-grade").value!=="" ||
+        document.getElementById("wednesday-test-grade").value!=="" ||
+        document.getElementById("wednesday-classwork-grade").value!=="") {
+
+        document.getElementById('submit_wednesday').disabled = false;
+    } else {
+        document.getElementById('submit_wednesday').disabled = true;
+    }
+}
+
+function checkThursdayInput() {
+    if(document.getElementById("thursday-homework-grade").value!=="" ||
+        document.getElementById("thursday-test-grade").value!=="" ||
+        document.getElementById("thursday-classwork-grade").value!=="") {
+
+        document.getElementById('submit_thursday').disabled = false;
+    } else {
+        document.getElementById('submit_thursday').disabled = true;
+    }
+}
+
+function checkFridayInput() {
+    if(document.getElementById("friday-homework-grade").value!=="" ||
+        document.getElementById("friday-test-grade").value!=="" ||
+        document.getElementById("friday-classwork-grade").value!=="") {
+
+        document.getElementById('submit_friday').disabled = false;
+    } else {
+        document.getElementById('submit_friday').disabled = true;
+    }
+}
+
+function checkSaturdayInput() {
+    if(document.getElementById("saturday-homework-grade").value!=="" ||
+        document.getElementById("saturday-test-grade").value!=="" ||
+        document.getElementById("saturday-classwork-grade").value!=="") {
+
+        document.getElementById('submit_saturday').disabled = false;
+    } else {
+        document.getElementById('submit_saturday').disabled = true;
+    }
+}
+
+function checkSundayInput() {
+    if(document.getElementById("sunday-homework-grade").value !== "" ||
+        document.getElementById("sunday-test-grade").value !== "" ||
+        document.getElementById("sunday-classwork-grade").value !== "") {
+
+        document.getElementById('submit_sunday').disabled = false;
+    } else {
+        document.getElementById('submit_sunday').disabled = true;
+    }
+}
