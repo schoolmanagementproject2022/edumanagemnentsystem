@@ -47,9 +47,6 @@ public class GradesMapper {
         }
         gradesDto.setStudent(grades.getStudent());
         gradesDto.setCourseId(grades.getAcademicCourse().getId());
-        gradesDto.setHomework(grades.getHomework().getHomework());
-        gradesDto.setClasswork(grades.getClasswork().getClasswork());
-        gradesDto.setTest(grades.getTest().getTest());
         gradesDto.setDate(grades.getDate());
         return gradesDto;
     }

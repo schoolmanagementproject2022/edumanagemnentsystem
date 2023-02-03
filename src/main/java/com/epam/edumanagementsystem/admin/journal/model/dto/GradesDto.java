@@ -6,6 +6,7 @@ import com.epam.edumanagementsystem.util.annotation.ValidGrade;
 import java.time.LocalDate;
 
 public class GradesDto {
+
     private Long id;
     @ValidGrade
     private String gradeClasswork;

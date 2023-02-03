@@ -96,7 +96,7 @@ function PopUpShowGradeMonday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
@@ -167,7 +167,7 @@ function PopUpShowGradeTuesday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
@@ -238,7 +238,7 @@ function PopUpShowGradeWednesday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
@@ -310,7 +310,7 @@ function PopUpShowGradeThursday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
@@ -381,7 +381,7 @@ function PopUpShowGradeFriday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
@@ -452,7 +452,7 @@ function PopUpShowGradeSaturday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {
@@ -523,7 +523,7 @@ function PopUpShowGradeSunday() {
     });
     $.ajax({
         type: 'GET',
-        url: "/agendas/check/grades/" + selectedRowId,
+        url: "/agendas/check/grades/" + selectedRowId + "/" + dateValue + "/" + courseId,
         dataType: 'json',
         contentType: "application/json",
         success: function (response) {

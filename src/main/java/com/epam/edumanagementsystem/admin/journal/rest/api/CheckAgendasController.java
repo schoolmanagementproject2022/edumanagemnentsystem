@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.journal.rest.api;
 import com.epam.edumanagementsystem.admin.journal.model.dto.GradesDto;
 import com.epam.edumanagementsystem.admin.journal.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Classwork;
+import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Homework;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Test;
 import com.epam.edumanagementsystem.admin.journal.rest.mapper.GradesMapper;
@@ -52,10 +53,16 @@ public class CheckAgendasController {
         return saveAgendaDto;
     }
 
-    @GetMapping("grades/{studentId}")
+    @GetMapping("grades/{studentId}/{date}/{courseId}")
     public @ResponseBody
-    GradesDto getGrades(@PathVariable(value = "studentId", required = false) String studentId) {
-        return GradesMapper.toDto(gradesService.findByStudentId(Long.parseLong(studentId)).get());
+    GradesDto getGrades(@PathVariable(value = "studentId", required = false) String studentId,
+                        @PathVariable(value = "date", required = false) String date,
+                        @PathVariable(value = "courseId", required = false) Long courseId) {
+        Grades grades = gradesService.findByDateStudentIdAndCourseId(date, Long.parseLong(studentId), courseId);
+        if (grades != null) {
+            return GradesMapper.toDto(grades);
+        }
+        return new GradesDto();
     }
 
 }
