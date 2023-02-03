@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface GradesService {
 
-    Grades save(GradesDto gradesDto, String date, Long studentId);
+    Grades save(GradesDto gradesDto, String date);
 
     boolean existByDateStudentIdAndCourseId(String date, Long studentId, Long courseId);
 
@@ -15,6 +15,6 @@ public interface GradesService {
 
     Grades findByDateStudentIdAndCourseId(String date, Long studentId, Long courseId);
 
-    void update(GradesDto gradesDto, String date, Long studentId);
+    void update(GradesDto gradesDto, String date);
 
 }

@@ -10,9 +10,6 @@ import com.epam.edumanagementsystem.admin.journal.rest.service.HomeworkService;
 import com.epam.edumanagementsystem.admin.journal.rest.service.TestService;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
-import com.epam.edumanagementsystem.student.mapper.StudentMapper;
-import com.epam.edumanagementsystem.student.model.dto.StudentDto;
-import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,27 +26,22 @@ public class GradesServiceImpl implements GradesService {
     private final ClassworkService classworkService;
     private final HomeworkService homeworkService;
     private final TestService testService;
-    private final StudentService studentService;
 
     public GradesServiceImpl(GradesRepository gradesRepository, AcademicCourseService academicCourseService,
-                             ClassworkService classworkService, HomeworkService homeworkService, TestService testService,
-                             StudentService studentService) {
+                             ClassworkService classworkService, HomeworkService homeworkService, TestService testService) {
         this.gradesRepository = gradesRepository;
         this.academicCourseService = academicCourseService;
         this.classworkService = classworkService;
         this.homeworkService = homeworkService;
         this.testService = testService;
-        this.studentService = studentService;
     }
 
     @Override
-    public Grades save(GradesDto gradesDto, String date, Long studentId) {
+    public Grades save(GradesDto gradesDto, String date) {
         Grades grades = GradesMapper.toGrades(gradesDto);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL);
         LocalDate localdate = LocalDate.parse(date, formatter);
         grades.setDate(localdate);
-        StudentDto student = studentService.findById(studentId);
-        grades.setStudent(StudentMapper.mapToStudent(student));
         if (grades.getGradeHomework() != 0) {
             grades.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
         }
@@ -83,9 +75,7 @@ public class GradesServiceImpl implements GradesService {
     }
 
     @Override
-    public void update(GradesDto gradesDto, String date, Long studentId) {
-        StudentDto student = studentService.findById(studentId);
-        gradesDto.setStudent(StudentMapper.mapToStudent(student));
+    public void update(GradesDto gradesDto, String date) {
         Grades editedGrades = GradesMapper.toGrades(gradesDto);
         if (existByDateStudentIdAndCourseId(date, gradesDto.getStudent().getId(), gradesDto.getCourseId())) {
             Grades grade = findByDateStudentIdAndCourseId(date, gradesDto.getStudent().getId(), gradesDto.getCourseId());

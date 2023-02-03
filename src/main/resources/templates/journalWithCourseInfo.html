@@ -649,14 +649,15 @@
                              th:errors="*{gradeHomework}"></div>
                     </div>
 
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'MONDAY'">
-                        PopUpShowGradeMonday();
-                    </script>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="students-monday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-monday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'MONDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'MONDAY'">
+                        PopUpShowGradeMondayError();
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_monday" disabled><b>Save</b>
@@ -726,14 +727,15 @@
                              th:errors="*{gradeHomework}"></div>
                     </div>
 
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'TUESDAY'">
-                        PopUpShowGradeTuesday();
-                    </script>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="students-tuesday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-tuesday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'TUESDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'TUESDAY'">
+                        PopUpShowGradeTuesdayError();
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_tuesday" disabled><b>Save</b>
@@ -802,15 +804,15 @@
                         <div class="gradeError" th:if="${#fields.hasErrors('gradeHomework')}"
                              th:errors="*{gradeHomework}"></div>
                     </div>
-
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'WEDNESDAY'">
-                        PopUpShowGradeWednesday();
-                    </script>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="students-wednesday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-wednesday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'WEDNESDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'WEDNESDAY'">
+                        PopUpShowGradeWednesdayError();
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_wednesday" disabled><b>Save</b>
@@ -876,14 +878,15 @@
                              th:errors="*{gradeHomework}"></div>
                     </div>
 
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'THURSDAY'">
-                        PopUpShowGradeThursday();
-                    </script>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="students-thursday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-thursday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'THURSDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'THURSDAY'">
+                        PopUpShowGradeThursdayError()
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_thursday" disabled><b>Save</b>
@@ -951,14 +954,15 @@
                         <div class="gradeError" th:if="${#fields.hasErrors('gradeHomework')}"
                              th:errors="*{gradeHomework}"></div>
                     </div>
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'FRIDAY'">
-                        PopUpShowGradeFriday();
-                    </script>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="students-friday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-friday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'FRIDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'FRIDAY'">
+                        PopUpShowGradeFridayError();
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_friday" disabled><b>Save</b>
@@ -1027,14 +1031,15 @@
                         <div class="gradeError" th:if="${#fields.hasErrors('gradeHomework')}"
                              th:errors="*{gradeHomework}"></div>
                     </div>
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SATURDAY'">
-                        PopUpShowGradeSaturday();
-                    </script>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="students-saturday-grade" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-saturday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'SATURDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SATURDAY'">
+                        PopUpShowGradeSaturdayError();
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" onclick="tuesday_popUp()" id="submit_saturday" disabled><b>Save</b>
@@ -1100,14 +1105,17 @@
                         <div class="gradeError" th:if="${#fields.hasErrors('gradeHomework')}"
                              th:errors="*{gradeHomework}"></div>
                     </div>
-                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SUNDAY'">
-                        PopUpShowGradeSunday();
-                    </script>
-                    <input type="hidden" id="students-sunday-grade" name="studentId"/>
+
+
+                    <input type="hidden"  id="students-sunday-grade" name="student"/>
+                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-sunday-grade" name="date" th:value="${date}"/>
                     <input type="hidden" name="concreteDay" th:value="'SUNDAY'"/>
+                    <script th:inline="javascript" th:if="${#fields.hasAnyErrors()} and ${concreteDay} eq 'SUNDAY'">
+                        PopUpShowGradeSundayError();
+                    </script>
                 </div>
                 <div name="btn-div">
                     <button type="submit" class="saveGrade" id="submit_sunday" disabled><b>Save</b>

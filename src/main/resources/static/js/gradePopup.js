@@ -114,7 +114,6 @@ function PopUpShowGradeMonday() {
                     document.getElementById("test-monday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkMondayInput();
         }
     })
@@ -138,7 +137,6 @@ function PopUpShowGradeMonday() {
                     document.getElementById("monday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkMondayInput();
         }
     })
@@ -150,6 +148,46 @@ function PopUpShowGradeMonday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeMondayError() {
+    let dateValue = document.getElementById("mondayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-monday-grade").value === "") {
+                    document.getElementById("classwork-monday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-monday-grade").value === "") {
+                    document.getElementById("homework-monday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-monday-grade").value === "") {
+                    document.getElementById("test-monday-grade").value = parse.test
+                }
+            }
+            checkMondayInput()
+        }
+    })
+
+    $("#popup-container-grade-monday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeTuesday() {
@@ -188,7 +226,6 @@ function PopUpShowGradeTuesday() {
                     document.getElementById("test-tuesday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkTuesdayInput();
         }
     })
@@ -212,7 +249,6 @@ function PopUpShowGradeTuesday() {
                     document.getElementById("tuesday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkTuesdayInput();
         }
     })
@@ -224,6 +260,46 @@ function PopUpShowGradeTuesday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeTuesdayError() {
+    let dateValue = document.getElementById("tuesdayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-tuesday-grade").value === "") {
+                    document.getElementById("classwork-tuesday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-tuesday-grade").value === "") {
+                    document.getElementById("homework-tuesday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-tuesday-grade").value === "") {
+                    document.getElementById("test-tuesday-grade").value = parse.test
+                }
+            }
+            checkTuesdayInput()
+        }
+    })
+
+    $("#popup-container-grade-tuesday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeWednesday() {
@@ -262,7 +338,6 @@ function PopUpShowGradeWednesday() {
                     document.getElementById("test-wednesday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkWednesdayInput();
         }
     })
@@ -286,7 +361,6 @@ function PopUpShowGradeWednesday() {
                     document.getElementById("wednesday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkWednesdayInput();
         }
     })
@@ -298,6 +372,46 @@ function PopUpShowGradeWednesday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeWednesdayError() {
+    let dateValue = document.getElementById("wednesdayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-wednesday-grade").value === "") {
+                    document.getElementById("classwork-wednesday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-wednesday-grade").value === "") {
+                    document.getElementById("homework-wednesday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-wednesday-grade").value === "") {
+                    document.getElementById("test-wednesday-grade").value = parse.test
+                }
+            }
+            checkWednesdayInput();
+        }
+    })
+
+    $("#popup-container-grade-wednesday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeThursday() {
@@ -337,7 +451,6 @@ function PopUpShowGradeThursday() {
                     document.getElementById("test-thursday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkThursdayInput();
         }
     })
@@ -361,7 +474,6 @@ function PopUpShowGradeThursday() {
                     document.getElementById("thursday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkThursdayInput();
         }
     })
@@ -373,6 +485,46 @@ function PopUpShowGradeThursday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeThursdayError() {
+    let dateValue = document.getElementById("thursdayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response.valueOf() != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-thursday-grade").value === "") {
+                    document.getElementById("classwork-thursday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-thursday-grade").value === "") {
+                    document.getElementById("homework-thursday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-thursday-grade").value === "") {
+                    document.getElementById("test-thursday-grade").value = parse.test
+                }
+            }
+            checkThursdayInput();
+        }
+    })
+
+    $("#popup-container-grade-thursday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeFriday() {
@@ -411,7 +563,6 @@ function PopUpShowGradeFriday() {
                     document.getElementById("test-friday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkFridayInput();
         }
     })
@@ -435,7 +586,6 @@ function PopUpShowGradeFriday() {
                     document.getElementById("friday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkFridayInput();
         }
     })
@@ -447,6 +597,47 @@ function PopUpShowGradeFriday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeFridayError() {
+    let dateValue = document.getElementById("fridayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-friday-grade").value === "") {
+                    document.getElementById("classwork-friday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-friday-grade").value === "") {
+                    document.getElementById("homework-friday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-friday-grade").value === "") {
+                    document.getElementById("test-friday-grade").value = parse.test
+                }
+            }
+            checkFridayInput();
+        }
+    })
+
+    $("#popup-container-grade-friday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeSaturday() {
@@ -463,7 +654,6 @@ function PopUpShowGradeSaturday() {
         document.getElementById("students-saturday").innerText = studentName + ':' + dateValue
         document.getElementById("students-saturday-grade").value = selectedRowId
 
-        console.log("Selected row ID:", selectedRowId);
     });
 
     $.ajax({
@@ -485,7 +675,6 @@ function PopUpShowGradeSaturday() {
                     document.getElementById("test-saturday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkSaturdayInput();
         }
     })
@@ -509,7 +698,6 @@ function PopUpShowGradeSaturday() {
                     document.getElementById("saturday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkSaturdayInput();
         }
     })
@@ -521,6 +709,48 @@ function PopUpShowGradeSaturday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeSaturdayError() {
+    let dateValue = document.getElementById("saturdayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+    document.getElementById("date-saturday-grade").value = dateValue
+
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-saturday-grade").value === "") {
+                    document.getElementById("classwork-saturday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-saturday-grade").value === "") {
+                    document.getElementById("homework-saturday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-saturday-grade").value === "") {
+                    document.getElementById("test-saturday-grade").value = parse.test
+                }
+            }
+            checkSaturdayInput();
+        }
+    })
+
+    $("#popup-container-grade-saturday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function PopUpShowGradeSunday() {
@@ -537,7 +767,6 @@ function PopUpShowGradeSunday() {
         document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
         document.getElementById("students-sunday-grade").value = selectedRowId
 
-        console.log("Selected row ID:", selectedRowId);
     });
 
     $.ajax({
@@ -559,7 +788,6 @@ function PopUpShowGradeSunday() {
                     document.getElementById("test-sunday-grade").value = parse.test
                 }
             }
-            console.log(response);
             checkSundayInput();
         }
     })
@@ -583,7 +811,6 @@ function PopUpShowGradeSunday() {
                     document.getElementById("sunday-test-grade").value = parse.gradeTest
                 }
             }
-            console.log(response);
             checkSundayInput();
         }
     })
@@ -595,6 +822,45 @@ function PopUpShowGradeSunday() {
     $("#main-wrapper").css("pointer-events", "none");
     $("#show-btn").css("-webkit-filter", "blur(10px)");
     $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+}
+
+function PopUpShowGradeSundayError() {
+    let dateValue = document.getElementById("sundayDate").innerText
+    let classId = document.getElementById("classId").value
+    let courseId = document.getElementById("courseId").value
+    $.ajax({
+        type: 'GET',
+        url: "/agendas/check/" + classId + '/' + courseId + '/' + dateValue,
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (response) {
+            if (response != null) {
+                response = JSON.stringify(response);
+                let parse = JSON.parse(response);
+                if (document.getElementById("classwork-sunday-grade").value === "") {
+                    document.getElementById("classwork-sunday-grade").value = parse.classwork
+                }
+                if (document.getElementById("homework-sunday-grade").value === "") {
+                    document.getElementById("homework-sunday-grade").value = parse.homework
+                }
+                if (document.getElementById("test-sunday-grade").value === "") {
+                    document.getElementById("test-sunday-grade").value = parse.test
+                }
+            }
+        }
+    })
+
+    $("#popup-container-grade-sunday").show();
+    $("#header").css("-webkit-filter", "blur(10px)");
+    $("#header").css("pointer-events", "none");
+    $("#show-btn").css("pointer-events", "none");
+    $("#main-wrapper").css("pointer-events", "none");
+    $("#show-btn").css("-webkit-filter", "blur(10px)");
+    $("#main-wrapper").css("-webkit-filter", "blur(10px)");
+
+    let studentName = document.getElementById("studentNameSurname").value
+    document.getElementById("student-sunday-tooltip").innerText = studentName + ':' + dateValue
+    document.getElementById("students-sunday").innerText = studentName + ':' + dateValue
 }
 
 function checkMondayInput() {
@@ -617,9 +883,9 @@ function checkMondayInput() {
         document.getElementById('monday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("monday-homework-grade").value!=="" ||
-        document.getElementById("monday-test-grade").value!=="" ||
-        document.getElementById("monday-classwork-grade").value!=="") {
+    if (document.getElementById("monday-homework-grade").value !== "" ||
+        document.getElementById("monday-test-grade").value !== "" ||
+        document.getElementById("monday-classwork-grade").value !== "") {
 
         document.getElementById('submit_monday').disabled = false;
     } else {
@@ -647,9 +913,9 @@ function checkTuesdayInput() {
         document.getElementById('tuesday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("tuesday-homework-grade").value!=="" ||
-        document.getElementById("tuesday-test-grade").value!=="" ||
-        document.getElementById("tuesday-classwork-grade").value!=="") {
+    if (document.getElementById("tuesday-homework-grade").value !== "" ||
+        document.getElementById("tuesday-test-grade").value !== "" ||
+        document.getElementById("tuesday-classwork-grade").value !== "") {
 
         document.getElementById('submit_tuesday').disabled = false;
     } else {
@@ -677,9 +943,9 @@ function checkWednesdayInput() {
         document.getElementById('wednesday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("wednesday-homework-grade").value!=="" ||
-        document.getElementById("wednesday-test-grade").value!=="" ||
-        document.getElementById("wednesday-classwork-grade").value!=="") {
+    if (document.getElementById("wednesday-homework-grade").value !== "" ||
+        document.getElementById("wednesday-test-grade").value !== "" ||
+        document.getElementById("wednesday-classwork-grade").value !== "") {
 
         document.getElementById('submit_wednesday').disabled = false;
     } else {
@@ -707,9 +973,9 @@ function checkThursdayInput() {
         document.getElementById('thursday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("thursday-homework-grade").value!=="" ||
-        document.getElementById("thursday-test-grade").value!=="" ||
-        document.getElementById("thursday-classwork-grade").value!=="") {
+    if (document.getElementById("thursday-homework-grade").value !== "" ||
+        document.getElementById("thursday-test-grade").value !== "" ||
+        document.getElementById("thursday-classwork-grade").value !== "") {
 
         document.getElementById('submit_thursday').disabled = false;
     } else {
@@ -737,9 +1003,9 @@ function checkFridayInput() {
         document.getElementById('friday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("friday-homework-grade").value!=="" ||
-        document.getElementById("friday-test-grade").value!=="" ||
-        document.getElementById("friday-classwork-grade").value!=="") {
+    if (document.getElementById("friday-homework-grade").value !== "" ||
+        document.getElementById("friday-test-grade").value !== "" ||
+        document.getElementById("friday-classwork-grade").value !== "") {
 
         document.getElementById('submit_friday').disabled = false;
     } else {
@@ -767,9 +1033,9 @@ function checkSaturdayInput() {
         document.getElementById('saturday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("saturday-homework-grade").value!=="" ||
-        document.getElementById("saturday-test-grade").value!=="" ||
-        document.getElementById("saturday-classwork-grade").value!=="") {
+    if (document.getElementById("saturday-homework-grade").value !== "" ||
+        document.getElementById("saturday-test-grade").value !== "" ||
+        document.getElementById("saturday-classwork-grade").value !== "") {
 
         document.getElementById('submit_saturday').disabled = false;
     } else {
@@ -797,7 +1063,7 @@ function checkSundayInput() {
         document.getElementById('sunday-test-grade').disabled = true;
     }
 
-    if(document.getElementById("sunday-homework-grade").value !== "" ||
+    if (document.getElementById("sunday-homework-grade").value !== "" ||
         document.getElementById("sunday-test-grade").value !== "" ||
         document.getElementById("sunday-classwork-grade").value !== "") {
 

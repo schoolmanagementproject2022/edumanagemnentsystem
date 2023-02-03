@@ -70,7 +70,7 @@ public class JournalController {
             model.addAttribute("concreteDay", concreteDay);
         }
         model.addAttribute("saveAgenda", new SaveAgendaDto());
-        model.addAttribute("saveGrade",new GradesDto());
+        model.addAttribute("saveGrade", new GradesDto());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
