@@ -8,6 +8,8 @@ import com.epam.edumanagementsystem.admin.journal.rest.service.ClassworkService;
 import com.epam.edumanagementsystem.admin.journal.rest.service.GradesService;
 import com.epam.edumanagementsystem.admin.journal.rest.service.HomeworkService;
 import com.epam.edumanagementsystem.admin.journal.rest.service.TestService;
+import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
+import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.student.mapper.StudentMapper;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
@@ -23,13 +25,17 @@ import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_
 public class GradesServiceImpl implements GradesService {
 
     private final GradesRepository gradesRepository;
+    private final AcademicCourseService academicCourseService;
     private final ClassworkService classworkService;
     private final HomeworkService homeworkService;
     private final TestService testService;
     private final StudentService studentService;
 
-    public GradesServiceImpl(GradesRepository gradesRepository, ClassworkService classworkService, HomeworkService homeworkService, TestService testService, StudentService studentService) {
+    public GradesServiceImpl(GradesRepository gradesRepository, AcademicCourseService academicCourseService,
+                             ClassworkService classworkService, HomeworkService homeworkService, TestService testService,
+                             StudentService studentService) {
         this.gradesRepository = gradesRepository;
+        this.academicCourseService = academicCourseService;
         this.classworkService = classworkService;
         this.homeworkService = homeworkService;
         this.testService = testService;
@@ -47,8 +53,8 @@ public class GradesServiceImpl implements GradesService {
         grades.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
         grades.setTest(testService.findByTest(gradesDto.getTest()));
         grades.setClasswork(classworkService.findByClasswork(gradesDto.getClasswork()));
+        grades.setAcademicCourse(AcademicCourseMapper.toAcademicCourse(academicCourseService.findById(gradesDto.getCourseId())));
         return gradesRepository.save(grades);
-
     }
 
     @Override

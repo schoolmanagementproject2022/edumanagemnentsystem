@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.admin.journal.model.entity;
 
+import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 
 import javax.persistence.*;
@@ -21,11 +22,12 @@ public class Grades {
     private LocalDate date;
     @OneToOne
     private Classwork classwork;
-
     @OneToOne
     private Test test;
     @OneToOne
     private Homework homework;
+    @ManyToOne
+    private AcademicCourse academicCourse;
 
     public LocalDate getDate() {
         return date;
@@ -97,6 +99,14 @@ public class Grades {
 
     public void setGradeClasswork(int gradeClasswork) {
         this.gradeClasswork = gradeClasswork;
+    }
+
+    public AcademicCourse getAcademicCourse() {
+        return academicCourse;
+    }
+
+    public void setAcademicCourse(AcademicCourse academicCourse) {
+        this.academicCourse = academicCourse;
     }
 
     @Override

@@ -15,6 +15,7 @@ public class GradesDto {
     private String classwork;
     private String test;
     private String homework;
+    private Long courseId;
 
     public GradesDto() {
     }
@@ -81,6 +82,14 @@ public class GradesDto {
 
     public void setGradeTest(String gradeTest) {
         this.gradeTest = gradeTest;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     @Override

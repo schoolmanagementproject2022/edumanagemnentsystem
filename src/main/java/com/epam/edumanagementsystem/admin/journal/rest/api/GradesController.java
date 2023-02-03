@@ -33,23 +33,22 @@ public class GradesController {
     public String addGrade(@ModelAttribute(value = "saveGrade") @Valid GradesDto gradesDto, BindingResult result, Model model,
                            @RequestParam(value = "classId", required = false) Long classId,
                            @RequestParam(value = "studentId", required = false) Long studentId,
-                           @RequestParam(value = "courseId", required = false) Long academicCourseId,
                            @RequestParam(name = "date", required = false) String date) {
 
 
         AcademicClassDto academicClass = academicClassService.findById(classId);
         if (result.hasFieldErrors("gradeHomework") || result.hasFieldErrors("gradeTest") || result.hasFieldErrors("gradeClasswork")) {
             model.addAttribute("gradesDto", gradesDto);
-            return "forward:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId;
+            return "forward:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId();
         }
 
         if (gradeService.existByStudentIdAndDate(studentId, date)) {
             gradeService.update(gradesDto, date, studentId);
-            return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId + "?date=" + date;
+            return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId() + "?date=" + date;
         }
 
         gradeService.save(gradesDto, date, studentId);
-        return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + academicCourseId + "?date=" + date;
+        return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId() + "?date=" + date;
 
     }
 }
