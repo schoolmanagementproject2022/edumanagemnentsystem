@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" xmlns:scropt="http://www.w3.org/1999/html">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,19 +35,54 @@
                 minDate: 0,
                 maxDate: "+0D +0M +1Y",
                 onSelect: function () {
-                    var date = $("#startDate").datepicker('getDate');
-                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', date));
+                    var from = $("#startDate").val().split("-")
+                    var startDate = new Date(from[2], from[1] - 1, from[0])
+                    var maxDate = new Date(startDate);
+                    maxDate.setDate(maxDate.getDate() + 6)
+                    maxDate.setFullYear(maxDate.getFullYear() + 1);
+
+                    const minDate = new Date(startDate);
+                    minDate.setDate(minDate.getDate() + 6);
+                    if (minDate !== '') {
+                        $('#endDate').datepicker('option', 'minDate', minDate);
+                    }
+
+                    if (maxDate !== '') {
+                        $('#endDate').datepicker('option', 'maxDate', maxDate);
+                    }
+                    localStorage.setItem("startDate", $.datepicker.formatDate('dd-mm-yy', startDate));
                 }
             });
-            $("#endDate").datepicker({
+
+            $('#startDate').find(function () {
+                if (localStorage.getItem("startDate") != null) {
+                    var from = localStorage.getItem("startDate").split("-")
+                    var startDate = new Date(from[2], from[1] - 1, from[0])
+                    const minDate = new Date(startDate);
+                    minDate.setDate(minDate.getDate() + 6);
+
+                    var maxDate = new Date(minDate);
+                    maxDate.setDate(maxDate.getDate() + 6)
+                    maxDate.setFullYear(maxDate.getFullYear() + 1);
+                    if (minDate !== '') {
+                        $('#endDate').datepicker('option', 'minDate', minDate);
+                    }
+
+                    if (maxDate !== '') {
+                        $('#endDate').datepicker('option', 'maxDate', maxDate);
+                    }
+                }
+            })
+
+            $('#endDate').datepicker({
                 dateFormat: "dd-mm-yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-0:+10",
+                maxDate: "+0D +0M +2Y",
                 minDate: 0,
-                maxDate: "+0D +0M +1Y",
-                onSelect: function () {
-                    var date = $("#endDate").datepicker('getDate');
+                onSelect: function (selectedDate) {
+                    var date = $(this).datepicker('getDate');
                     localStorage.setItem("endDate", $.datepicker.formatDate('dd-mm-yy', date));
                 }
             });
@@ -249,7 +284,8 @@ window.onunload = function () {return "Are you sure?"};
                                        th:name="startDate"
                                        th:value="*{startDate}"
                                        th:field="*{startDate}"
-                                       th:id="startDate"/></div>
+                                       th:id="startDate"/>
+                            </div>
                             <div class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
                         </div>
                         <div class="end_date">

@@ -59,4 +59,12 @@ public class UtilForTimetableController {
         model.addAttribute("courseForTable", new CoursesForTimetableDto());
         sendToFrontAllAcademicCoursesAndAcademicClass(model, allAcademicCourses, academicClass);
     }
+
+    public static void sendToFrontAllNecessaryInfoAfterDateFailValidation(Model model, Set<AcademicCourseDto> allAcademicCourses,
+                                                                          AcademicClassDto academicClass, Long academicClassId) {
+        sendToFrontAllAcademicCoursesNewCourseForTimetableAndAcademicClass(model, allAcademicCourses, academicClass);
+        putEditedLessons(model, academicClassId);
+    }
+
+
 }

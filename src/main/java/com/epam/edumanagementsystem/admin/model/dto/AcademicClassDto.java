@@ -4,7 +4,6 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
 import com.epam.edumanagementsystem.util.annotation.ValidProperty;
-import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Objects;
 import java.util.Set;

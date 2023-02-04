@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.util.repository.DoneCoursesRepository;
 import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +31,11 @@ public class DoneCoursesServiceImpl implements DoneCoursesService {
     @Override
     public Set<DoneCourses> findAllByAcademicClassId(Long id) {
         return doneCoursesRepository.findAllByAcademicClass_Id(id);
+    }
+
+    @Override
+    public Set<DoneCourses> findAllByAcademicClassIdAndDate(Long id, LocalDate localDate) {
+        return doneCoursesRepository.findAllByAcademicClassIdAndDate(id, localDate);
     }
 
 }

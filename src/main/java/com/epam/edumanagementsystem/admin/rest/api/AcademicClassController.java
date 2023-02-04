@@ -1,14 +1,10 @@
 package com.epam.edumanagementsystem.admin.rest.api;
 
-import com.epam.edumanagementsystem.admin.mapper.AcademicClassMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
 import com.epam.edumanagementsystem.admin.model.entity.AcademicClass;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
-import com.epam.edumanagementsystem.student.mapper.StudentMapper;
-import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
-import com.epam.edumanagementsystem.student.model.entity.Student;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
 import com.epam.edumanagementsystem.teacher.mapper.TeacherMapper;
 import com.epam.edumanagementsystem.teacher.model.entity.Teacher;
@@ -174,14 +170,8 @@ public class AcademicClassController {
             model.addAttribute("students", studentService.findStudentsWithoutConnectionWithClass());
             return ACADEMIC_CLASS_SECTION_FOR_STUDENTS;
         }
-        AcademicClassDto byClassNumber = academicClassService.findByClassNumber(name);
-        byClassNumber.getStudents().addAll(academicClassDto.getStudents());
-        AcademicClass academicClass = AcademicClassMapper.toAcademicClass(byClassNumber);
-        for (Student student : academicClassDto.getStudents()) {
-            StudentEditDto studentEditDto = StudentMapper.toStudentEditDto(student);
-            studentEditDto.setAcademicClass(academicClass);
-            studentService.updateFields(studentEditDto);
-        }
+        academicClassDto.setClassNumber(name);
+        studentService.updateAcademicClassOfStudent(academicClassDto);
         return ACADEMIC_CLASSES_REDIRECT + name + STUDENTS_URL;
     }
 

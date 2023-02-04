@@ -38,17 +38,17 @@
 <!-- sidebar 2 in academic class-->
 <th:block th:fragment="sidebar2">
     <div>
-        <a class="item" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
+        <a class="itemList" th:classappend="${lastUrl eq 'classroom' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/classroom'}}">Classroom Teacher</a>
         <a th:classappend="${lastUrl eq 'students' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'students'}}" class="item">Students</a>
-        <a class="item" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{${'/' + firstUrl + '/' + middleUrl + '/' + 'students'}}" class="itemList">Students</a>
+        <a class="itemList" th:classappend="${lastUrl eq 'courses' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/courses'}}">Courses</a>
-        <a class="item" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
+        <a class="itemList" th:classappend="${lastUrl eq 'teachers' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/teachers'}}">Teachers</a>
         <a th:classappend="${lastUrl eq 'timetable' ? 'activeTab' : 'notActiveTab'}"
-           th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="item">Timetable</a>
-        <a class="item" th:classappend="${lastUrl eq 'journal' ? 'activeTab' : 'notActiveTab'}"
+           th:href="@{'/classes/' + ${middleUrl} + '/timetable'}" class="itemList">Timetable</a>
+        <a class="itemList" th:classappend="${lastUrl eq 'journal' ? 'activeTab' : 'notActiveTab'}"
            th:href="@{${'/' + firstUrl + '/' + middleUrl + '/journal'}}">Journal</a>
     </div>
 </th:block>

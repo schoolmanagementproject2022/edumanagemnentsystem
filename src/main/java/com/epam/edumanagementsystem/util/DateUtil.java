@@ -27,4 +27,12 @@ public class DateUtil {
         return localDate;
     }
 
+    public static LocalDate doneRecurs(LocalDate localDate) {
+        if (!localDate.getDayOfWeek().equals(LocalDate.now().getDayOfWeek())) {
+            localDate = localDate.minusDays(1);
+            localDate = recurs(localDate);
+        }
+        return localDate;
+    }
+
 }
