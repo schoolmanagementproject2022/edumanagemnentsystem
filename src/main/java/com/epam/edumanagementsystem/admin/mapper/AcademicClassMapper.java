@@ -53,5 +53,4 @@ public class AcademicClassMapper {
                 .map(AcademicClassMapper::toAcademicClass)
                 .collect(Collectors.toList());
     }
-
 }

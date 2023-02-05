@@ -1,5 +1,6 @@
 package com.epam.edumanagementsystem.student.rest.service;
 
+import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.student.model.dto.StudentDto;
 import com.epam.edumanagementsystem.student.model.dto.StudentEditDto;
 import com.epam.edumanagementsystem.student.model.entity.Student;
@@ -13,6 +14,7 @@ public interface StudentService {
 
     StudentDto updateFields(StudentEditDto studentDto);
 
+    void updateAcademicClassOfStudent(AcademicClassDto academicClassDto);
 
     List<StudentDto> findAll();
 
