@@ -149,31 +149,228 @@
                     </tr>
                     </thead>
                     <tbody>
-
                     <tr class="student" th:each=" student : ${allStudentsInAcademicClass}">
                         <td class="horizontalGrids" th:text="${student.getNameAndSurname()}"
                             th:id=" ${student.getId()}"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
-                            th:if="${monday.contains(course.getName) && Monday}" onclick="PopUpShowGradeMonday()"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
+                            th:if="${monday.contains(course.getName) && Monday}" onclick="PopUpShowGradeMonday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${MONDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${MONDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${MONDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${MONDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup
+                                        style="font-weight: bold;  display: inline"
+                                        th:if="${grade.gradeTest}!=''">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${MONDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${MONDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
                             th:if="${tuesday.contains(course.getName) && Tuesday}"
-                            onclick="PopUpShowGradeTuesday()"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
+                            onclick="PopUpShowGradeTuesday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${TUESDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${TUESDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${TUESDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${TUESDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup th:if="${grade.gradeTest}!=''"
+                                                                             style="font-weight: bold;  display: inline">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${TUESDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${TUESDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
                             th:if="${wednesday.contains(course.getName) && Wednesday}"
-                            onclick="PopUpShowGradeWednesday()"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
+                            onclick="PopUpShowGradeWednesday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${WEDNESDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${WEDNESDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${WEDNESDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${WEDNESDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup th:if="${grade.gradeTest}!=''"
+                                                                             style="font-weight: bold;  display: inline">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${WEDNESDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${WEDNESDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
                             th:if="${thursday.contains(course.getName) && Thursday}"
-                            onclick="PopUpShowGradeThursday()"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
-                            th:if="${friday.contains(course.getName) && Friday}" onclick="PopUpShowGradeFriday()"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
+                            onclick="PopUpShowGradeThursday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${THURSDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${THURSDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${THURSDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${THURSDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup th:if="${grade.gradeTest}!=''"
+                                                                             style="font-weight: bold;  display: inline">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${THURSDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${THURSDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
+                            th:if="${friday.contains(course.getName) && Friday}"
+                            onclick="PopUpShowGradeFriday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${FRIDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${FRIDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${FRIDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${FRIDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup th:if="${grade.gradeTest}!=''"
+                                                                             style="font-weight: bold;  display: inline">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${FRIDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${FRIDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
                             th:if="${saturday.contains(course.getName) && Saturday}"
-                            onclick="PopUpShowGradeSaturday()"></td>
-                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent"
-                            th:if="${sunday.contains(course.getName) && Sunday}" onclick="PopUpShowGradeSunday()"></td>
+                            onclick="PopUpShowGradeSaturday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SATURDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SATURDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SATURDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SATURDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup th:if="${grade.gradeTest}!=''"
+                                                                             style="font-weight: bold;  display: inline">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SATURDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SATURDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td th:id=" ${student.getId()}" th:value="${student.id}" class="absent" style="cursor: pointer"
+                            th:if="${sunday.contains(course.getName) && Sunday}"
+                            onclick="PopUpShowGradeSunday()">
+                            <div style="display: flex" th:each=" grade : ${allGradesInWeek}">
+                                <div class="tooltip" style="padding: 0; min-width: 35px "
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SUNDAY} and ${grade.gradeClasswork}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SUNDAY} and ${grade.gradeClasswork}"
+                                       th:text="${grade.gradeClasswork}"></p><sup th:if="${grade.gradeClasswork}!=''"
+                                                                                  style="font-weight: bold; display: inline">C</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Classwork">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SUNDAY} and ${grade.gradeTest}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SUNDAY} and ${grade.gradeTest}"
+                                       th:text="${grade.gradeTest}"></p><sup th:if="${grade.gradeTest}!=''"
+                                                                             style="font-weight: bold;  display: inline">T</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;"
+                                          th:text="Test">Tooltip text</span>
+                                </div>
+                                <div class="tooltip" style="padding: 0; min-width: 35px"
+                                     th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SUNDAY} and ${grade.gradeHomework}">
+                                    <p class="gradeStyle"
+                                       th:if="${student.id} eq ${grade.student.id} and ${grade.date} eq ${SUNDAY} and ${grade.gradeHomework}"
+                                       th:text="${grade.gradeHomework}"></p><sup th:if="${grade.gradeHomework}!=''"
+                                                                                 style="font-weight: bold;  display: inline">H</sup>
+                                    <span class="tooltiptext" style="white-space: nowrap;" th:text="Homework">Tooltip text</span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -350,7 +547,8 @@
                 </div>
                 <div class="half_2"></div>
                 <div name="btn-div">
-                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_wednesday"><b>Save</b>
+                    <button type="submit" class="save" onclick="tuesday_popUp()" id="agenda_submit_wednesday">
+                        <b>Save</b>
                     </button>
                 </div>
             </div>
@@ -622,7 +820,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkMondayInput()" id="monday-classwork-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkMondayInput()" id="monday-classwork-grade"
+                               class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -632,7 +831,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkMondayInput()" id="monday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkMondayInput()" id="monday-test-grade"
+                               class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -641,7 +841,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkMondayInput()" id="monday-homework-grade" class="form_input_grade" th:name="gradeHomework"
+                        <input type="number" disabled onkeyup="checkMondayInput()" id="monday-homework-grade"
+                               class="form_input_grade" th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -649,7 +850,7 @@
                              th:errors="*{gradeHomework}"></div>
                     </div>
 
-                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
+                    <input type="hidden" id="studentNameSurname" th:value="${nameSurname}"/>
                     <input type="hidden" id="students-monday-grade" name="student" th:value="${studentId}"/>
                     <input type="hidden" th:value="${studentId}" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
@@ -700,7 +901,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkTuesdayInput()" id="tuesday-classwork-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkTuesdayInput()" id="tuesday-classwork-grade"
+                               class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -710,7 +912,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkTuesdayInput()" id="tuesday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkTuesdayInput()" id="tuesday-test-grade"
+                               class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -719,7 +922,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkTuesdayInput()" id="tuesday-homework-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkTuesdayInput()" id="tuesday-homework-grade"
+                               class="form_input_grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -728,7 +932,7 @@
                              th:errors="*{gradeHomework}"></div>
                     </div>
 
-                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
+                    <input type="hidden" id="studentNameSurname" th:value="${nameSurname}"/>
                     <input type="hidden" id="students-tuesday-grade" name="student" th:value="${studentId}"/>
                     <input type="hidden" th:value="${studentId}" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
@@ -779,7 +983,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkWednesdayInput()" id="wednesday-classwork-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkWednesdayInput()" id="wednesday-classwork-grade"
+                               class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -789,7 +994,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkWednesdayInput()" id="wednesday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkWednesdayInput()" id="wednesday-test-grade"
+                               class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -798,7 +1004,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkWednesdayInput()" id="wednesday-homework-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkWednesdayInput()" id="wednesday-homework-grade"
+                               class="form_input_grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -806,7 +1013,7 @@
                         <div class="gradeError" th:if="${#fields.hasErrors('gradeHomework')}"
                              th:errors="*{gradeHomework}"></div>
                     </div>
-                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
+                    <input type="hidden" id="studentNameSurname" th:value="${nameSurname}"/>
                     <input type="hidden" id="students-wednesday-grade" name="student" th:value="${studentId}"/>
                     <input type="hidden" th:value="${studentId}" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
@@ -853,7 +1060,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkThursdayInput()" class="form_input_grade" id="thursday-classwork-grade"
+                        <input type="number" disabled onkeyup="checkThursdayInput()" class="form_input_grade"
+                               id="thursday-classwork-grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -863,7 +1071,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkThursdayInput()" class="form_input_grade" id="thursday-test-grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkThursdayInput()" class="form_input_grade"
+                               id="thursday-test-grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -872,7 +1081,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkThursdayInput()" class="form_input_grade" id="thursday-homework-grade"
+                        <input type="number" disabled onkeyup="checkThursdayInput()" class="form_input_grade"
+                               id="thursday-homework-grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -881,7 +1091,7 @@
                              th:errors="*{gradeHomework}"></div>
                     </div>
 
-                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
+                    <input type="hidden" id="studentNameSurname" th:value="${nameSurname}"/>
                     <input type="hidden" id="students-thursday-grade" name="student" th:value="${studentId}"/>
                     <input type="hidden" th:value="${studentId}" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
@@ -932,7 +1142,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkFridayInput()" id="friday-classwork-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkFridayInput()" id="friday-classwork-grade"
+                               class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -942,7 +1153,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkFridayInput()" id="friday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkFridayInput()" id="friday-test-grade"
+                               class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -951,14 +1163,15 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkFridayInput()" id="friday-homework-grade" class="form_input_grade" th:name="gradeHomework"
+                        <input type="number" disabled onkeyup="checkFridayInput()" id="friday-homework-grade"
+                               class="form_input_grade" th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
                         <div class="gradeError" th:if="${#fields.hasErrors('gradeHomework')}"
                              th:errors="*{gradeHomework}"></div>
                     </div>
-                    <input type="hidden"  id="studentNameSurname"  th:value="${nameSurname}"/>
+                    <input type="hidden" id="studentNameSurname" th:value="${nameSurname}"/>
                     <input type="hidden" id="students-friday-grade" name="student" th:value="${studentId}"/>
                     <input type="hidden" th:value="${studentId}" name="studentId"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
@@ -1009,7 +1222,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkSaturdayInput()" id="saturday-classwork-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkSaturdayInput()" id="saturday-classwork-grade"
+                               class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -1019,7 +1233,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkSaturdayInput()" id="saturday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkSaturdayInput()" id="saturday-test-grade"
+                               class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -1028,7 +1243,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkSaturdayInput()" id="saturday-homework-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkSaturdayInput()" id="saturday-homework-grade"
+                               class="form_input_grade"
                                th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -1085,7 +1301,8 @@
                 <div class="half_2">
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkSundayInput()" id="sunday-classwork-grade" class="form_input_grade"
+                        <input type="number" disabled onkeyup="checkSundayInput()" id="sunday-classwork-grade"
+                               class="form_input_grade"
                                th:name="gradeClasswork"
                                th:value="*{gradeClasswork}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
@@ -1095,7 +1312,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkSundayInput()" id="sunday-test-grade" class="form_input_grade" th:name="gradeTest"
+                        <input type="number" disabled onkeyup="checkSundayInput()" id="sunday-test-grade"
+                               class="form_input_grade" th:name="gradeTest"
                                th:value="*{gradeTest}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -1104,7 +1322,8 @@
                     </div>
                     <div class="gradeContainer">
                         <label class="popup-label-title">Grade</label>
-                        <input type="number" disabled onkeyup="checkSundayInput()" id="sunday-homework-grade" class="form_input_grade" th:name="gradeHomework"
+                        <input type="number" disabled onkeyup="checkSundayInput()" id="sunday-homework-grade"
+                               class="form_input_grade" th:name="gradeHomework"
                                th:value="*{gradeHomework}"
                                maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0
                         || (event.charCode >= 48 && event.charCode <= 57))">
@@ -1115,7 +1334,7 @@
 
                     <input type="hidden" id="students-sunday-grade" name="student" th:value="${studentId}"/>
                     <input type="hidden" th:value="${studentId}" name="studentId"/>
-                    <input type="hidden" id="studentNameSurname"  th:value="${nameSurname}"/>
+                    <input type="hidden" id="studentNameSurname" th:value="${nameSurname}"/>
                     <input type="hidden" id="classId" name="classId" th:value="${class.id}"/>
                     <input type="hidden" id="courseId" name="courseId" th:value="${course.id}"/>
                     <input type="hidden" id="date-sunday-grade" name="date" th:value="${gradeDate}"/>
@@ -1156,8 +1375,8 @@
     };
 </script>
 <script>
-    // var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
-    var host = 'http://localhost:8082'
+    var host = 'http://edumanagement-env.eba-n3xmzppc.eu-north-1.elasticbeanstalk.com'
+    // var host = 'http://localhost:8082'
 
 
     $("#abc").on('click', function () {
@@ -1233,8 +1452,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-

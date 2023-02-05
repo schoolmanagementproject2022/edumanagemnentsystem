@@ -330,3 +330,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+
+.gradeStyle{
+    display: inline;
+    font-size: 1.2vw;
+    font-weight: bold;
+}

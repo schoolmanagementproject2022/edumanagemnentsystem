@@ -3,6 +3,7 @@ package com.epam.edumanagementsystem.admin.journal.rest.service;
 import com.epam.edumanagementsystem.admin.journal.model.dto.GradesDto;
 import com.epam.edumanagementsystem.admin.journal.model.entity.Grades;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface GradesService {
@@ -16,5 +17,7 @@ public interface GradesService {
     Grades findByDateStudentIdAndCourseId(String date, Long studentId, Long courseId);
 
     void update(GradesDto gradesDto, String date);
+
+    List<GradesDto> findAllGradesInClassForWeek(String date, Long classId, Long courseId);
 
 }
