@@ -43,10 +43,9 @@ public class GradesController {
 
         if (gradeService.existByDateStudentIdAndCourseId(date, gradesDto.getStudent().getId(), gradesDto.getCourseId())) {
             gradeService.update(gradesDto, date);
-            return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId() + "?date=" + date;
+        } else {
+            gradeService.save(gradesDto, date);
         }
-
-        gradeService.save(gradesDto, date);
         return "redirect:/classes/" + academicClass.getClassNumber() + "/journal/" + gradesDto.getCourseId() + "?date=" + date;
     }
 }

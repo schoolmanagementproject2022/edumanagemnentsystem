@@ -28,6 +28,16 @@ public class GradesMapper {
     }
 
     public static GradesDto toDto(Grades grades) {
+        GradesDto gradesDto = getGradesDto(grades);
+        gradesDto.setStudent(grades.getStudent());
+        return gradesDto;
+    }
+
+    public static GradesDto toDtoWithoutStudent(Grades grades) {
+        return getGradesDto(grades);
+    }
+
+    private static GradesDto getGradesDto(Grades grades) {
         GradesDto gradesDto = new GradesDto();
         gradesDto.setId(grades.getId());
         if (grades.getGradeClasswork() == 0) {
@@ -45,7 +55,6 @@ public class GradesMapper {
         } else {
             gradesDto.setGradeTest(Integer.toString(grades.getGradeTest()));
         }
-        gradesDto.setStudent(grades.getStudent());
         gradesDto.setCourseId(grades.getAcademicCourse().getId());
         gradesDto.setDate(grades.getDate());
         return gradesDto;

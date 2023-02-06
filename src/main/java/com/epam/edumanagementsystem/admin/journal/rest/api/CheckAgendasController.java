@@ -60,7 +60,7 @@ public class CheckAgendasController {
                         @PathVariable(value = "courseId", required = false) Long courseId) {
         Grades grades = gradesService.findByDateStudentIdAndCourseId(date, Long.parseLong(studentId), courseId);
         if (grades != null) {
-            return GradesMapper.toDto(grades);
+            return GradesMapper.toDtoWithoutStudent(grades);
         }
         return new GradesDto();
     }
