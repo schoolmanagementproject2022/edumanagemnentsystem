@@ -13,5 +13,5 @@ public interface HomeworkService {
 
     Homework getHomeworkOfCourse(LocalDate date, Long classId, Long courseId);
 
-    Homework findByHomework(String homework);
+    Homework findByDescriptionAndAcademicCourseIdAndDateOfHomework(String homework, Long courseId, LocalDate date);
 }

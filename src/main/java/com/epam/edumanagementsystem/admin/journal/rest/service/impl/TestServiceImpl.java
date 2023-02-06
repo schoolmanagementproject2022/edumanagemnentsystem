@@ -48,8 +48,8 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Test findByTest(String test) {
-        return testRepository.findTestByTest(test);
+    public Test findByTestDescriptionCourseIdAndDateOdTest(String test, Long courseId, LocalDate date) {
+        return testRepository.findByTestAndAcademicCourseIdAndDateOfTest(test, courseId, date);
     }
 
 }

@@ -13,5 +13,5 @@ public interface TestService {
 
     Test getTestOfCourse(LocalDate date, Long classId, Long courseId);
 
-    Test findByTest(String test);
+    Test findByTestDescriptionCourseIdAndDateOdTest(String test, Long courseId, LocalDate date);
 }

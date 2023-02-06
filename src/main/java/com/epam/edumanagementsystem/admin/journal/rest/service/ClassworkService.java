@@ -13,5 +13,5 @@ public interface ClassworkService {
 
     Classwork getClassWorkOfCourse(LocalDate date, Long classId, Long courseId);
 
-    Classwork findByClasswork(String classwork);
+    Classwork findByDescriptionAndAcademicCourseIdAndDateOfClasswork(String classwork, Long courseId, LocalDate date);
 }
