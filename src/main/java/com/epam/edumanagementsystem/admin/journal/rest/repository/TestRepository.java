@@ -11,4 +11,5 @@ public interface TestRepository extends JpaRepository<Test, Long> {
 
     Test findByDateOfTestAndAcademicClassIdAndAcademicCourseId(LocalDate date, Long classId, Long courseId);
 
+    Test findTestByTest(String test);
 }

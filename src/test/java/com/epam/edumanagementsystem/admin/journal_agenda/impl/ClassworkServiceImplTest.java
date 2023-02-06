@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,7 +52,7 @@ class ClassworkServiceImplTest {
         academicCourse = new AcademicCourse();
         academicCourse.setId(1L);
         academicCourse.setName("Course 1");
-        classwork = new Classwork(1L, "classwork", 5, LocalDate.now(), academicCourse, academicClass);
+        classwork = new Classwork(1L, "classwork", LocalDate.now(), academicCourse, academicClass);
         saveAgendaDto = new SaveAgendaDto(classwork.getClasswork(), "homework", "test");
     }
 

@@ -9,22 +9,9 @@ public class TestDto {
 
     private Long id;
     private String test;
-    private int grade;
     private LocalDate dateOfTest;
     private AcademicCourse academicCourse;
     private AcademicClass academicClass;
-
-    public TestDto() {
-    }
-
-    public TestDto(Long id, String test, int grade, LocalDate dateOfTest, AcademicCourse academicCourse, AcademicClass academicClass) {
-        this.id = id;
-        this.test = test;
-        this.grade = grade;
-        this.dateOfTest = dateOfTest;
-        this.academicCourse = academicCourse;
-        this.academicClass = academicClass;
-    }
 
     public Long getId() {
         return id;
@@ -40,14 +27,6 @@ public class TestDto {
 
     public void setTest(String test) {
         this.test = test;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 
     public LocalDate getDateOfTest() {
@@ -76,13 +55,6 @@ public class TestDto {
 
     @Override
     public String toString() {
-        return "TestDto{" +
-                "id=" + id +
-                ", test='" + test + '\'' +
-                ", grade=" + grade +
-                ", dateOfTest=" + dateOfTest +
-                ", academicCourse=" + academicCourse +
-                ", academicClass=" + academicClass +
-                '}';
+        return "TestDto{" + "id=" + id + ", test='" + test + '\'' + ", dateOfTest=" + dateOfTest + ", academicCourse=" + academicCourse + ", academicClass=" + academicClass + '}';
     }
 }

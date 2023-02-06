@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "agenda_classwork")
@@ -14,7 +15,6 @@ public class Classwork {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String classwork;
-    private int grade;
     private LocalDate dateOfClasswork;
     @ManyToOne
     private AcademicCourse academicCourse;
@@ -24,10 +24,10 @@ public class Classwork {
     public Classwork() {
     }
 
-    public Classwork(Long id, String classwork, int grade, LocalDate dateOfClasswork, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public Classwork(Long id, String classwork, LocalDate dateOfClasswork,
+                     AcademicCourse academicCourse, AcademicClass academicClass) {
         this.id = id;
         this.classwork = classwork;
-        this.grade = grade;
         this.dateOfClasswork = dateOfClasswork;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
@@ -47,14 +47,6 @@ public class Classwork {
 
     public void setClasswork(String classwork) {
         this.classwork = classwork;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 
     public LocalDate getDateOfClasswork() {
@@ -86,7 +78,6 @@ public class Classwork {
         return "Classwork{" +
                 "id=" + id +
                 ", classwork='" + classwork + '\'' +
-                ", grade=" + grade +
                 ", dateOfClasswork=" + dateOfClasswork +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +

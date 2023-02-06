@@ -61,7 +61,6 @@ function PopUpShowAgendaTuesday() {
                 let parse = JSON.parse(response);
                 if (document.getElementById("classwork-tuesday").value === "") {
                     document.getElementById("classwork-tuesday").value = parse.classwork
-
                 }
                 if (document.getElementById("homework-tuesday").value === "") {
                     document.getElementById("homework-tuesday").value = parse.homework
@@ -103,7 +102,6 @@ function PopUpShowAgendaWednesday() {
                 let parse = JSON.parse(response);
                 if (document.getElementById("classwork-wednesday").value === "") {
                     document.getElementById("classwork-wednesday").value = parse.classwork
-
                 }
                 if (document.getElementById("homework-wednesday").value === "") {
                     document.getElementById("homework-wednesday").value = parse.homework

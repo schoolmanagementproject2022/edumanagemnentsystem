@@ -5,6 +5,7 @@ import com.epam.edumanagementsystem.admin.model.entity.AcademicCourse;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "agenda_homework")
@@ -14,7 +15,6 @@ public class Homework {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String homework;
-    private int grade;
     private LocalDate dateOfHomework;
     @ManyToOne
     private AcademicCourse academicCourse;
@@ -24,10 +24,10 @@ public class Homework {
     public Homework() {
     }
 
-    public Homework(Long id, String homework, int grade, LocalDate dateOfHomework, AcademicCourse academicCourse, AcademicClass academicClass) {
+    public Homework(Long id, String homework, LocalDate dateOfHomework, AcademicCourse academicCourse,
+                    AcademicClass academicClass) {
         this.id = id;
         this.homework = homework;
-        this.grade = grade;
         this.dateOfHomework = dateOfHomework;
         this.academicCourse = academicCourse;
         this.academicClass = academicClass;
@@ -49,12 +49,12 @@ public class Homework {
         this.homework = homework;
     }
 
-    public int getGrade() {
-        return grade;
+    public AcademicCourse getAcademicCourse() {
+        return academicCourse;
     }
 
-    public void setGrade(int grade) {
-        this.grade = grade;
+    public void setAcademicCourse(AcademicCourse academicCourse) {
+        this.academicCourse = academicCourse;
     }
 
     public LocalDate getDateOfHomework() {
@@ -86,7 +86,6 @@ public class Homework {
         return "Homework{" +
                 "id=" + id +
                 ", homework='" + homework + '\'' +
-                ", grade=" + grade +
                 ", dateOfHomework=" + dateOfHomework +
                 ", academicCourse=" + academicCourse +
                 ", academicClass=" + academicClass +

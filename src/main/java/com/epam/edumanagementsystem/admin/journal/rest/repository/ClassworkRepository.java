@@ -11,4 +11,5 @@ public interface ClassworkRepository extends JpaRepository<Classwork, Long> {
 
     Classwork findByDateOfClassworkAndAcademicClassIdAndAcademicCourseId(LocalDate date, Long classId, Long courseId);
 
+    Classwork findClassworkByClasswork(String classWork);
 }

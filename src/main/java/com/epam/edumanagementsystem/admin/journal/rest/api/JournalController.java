@@ -1,12 +1,12 @@
 package com.epam.edumanagementsystem.admin.journal.rest.api;
 
+import com.epam.edumanagementsystem.admin.journal.model.dto.GradesDto;
 import com.epam.edumanagementsystem.admin.journal.model.dto.SaveAgendaDto;
 import com.epam.edumanagementsystem.admin.journal.rest.service.JournalService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicClassService;
 import com.epam.edumanagementsystem.admin.rest.service.AcademicCourseService;
 import com.epam.edumanagementsystem.admin.timetable.rest.service.TimetableService;
 import com.epam.edumanagementsystem.student.rest.service.StudentService;
-import com.epam.edumanagementsystem.util.service.DoneCoursesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
@@ -62,7 +62,6 @@ public class JournalController {
                                         @RequestParam(value = "allFieldsBlankMessage", required = false) String allFieldsBlankMessage,
                                         @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                         Model model) {
-
         model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
         model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
 
@@ -71,6 +70,7 @@ public class JournalController {
             model.addAttribute("concreteDay", concreteDay);
         }
         model.addAttribute("saveAgenda", new SaveAgendaDto());
+        model.addAttribute("saveGrade", new GradesDto());
 
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
@@ -89,15 +89,16 @@ public class JournalController {
 
     @PostMapping("/{name}/journal/{courseId}")
     public String journalWithCourses(@ModelAttribute(value = "saveAgenda") @Valid SaveAgendaDto agendaDto, BindingResult result,
+                                     @ModelAttribute(value = "saveGrade") @Valid GradesDto saveGrade, BindingResult bindingResult,
                                      @PathVariable("name") String name, @PathVariable("courseId") Long courseId,
                                      @RequestParam(name = "date", required = false) String date,
                                      @RequestParam(name = "startDate", required = false) String startDate,
                                      @RequestParam(value = "concreteDay", required = false) String concreteDay,
                                      Model model) {
-
         model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
         model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
-
+        model.addAttribute("studentId", saveGrade.getStudent().getId());
+        model.addAttribute("gradeDate", date);
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
             model.addAttribute("concreteDay", concreteDay);

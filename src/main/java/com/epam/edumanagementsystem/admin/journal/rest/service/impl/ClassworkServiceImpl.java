@@ -47,4 +47,9 @@ public class ClassworkServiceImpl implements ClassworkService {
     public Classwork getClassWorkOfCourse(LocalDate date, Long classId, Long courseId) {
         return classworkRepository.findByDateOfClassworkAndAcademicClassIdAndAcademicCourseId(date, classId, courseId);
     }
+
+    @Override
+    public Classwork findByClasswork(String classwork) {
+        return classworkRepository.findClassworkByClasswork(classwork);
+    }
 }

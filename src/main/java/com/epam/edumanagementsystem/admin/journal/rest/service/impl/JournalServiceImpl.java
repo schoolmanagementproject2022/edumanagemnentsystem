@@ -1,10 +1,8 @@
 package com.epam.edumanagementsystem.admin.journal.rest.service.impl;
 
+import com.epam.edumanagementsystem.admin.journal.model.dto.GradesDto;
 import com.epam.edumanagementsystem.admin.journal.model.dto.SaveAgendaDto;
-import com.epam.edumanagementsystem.admin.journal.rest.service.ClassworkService;
-import com.epam.edumanagementsystem.admin.journal.rest.service.HomeworkService;
-import com.epam.edumanagementsystem.admin.journal.rest.service.JournalService;
-import com.epam.edumanagementsystem.admin.journal.rest.service.TestService;
+import com.epam.edumanagementsystem.admin.journal.rest.service.*;
 import com.epam.edumanagementsystem.admin.mapper.AcademicCourseMapper;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicClassDto;
 import com.epam.edumanagementsystem.admin.model.dto.AcademicCourseDto;
@@ -21,10 +19,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER_JOURNAL;
 import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimetableController.putLessons;
@@ -32,21 +27,23 @@ import static com.epam.edumanagementsystem.admin.timetable.rest.api.UtilForTimet
 @Service
 public class JournalServiceImpl implements JournalService {
 
-    private final AcademicClassService academicClassService;
+    private final CoursesForTimetableService coursesForTimetableService;
     private final AcademicCourseService academicCourseService;
+    private final AcademicClassService academicClassService;
+    private final DoneCoursesService doneCoursesService;
     private final TimetableService timetableService;
     private final ClassworkService classworkService;
-    private final DoneCoursesService doneCoursesService;
-    private final TestService testService;
     private final HomeworkService homeworkService;
-    private final CoursesForTimetableService coursesForTimetableService;
+    private final GradesService gradesService;
+    private final TestService testService;
 
     public JournalServiceImpl(AcademicClassService academicClassService, AcademicCourseService academicCourseService,
-                              TimetableService timetableService, ClassworkService classworkService, DoneCoursesService doneCoursesService, TestService testService, HomeworkService homeworkService, CoursesForTimetableService coursesForTimetableService) {
+                              TimetableService timetableService, ClassworkService classworkService, GradesService gradesService, DoneCoursesService doneCoursesService, TestService testService, HomeworkService homeworkService, CoursesForTimetableService coursesForTimetableService) {
         this.academicClassService = academicClassService;
         this.academicCourseService = academicCourseService;
         this.timetableService = timetableService;
         this.classworkService = classworkService;
+        this.gradesService = gradesService;
         this.doneCoursesService = doneCoursesService;
         this.testService = testService;
         this.homeworkService = homeworkService;
@@ -59,7 +56,6 @@ public class JournalServiceImpl implements JournalService {
             startDate = date;
         }
         AcademicClassDto academicClassByName = academicClassService.findByClassNumber(name);
-
         LocalDate timetableStartDate = timetableService.findTimetableByAcademicClassName(name).getStartDate();
         LocalDate timetableEndDate = timetableService.findTimetableByAcademicClassName(name).getEndDate();
         model.addAttribute("startDateForDatePicker", timetableStartDate);
@@ -111,29 +107,32 @@ public class JournalServiceImpl implements JournalService {
                     .filter(coursesForTimetable -> coursesForTimetable.getAcademicCourse() != null)
                     .forEach(coursesForTimetable -> academicCoursesInClassDto.add(academicCourseService.findByName(coursesForTimetable.getAcademicCourse())));
         }
-
         model.addAttribute("allCoursesInAcademicClass", academicCoursesInClassDto);
 
         boolean existDay = false;
+        List<GradesDto> allGradesInClass = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate, existDay, courseId);
+            existDay = getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate,
+                    timetableEndDate, existDay, courseId, allGradesInClass);
             journalStartDate = journalStartDate.plusDays(1);
         }
         if (!existDay) {
             if (journalStartDate.isAfter(timetableEndDate) || journalStartDate.isAfter(LocalDate.now())
                     || journalStartDate.isAfter(LocalDate.now())) {
                 journalStartDate = journalStartDate.minusDays(14);
-                for (int i = 0; i < 7; i++) {
-                    getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate,
-                            existDay, courseId);
-                    journalStartDate = journalStartDate.plusDays(1);
-                }
             }
+            for (int i = 0; i < 7; i++) {
+                getCoursesInWeekDays(model, journalStartDate, academicClassByName, timetableStartDate, timetableEndDate,
+                        existDay, courseId, allGradesInClass);
+                journalStartDate = journalStartDate.plusDays(1);
+            }
+
         }
         String journalStartDateToString = journalStartDate.toString();
         model.addAttribute("month", journalStartDate.getMonth());
         model.addAttribute("year", journalStartDate.getYear());
         model.addAttribute("startDate", journalStartDateToString);
+        model.addAttribute("allGradesInWeek", allGradesInClass);
     }
 
     @Override
@@ -163,8 +162,10 @@ public class JournalServiceImpl implements JournalService {
         }
     }
 
-    private boolean getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClassDto academicClassByNameDto,
-                                         LocalDate timetableStartDate, LocalDate timetableEndDate, boolean existDay, Long courseId) {
+    private boolean
+    getCoursesInWeekDays(Model model, LocalDate journalStartDate, AcademicClassDto academicClassByNameDto,
+                         LocalDate timetableStartDate, LocalDate timetableEndDate,
+                         boolean existDay, Long courseId, List<GradesDto> allGrades) {
 
         String deyOfWeek = journalStartDate.getDayOfWeek().toString();
         model.addAttribute(deyOfWeek, journalStartDate);
@@ -172,11 +173,15 @@ public class JournalServiceImpl implements JournalService {
         if (journalStartDate.isBefore(LocalDate.now()) && (timetableStartDate.isBefore(journalStartDate) || timetableStartDate.isEqual(journalStartDate))) {
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getDoneCoursesNamesByDayOfWeekAndAcademicClassId(day, academicClassByNameDto.getId(), journalStartDate);
+            allGrades.addAll(gradesService.findAllGradesInClassForWeek(journalStartDate.toString(),
+                    academicClassByNameDto.getId(), courseId));
             existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
                     existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId, courseId);
         } else {
             List<String> coursesByDayOfWeekAndStatusAndAcademicClassId = coursesForTimetableService
                     .getCoursesNamesByDayOfWeekAndStatusAndAcademicClassId(day, "Active", academicClassByNameDto.getId());
+            allGrades.addAll(gradesService.findAllGradesInClassForWeek(journalStartDate.toString(),
+                    academicClassByNameDto.getId(), courseId));
             existDay = isExistDay(model, journalStartDate, timetableStartDate, timetableEndDate,
                     existDay, deyOfWeek, day, coursesByDayOfWeekAndStatusAndAcademicClassId, courseId);
         }
