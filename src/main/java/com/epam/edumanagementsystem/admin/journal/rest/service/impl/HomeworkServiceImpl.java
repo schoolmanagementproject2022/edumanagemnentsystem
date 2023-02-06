@@ -48,7 +48,7 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public Homework findByHomework(String homework) {
-        return homeworkRepository.findHomeworkByHomework(homework);
+    public Homework findByDescriptionAndAcademicCourseIdAndDateOfHomework(String homework, Long courseId, LocalDate date) {
+        return homeworkRepository.findByHomeworkAndAcademicCourseIdAndDateOfHomework(homework, courseId, date);
     }
 }

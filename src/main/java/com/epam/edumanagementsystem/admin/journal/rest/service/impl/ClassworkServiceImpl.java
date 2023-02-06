@@ -49,7 +49,7 @@ public class ClassworkServiceImpl implements ClassworkService {
     }
 
     @Override
-    public Classwork findByClasswork(String classwork) {
-        return classworkRepository.findClassworkByClasswork(classwork);
+    public Classwork findByDescriptionAndAcademicCourseIdAndDateOfClasswork(String classwork, Long courseId, LocalDate date) {
+        return classworkRepository.findByClassworkAndAcademicCourseIdAndDateOfClasswork(classwork, courseId, date);
     }
 }

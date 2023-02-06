@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.epam.edumanagementsystem.admin.constants.GlobalConstants.DATE_FORMATTER_JOURNAL;
 
@@ -45,13 +46,13 @@ public class GradesServiceImpl implements GradesService {
         Grades grades = GradesMapper.toGrades(gradesDto);
         grades.setDate(LocalDate.parse(date, DateTimeFormatter.ofPattern(DATE_FORMATTER_JOURNAL)));
         if (grades.getGradeHomework() != 0) {
-            grades.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
+            grades.setHomework(homeworkService.findByDescriptionAndAcademicCourseIdAndDateOfHomework(gradesDto.getHomework(), gradesDto.getCourseId(), gradesDto.getDate()));
         }
         if (grades.getGradeTest() != 0) {
-            grades.setTest(testService.findByTest(gradesDto.getTest()));
+            grades.setTest(testService.findByTestDescriptionCourseIdAndDateOdTest(gradesDto.getTest(), gradesDto.getCourseId(), gradesDto.getDate()));
         }
         if (grades.getGradeClasswork() != 0) {
-            grades.setClasswork(classworkService.findByClasswork(gradesDto.getClasswork()));
+            grades.setClasswork(classworkService.findByDescriptionAndAcademicCourseIdAndDateOfClasswork(gradesDto.getClasswork(), gradesDto.getCourseId(), gradesDto.getDate()));
         }
         grades.setAcademicCourse(AcademicCourseMapper.toAcademicCourse(academicCourseService.findById(gradesDto.getCourseId())));
         return gradesRepository.save(grades);
@@ -85,13 +86,13 @@ public class GradesServiceImpl implements GradesService {
             grade.setGradeHomework(editedGrades.getGradeHomework());
             grade.setGradeTest(editedGrades.getGradeTest());
             if (grade.getGradeHomework() != 0) {
-                grade.setHomework(homeworkService.findByHomework(gradesDto.getHomework()));
+                grade.setHomework(homeworkService.findByDescriptionAndAcademicCourseIdAndDateOfHomework(gradesDto.getHomework(), gradesDto.getCourseId(), gradesDto.getDate()));
             }
             if (grade.getGradeTest() != 0) {
-                grade.setTest(testService.findByTest(gradesDto.getTest()));
+                grade.setTest(testService.findByTestDescriptionCourseIdAndDateOdTest(gradesDto.getTest(), gradesDto.getCourseId(), gradesDto.getDate()));
             }
             if (grade.getGradeClasswork() != 0) {
-                grade.setClasswork(classworkService.findByClasswork(gradesDto.getClasswork()));
+                grade.setClasswork(classworkService.findByDescriptionAndAcademicCourseIdAndDateOfClasswork(gradesDto.getClasswork(), gradesDto.getCourseId(), gradesDto.getDate()));
             }
             gradesRepository.save(grade);
         }
@@ -101,16 +102,14 @@ public class GradesServiceImpl implements GradesService {
     public List<GradesDto> findAllGradesInClassForWeek(String date, Long classId, Long courseId) {
         Set<StudentDto> allStudentsInClass = new LinkedHashSet<>();
         List<GradesDto> allGradesInClass = new ArrayList<>();
-        for (StudentDto studentDto : studentService.findAll()) {
-            if (studentDto.getAcademicClass().getId().equals(classId)) {
-                allStudentsInClass.add(studentDto);
-            }
-        }
-        for (StudentDto student : allStudentsInClass) {
-            if (existByDateStudentIdAndCourseId(date, student.getId(), courseId)) {
-                allGradesInClass.add(GradesMapper.toDto(findByDateStudentIdAndCourseId(date, student.getId(), courseId)));
-            }
-        }
+        studentService.findAll().stream()
+                .filter(studentDto -> studentDto.getAcademicClass() != null && studentDto.getAcademicClass().getId().equals(classId))
+                .collect(Collectors.toCollection(()->allStudentsInClass));
+
+        allStudentsInClass.stream()
+                .filter(studentDto -> existByDateStudentIdAndCourseId(date, studentDto.getId(),courseId))
+                .map(studentDto -> GradesMapper.toDto(findByDateStudentIdAndCourseId(date, studentDto.getId(), courseId)))
+                .collect(Collectors.toCollection(()->allGradesInClass));
         return allGradesInClass;
     }
 }

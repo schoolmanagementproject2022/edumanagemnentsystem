@@ -97,8 +97,10 @@ public class JournalController {
                                      Model model) {
         model.addAttribute("startDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getStartDate());
         model.addAttribute("endDateForDatePicker", timetableService.findTimetableByAcademicClassName(name).getEndDate());
-        model.addAttribute("studentId", saveGrade.getStudent().getId());
         model.addAttribute("gradeDate", date);
+        if (saveGrade.getStudent() != null) {
+            model.addAttribute("studentId", saveGrade.getStudent().getId());
+        }
         if (null != timetableService.findTimetableByAcademicClassName(name)) {
             setAttributesInJournalSectionWhenTimetableExist(model, name, courseId);
             model.addAttribute("concreteDay", concreteDay);
